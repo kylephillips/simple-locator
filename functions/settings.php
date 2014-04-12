@@ -3,6 +3,7 @@
 * Settings page
 */
 class WPSimpleLocatorSettings {
+	
 
 	public function __construct()
 	{
@@ -23,6 +24,7 @@ class WPSimpleLocatorSettings {
 			array( $this, 'settings_page' ) 
 		);
 	}
+
 
 	/**
 	* Register the settings

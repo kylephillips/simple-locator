@@ -18,7 +18,7 @@ class WPSLShortcode {
 	<form id="wpslsearch" class="simple-locator-form">
 		<div id="searcherror" class="alert alert-error" style="display:none;"></div>
 		<div class="zip">
-			<label for="zip">Zip Code</label>
+			<label for="zip">Zip/Postal Code</label>
 			<input type="tel" name="zip" id="zip" />
 		</div>
 		<div class="distance">

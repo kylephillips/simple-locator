@@ -30,6 +30,8 @@ class WPSimpleLocator {
 		add_action( 'wp_enqueue_scripts', array($this, 'enqueueDependencies'));
 		add_filter( 'manage_location_posts_columns', array($this,'locations_table_head'));
 		add_action( 'manage_location_posts_custom_column', array($this, 'locations_table_columns'), 10, 2);
+		add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array($this, 'settings_link' ) );
+
 		if ( is_admin() ) {
 			// Ajax form handler
 			add_action( 'wp_ajax_nopriv_locate', 'wpsl_form_handler' );
@@ -307,6 +309,17 @@ class WPSimpleLocator {
 			'', 
 			'1.0'
 		);
+	}
+
+
+	/**
+	* Add a link to the settings on the plugin page
+	*/
+	function settings_link($links)
+	{ 
+  		$settings_link = '<a href="options-general.php?page=wp_simple_locator">Settings</a>'; 
+  		array_unshift($links, $settings_link); 
+  		return $links; 
 	}
 
 }

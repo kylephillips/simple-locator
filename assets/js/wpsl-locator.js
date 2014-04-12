@@ -80,8 +80,10 @@ function loadLocationResults(data)
 		
 		for( i = 0; i < data.results.length; i++ ) {
 			
-			output = output + '<li>';
-			output = output + '<strong>' + data.results[i].title + '</strong><br />';
+			output = output + '<li><strong>';
+			output = output + '<a href="' + data.results[i].permalink + '">';
+			output = output + data.results[i].title;
+			output = output + '</a></strong><br />';
 			output = output + '<em>Distance: ' + data.results[i].distance + ' miles</em><br />';
 			output = output + data.results[i].address + '<br />' + data.results[i].city + ', ' + data.results[i].state + ' ' + data.results[i].zip;
 

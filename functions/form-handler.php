@@ -94,6 +94,7 @@ function wpls_locations_query($data)
 	$sql = "
 	SELECT 
 		p.post_title AS title,
+		p.ID AS id,
 		p.post_content AS content,
 		t.meta_value AS phone,
 		a.meta_value AS address,
@@ -143,8 +144,9 @@ function wpls_locations_query($data)
 	$result_count = count($query_results);
 
 	foreach ( $query_results as $qr ) :
-		$counselor = array(
+		$location = array(
 			'title' => $qr->title,
+			'permalink' => get_permalink($qr->id),
 			'distance' => round($qr->distance, 2),
 			'address' => $qr->address,
 			'city' => $qr->city,
@@ -155,7 +157,7 @@ function wpls_locations_query($data)
 			'latitude' => $qr->latitude,
 			'longitude' => $qr->longitude
 		);
-		array_push($results, $counselor);
+		array_push($results, $location);
 	endforeach;
 
 

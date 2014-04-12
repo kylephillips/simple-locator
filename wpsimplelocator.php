@@ -57,7 +57,7 @@ class WPSimpleLocator {
 		    'capability_type' => 'post',  
 		    'hierarchical' => true,  
 		    'has_archive' => true,
-		    'supports' => array('title','content','thumbnail'),
+		    'supports' => array('title','editor','thumbnail'),
 		    'rewrite' => array('slug' => 'location', 'with_front' => false)
 		);
 		register_post_type( 'location' , $args );

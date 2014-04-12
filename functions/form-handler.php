@@ -10,13 +10,15 @@ function wpsl_form_handler()
 	$distance = sanitize_text_field($_POST['distance']);
 	$latitude = sanitize_text_field($_POST['latitude']);
 	$longitude = sanitize_text_field($_POST['longitude']);
+	$unit = sanitize_text_field($_POST['unit']);
 
 	$data = array(
 		'nonce' => $nonce,
 		'zip' => $zip,
 		'distance' => $distance,
 		'latitude' => $latitude,
-		'longitude' => $longitude
+		'longitude' => $longitude,
+		'unit' => $unit
 	);
 
 	// Validate
@@ -74,6 +76,16 @@ function wpsl_validate_data($data)
 		echo $output;
 		die();
 	}
+
+	// Validate Unit
+	if ( ($data['unit'] !== 'miles') && ($data['unit'] !== 'kilometers') ){
+		$output = json_encode(array(
+			'status'=>'error',
+			'message' => 'Invalid unit'
+		));
+		echo $output;
+		die();
+	}
 }
 
 
@@ -90,6 +102,13 @@ function wpls_locations_query($data)
 	$distance = $data['distance'];
 	$ulat = $data['latitude'];
 	$ulong = $data['longitude'];
+	$unit = $data['unit'];
+	
+	if ( $unit == "miles" ){
+		$l = 3959;
+	} else {
+		$l = 6371;
+	}
 
 	$sql = "
 	SELECT 
@@ -104,7 +123,7 @@ function wpls_locations_query($data)
 		w.meta_value AS website,
 		lat.meta_value AS latitude,
 		lng.meta_value AS longitude,
-		( 3959 * acos( cos( radians($ulat) ) * cos( radians( lat.meta_value ) ) 
+		( $l * acos( cos( radians($ulat) ) * cos( radians( lat.meta_value ) ) 
 		* cos( radians( lng.meta_value ) - radians($ulong) ) + sin( radians($ulat) ) * sin(radians(lat.meta_value)) ) ) 
 		AS distance
 		FROM $post_table AS p
@@ -167,6 +186,7 @@ function wpls_locations_query($data)
 		'distance'=> $data['distance'],
 		'latitude' => $data['latitude'],
 		'longitude' => $data['longitude'],
+		'unit' => $unit,
 		'results' => $results,
 		'result_count' => $result_count
 	);

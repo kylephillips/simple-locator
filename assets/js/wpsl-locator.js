@@ -24,7 +24,8 @@ function sendFormData()
 			locatorNonce : wpsl_locator.locatorNonce,
 			distance: jQuery('#distance').val(),
 			latitude: jQuery('#latitude').val(),
-			longitude: jQuery('#longitude').val()
+			longitude: jQuery('#longitude').val(),
+			unit: jQuery('#unit').val()
 		},
 		success: function(data){
 			if (data.status === 'error'){
@@ -76,7 +77,14 @@ function geocodeZip()
 function loadLocationResults(data)
 {
 	if ( data.result_count > 0 ){
-		var output = '<h3>' + data.result_count + ' locations found within ' + data.distance + ' miles of ' + data.zip + '</h3><ul>';
+
+		if ( data.result_count === 1 ){
+			var location = 'location';
+		} else {
+			var location = 'locations';
+		}
+
+		var output = '<h3>' + data.result_count + ' ' + location + ' found within ' + data.distance + ' ' + data.unit + ' of ' + data.zip + '</h3><ul>';
 		
 		for( i = 0; i < data.results.length; i++ ) {
 			
@@ -84,7 +92,7 @@ function loadLocationResults(data)
 			output = output + '<a href="' + data.results[i].permalink + '">';
 			output = output + data.results[i].title;
 			output = output + '</a></strong><br />';
-			output = output + '<em>Distance: ' + data.results[i].distance + ' miles</em><br />';
+			output = output + '<em>Distance: ' + data.results[i].distance + ' ' + data.unit + '</em><br />';
 			output = output + data.results[i].address + '<br />' + data.results[i].city + ', ' + data.results[i].state + ' ' + data.results[i].zip;
 
 			var phone = data.results[i].phone;

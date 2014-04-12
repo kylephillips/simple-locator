@@ -13,6 +13,7 @@ License: GPL
 
 require_once('functions/shortcode.php');
 require_once('functions/form-handler.php');
+require_once('functions/settings.php');
 
 
 /**
@@ -260,7 +261,11 @@ class WPSimpleLocator {
 			echo '<script src="' . plugins_url() . '/wpsimplelocator
 			/assets/js/wpsl_admin.js"></script>';
 			echo "\n";
-			echo '<script src="http://maps.google.com/maps/api/js?sensor=false"></script>';
+			if ( get_option('wpsl_google_api_key') ){
+				echo '<script src="http://maps.google.com/maps/api/js?key=' . get_option('wpsl_google_api_key') . '&sensor=false"></script>';
+			} else {
+				echo '<script src="http://maps.google.com/maps/api/js?sensor=false"></script>';
+			}
 		}
 	}
 
@@ -306,6 +311,7 @@ class WPSimpleLocator {
 
 }
 $wpsimplelocator = new WPSimpleLocator;
+$wpsimplelocatorsettings = new WPSimpleLocatorSettings;
 $wpsl_shortcode = new WPSLShortcode;
 
 

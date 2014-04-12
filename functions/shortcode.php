@@ -34,8 +34,12 @@ class WPSLShortcode {
 		</div>
 	</form>
 	<div id="locatormap"></div>
-	<div id="locatorresults" class="loading"></div>
-	<script src="http://maps.google.com/maps/api/js?sensor=false"></script>';
+	<div id="locatorresults" class="loading"></div>';
+	if ( get_option('wpsl_google_api_key') ){
+		echo '<script src="http://maps.google.com/maps/api/js?key=' . get_option('wpsl_google_api_key') . '&sensor=false"></script>';
+	} else {
+		echo '<script src="http://maps.google.com/maps/api/js?sensor=false"></script>';
+	}
 	return $output;
 	}
 

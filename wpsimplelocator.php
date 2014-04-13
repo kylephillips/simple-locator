@@ -1,12 +1,11 @@
 <?php
-
 /*
 Plugin Name: WP Simple Locator
-Plugin URI: http://kylephillips.is
+Plugin URI: https://github.com/kylephillips/wp-simple-locator
 Description: Simple locator for Wordpress. Can be used for store or any other type of location. Simply add the shortcode [wp_simple_locator] to add the locator.
 Version: 1.0
 Author: Kyle Phillips
-Author URI: http://kylephillips.is
+Author URI: https://github.com/kylephillips
 License: GPL
 */
 
@@ -323,6 +322,10 @@ class WPSimpleLocator {
 	}
 
 }
+
+/**
+* Instantiate the Plugin Classes
+*/
 $wpsimplelocator = new WPSimpleLocator;
 $wpsimplelocatorsettings = new WPSimpleLocatorSettings;
 $wpsl_shortcode = new WPSLShortcode;

@@ -6,6 +6,10 @@
 **WP Simple locator** is a simple location plugin for Wordpress.
 
 
+#### Demo 
+[View the Demo](http://locatewp.com)
+
+
 #### Installation 
 1. Upload the contents of /wpsimplelocator/ to the /wp-content/plugins/ directory
 1. Activate Simple Locator through the 'Plugins' menu in WordPress

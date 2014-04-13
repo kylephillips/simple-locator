@@ -76,6 +76,7 @@ function geocodeZip()
 */
 function loadLocationResults(data)
 {
+	console.log(data);
 	if ( data.result_count > 0 ){
 
 		if ( data.result_count === 1 ){
@@ -98,7 +99,7 @@ function loadLocationResults(data)
 			var phone = data.results[i].phone;
 			var website = data.results[i].website;
 			
-			if ( phone !== "" ){
+			if ( phone ){
 				output = output + '<br />Phone: ' + phone;
 			}
 			if ( website !== "" ){

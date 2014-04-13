@@ -30,6 +30,7 @@ class WPSimpleLocator {
 		add_filter( 'manage_location_posts_columns', array($this,'locations_table_head'));
 		add_action( 'manage_location_posts_custom_column', array($this, 'locations_table_columns'), 10, 2);
 		add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array($this, 'settings_link' ) );
+		add_action('init', array($this, 'add_localization') );
 
 		if ( is_admin() ) {
 			// Ajax form handler
@@ -300,7 +301,13 @@ class WPSimpleLocator {
 			'wpsl_locator', 
 			array( 
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'locatorNonce' => wp_create_nonce( 'wpsl_locator-locator-nonce' )
+				'locatorNonce' => wp_create_nonce( 'wpsl_locator-locator-nonce' ),
+				'distance' => __( 'Distance', 'wpsimplelocator' ), 
+				'website' => __('Website', 'wpsimplelocator'),
+				'location' => __('location', 'wpsimplelocator'),
+				'locations' => __('locations', 'wpsimplelocator'),
+				'found_within' => __('found within', 'wpsimplelocator'),
+				'phone' => __('Phone', 'wpsimplelocator')
 		));
 		wp_enqueue_style(
 			'simple-locator', 
@@ -320,6 +327,15 @@ class WPSimpleLocator {
   		array_unshift($links, $settings_link); 
   		return $links; 
 	}
+
+	/**
+	* Localization Domain
+	*/
+	function add_localization()
+	{
+		load_plugin_textdomain('wpsimplelocator', false, basename( dirname( __FILE__ ) ) . '/languages' );
+	}
+
 
 }
 

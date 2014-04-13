@@ -14,15 +14,20 @@ class WPSLShortcode {
 	} else {
 		$unit = 'miles';
 	}
+
+	// Localized Strings
+	$distance = __('Distance', 'wpsimplelocator');
+	$zip = __('Zip/Postal Code', 'wpsimplelocator');
+
 	$output = '
 	<form id="wpslsearch" class="simple-locator-form">
 		<div id="searcherror" class="alert alert-error" style="display:none;"></div>
 		<div class="zip">
-			<label for="zip">Zip/Postal Code</label>
+			<label for="zip">' . $zip . '</label>
 			<input type="tel" name="zip" id="zip" />
 		</div>
 		<div class="distance">
-			<label for="distance">Distance</label>
+			<label for="distance">' . $distance . '</label>
 			<select name="distance" id="distance">
 				<option value="5">5 ' . $unit . '</option>
 				<option value="10">10 ' . $unit . '</option>

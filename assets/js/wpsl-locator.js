@@ -81,12 +81,12 @@ function loadLocationResults(data)
 	if ( data.result_count > 0 ){
 
 		if ( data.result_count === 1 ){
-			var location = 'location';
+			var location = wpsl_locator.location;
 		} else {
-			var location = 'locations';
+			var location = wpsl_locator.locations;
 		}
 
-		var output = '<h3>' + data.result_count + ' ' + location + ' found within ' + data.distance + ' ' + data.unit + ' of ' + data.zip + '</h3><ul>';
+		var output = '<h3>' + data.result_count + ' ' + location + ' ' + wpsl_locator.found_within + ' ' + data.distance + ' ' + data.unit + ' of ' + data.zip + '</h3><ul>';
 		
 		for( i = 0; i < data.results.length; i++ ) {
 			
@@ -94,14 +94,14 @@ function loadLocationResults(data)
 			output = output + '<a href="' + data.results[i].permalink + '">';
 			output = output + data.results[i].title;
 			output = output + '</a></strong><br />';
-			output = output + '<em>Distance: ' + data.results[i].distance + ' ' + data.unit + '</em><br />';
+			output = output + '<em>' + wpsl_locator.distance + ': ' + data.results[i].distance + ' ' + data.unit + '</em><br />';
 			output = output + data.results[i].address + '<br />' + data.results[i].city + ', ' + data.results[i].state + ' ' + data.results[i].zip;
 
 			var phone = data.results[i].phone;
 			var website = data.results[i].website;
 			
 			if ( phone ){
-				output = output + '<br />Phone: ' + phone;
+				output = output + '<br />' + wpsl_locator.phone + ': ' + phone;
 			}
 			if ( website !== "" ){
 				output = output + '<br /><a href="' + website + '" target="_blank">' + website + '</a>';

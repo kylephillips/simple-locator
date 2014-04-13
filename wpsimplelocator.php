@@ -11,9 +11,9 @@ License: GPL
 */
 
 
-require_once('functions/shortcode.php');
-require_once('functions/form-handler.php');
-require_once('functions/settings.php');
+require_once('lib/shortcode.php');
+require_once('lib/form-handler.php');
+require_once('lib/settings.php');
 
 
 /**

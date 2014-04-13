@@ -4,6 +4,7 @@ jQuery('#wpslsubmit').on('click', function(e){
 	jQuery('#searcherror').hide();
 	jQuery('#locatormap').hide();
 	jQuery('#locatorresults').empty();
+	jQuery('#locatorresults').addClass('loading');
 	jQuery('#locatorresults').show();
 	geocodeZip();	
 });

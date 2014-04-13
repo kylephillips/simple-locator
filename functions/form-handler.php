@@ -127,32 +127,24 @@ function wpls_locations_query($data)
 		* cos( radians( lng.meta_value ) - radians($ulong) ) + sin( radians($ulat) ) * sin(radians(lat.meta_value)) ) ) 
 		AS distance
 		FROM $post_table AS p
-		JOIN $meta_table AS lat
-		ON p.ID = lat.post_id
-		JOIN $meta_table AS lng
-		ON p.ID = lng.post_id
-		JOIN $meta_table AS c
-		ON p.ID = c.post_id
-		JOIN $meta_table AS a
-		ON p.ID = a.post_id
-		JOIN $meta_table AS s
-		ON p.ID = s.post_id
-		JOIN $meta_table AS z
-		ON p.ID = z.post_id
-		JOIN $meta_table AS t
-		ON p.ID = t.post_id
-		JOIN $meta_table AS w
-		ON p.ID = w.post_ID
+		LEFT JOIN $meta_table AS lat
+		ON p.ID = lat.post_id AND lat.meta_key = 'wpsl_latitude'
+		LEFT JOIN $meta_table AS lng
+		ON p.ID = lng.post_id AND lng.meta_key = 'wpsl_longitude'
+		LEFT JOIN $meta_table AS c
+		ON p.ID = c.post_id AND c.meta_key = 'wpsl_city'
+		LEFT JOIN $meta_table AS a
+		ON p.ID = a.post_id AND a.meta_key = 'wpsl_address'
+		LEFT JOIN $meta_table AS s
+		ON p.ID = s.post_id AND s.meta_key = 'wpsl_state'
+		LEFT JOIN $meta_table AS z
+		ON p.ID = z.post_id AND z.meta_key = 'wpsl_zip'
+		LEFT JOIN $meta_table AS t
+		ON p.ID = t.post_id AND t.meta_key = 'wpsl_phone'
+		LEFT JOIN $meta_table AS w
+		ON p.ID = w.post_ID AND w.meta_key = 'wpsl_website'
 		WHERE `post_type` = 'location'
 		AND `post_status` = 'publish'
-		AND lat.meta_key = 'wpsl_latitude'
-		AND lng.meta_key = 'wpsl_longitude'
-		AND c.meta_key = 'wpsl_city'
-		AND a.meta_key = 'wpsl_address'
-		AND s.meta_key = 'wpsl_state'
-		AND z.meta_key = 'wpsl_zip'
-		AND t.meta_key = 'wpsl_phone'
-		AND w.meta_key = 'wpsl_website'
 		HAVING distance < $distance
 	";
 	

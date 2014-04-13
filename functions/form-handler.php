@@ -146,6 +146,7 @@ function wpls_locations_query($data)
 		WHERE `post_type` = 'location'
 		AND `post_status` = 'publish'
 		HAVING distance < $distance
+		ORDER BY distance
 	";
 	
 	$query_results = $wpdb->get_results($sql);

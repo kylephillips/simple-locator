@@ -103,6 +103,9 @@ function wpls_locations_query($data)
 	$ulat = $data['latitude'];
 	$ulong = $data['longitude'];
 	$unit = $data['unit'];
+	$post_type = get_option('wpsl_post_type');
+	$lat_field = get_option('wpsl_lat_field');
+	$lng_field = get_option('wpsl_lng_field');
 	
 	if ( $unit == "miles" ){
 		$l = 3959;
@@ -128,9 +131,9 @@ function wpls_locations_query($data)
 		AS distance
 		FROM $post_table AS p
 		LEFT JOIN $meta_table AS lat
-		ON p.ID = lat.post_id AND lat.meta_key = 'wpsl_latitude'
+		ON p.ID = lat.post_id AND lat.meta_key = '$lat_field'
 		LEFT JOIN $meta_table AS lng
-		ON p.ID = lng.post_id AND lng.meta_key = 'wpsl_longitude'
+		ON p.ID = lng.post_id AND lng.meta_key = '$lng_field'
 		LEFT JOIN $meta_table AS c
 		ON p.ID = c.post_id AND c.meta_key = 'wpsl_city'
 		LEFT JOIN $meta_table AS a
@@ -143,7 +146,7 @@ function wpls_locations_query($data)
 		ON p.ID = t.post_id AND t.meta_key = 'wpsl_phone'
 		LEFT JOIN $meta_table AS w
 		ON p.ID = w.post_ID AND w.meta_key = 'wpsl_website'
-		WHERE `post_type` = 'location'
+		WHERE `post_type` = '$post_type'
 		AND `post_status` = 'publish'
 		HAVING distance < $distance
 		ORDER BY distance
@@ -181,7 +184,8 @@ function wpls_locations_query($data)
 		'longitude' => $data['longitude'],
 		'unit' => $unit,
 		'results' => $results,
-		'result_count' => $result_count
+		'result_count' => $result_count,
+		'sql'=> $sql
 	);
 	return $output;
 }

@@ -29,6 +29,7 @@ function sendFormData()
 			unit: jQuery('#unit').val()
 		},
 		success: function(data){
+			console.log(data);
 			if (data.status === 'error'){
 				jQuery('#searcherror').text(data.message);
 				jQuery('#searcherror').show();
@@ -77,7 +78,6 @@ function geocodeZip()
 */
 function loadLocationResults(data)
 {
-	console.log(data);
 	if ( data.result_count > 0 ){
 
 		if ( data.result_count === 1 ){
@@ -95,7 +95,10 @@ function loadLocationResults(data)
 			output = output + data.results[i].title;
 			output = output + '</a></strong><br />';
 			output = output + '<em>' + wpsl_locator.distance + ': ' + data.results[i].distance + ' ' + data.unit + '</em><br />';
+
+			if ( data.results[i].address ){
 			output = output + data.results[i].address + '<br />' + data.results[i].city + ', ' + data.results[i].state + ' ' + data.results[i].zip;
+			}
 
 			var phone = data.results[i].phone;
 			var website = data.results[i].website;
@@ -103,7 +106,7 @@ function loadLocationResults(data)
 			if ( phone ){
 				output = output + '<br />' + wpsl_locator.phone + ': ' + phone;
 			}
-			if ( website !== "" ){
+			if ( website ){
 				output = output + '<br /><a href="' + website + '" target="_blank">' + website + '</a>';
 			}
 			output = output + '</li>';

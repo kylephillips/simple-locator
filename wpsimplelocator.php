@@ -3,7 +3,7 @@
 Plugin Name: WP Simple Locator
 Plugin URI: https://github.com/kylephillips/wp-simple-locator
 Description: Simple locator for Wordpress. Can be used for store or any other type of location. Simply add the shortcode [wp_simple_locator] to add the locator.
-Version: 1.0
+Version: 1.01
 Author: Kyle Phillips
 Author URI: https://github.com/kylephillips
 License: GPL
@@ -20,17 +20,23 @@ require_once('lib/settings.php');
 */
 class WPSimpleLocator {
 
+	private $version;
+
 	public function __construct(){
+		$this->version = '1.0';
+		$this->set_version();
+		
 		add_action( 'init', array( $this, 'register_post_type') );
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ));
 		add_action( 'save_post', array($this, 'meta_box_save' ));
-		add_action( 'wp_print_scripts', array($this, 'deregister_wpml_script'));
-		add_action( 'admin_head', array($this, 'admin_styes'));
-		add_action( 'wp_enqueue_scripts', array($this, 'enqueueDependencies'));
 		add_filter( 'manage_location_posts_columns', array($this,'locations_table_head'));
 		add_action( 'manage_location_posts_custom_column', array($this, 'locations_table_columns'), 10, 2);
+		add_action( 'wp_print_scripts', array($this, 'deregister_wpml_script'));
+		add_action( 'admin_head', array($this, 'admin_styles'));
+		add_action( 'wp_enqueue_scripts', array($this, 'enqueueDependencies'));
 		add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array($this, 'settings_link' ) );
 		add_action('init', array($this, 'add_localization') );
+		$this->set_default_options();
 
 		if ( is_admin() ) {
 			// Ajax form handler
@@ -45,6 +51,12 @@ class WPSimpleLocator {
 	*/
 	public function register_post_type()
 	{
+		if ( $this->check_post_type() ){
+			$show_ui = false;
+		} else {
+			$show_ui = true;
+		}
+
 		$labels = array(
 			'name' => __('Locations'),  
 		    'singular_name' => __('Location'),
@@ -55,7 +67,7 @@ class WPSimpleLocator {
 		$args = array(
 		 	'labels' => $labels,
 		    'public' => true,  
-		    'show_ui' => true,
+		    'show_ui' => $show_ui,
 			'menu_position' => 5,
 		    'capability_type' => 'post',  
 		    'hierarchical' => true,  
@@ -64,6 +76,7 @@ class WPSimpleLocator {
 		    'rewrite' => array('slug' => 'location', 'with_front' => false)
 		);
 		register_post_type( 'location' , $args );
+
 	}
 
 
@@ -254,20 +267,18 @@ class WPSimpleLocator {
 	/**
 	* Add the necessary styles & scripts
 	*/
-	public function admin_styes()
+	public function admin_styles($page)
 	{
-		global $post_type;
-	    if( 'location' == $post_type ){
-			echo '<link rel="stylesheet" href="' . plugins_url() . '/wpsimplelocator/assets/css/wpsl_admin_styles.css' . '" type="text/css">';
-			echo "\n";
-			echo '<script src="' . plugins_url() . '/wpsimplelocator
-			/assets/js/wpsl_admin.js"></script>';
-			echo "\n";
-			if ( get_option('wpsl_google_api_key') ){
-				echo '<script src="http://maps.google.com/maps/api/js?key=' . get_option('wpsl_google_api_key') . '&sensor=false"></script>';
-			} else {
-				echo '<script src="http://maps.google.com/maps/api/js?sensor=false"></script>';
-			}
+		
+		echo '<link rel="stylesheet" href="' . plugins_url() . '/wpsimplelocator/assets/css/wpsl_admin_styles.css' . '" type="text/css">';
+		echo "\n";
+		echo '<script src="' . plugins_url() . '/wpsimplelocator
+		/assets/js/wpsl_admin.js"></script>';
+		echo "\n";
+		if ( get_option('wpsl_google_api_key') ){
+			echo '<script src="http://maps.google.com/maps/api/js?key=' . get_option('wpsl_google_api_key') . '&sensor=false"></script>';
+		} else {
+			echo '<script src="http://maps.google.com/maps/api/js?sensor=false"></script>';
 		}
 	}
 
@@ -321,21 +332,68 @@ class WPSimpleLocator {
 	/**
 	* Add a link to the settings on the plugin page
 	*/
-	function settings_link($links)
+	public function settings_link($links)
 	{ 
   		$settings_link = '<a href="options-general.php?page=wp_simple_locator">Settings</a>'; 
   		array_unshift($links, $settings_link); 
   		return $links; 
 	}
 
+
 	/**
 	* Localization Domain
 	*/
-	function add_localization()
+	public function add_localization()
 	{
 		load_plugin_textdomain('wpsimplelocator', false, basename( dirname( __FILE__ ) ) . '/languages' );
 	}
 
+
+	/**
+	* Set Default Options
+	*/
+	public function set_default_options()
+	{
+		if ( !get_option('wpsl_post_type') ){
+			update_option('wpsl_post_type', 'location');
+		}
+		if ( !get_option('wpsl_field_type') ){
+			update_option('wpsl_field_type', 'wpsl');
+		}
+		if ( !get_option('wpsl_lat_field') ){
+			update_option('wpsl_lat_field', 'wpsl_latitude');
+		}
+		if ( !get_option('wpsl_lng_field') ){
+			update_option('wpsl_lng_field', 'wpsl_longitude');
+		}
+	}
+
+
+	/**
+	* Check/update the version number in the DB
+	*/
+	public function set_version()
+	{
+		if ( !get_option('wpsl_version') ){
+			update_option('wpsl_version', $this->version);
+		}
+		elseif ( get_option('wpsl_version') < $this->version ){
+			update_option('wpsl_version', $this->version);	
+		}
+	}
+
+
+	/**
+	* Check the post type option
+	* If the option is not set to the location type, remove it from the menu
+	*/
+	public function check_post_type()
+	{
+		$pt = get_option('wpsl_post_type');
+		if ( $pt !== 'location' ){
+			return true;
+		}
+	}
 
 }
 

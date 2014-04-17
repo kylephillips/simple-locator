@@ -29,7 +29,6 @@ function sendFormData()
 			unit: jQuery('#unit').val()
 		},
 		success: function(data){
-			console.log(data);
 			if (data.status === 'error'){
 				jQuery('#searcherror').text(data.message);
 				jQuery('#searcherror').show();

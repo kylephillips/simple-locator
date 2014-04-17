@@ -23,7 +23,7 @@ class WPSimpleLocator {
 	private $version;
 
 	public function __construct(){
-		$this->version = '1.0';
+		$this->version = '1.01';
 		$this->set_version();
 		
 		add_action( 'init', array( $this, 'register_post_type') );

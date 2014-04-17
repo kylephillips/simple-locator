@@ -195,7 +195,6 @@ class WPSimpleLocatorSettings {
 	private function show_acf_fields()
 	{
 		$acfs = $this->get_acf_fields();
-		$output = [];
 
 		foreach ( $acfs as $field )
 		{
@@ -239,7 +238,6 @@ class WPSimpleLocatorSettings {
 		if (!empty($meta_keys) ):
 			foreach ($meta_keys as $meta_key) {
 				if ( !in_array($meta_key, $exclude_fields) ) {
-					$f = [];
 					$f['value'] = $meta_key;
 					$f['label'] = $meta_key;
 					$output[] = $f;

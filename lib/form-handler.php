@@ -5,23 +5,7 @@
 */
 function wpsl_form_handler()
 {
-	$nonce = sanitize_text_field($_POST['locatorNonce']);
-	$zip = sanitize_text_field($_POST['zip']);
-	$distance = sanitize_text_field($_POST['distance']);
-	$latitude = sanitize_text_field($_POST['latitude']);
-	$longitude = sanitize_text_field($_POST['longitude']);
-	$unit = sanitize_text_field($_POST['unit']);
-
-	$data = array(
-		'nonce' => $nonce,
-		'zip' => $zip,
-		'distance' => $distance,
-		'latitude' => $latitude,
-		'longitude' => $longitude,
-		'unit' => $unit
-	);
-
-	$form = new WPSimpleLocatorForm($data);
+	$form = new WPSimpleLocatorForm;
 }
 
 
@@ -37,17 +21,41 @@ class WPSimpleLocatorForm {
 	private $data;
 
 
-	public function __construct($data)
+	public function __construct()
 	{
-		$this->data = $data;
-		$this->wpsl_validate_data();
-		$this->wpsl_locations_query();
+		$this->set_data();
+		$this->validate_data();
+		$this->query_locations();
 	}
+
+
+	/**
+	* Sanitize and set the user-submitted data
+	*/
+	private function set_data()
+	{
+		$nonce = sanitize_text_field($_POST['locatorNonce']);
+		$zip = sanitize_text_field($_POST['zip']);
+		$distance = sanitize_text_field($_POST['distance']);
+		$latitude = sanitize_text_field($_POST['latitude']);
+		$longitude = sanitize_text_field($_POST['longitude']);
+		$unit = sanitize_text_field($_POST['unit']);
+
+		$this->data = array(
+			'nonce' => $nonce,
+			'zip' => $zip,
+			'distance' => $distance,
+			'latitude' => $latitude,
+			'longitude' => $longitude,
+			'unit' => $unit
+		);
+	}
+
 
 	/**
 	* Validate the form data
 	*/
-	private function wpsl_validate_data()
+	private function validate_data()
 	{
 		$data = $this->data;
 
@@ -106,7 +114,7 @@ class WPSimpleLocatorForm {
 	/**
 	* Lookup location data
 	*/
-	private function wpsl_locations_query()
+	private function query_locations()
 	{
 		$data = $this->data;
 

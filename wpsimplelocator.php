@@ -6,7 +6,7 @@ Description: Simple locator for Wordpress. Can be used for store or any other ty
 Version: 1.01
 Author: Kyle Phillips
 Author URI: https://github.com/kylephillips
-License: GPL
+License: GPLv2 or later.
 */
 
 
@@ -23,6 +23,7 @@ class WPSimpleLocator {
 	private $version;
 
 	public function __construct(){
+
 		$this->version = '1.01';
 		$this->set_version();
 		
@@ -208,7 +209,7 @@ class WPSimpleLocator {
 		});    	
 	   	</script>
 	    <?php
-	} // kyhi_meta_output
+	}
 
 
 
@@ -219,10 +220,8 @@ class WPSimpleLocator {
 	{
 		if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
 
-		// Verify the nonce. If insn't there, stop the script
+		// Verify the nonce & permissions.
 		if( !isset( $_POST['wpsl_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['wpsl_meta_box_nonce'], 'my_wpsl_meta_box_nonce' ) ) return;
-
-		// Stop the script if the user does not have edit permissions
 		if( !current_user_can( 'edit_post' ) ) return;
 
 	    // Save the address
@@ -260,7 +259,7 @@ class WPSimpleLocator {
 		// Save the additional info
 		if( isset( $_POST['wpsl_additionalinfo'] ) )
 			update_post_meta( $post_id, 'wpsl_additionalinfo', esc_attr( $_POST['wpsl_additionalinfo'] ) );
-	} //_meta_box_save
+	} 
 
 
 
@@ -269,7 +268,6 @@ class WPSimpleLocator {
 	*/
 	public function admin_styles($page)
 	{
-		
 		echo '<link rel="stylesheet" href="' . plugins_url() . '/wpsimplelocator/assets/css/wpsl_admin_styles.css' . '" type="text/css">';
 		echo "\n";
 		echo '<script src="' . plugins_url() . '/wpsimplelocator

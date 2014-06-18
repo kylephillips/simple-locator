@@ -3,10 +3,22 @@
 * Settings page
 */
 class WPSimpleLocatorSettings {
+
+	/**
+	* Selected Unit of Measurement
+	*/
+	protected $unit;
+
+	/**
+	* Selected Field Type
+	*/
+	protected $field_type;
 	
 
 	public function __construct()
 	{
+		$this->unit = get_option('wpsl_measurement_unit');
+		$this->field_type = $field_type = get_option('wpsl_field_type');
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_init', array($this, 'register_settings' ) );
 	}
@@ -42,10 +54,8 @@ class WPSimpleLocatorSettings {
 	/**
 	* Add the Settings Page
 	*/
-	public function settings_page () {
-		
-		$unit = get_option('wpsl_measurement_unit');
-		$field_type = get_option('wpsl_field_type');
+	public function settings_page()
+	{
 		include( dirname( dirname(__FILE__) ) . '/views/settings.php');
 	}
 

@@ -12,10 +12,10 @@
 			<td>
 				<select name="wpsl_measurement_unit">
 					<option value="miles"
-					<?php if ( $unit == "miles") echo ' selected'; ?>
+					<?php if ( $this->unit == "miles") echo ' selected'; ?>
 					>Miles</option>
 					<option value="kilometers"
-					<?php if ( $unit == "kilometers") echo ' selected'; ?>
+					<?php if ( $this->unit == "kilometers") echo ' selected'; ?>
 					>Kilometers</option>
 				</select>
 			</td>
@@ -34,14 +34,14 @@
 			<p>
 				<label for="field_wpsl" class="wpsl-field-type">
 					<input type="radio" name="wpsl_field_type" id="field_wpsl" value="wpsl"
-					<?php if ( $field_type == 'wpsl' ) echo ' checked'; ?>
+					<?php if ( $this->field_type == 'wpsl' ) echo ' checked'; ?>
 					>Use WP Simple Locator Fields
 				</label>
 			</p>
 			<p>
 				<label for="field_custom" class="wpsl-field-type">
 					<input type="radio" name="wpsl_field_type" id="field_custom" value="custom"
-					<?php if ( $field_type == 'custom' ) echo ' checked'; ?>
+					<?php if ( $this->field_type == 'custom' ) echo ' checked'; ?>
 					>Use Other Custom Fields
 				</label>
 			</p>
@@ -64,26 +64,26 @@
 			</select>
 			</td>
 			</tr>
-			</table>
+		</table>
 
-			<input type="hidden" id="wpsl_lat_field" name="wpsl_lat_field"
-			<?php 
-			if ( get_option('wpsl_lat_field') ){
-				echo ' value="' . get_option('wpsl_lat_field') .  '"';
-			} else {
-				echo ' value="wpsl_latitude"';
-			}
-			?>
-			 />
-			<input type="hidden" id="wpsl_lng_field" name="wpsl_lng_field"
-			<?php
-			if ( get_option('wpsl_lng_field') ){
-				echo ' value="' . get_option('wpsl_lng_field') . '"';
-			} else {
-				echo ' value="wpsl_longitude"';
-			}
-			?>
-			/>
+		<input type="hidden" id="wpsl_lat_field" name="wpsl_lat_field"
+		<?php 
+		if ( get_option('wpsl_lat_field') ){
+			echo ' value="' . get_option('wpsl_lat_field') .  '"';
+		} else {
+			echo ' value="wpsl_latitude"';
+		}
+		?>
+		 />
+		<input type="hidden" id="wpsl_lng_field" name="wpsl_lng_field"
+		<?php
+		if ( get_option('wpsl_lng_field') ){
+			echo ' value="' . get_option('wpsl_lng_field') . '"';
+		} else {
+			echo ' value="wpsl_longitude"';
+		}
+		?>
+		/>
 
 		<?php submit_button(); ?>
 	</form>

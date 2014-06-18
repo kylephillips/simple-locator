@@ -2,56 +2,55 @@
 
 class WPSLShortcode {
 
+	/**
+	* Unit of Measurement
+	*/
+	protected $unit;
+
+	/**
+	* Localized strings
+	*/
+	protected $distance;
+	protected $zip;
+
+	/**
+	* Maps API Key
+	*/
+	protected $maps_api;
+
+
 	public function __construct()
 	{
+		$this->set_unit();
+		$this->set_localized_strings();
+		$this->set_api_key();
 		add_shortcode('wp_simple_locator', array($this, 'wp_simple_locator'));
 	}
 
-	public function wp_simple_locator()
+	private function set_unit()
 	{
-	if ( get_option('wpsl_measurement_unit') ){
-		$unit = get_option('wpsl_measurement_unit');
-	} else {
-		$unit = 'miles';
+		if ( get_option('wpsl_measurement_unit') ){
+			$this->unit = get_option('wpsl_measurement_unit');
+		} else {
+			$this->unit = 'miles';
+		}
 	}
 
-	// Localized Strings
-	$distance = __('Distance', 'wpsimplelocator');
-	$zip = __('Zip/Postal Code', 'wpsimplelocator');
-
-	$output = '
-	<form id="wpslsearch" class="simple-locator-form">
-		<div id="searcherror" class="alert alert-error" style="display:none;"></div>
-		<div class="zip">
-			<label for="zip">' . $zip . '</label>
-			<input type="tel" name="zip" id="zip" />
-		</div>
-		<div class="distance">
-			<label for="distance">' . $distance . '</label>
-			<select name="distance" id="distance">
-				<option value="5">5 ' . $unit . '</option>
-				<option value="10">10 ' . $unit . '</option>
-				<option value="20">20 ' . $unit . '</option>
-				<option value="30">30 ' . $unit . '</option>
-				<option value="40">40 ' . $unit . '</option>
-				<option value="50">50 ' . $unit . '</option>
-			</select>
-		</div>
-		<div class="submit">
-			<input type="hidden" name="latitude" id="latitude" />
-			<input type="hidden" name="longitude" id="longitude" />
-			<input type="hidden" name="unit" value="' . $unit . '" id="unit" />
-			<button type="submit" id="wpslsubmit">Search</button>
-		</div>
-		</form>
-	<div id="locatormap"></div>
-	<div id="locatorresults" class="loading"></div>';
-	if ( get_option('wpsl_google_api_key') ){
-		echo '<script src="http://maps.google.com/maps/api/js?key=' . get_option('wpsl_google_api_key') . '&sensor=false"></script>';
-	} else {
-		echo '<script src="http://maps.google.com/maps/api/js?sensor=false"></script>';
+	private function set_localized_strings()
+	{
+		$this->distance = __('Distance', 'wpsimplelocator');
+		$this->zip = __('Zip/Postal Code', 'wpsimplelocator');
 	}
-	return $output;
+
+	private function set_api_key()
+	{
+		$this->maps_api = get_option('wpsl_google_api_key');
+	}
+
+	public function wp_simple_locator()
+	{	
+		include( dirname( dirname(__FILE__) ) . '/views/ajax-form.php');
+		return $output;
 	}
 
 }

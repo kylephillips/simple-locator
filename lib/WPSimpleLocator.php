@@ -9,7 +9,7 @@ require_once('dependencies.php');
 /**
 * Primary Plugin Class
 */
-class SimpleLocator {
+class WPSimpleLocator {
 
 	/**
 	* Plugin Version
@@ -19,7 +19,7 @@ class SimpleLocator {
 
 	function __construct()
 	{
-		$this->version = '1.01';
+		$this->version = '1.02';
 		$this->set_version();
 		$this->init();
 		$this->form_action();

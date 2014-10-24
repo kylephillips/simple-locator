@@ -1,26 +1,44 @@
-
 // Geocode the address on submit
-function geocodeAddress(address){
-   geocoder = new google.maps.Geocoder();
-		
-	geocoder.geocode({
-		'address' : address
-	}, function(results, status){
-		if ( status == google.maps.GeocoderStatus.OK ){
-			
-			var latitude = results[0].geometry.location.lat();
-			var longitude = results[0].geometry.location.lng();
-			
-			jQuery('#wpsl_latitude').val(latitude);
-			jQuery('#wpsl_longitude').val(longitude);
-			
-			jQuery('#publish').unbind('click').click();
-
-		} else {
-			alert('Google Maps could not geocode this address.');
-		}
+jQuery(function($){
+	var form = $("form[name='post']");
+	$(form).find("#publish").on('click', function(e){
+		e.preventDefault();
+		var streetaddress = $('#wpsl_address').val();
+		var city = $('#wpsl_city').val();
+		var state = $('#wpsl_state').val();
+		var zip = $('#wpsl_zip').val();
+		var address = streetaddress + ' ' + city + ' ' + state + ' ' + zip;
+		geocodeAddress(address);
 	});
-}
+
+	function geocodeAddress(address){
+		geocoder = new google.maps.Geocoder();
+			
+		geocoder.geocode({
+			'address' : address
+		}, 
+		function(results, status){
+			if ( status == google.maps.GeocoderStatus.OK ){
+				
+				var latitude = results[0].geometry.location.lat();
+				var longitude = results[0].geometry.location.lng();
+				
+				$('#wpsl_latitude').val(latitude);
+				$('#wpsl_longitude').val(longitude);
+				
+				$('#publish').unbind('click').click();
+
+			} else {
+				alert('Google Maps could not geocode this address.');
+			}
+		});
+	}
+
+	$(document).ready(function(){
+		checkMapStatus();
+	});
+}); // jQuery
+
 
 // Check if post has geocode info saved
 function checkMapStatus(){

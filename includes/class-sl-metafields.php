@@ -4,22 +4,27 @@
 */
 class SL_MetaFields {
 
+	/**
+	* Meta Data
+	*/
+	private $meta;
+
 	function __construct()
 	{
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ));
-		add_action( 'save_post', array($this, 'meta_box_save' ));
+		add_action( 'add_meta_boxes', array( $this, 'metaBox' ));
+		add_action( 'save_post', array($this, 'saveLocation' ));
 	}
 
 
 	/**
 	* Register the Meta Box
 	*/
-	public function add_meta_box() 
+	public function metaBox() 
 	{
     	add_meta_box( 
     		'wpsl-meta-box', 
     		'Location Information', 
-    		array($this, 'meta_fields'), 
+    		array($this, 'fields'), 
     		'location', 
     		'normal', 
     		'high' 
@@ -30,20 +35,28 @@ class SL_MetaFields {
 	/**
 	* Meta Boxes for Output
 	*/
-	public function meta_fields($post)
+	public function fields($post)
 	{
-		// Set field values
-	    wp_nonce_field( 'my_wpsl_meta_box_nonce', 'wpsl_meta_box_nonce' ); 
-		$latitude = get_post_meta( $post->ID, 'wpsl_latitude', true );
-		$longitude = get_post_meta( $post->ID, 'wpsl_longitude', true );
-		$address = get_post_meta( $post->ID, 'wpsl_address', true );
-		$city = get_post_meta( $post->ID, 'wpsl_city', true );
-		$state = get_post_meta( $post->ID, 'wpsl_state', true );
-		$zip = get_post_meta( $post->ID, 'wpsl_zip', true );
-		$phone = get_post_meta( $post->ID, 'wpsl_phone', true );
-		$website = get_post_meta( $post->ID, 'wpsl_website', true );
-		$additionalinfo = get_post_meta( $post->ID, 'wpsl_additionalinfo', true );
+		wp_nonce_field( 'my_wpsl_meta_box_nonce', 'wpsl_meta_box_nonce' ); 
+		$this->setData($post);
 		include( dirname(dirname(__FILE__)) . '/views/location-meta.php' );
+	}
+
+
+	/**
+	* Set the Field Data
+	*/
+	private function setData($post)
+	{
+		$this->meta['latitude'] = get_post_meta( $post->ID, 'wpsl_latitude', true );
+		$this->meta['longitude'] = get_post_meta( $post->ID, 'wpsl_longitude', true );
+		$this->meta['address'] = get_post_meta( $post->ID, 'wpsl_address', true );
+		$this->meta['city'] = get_post_meta( $post->ID, 'wpsl_city', true );
+		$this->meta['state'] = get_post_meta( $post->ID, 'wpsl_state', true );
+		$this->meta['zip'] = get_post_meta( $post->ID, 'wpsl_zip', true );
+		$this->meta['phone'] = get_post_meta( $post->ID, 'wpsl_phone', true );
+		$this->meta['website'] = get_post_meta( $post->ID, 'wpsl_website', true );
+		$this->meta['additionalinfo'] = get_post_meta( $post->ID, 'wpsl_additionalinfo', true );
 	}
 
 
@@ -51,7 +64,7 @@ class SL_MetaFields {
 	/**
 	* Save the custom post meta
 	*/
-	public function meta_box_save( $post_id ) 
+	public function saveLocation( $post_id ) 
 	{
 		if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
 

@@ -1,17 +1,41 @@
-// Geocode the address on submit
 jQuery(function($){
+
+	/**
+	* ------------------------------------------------------
+	* Location Post Type Entry Map Functions
+	* ------------------------------------------------------
+	*/
+
+	/**
+	* Geocode Address when saving Location Posts
+	*/
 	var form = $("form[name='post']");
 	$(form).find("#publish").on('click', function(e){
 		e.preventDefault();
+		var address = formatAddress();
+		googleGeocodeAddress(address);
+	});
+
+
+	/**
+	* Format the provided address to submit for geocoding
+	*/
+	function formatAddress()
+	{
 		var streetaddress = $('#wpsl_address').val();
 		var city = $('#wpsl_city').val();
 		var state = $('#wpsl_state').val();
 		var zip = $('#wpsl_zip').val();
 		var address = streetaddress + ' ' + city + ' ' + state + ' ' + zip;
-		geocodeAddress(address);
-	});
+		return address;
+	}
 
-	function geocodeAddress(address){
+
+	/**
+	* Submit the address to Google for Geocoding
+	*/
+	function googleGeocodeAddress(address)
+	{
 		geocoder = new google.maps.Geocoder();
 			
 		geocoder.geocode({
@@ -19,57 +43,73 @@ jQuery(function($){
 		}, 
 		function(results, status){
 			if ( status == google.maps.GeocoderStatus.OK ){
-				
-				var latitude = results[0].geometry.location.lat();
-				var longitude = results[0].geometry.location.lng();
-				
-				$('#wpsl_latitude').val(latitude);
-				$('#wpsl_longitude').val(longitude);
-				
+				var lat = results[0].geometry.location.lat();
+				var lng = results[0].geometry.location.lng();
+				setFormCoordinates(lat, lng);
 				$('#publish').unbind('click').click();
-
 			} else {
-				alert('Google Maps could not geocode this address.');
+				alert('The address could not be located.');
 			}
 		});
 	}
 
+
+	/**
+	* Set the Lat & Lng Form Fields
+	*/
+	function setFormCoordinates(lat, lng)
+	{
+		$('#wpsl_latitude').val(lat);
+		$('#wpsl_longitude').val(lng);
+	}
+
+
+	/**
+	* Check if the Location has Geocode Saved
+	*/
 	$(document).ready(function(){
 		checkMapStatus();
 	});
-}); // jQuery
-
-
-// Check if post has geocode info saved
-function checkMapStatus(){
-	var lat = jQuery('#wpsl_latitude').val();
-	var lng = jQuery('#wpsl_longitude').val();
-	if ( (lat !== "") && (lng !== "") ){
-		// Show the hidden map div
-		jQuery('#wpslmap').show();
-		// Load the GMap
-		loadMap(lat, lng);
+	function checkMapStatus()
+	{
+		var lat = $('#wpsl_latitude').val();
+		var lng = $('#wpsl_longitude').val();
+		if ( (lat !== "") && (lng !== "") ){
+			$('#wpslmap').show();
+			loadGoogleMap(lat, lng);
+		}
 	}
-}
 
 
-// Load the Google Map in Admin View
-function loadMap(lat, lng){
-    var map = new google.maps.Map(document.getElementById('wpslmap'), {
-      zoom: 14,
-      center: new google.maps.LatLng(lat,lng),
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-	  mapTypeControl: false,
-	  scaleControl : false,
-    });
+	/*
+	* Load the Google Map in Admin View
+	*/
+	function loadGoogleMap(lat, lng){
+		var map = new google.maps.Map(document.getElementById('wpslmap'), {
+			zoom: 14,
+			center: new google.maps.LatLng(lat,lng),
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			mapTypeControl: false,
+			scaleControl : false,
+		});
 
-    var marker, i;
+		var marker, i;
 
-	marker = new google.maps.Marker({
-		position: new google.maps.LatLng(lat, lng),
-		map: map
-	});
-}
+		marker = new google.maps.Marker({
+			position: new google.maps.LatLng(lat, lng),
+			map: map
+		});
+	}
+
+
+	/**
+	* ------------------------------------------------------
+	* Settings Page
+	* ------------------------------------------------------
+	*/
+
+
+}); // jQuery
 
 
 /**

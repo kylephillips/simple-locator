@@ -17,7 +17,7 @@ class SL_SimpleLocator {
 		$this->init();
 		$this->formActions();
 		add_filter( 'plugin_action_links_' . 'wp-simple-locator/simplelocator.php', array($this, 'settingsLink' ) );
-		add_action('init', array($this, 'localization') );
+		add_action( 'init', array($this, 'localization') );
 	}
 
 

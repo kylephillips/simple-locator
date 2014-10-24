@@ -15,9 +15,9 @@ class SL_SimpleLocator {
 	function __construct()
 	{
 		$this->init();
-		$this->form_action();
-		add_filter( 'plugin_action_links_' . 'wp-simple-locator/simplelocator.php', array($this, 'settings_link' ) );
-		add_action('init', array($this, 'add_localization') );
+		$this->formActions();
+		add_filter( 'plugin_action_links_' . 'wp-simple-locator/simplelocator.php', array($this, 'settingsLink' ) );
+		add_action('init', array($this, 'localization') );
 	}
 
 
@@ -36,9 +36,9 @@ class SL_SimpleLocator {
 
 
 	/**
-	* Set Form Action & Handler
+	* Set Form Actions & Handlers
 	*/
-	public function form_action()
+	public function formActions()
 	{
 		if ( is_admin() ) {
 			add_action( 'wp_ajax_nopriv_locate', 'wpsl_form_handler' );
@@ -50,7 +50,7 @@ class SL_SimpleLocator {
 	/**
 	* Add a link to the settings on the plugin page
 	*/
-	public function settings_link($links)
+	public function settingsLink($links)
 	{ 
   		$settings_link = '<a href="options-general.php?page=wp_simple_locator">Settings</a>'; 
   		array_unshift($links, $settings_link); 
@@ -59,11 +59,11 @@ class SL_SimpleLocator {
 
 
 	/**
-	* Localization Domain
+	* Localization Text Domain
 	*/
-	public function add_localization()
+	public function localization()
 	{
-		load_plugin_textdomain('wpsimplelocator', false, 'wpsimplelocator' . '/languages' );
+		load_plugin_textdomain('wpsimplelocator', false, 'wp-simple-locator' . '/languages' );
 	}
 
 }

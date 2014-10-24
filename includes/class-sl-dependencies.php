@@ -12,42 +12,77 @@ class SL_Dependencies {
 	public function __construct()
 	{
 		$this->plugin_dir = plugins_url() . '/wp-simple-locator';
-		add_action( 'admin_head', array( $this, 'admin_styles' ));
+		add_action( 'admin_enqueue_scripts', array( $this, 'adminStyles' ));
+		add_action( 'admin_enqueue_scripts', array( $this, 'adminScripts' ));
+		add_action( 'wp_enqueue_scripts', array( $this, 'styles' ));
 		add_action( 'wp_enqueue_scripts', array( $this, 'scripts' ));
-		add_action( 'wp_print_scripts', array( $this, 'deregister_wpml_script' ));
 	}
 
 
 	/**
-	* Add the necessary styles & scripts
+	* Admin Styles
 	*/
-	public function admin_styles($page)
+	public function adminStyles()
 	{
-		echo '<link rel="stylesheet" href="' . $this->plugin_dir . '/assets/css/wpsl_admin_styles.css' . '" type="text/css">';
-		echo "\n";
-		echo '<script src="' . $this->plugin_dir . '/assets/js/wpsl_admin.js"></script>';
-		echo "\n";
-		if ( get_option('wpsl_google_api_key') ){
-			echo '<script src="http://maps.google.com/maps/api/js?key=' . get_option('wpsl_google_api_key') . '&sensor=false"></script>';
-		} else {
-			echo '<script src="http://maps.google.com/maps/api/js?sensor=false"></script>';
-		}
+		wp_enqueue_style(
+			'simplelocator', 
+			$this->plugin_dir . '/assets/css/simple-locator-admin.css', 
+			array(), 
+			'1.0'
+		);
 	}
 
 
 	/**
-	* Enqueue the front-end scripts & styles
+	* Admin Scripts
+	*/
+	public function adminScripts()
+	{
+		$maps_url = 'http://maps.google.com/maps/api/js?';
+		$maps_url .= ( get_option('wpsl_google_api_key') ) ? 'key=' . get_option('wpsl_google_api_key') . '&' : '';
+		$maps_url .= 'sensor=false';
+
+		wp_enqueue_script(
+			'google-maps', 
+			$maps_url
+		);
+
+		wp_enqueue_script(
+			'simple-locator-admin', 
+			$this->plugin_dir . '/assets/js/simple-locator-admin.js', 
+			array('jquery'), 
+			'1.0'
+		);
+	}
+
+
+	/**
+	* Front End Styles
+	*/
+	public function styles()
+	{
+		wp_enqueue_style(
+			'simple-locator', 
+			$this->plugin_dir . '/assets/css/simple-locator.css', 
+			'', 
+			'1.0'
+		);
+	}
+
+
+	/**
+	* Front End Scripts
 	*/
 	public function scripts()
 	{
 		wp_enqueue_script(
-			'wpsl-locator', 
-			$this->plugin_dir . '/assets/js/wpsl-locator.js', 
+			'simple-locator', 
+			$this->plugin_dir . '/assets/js/simple-locator.js', 
 			'jquery', '1.0', 
 			true
 		);
 		wp_localize_script( 
-			'wpsl-locator', 
+			'simple-locator', 
 			'wpsl_locator', 
 			array( 
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
@@ -58,26 +93,9 @@ class SL_Dependencies {
 				'locations' => __('locations', 'wpsimplelocator'),
 				'found_within' => __('found within', 'wpsimplelocator'),
 				'phone' => __('Phone', 'wpsimplelocator')
-		));
-		wp_enqueue_style(
-			'simple-locator', 
-			plugins_url() . '/wpsimplelocator/assets/css/simple-locator.css', 
-			'', 
-			'1.0'
+			)
 		);
 	}
 
-
-	/**
-	* Deregister WPMLs script on counselor edit screen to fix conflict bug
-	*/
-	public function deregister_wpml_script()
-	{
-	  global $post_type;
-	  if ( 'location' == $post_type ){
-	    wp_deregister_script('sitepress-post-edit');
-	    wp_dequeue_script('sitepress-post-edit');
-	  }
-	}
 
 }

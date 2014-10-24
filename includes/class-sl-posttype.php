@@ -1,12 +1,12 @@
 <?php
 /**
-* The Locations Post Type
+* Locations Post Type
 */
 class SL_PostType {
 
 	function __construct()
 	{
-		add_action( 'init', array( $this, 'register_post_type') );
+		add_action( 'init', array( $this, 'register') );
 		add_filter( 'manage_location_posts_columns', array($this,'locations_table_head'));
 		add_action( 'manage_location_posts_custom_column', array($this, 'locations_table_columns'), 10, 2);
 	}
@@ -15,14 +15,8 @@ class SL_PostType {
 	/**
 	* Register the Location Post Type
 	*/
-	public function register_post_type()
+	public function register()
 	{
-		if ( $this->check_post_type() ){
-			$show_ui = false;
-		} else {
-			$show_ui = true;
-		}
-
 		$labels = array(
 			'name' => __('Locations'),  
 		    'singular_name' => __('Location'),
@@ -33,7 +27,7 @@ class SL_PostType {
 		$args = array(
 		 	'labels' => $labels,
 		    'public' => true,  
-		    'show_ui' => $show_ui,
+		    'show_ui' => $this->check_post_type(),
 			'menu_position' => 5,
 		    'capability_type' => 'post',  
 		    'hierarchical' => false,  
@@ -42,20 +36,15 @@ class SL_PostType {
 		    'rewrite' => array('slug' => 'location', 'with_front' => false)
 		);
 		register_post_type( 'location' , $args );
-
 	}
 
 
 	/**
 	* Check the post type option
-	* If the option is not set to the location type, remove it from the menu
 	*/
-	public function check_post_type()
+	private function check_post_type()
 	{
-		$pt = get_option('wpsl_post_type');
-		if ( $pt !== 'location' ){
-			return true;
-		}
+		return ( get_option('wpsl_post_type') == 'location' ) ? true : false;
 	}
 
 

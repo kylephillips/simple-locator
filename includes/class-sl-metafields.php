@@ -9,10 +9,35 @@ class SL_MetaFields {
 	*/
 	private $meta;
 
+	/**
+	* Fields
+	*/
+	public $fields;
+
 	function __construct()
 	{
+		$this->setFields();
 		add_action( 'add_meta_boxes', array( $this, 'metaBox' ));
-		add_action( 'save_post', array($this, 'saveLocation' ));
+		add_action( 'save_post', array($this, 'savePost' ));
+	}
+
+
+	/**
+	* Set the Fields for use in custom meta
+	*/
+	private function setFields()
+	{
+		$this->fields = array(
+			'latitude' => 'wpsl_latitude',
+			'longitude' => 'wpsl_longitude',
+			'address' => 'wpsl_address',
+			'city' => 'wpsl_city',
+			'state' => 'wpsl_state',
+			'zip' => 'wpsl_zip',
+			'phone' => 'wpsl_phone',
+			'website' => 'wpsl_website',
+			'additionalinfo' => 'wpsl_additionalinfo'
+		);
 	}
 
 
@@ -24,7 +49,7 @@ class SL_MetaFields {
     	add_meta_box( 
     		'wpsl-meta-box', 
     		'Location Information', 
-    		array($this, 'fields'), 
+    		array($this, 'displayMeta'), 
     		'location', 
     		'normal', 
     		'high' 
@@ -35,10 +60,10 @@ class SL_MetaFields {
 	/**
 	* Meta Boxes for Output
 	*/
-	public function fields($post)
+	public function displayMeta($post)
 	{
-		wp_nonce_field( 'my_wpsl_meta_box_nonce', 'wpsl_meta_box_nonce' ); 
 		$this->setData($post);
+		wp_nonce_field( 'my_wpsl_meta_box_nonce', 'wpsl_meta_box_nonce' );
 		include( dirname(dirname(__FILE__)) . '/views/location-meta.php' );
 	}
 
@@ -48,65 +73,27 @@ class SL_MetaFields {
 	*/
 	private function setData($post)
 	{
-		$this->meta['latitude'] = get_post_meta( $post->ID, 'wpsl_latitude', true );
-		$this->meta['longitude'] = get_post_meta( $post->ID, 'wpsl_longitude', true );
-		$this->meta['address'] = get_post_meta( $post->ID, 'wpsl_address', true );
-		$this->meta['city'] = get_post_meta( $post->ID, 'wpsl_city', true );
-		$this->meta['state'] = get_post_meta( $post->ID, 'wpsl_state', true );
-		$this->meta['zip'] = get_post_meta( $post->ID, 'wpsl_zip', true );
-		$this->meta['phone'] = get_post_meta( $post->ID, 'wpsl_phone', true );
-		$this->meta['website'] = get_post_meta( $post->ID, 'wpsl_website', true );
-		$this->meta['additionalinfo'] = get_post_meta( $post->ID, 'wpsl_additionalinfo', true );
+		foreach ( $this->fields as $key=>$field )
+		{
+			$this->meta[$key] = get_post_meta( $post->ID, $field, true );
+		}
 	}
-
 
 
 	/**
 	* Save the custom post meta
 	*/
-	public function saveLocation( $post_id ) 
+	public function savePost( $post_id ) 
 	{
 		if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
-
-		// Verify the nonce & permissions.
 		if( !isset( $_POST['wpsl_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['wpsl_meta_box_nonce'], 'my_wpsl_meta_box_nonce' ) ) return;
 		if( !current_user_can( 'edit_post' ) ) return;
 
-	    // Save the address
-		if( isset( $_POST['wpsl_address'] ) )
-			update_post_meta( $post_id, 'wpsl_address', esc_attr( $_POST['wpsl_address'] ) );
-
-	    // Save the city
-		if( isset( $_POST['wpsl_city'] ) )
-			update_post_meta( $post_id, 'wpsl_city', esc_attr( $_POST['wpsl_city'] ) );
-
-		// Save the state
-		if( isset( $_POST['wpsl_state'] ) )
-			update_post_meta( $post_id, 'wpsl_state', esc_attr( $_POST['wpsl_state'] ) );
-
-		// Save the zip
-		if( isset( $_POST['wpsl_zip'] ) )
-			update_post_meta( $post_id, 'wpsl_zip', esc_attr( $_POST['wpsl_zip'] ) );
-
-		// Save the latitude
-		if( isset( $_POST['wpsl_latitude'] ) )
-			update_post_meta( $post_id, 'wpsl_latitude', esc_attr( $_POST['wpsl_latitude'] ) );
-
-		// Save the longitude
-		if( isset( $_POST['wpsl_longitude'] ) )
-			update_post_meta( $post_id, 'wpsl_longitude', esc_attr( $_POST['wpsl_longitude'] ) );
-
-		// Save the phone
-		if( isset( $_POST['wpsl_phone'] ) )
-			update_post_meta( $post_id, 'wpsl_phone', esc_attr( $_POST['wpsl_phone'] ) );
-
-		// Save the website
-		if( isset( $_POST['wpsl_website'] ) )
-			update_post_meta( $post_id, 'wpsl_website', esc_attr( $_POST['wpsl_website'] ) );
-
-		// Save the additional info
-		if( isset( $_POST['wpsl_additionalinfo'] ) )
-			update_post_meta( $post_id, 'wpsl_additionalinfo', esc_attr( $_POST['wpsl_additionalinfo'] ) );
+		// Save Custom Fields
+		foreach ( $this->fields as $key => $field )
+		{
+			if ( isset( $_POST[$field] ) ) update_post_meta( $post_id, $field, esc_attr( $_POST[$field] ) );
+		}
 	} 
 
 }

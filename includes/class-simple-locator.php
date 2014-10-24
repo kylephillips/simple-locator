@@ -17,7 +17,7 @@ class SL_SimpleLocator {
 		$this->init();
 		$this->formActions();
 		add_filter( 'plugin_action_links_' . 'wp-simple-locator/simplelocator.php', array($this, 'settingsLink' ) );
-		add_action( 'init', array($this, 'localization') );
+		add_action( 'init', array($this, 'localize') );
 	}
 
 
@@ -61,7 +61,7 @@ class SL_SimpleLocator {
 	/**
 	* Localization Text Domain
 	*/
-	public function localization()
+	public function localize()
 	{
 		load_plugin_textdomain('wpsimplelocator', false, 'wp-simple-locator' . '/languages' );
 	}

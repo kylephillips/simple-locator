@@ -1,15 +1,15 @@
 <?php
-require_once('shortcode.php');
-require_once('form-handler.php');
-require_once('settings.php');
-require_once('meta-fields.php');
-require_once('post-type.php');
-require_once('dependencies.php');
+require_once('class-sl-shortcode.php');
+require_once('class-sl-formhandler.php');
+require_once('class-sl-settings.php');
+require_once('class-sl-metafields.php');
+require_once('class-sl-posttype.php');
+require_once('class-sl-dependencies.php');
 
 /**
 * Primary Plugin Class
 */
-class WPSimpleLocator {
+class SL_SimpleLocator {
 
 	/**
 	* Plugin Version
@@ -19,7 +19,7 @@ class WPSimpleLocator {
 
 	function __construct()
 	{
-		$this->version = '1.02';
+		$this->version = '1.0';
 		$this->set_version();
 		$this->init();
 		$this->form_action();
@@ -34,11 +34,11 @@ class WPSimpleLocator {
 	*/
 	public function init()
 	{
-		$post_type = new WPSLPostType;
-		$settings = new WPSimpleLocatorSettings;
-		$meta_fields = new WPSLMetaFields;
-		$shortcode = new WPSLShortcode;
-		$dependencies = new WPSLDependencies;
+		$dependencies = new SL_Dependencies;
+		$post_type = new SL_PostType;
+		$meta_fields = new SL_MetaFields;
+		$settings = new SL_Settings;
+		$shortcode = new SL_Shortcode;
 	}
 
 

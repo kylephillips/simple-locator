@@ -5,14 +5,14 @@
 */
 function wpsl_form_handler()
 {
-	$form = new WPSimpleLocatorForm;
+	$form = new SL_Handler;
 }
 
 
 /**
 * Processes the form data and return results
 */
-class WPSimpleLocatorForm {
+class SL_Handler {
 
 	/**
 	* Form Data

@@ -2,7 +2,7 @@
 /**
 * The Locations Post Type
 */
-class WPSLPostType {
+class SL_PostType {
 
 	function __construct()
 	{

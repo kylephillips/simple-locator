@@ -2,7 +2,7 @@
 /**
 * Settings page
 */
-class WPSimpleLocatorSettings {
+class SL_Settings {
 
 	/**
 	* Selected Unit of Measurement

@@ -2,7 +2,7 @@
 /**
 * Custom Meta Fields
 */
-class WPSLMetaFields {
+class SL_MetaFields {
 
 	function __construct()
 	{

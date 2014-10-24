@@ -1,14 +1,20 @@
 <?php
 /**
-* Styles & Scripts required by plugin
+* Styles & Scripts required by Simple Locator
 */
-class WPSLDependencies {
+class SL_Dependencies {
 
-	function __construct()
+	/**
+	* Plugin Directory
+	*/
+	private $plugin_dir;
+
+	public function __construct()
 	{
-		add_action( 'admin_head', array($this, 'admin_styles'));
-		add_action( 'wp_enqueue_scripts', array($this, 'enqueueDependencies'));
-		add_action( 'wp_print_scripts', array($this, 'deregister_wpml_script'));
+		$this->plugin_dir = plugins_url() . '/wp-simple-locator';
+		add_action( 'admin_head', array( $this, 'admin_styles' ));
+		add_action( 'wp_enqueue_scripts', array( $this, 'scripts' ));
+		add_action( 'wp_print_scripts', array( $this, 'deregister_wpml_script' ));
 	}
 
 
@@ -17,10 +23,9 @@ class WPSLDependencies {
 	*/
 	public function admin_styles($page)
 	{
-		echo '<link rel="stylesheet" href="' . plugins_url() . '/wpsimplelocator/assets/css/wpsl_admin_styles.css' . '" type="text/css">';
+		echo '<link rel="stylesheet" href="' . $this->plugin_dir . '/assets/css/wpsl_admin_styles.css' . '" type="text/css">';
 		echo "\n";
-		echo '<script src="' . plugins_url() . '/wpsimplelocator
-		/assets/js/wpsl_admin.js"></script>';
+		echo '<script src="' . $this->plugin_dir . '/assets/js/wpsl_admin.js"></script>';
 		echo "\n";
 		if ( get_option('wpsl_google_api_key') ){
 			echo '<script src="http://maps.google.com/maps/api/js?key=' . get_option('wpsl_google_api_key') . '&sensor=false"></script>';
@@ -33,11 +38,11 @@ class WPSLDependencies {
 	/**
 	* Enqueue the front-end scripts & styles
 	*/
-	public function enqueueDependencies()
+	public function scripts()
 	{
 		wp_enqueue_script(
 			'wpsl-locator', 
-			plugins_url() . '/wpsimplelocator/assets/js/wpsl-locator.js', 
+			$this->plugin_dir . '/assets/js/wpsl-locator.js', 
 			'jquery', '1.0', 
 			true
 		);

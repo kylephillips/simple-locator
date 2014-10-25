@@ -3,6 +3,8 @@ $output = "";
 if ( isset($widget_instance) ) {
 	$output .= '<div class="simple-locator-widget">';
 	$mapheight = $instance['map_height'];
+} else {
+	$mapheight = $this->options['mapheight'];
 }
 $output .= '
 <div class="simple-locator-form">
@@ -25,7 +27,7 @@ $output .= '
 		<button type="submit" class="wpslsubmit">Search</button>
 	</div>
 	</form>';
-	
+
 $output .= ( isset($mapheight) && $mapheight !== "" ) ? '<div class="wpsl-map" style="height:' . $mapheight . 'px;"></div>' : '<div class="wpsl-map"></div>';
 
 $output .= '

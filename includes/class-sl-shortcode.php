@@ -45,7 +45,8 @@ class WPSL_Shortcode {
 	private function setOptions($options)
 	{
 		$this->options = shortcode_atts(array(
-			'distances' => '5,10,20,50,100'
+			'distances' => '5,10,20,50,100',
+			'mapheight' => '250'
 		), $options);
 	}
 

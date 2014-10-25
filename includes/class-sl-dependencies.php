@@ -38,14 +38,8 @@ class WPSL_Dependencies {
 	*/
 	public function adminScripts()
 	{
-		$maps_url = 'http://maps.google.com/maps/api/js?';
-		$maps_url .= ( get_option('wpsl_google_api_key') ) ? 'key=' . get_option('wpsl_google_api_key') . '&' : '';
-		$maps_url .= 'sensor=false';
-
-		wp_enqueue_script(
-			'google-maps', 
-			$maps_url
-		);
+		$this->addGoogleMaps();
+		wp_enqueue_script('google-maps');
 
 		wp_enqueue_script(
 			'simple-locator-admin', 
@@ -75,7 +69,9 @@ class WPSL_Dependencies {
 	*/
 	public function scripts()
 	{
-		wp_enqueue_script(
+		$this->addGoogleMaps();
+
+		wp_register_script(
 			'simple-locator', 
 			$this->plugin_dir . '/assets/js/simple-locator.js', 
 			'jquery', '1.0', 
@@ -94,6 +90,23 @@ class WPSL_Dependencies {
 				'found_within' => __('found within', 'wpsimplelocator'),
 				'phone' => __('Phone', 'wpsimplelocator')
 			)
+		);
+	}
+
+
+	/**
+	* Register the Google Maps Script
+	* Only Enqueue when needed
+	*/
+	private function addGoogleMaps()
+	{
+		$maps_url = 'http://maps.google.com/maps/api/js?';
+		$maps_url .= ( get_option('wpsl_google_api_key') ) ? 'key=' . get_option('wpsl_google_api_key') . '&' : '';
+		$maps_url .= 'sensor=false';
+
+		wp_register_script(
+			'google-maps', 
+			$maps_url
 		);
 	}
 

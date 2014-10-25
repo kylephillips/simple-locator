@@ -8,12 +8,6 @@ class WPSL_Shortcode {
 	protected $unit;
 
 	/**
-	* Localized strings
-	*/
-	protected $distance;
-	protected $zip;
-
-	/**
 	* Maps API Key
 	*/
 	protected $maps_api;
@@ -21,34 +15,33 @@ class WPSL_Shortcode {
 
 	public function __construct()
 	{
-		$this->set_unit();
-		$this->set_localized_strings();
-		$this->set_api_key();
-		add_shortcode('wp_simple_locator', array($this, 'wp_simple_locator'));
+		$this->setUnit();
+		add_shortcode('wp_simple_locator', array($this, 'renderView'));
 	}
 
-	private function set_unit()
+	/**
+	* Set the unit of measurement
+	*/
+	private function setUnit()
 	{
-		if ( get_option('wpsl_measurement_unit') ){
-			$this->unit = get_option('wpsl_measurement_unit');
-		} else {
-			$this->unit = 'miles';
-		}
+		$this->unit = ( get_option('wpsl_measurement_unit') ) ? get_option('wpsl_measurement_unit') : 'miles';
 	}
 
-	private function set_localized_strings()
+	/**
+	* Enqueue the Required Scripts
+	*/
+	private function enqueueScripts()
 	{
-		$this->distance = __('Distance', 'wpsimplelocator');
-		$this->zip = __('Zip/Postal Code', 'wpsimplelocator');
+		wp_enqueue_script('google-maps');
+		wp_enqueue_script('simple-locator');
 	}
 
-	private function set_api_key()
-	{
-		$this->maps_api = get_option('wpsl_google_api_key');
-	}
-
-	public function wp_simple_locator()
+	/**
+	* The View
+	*/
+	public function renderView()
 	{	
+		$this->enqueueScripts();
 		include( dirname( dirname(__FILE__) ) . '/views/ajax-form.php');
 		return $output;
 	}

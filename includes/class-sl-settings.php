@@ -77,12 +77,12 @@ class WPSL_Settings {
 	*/
 	public function registerSettings()
 	{
-		register_setting( 'wp-simple-locator', 'wpsl_google_api_key' );
-		register_setting( 'wp-simple-locator', 'wpsl_measurement_unit' );
-		register_setting( 'wp-simple-locator', 'wpsl_post_type' );
-		register_setting( 'wp-simple-locator', 'wpsl_field_type' );
-		register_setting( 'wp-simple-locator', 'wpsl_lat_field' );
-		register_setting( 'wp-simple-locator', 'wpsl_lng_field' );
+		register_setting( 'wpsimplelocator-general', 'wpsl_google_api_key' );
+		register_setting( 'wpsimplelocator-general', 'wpsl_measurement_unit' );
+		register_setting( 'wpsimplelocator-posttype', 'wpsl_post_type' );
+		register_setting( 'wpsimplelocator-posttype', 'wpsl_field_type' );
+		register_setting( 'wpsimplelocator-posttype', 'wpsl_lat_field' );
+		register_setting( 'wpsimplelocator-posttype', 'wpsl_lng_field' );
 	}
 
 
@@ -91,6 +91,7 @@ class WPSL_Settings {
 	*/
 	public function settingsPage()
 	{
+		$tab = ( isset($_GET['tab']) ) ? $_GET['tab'] : 'general';
 		include( dirname( dirname(__FILE__) ) . '/views/settings.php');
 	}
 

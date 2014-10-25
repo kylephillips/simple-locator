@@ -42,7 +42,7 @@ class WPSL_Shortcode {
 	public function renderView()
 	{	
 		$this->enqueueScripts();
-		include( dirname( dirname(__FILE__) ) . '/views/ajax-form.php');
+		include( dirname( dirname(__FILE__) ) . '/views/simple-locator-form.php');
 		return $output;
 	}
 

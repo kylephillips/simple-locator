@@ -38,15 +38,17 @@ class WPSL_Dependencies {
 	*/
 	public function adminScripts()
 	{
-		$this->addGoogleMaps();
-		wp_enqueue_script('google-maps');
-
-		wp_enqueue_script(
-			'simple-locator-admin', 
-			$this->plugin_dir . '/assets/js/simple-locator-admin.js', 
-			array('jquery'), 
-			'1.0'
-		);
+		$screen = get_current_screen();
+		if ( $screen->post_type == get_option('wpsl_post_type') ) {
+			$this->addGoogleMaps();
+			wp_enqueue_script('google-maps');
+			wp_enqueue_script(
+				'simple-locator-admin', 
+				$this->plugin_dir . '/assets/js/simple-locator-admin.js', 
+				array('jquery'), 
+				'1.0'
+			);
+		}
 	}
 
 

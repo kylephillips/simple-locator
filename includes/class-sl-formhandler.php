@@ -184,19 +184,19 @@ class WPSL_Handler {
 	*/
 	private function setResults($results)
 	{
-		foreach ( $results as $qr ) :
+		foreach ( $results as $result ) :
 			$location = array(
-				'title' => $qr->title,
-				'permalink' => get_permalink($qr->id),
-				'distance' => round($qr->distance, 2),
-				'address' => $qr->address,
-				'city' => $qr->city,
-				'state' => $qr->state,
-				'zip' => $qr->zip,
-				'phone' => $qr->phone,
-				'website' => $qr->website,
-				'latitude' => $qr->latitude,
-				'longitude' => $qr->longitude
+				'title' => $result->title,
+				'permalink' => get_permalink($result->id),
+				'distance' => round($result->distance, 2),
+				'address' => $result->address,
+				'city' => $result->city,
+				'state' => $result->state,
+				'zip' => $result->zip,
+				'phone' => $result->phone,
+				'website' => $result->website,
+				'latitude' => $result->latitude,
+				'longitude' => $result->longitude
 			);
 			$this->results[] = $location;
 		endforeach;

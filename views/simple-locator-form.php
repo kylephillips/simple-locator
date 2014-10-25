@@ -8,14 +8,9 @@ $output = '
 	</div>
 	<div class="distance">
 		<label for="distance">' . __('Distance', 'wpsimplelocator'). '</label>
-		<select name="distance" id="distance">
-			<option value="5">5 ' . $this->unit . '</option>
-			<option value="10">10 ' . $this->unit . '</option>
-			<option value="20">20 ' . $this->unit . '</option>
-			<option value="30">30 ' . $this->unit . '</option>
-			<option value="40">40 ' . $this->unit . '</option>
-			<option value="50">50 ' . $this->unit . '</option>
-		</select>
+		<select name="distance" id="distance">' .
+			$this->distanceOptions() . 
+		'</select>
 	</div>
 	<div class="submit">
 		<input type="hidden" name="latitude" id="latitude" />

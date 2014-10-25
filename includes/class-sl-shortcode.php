@@ -5,12 +5,12 @@ class WPSL_Shortcode {
 	/**
 	* Unit of Measurement
 	*/
-	protected $unit;
+	private $unit;
 
 	/**
-	* Maps API Key
+	* Shortcode Options
 	*/
-	protected $maps_api;
+	public $options;
 
 
 	public function __construct()
@@ -19,6 +19,7 @@ class WPSL_Shortcode {
 		add_shortcode('wp_simple_locator', array($this, 'renderView'));
 	}
 
+
 	/**
 	* Set the unit of measurement
 	*/
@@ -26,6 +27,7 @@ class WPSL_Shortcode {
 	{
 		$this->unit = ( get_option('wpsl_measurement_unit') ) ? get_option('wpsl_measurement_unit') : 'miles';
 	}
+
 
 	/**
 	* Enqueue the Required Scripts
@@ -36,11 +38,39 @@ class WPSL_Shortcode {
 		wp_enqueue_script('simple-locator');
 	}
 
+
+	/**
+	* Shortcode Options
+	*/
+	private function setOptions($options)
+	{
+		$this->options = shortcode_atts(array(
+			'distances' => '5,10,20,50,100'
+		), $options);
+	}
+
+
+	/**
+	* Format Distances option as array & return a list of select options
+	*/
+	private function distanceOptions()
+	{
+		$this->options['distances'] = explode(',', $this->options['distances']);
+		$out = "";
+		foreach ( $this->options['distances'] as $distance ){
+			if ( !is_numeric($distance) ) continue;
+			$out .= '<option value="' . $distance . '">' . $distance . ' ' . $this->unit . '</option>';
+		}
+		return $out;
+	}
+
+
 	/**
 	* The View
 	*/
-	public function renderView()
+	public function renderView($options)
 	{	
+		$this->setOptions($options);
 		$this->enqueueScripts();
 		include( dirname( dirname(__FILE__) ) . '/views/simple-locator-form.php');
 		return $output;

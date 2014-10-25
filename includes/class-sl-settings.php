@@ -7,33 +7,67 @@ class WPSL_Settings {
 	/**
 	* Selected Unit of Measurement
 	*/
-	protected $unit;
+	private $unit;
 
 	/**
-	* Selected Field Type
+	* Selected Field Type (Custom vs Provided)
 	*/
-	protected $field_type;
+	private $field_type;
+
+	/**
+	* Currently Selected Post Type
+	*/
+	private $post_type;
 	
 
 	public function __construct()
 	{
-		$this->unit = get_option('wpsl_measurement_unit');
-		$this->field_type = $field_type = get_option('wpsl_field_type');
-		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-		add_action( 'admin_init', array($this, 'register_settings' ) );
+		$this->setUnit();
+		$this->setFieldType();
+		$this->setPostType();
+		add_action( 'admin_menu', array( $this, 'registerPage' ) );
+		add_action( 'admin_init', array($this, 'registerSettings' ) );
 	}
+
+
+	/**
+	* Set the Unit
+	*/
+	private function setUnit()
+	{
+		$this->unit = get_option('wpsl_measurement_unit');
+	}
+
+
+	/**
+	* Set the Field Type
+	*/
+	private function setFieldType()
+	{
+		$this->field_type = $field_type = get_option('wpsl_field_type');
+	}
+
+
+	/**
+	* Set the Selected Post Type
+	*/
+	private function setPostType()
+	{
+		$this->post_type = get_option('wpsl_post_type');
+	}
+
 
 	/**
 	* Add the admin menu item
 	*/
-	public function admin_menu()
+	public function registerPage()
 	{
 		add_options_page( 
 			'WP Simple Locator',
 			'Simple Locator',
 			'manage_options',
 			'wp_simple_locator', 
-			array( $this, 'settings_page' ) 
+			array( $this, 'settingsPage' ) 
 		);
 	}
 
@@ -41,7 +75,7 @@ class WPSL_Settings {
 	/**
 	* Register the settings
 	*/
-	public function register_settings()
+	public function registerSettings()
 	{
 		register_setting( 'wp-simple-locator', 'wpsl_google_api_key' );
 		register_setting( 'wp-simple-locator', 'wpsl_measurement_unit' );
@@ -51,10 +85,11 @@ class WPSL_Settings {
 		register_setting( 'wp-simple-locator', 'wpsl_lng_field' );
 	}
 
+
 	/**
-	* Add the Settings Page
+	* Display the Settings Page
 	*/
-	public function settings_page()
+	public function settingsPage()
 	{
 		include( dirname( dirname(__FILE__) ) . '/views/settings.php');
 	}
@@ -63,26 +98,15 @@ class WPSL_Settings {
 	/**
 	* Get all the post types
 	*/
-	private function get_post_types()
+	private function getPostTypes()
 	{
 		$types = get_post_types(array('public'=>true, 'publicly_queryable'=>true ), 'objects');
-		$current = get_option('wpsl_post_type');
-		$output = "";
-
-		foreach( $types as $type ){
-			$output .= '<option value="' . $type->name . '"';
-			if ( $type->name == $current ){
-				$output .= ' selected';
-			}
-			$output .= '>';
-			if ( $type->name == 'location' ){
-				$output .= 'Locations (Simple Locator Default)';
-			} else {
-				$output .= $type->labels->name;
-			}
-			$output .= '</option>';
+		$post_types = array();
+		foreach( $types as $key => $type ){
+			$post_types[$key]['name'] = $type->name;
+			$post_types[$key]['label'] = $type->labels->name;
 		}
-		return $output;
+		return $post_types;
 	}
 
 

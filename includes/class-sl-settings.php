@@ -2,7 +2,7 @@
 /**
 * Settings page
 */
-class SL_Settings {
+class WPSL_Settings {
 
 	/**
 	* Selected Unit of Measurement

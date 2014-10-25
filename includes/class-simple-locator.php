@@ -10,7 +10,7 @@ require_once('class-sl-dependencies.php');
 /**
 * Primary Plugin Class
 */
-class SL_SimpleLocator {
+class WPSL_SimpleLocator {
 
 	function __construct()
 	{
@@ -26,12 +26,12 @@ class SL_SimpleLocator {
 	*/
 	public function init()
 	{
-		new SL_Activation;
-		new SL_Dependencies;
-		new SL_PostType;
-		new SL_MetaFields;
-		new SL_Settings;
-		new SL_Shortcode;
+		new WPSL_Activation;
+		new WPSL_Dependencies;
+		new WPSL_PostType;
+		new WPSL_MetaFields;
+		new WPSL_Settings;
+		new WPSL_Shortcode;
 	}
 
 

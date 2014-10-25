@@ -2,7 +2,7 @@
 /**
 * Styles & Scripts required by Simple Locator
 */
-class SL_Dependencies {
+class WPSL_Dependencies {
 
 	/**
 	* Plugin Directory

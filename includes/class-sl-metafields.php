@@ -2,7 +2,7 @@
 /**
 * Custom Meta Fields
 */
-class SL_MetaFields {
+class WPSL_MetaFields {
 
 	/**
 	* Meta Data

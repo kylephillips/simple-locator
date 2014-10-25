@@ -1,6 +1,6 @@
 <?php
 
-class SL_Shortcode {
+class WPSL_Shortcode {
 
 	/**
 	* Unit of Measurement

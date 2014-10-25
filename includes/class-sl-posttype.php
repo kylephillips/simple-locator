@@ -2,7 +2,7 @@
 /**
 * Locations Post Type
 */
-class SL_PostType {
+class WPSL_PostType {
 
 	function __construct()
 	{
@@ -29,6 +29,7 @@ class SL_PostType {
 		    'public' => true,  
 		    'show_ui' => $this->check_post_type(),
 			'menu_position' => 5,
+			'menu_icon' => 'dashicons-post-status',
 		    'capability_type' => 'post',  
 		    'hierarchical' => false,  
 		    'has_archive' => true,

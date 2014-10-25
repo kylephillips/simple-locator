@@ -1,6 +1,6 @@
 <?php
 
-class SL_Activation {
+class WPSL_Activation {
 
 	/**
 	* Plugin Version

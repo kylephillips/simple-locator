@@ -72,11 +72,13 @@ jQuery(function($){
 	});
 	function checkMapStatus()
 	{
-		var lat = $('#wpsl_latitude').val();
-		var lng = $('#wpsl_longitude').val();
-		if ( (lat !== "") && (lng !== "") ){
-			$('#wpslmap').show();
-			loadGoogleMap(lat, lng);
+		if ( $("#wpslmap").length > 0 ){
+			var lat = $('#wpsl_latitude').val();
+			var lng = $('#wpsl_longitude').val();
+			if ( (lat !== "") && (lng !== "") ){
+				$('#wpslmap').show();
+				loadGoogleMap(lat, lng);
+			}
 		}
 	}
 
@@ -107,63 +109,55 @@ jQuery(function($){
 	* Settings Page
 	* ------------------------------------------------------
 	*/
+	$(document).ready(function(){
+		var pt = $('#wpsl_post_type').val();
+		if ( pt !== 'location' ){
+			$('#field_wpsl').attr('disabled', 'disabled').removeAttr('checked');
+			$('#field_custom').attr('checked','checked');
+		}
 
+		var ft = $('input[name="wpsl_field_type"]:checked').val();
+	
+		if ( ft === 'wpsl' ) $('.latlng').hide();
+	});
+
+	// Prevent the selection of wspl geo fields if another post type is selected
+	$(document).on('change', '#wpsl_post_type', function(){
+		var value = $(this).val();
+		if ( value !== 'location' ){
+			$('#field_wpsl').attr('disabled', 'disabled').removeAttr('checked');
+			$('#field_custom').attr('checked','checked');
+			$('.latlng').show();
+		} else {
+			$('#field_wpsl').removeAttr('disabled');
+		}
+	});
+
+
+	$(document).on('change', 'input[name="wpsl_field_type"]:radio', function(){
+		var type = $(this).val();
+		if ( type == 'wpsl' ){
+			$('.latlng').hide();
+			$('#wpsl_lat_field').val('wpsl_latitude');
+			$('#wpsl_lng_field').val('wpsl_longitude');
+		} else {
+			$('.latlng').show();
+			var lat = $('#lat_select').val();
+			var lng = $('#lng_select').val();
+			$('#wpsl_lat_field').val(lat);
+			$('#wpsl_lng_field').val(lng);
+		}
+	});
+
+	// Update lat field on select change
+	$(document).on('change', '#lat_select', function(){
+		var value = $(this).val();
+		$('#wpsl_lat_field').val(value);
+	});
+	$(document).on('change', '#lng_select', function(){
+		var value = $(this).val();
+		$('#wpsl_lng_field').val(value);
+	});
+	
 
 }); // jQuery
-
-
-/**
-* Settings Page
-*/
-jQuery(document).ready(function(){
-	var pt = jQuery('#wpsl_post_type').val();
-	if ( pt !== 'location' ){
-		jQuery('#field_wpsl').attr('disabled', 'disabled').removeAttr('checked');
-		jQuery('#field_custom').attr('checked','checked');
-	}
-
-	var ft = jQuery('input[name="wpsl_field_type"]:checked').val();
-	
-	if ( ft === 'wpsl' ){
-		jQuery('.latlng').hide();
-	}
-});
-
-// Prevent the selection of wspl geo fields if another post type is selected
-jQuery(document).on('change', '#wpsl_post_type', function(){
-	var value = jQuery(this).val();
-	if ( value !== 'location' ){
-		jQuery('#field_wpsl').attr('disabled', 'disabled').removeAttr('checked');
-		jQuery('#field_custom').attr('checked','checked');
-		jQuery('.latlng').show();
-	} else {
-		jQuery('#field_wpsl').removeAttr('disabled');
-	}
-});
-
-
-jQuery(document).on('change', 'input[name="wpsl_field_type"]:radio', function(){
-	var type = jQuery(this).val();
-	if ( type == 'wpsl' ){
-		jQuery('.latlng').hide();
-		jQuery('#wpsl_lat_field').val('wpsl_latitude');
-		jQuery('#wpsl_lng_field').val('wpsl_longitude');
-	} else {
-		jQuery('.latlng').show();
-		var lat = jQuery('#lat_select').val();
-		var lng = jQuery('#lng_select').val();
-		jQuery('#wpsl_lat_field').val(lat);
-		jQuery('#wpsl_lng_field').val(lng);
-	}
-});
-
-// Update lat field on select change
-jQuery(document).on('change', '#lat_select', function(){
-	var value = jQuery(this).val();
-	jQuery('#wpsl_lat_field').val(value);
-});
-jQuery(document).on('change', '#lng_select', function(){
-	var value = jQuery(this).val();
-	jQuery('#wpsl_lng_field').val(value);
-});
-

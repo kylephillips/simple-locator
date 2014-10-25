@@ -39,7 +39,7 @@ class WPSL_Dependencies {
 	public function adminScripts()
 	{
 		$screen = get_current_screen();
-		if ( $screen->post_type == get_option('wpsl_post_type') ) {
+		if ( ($screen->post_type == get_option('wpsl_post_type')) || ($screen->id == 'settings_page_wp_simple_locator') ) {
 			$this->addGoogleMaps();
 			wp_enqueue_script('google-maps');
 			wp_enqueue_script(

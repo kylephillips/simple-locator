@@ -1,6 +1,6 @@
 <?php
 /**
-* Custom Meta Fields
+* Custom Meta Fields for Location Post Type
 */
 class WPSL_MetaFields {
 
@@ -14,11 +14,12 @@ class WPSL_MetaFields {
 	*/
 	public $fields;
 
+
 	function __construct()
 	{
 		$this->setFields();
 		add_action( 'add_meta_boxes', array( $this, 'metaBox' ));
-		add_action( 'save_post', array($this, 'savePost' ));
+		add_action( 'save_post_location', array($this, 'savePost' ));
 	}
 
 
@@ -85,9 +86,8 @@ class WPSL_MetaFields {
 	*/
 	public function savePost( $post_id ) 
 	{
-		if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
-		if( !isset( $_POST['wpsl_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['wpsl_meta_box_nonce'], 'my_wpsl_meta_box_nonce' ) ) return;
-		if( !current_user_can( 'edit_post' ) ) return;
+		if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return $post_id;
+		if( !isset( $_POST['wpsl_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['wpsl_meta_box_nonce'], 'my_wpsl_meta_box_nonce' ) ) return $post_id;
 
 		// Save Custom Fields
 		foreach ( $this->fields as $key => $field )

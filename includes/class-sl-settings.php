@@ -101,11 +101,13 @@ class WPSL_Settings {
 	*/
 	private function getPostTypes()
 	{
-		$types = get_post_types(array('public'=>true, 'publicly_queryable'=>true ), 'objects');
+		$types = get_post_types(array('public' => true, 'publicly_queryable' => true ), 'objects');
 		$post_types = array();
-		foreach( $types as $key => $type ){
+		foreach( $types as $key => $type ){ 
+			if ( $type->name == 'attachment' ) continue;
 			$post_types[$key]['name'] = $type->name;
 			$post_types[$key]['label'] = $type->labels->name;
+			
 		}
 		return $post_types;
 	}

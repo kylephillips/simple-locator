@@ -9,12 +9,6 @@ class WPSL_Validation {
 	*/
 	public $data;
 
-	
-	public function __construct()
-	{
-		
-	}
-
 
 	/**
 	* Run the Validation

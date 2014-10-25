@@ -1,52 +1,46 @@
-// Location Scripts
-jQuery('#wpslsubmit').on('click', function(e){
+jQuery(function($){
+
+
+$('.wpslsubmit').on('click', function(e){
 	e.preventDefault();
-	jQuery('#searcherror').hide();
-	jQuery('#locatormap').hide();
-	jQuery('#locatorresults').empty();
-	jQuery('#locatorresults').addClass('loading');
-	jQuery('#locatorresults').show();
-	geocodeZip();	
+	var form = $(this).parents('.simple-locator-form');
+	var formelements = setFormElements(form);
+
+	$(formelements.errordiv).hide();
+	$(formelements.map).hide();
+	$(formelements.results).empty().addClass('loading').show();
+
+	geocodeZip(formelements);
 });
 
 
 /**
-* Send the form data to the form handler
+* Set the form elements
 */
-function sendFormData()
+function setFormElements(form)
 {
-	jQuery.ajax({
-		url: wpsl_locator.ajaxurl,
-		type: 'post',
-		datatype: 'json',
-		data: {
-			action: 'locate',
-			zip: jQuery('#zip').val(),
-			locatorNonce : wpsl_locator.locatorNonce,
-			distance: jQuery('#distance').val(),
-			latitude: jQuery('#latitude').val(),
-			longitude: jQuery('#longitude').val(),
-			unit: jQuery('#unit').val()
-		},
-		success: function(data){
-			if (data.status === 'error'){
-				jQuery('#searcherror').text(data.message);
-				jQuery('#searcherror').show();
-				jQuery('#locatorresults').hide();
-			} else {
-				loadLocationResults(data);
-			}
-		}
-	});
+	formelements = {
+		'parentdiv' : $(form),
+		'errordiv' : $(form).find('.wpsl-error'),
+		'map' : $(form).find('.wpsl-map'),
+		'results' : $(form).find('.wpsl-results'),
+		'distance' : $(form).find('.distanceselect'),
+		'zip' : $(form).find('.zipcode'),
+		'latitude' : $(form).find('.latitude'),
+		'longitude' : $(form).find('.longitude'),
+		'unit' : $(form).find('.unit')
+	}
+	return formelements;
 }
 
 
 /**
 * Geocode the zip prior to submitting the search form
 */
-function geocodeZip()
+function geocodeZip(formelements)
 {
-	var zip = jQuery('#zip').val();
+	var zip = $(formelements.zip).val();
+	console.log(zip)
 	
 	geocoder = new google.maps.Geocoder();
 	geocoder.geocode({
@@ -54,28 +48,60 @@ function geocodeZip()
 	}, function(results, status){
 
 		if ( status == google.maps.GeocoderStatus.OK ){
-			
+
 			var latitude = results[0].geometry.location.lat();
 			var longitude = results[0].geometry.location.lng();
 			
-			jQuery('#latitude').val(latitude);
-			jQuery('#longitude').val(longitude);
+			$(formelements.latitude).val(latitude);
+			$(formelements.longitude).val(longitude);
 			
-			sendFormData();
+			sendFormData(formelements);
 
 		} else {
-			jQuery('#searcherror').text('Address could not be found at this time.');
-			jQuery('#searcherror').show();
-			jQuery('#locatorresults').hide();
+			$(formelements.errordiv).text('Address could not be found at this time.').show();
+			$(formelements.results).hide();
 		}
 	});
 }
 
 
+
+/**
+* Send the form data to the form handler
+*/
+function sendFormData(formelements)
+{
+	$.ajax({
+		url: wpsl_locator.ajaxurl,
+		type: 'post',
+		datatype: 'json',
+		data: {
+			action: 'locate',
+			zip: $(formelements.zip).val(),
+			locatorNonce : wpsl_locator.locatorNonce,
+			distance: $(formelements.distance).val(),
+			latitude: $(formelements.latitude).val(),
+			longitude: $(formelements.longitude).val(),
+			unit: $(formelements.unit).val()
+		},
+		success: function(data){
+			if (data.status === 'error'){
+				$(formelements.errordiv).text(data.message).show();
+				$(formelements.results).hide();
+			} else {
+				loadLocationResults(data, formelements);
+			}
+		}
+	});
+}
+
+
+
+
 /**
 * Load the results into the view
 */
-function loadLocationResults(data)
+function loadLocationResults(data, formelements)
 {
 	if ( data.result_count > 0 ){
 
@@ -113,17 +139,15 @@ function loadLocationResults(data)
 
 		output = output + '</ul>';
 
-		jQuery('#locatorresults').removeClass('loading');
-		jQuery('#locatorresults').html(output);
+		$(formelements.results).removeClass('loading').html(output);
 
-		jQuery('#locatormap').show();
-		showLocationMap(data);
+		$(formelements.map).show();
+		showLocationMap(data, formelements);
 
 	} else {
 		// No results were returned
-		jQuery('#searcherror').text('No results found.');
-		jQuery('#searcherror').show();
-		jQuery('#locatorresults').hide();
+		$(formelements.errordiv).text('No results found.').show();
+		$(formelements.results).hide();
 	}
 }
 
@@ -131,8 +155,11 @@ function loadLocationResults(data)
 /**
 * Load the Google map and show locations found
 */
-function showLocationMap(data)
+function showLocationMap(data, formelements)
 {
+	var mapcont = $(formelements.map)[0];
+	console.log(mapcont);
+
 	var map;
 	var bounds = new google.maps.LatLngBounds();
 	var mapOptions = {
@@ -142,7 +169,7 @@ function showLocationMap(data)
 		}
 	var locations = [];
 	var infoWindow = new google.maps.InfoWindow(), marker, i;
-	map = new google.maps.Map(document.getElementById("locatormap"), mapOptions);
+	map = new google.maps.Map(mapcont, mapOptions);
 	
 	// Array of locations
 	for (var i = 0, length = data.results.length; i < length; i++) {
@@ -182,3 +209,5 @@ function showLocationMap(data)
 		google.maps.event.removeListener(boundsListener);
 	});
 }
+
+}); // jQuery

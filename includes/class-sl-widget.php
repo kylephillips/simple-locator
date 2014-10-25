@@ -71,6 +71,7 @@ class WPSL_Widget extends WP_Widget {
 	public function form( $instance ) {
 		$title = ( isset($instance['title']) ) ? $instance[ 'title' ] : '';
 		$distance_options = ( isset($instance['distance_options']) ) ? $instance[ 'distance_options' ] : '';
+		$map_height = ( isset($instance['map_height']) ) ? $instance[ 'map_height' ] : '';
 		include( dirname(dirname(__FILE__)) . '/views/widget_options.php' );
 	}
 
@@ -82,6 +83,7 @@ class WPSL_Widget extends WP_Widget {
 		$instance = array();
 		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
 		$instance['distance_options'] = ( ! empty( $new_instance['distance_options'] ) ) ? strip_tags( $new_instance['distance_options'] ) : '5,10,20,50,100';
+		$instance['map_height'] = ( ! empty( $new_instance['map_height'] ) ) ? strip_tags( intval($new_instance['map_height']) ) : '';
 		return $instance;
 	}
 

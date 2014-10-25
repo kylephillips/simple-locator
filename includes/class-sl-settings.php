@@ -115,15 +115,15 @@ class WPSL_Settings {
 
 	/**
 	* Get ACF Fields
+	* @return array
 	*/
 	private function get_acf_fields()
 	{
 		if ( function_exists('get_field_objects') ){
 
-			// Get the meta fields where convention matches ACFs
 			global $wpdb;
-			$m = $wpdb->prefix . 'postmeta';
-			$sql = "SELECT meta_value FROM $m WHERE `meta_key` LIKE '%field_%'";
+			$meta_table = $wpdb->prefix . 'postmeta';
+			$sql = "SELECT meta_value FROM $meta_table WHERE `meta_key` LIKE '%field_%'";
 			$results = $wpdb->get_results($sql);
 
 			foreach ($results as $result){
@@ -174,18 +174,17 @@ class WPSL_Settings {
 			$meta_keys[] = $result->meta_key;
 		}
 
-		// Fields to exclude from returned array
-		$exclude_fields = array('_wp_page_template', '_edit_lock', '_edit_last', '_wp_trash_meta_status', '_wp_trash_meta_time', 'layout', 'position', 'rule', 'hide_on_screen');
+		// Fields to exclude from returned array (Built in WP fields, Simple Locator Fields)
+		$exclude_fields = array('_wp_page_template', '_edit_lock', '_edit_last', '_wp_trash_meta_status', '_wp_trash_meta_time', 'layout', 'position', 'rule', 'hide_on_screen', 'wpsl_latitude', 'wpsl_longitude', 'wpsl_additionalinfo', 'wpsl_address', 'wpsl_city', 'wpsl_state', 'wpsl_phone', 'wpsl_zip', 'wpsl_zip', 'wpsl_website');
 
 		// Add the ACFs to the excluded fields
 		$acfs = $this->get_acf_fields();
 		if ( $acfs ){
-			foreach ( $acfs as $acf ){
-				array_push($exclude_fields, $acf['name']);
-			}
+			foreach ( $acfs as $acf ){ array_push($exclude_fields, $acf['name']); }
 		}
 		
 		// Add the fields to the output array
+		$output = "";
 		if (!empty($meta_keys) ):
 			foreach ($meta_keys as $meta_key) {
 				if ( !in_array($meta_key, $exclude_fields) ) {
@@ -203,39 +202,43 @@ class WPSL_Settings {
 	/**
 	* Show the options for custom lat/lng fields
 	* @param string $field
+	* @return html
 	*/
 	private function show_field_options($field = null)
 	{
 		$cfs = $this->get_custom_fields();
+		$current = get_option($field);
+		$out = "";
 
+		/**
+		* Optgroup for Advanced Custom Fields
+		*/
 		if ( function_exists('get_field_objects') ){
-			// Advanced Custom Fields
 			$acfs = $this->show_acf_fields();
-			echo '<optgroup label="Advanced Custom Fields">';
+			$out .= '<optgroup label="Advanced Custom Fields">';
 			foreach($acfs as $acf){
-				echo '<option value="' . $acf['value'] . '"';
-				if ( get_option($field) == $acf['value'] ) echo ' selected';
-				echo '>' . $acf['label'] . '</option>';
+				$out .= '<option value="' . $acf['value'] . '"';
+				if ( $current == $acf['value'] ) $out .= ' selected';
+				$out .= '>' . $acf['label'] . '</option>';
 			}
-			echo '</optgroup>';
-				
-			// Other fields
-			echo '<optgroup label="Other Custom Fields">';
-			foreach($cfs as $cf){
-				echo '<option value="' . $cf['value'] . '"';
-				if ( get_option($field) == $cf['value'] ) echo ' selected';
-				echo '>' . $cf['label'] . '</option>';
-			}
-
-			echo '</optgroup>';
-		} else {
-			// ACF not installed
-			foreach($cfs as $cf){
-				echo '<option value="' . $cf['value'] . '"';
-				if ( get_option($field) == $cf['value'] ) echo ' selected';
-				echo '>' . $cf['label'] . '</option>';
-			}
+			$out .= '</optgroup>';
 		}
+
+		/**
+		* Optgroup for other custom fields
+		*/
+		if ( $cfs ){
+			$out .= '<optgroup label="Custom Fields">';
+			foreach($cfs as $cf){
+				$out .= '<option value="' . $cf['value'] . '"';
+				if ( $current == $cf['value'] ) $out .= ' selected';
+				$out .= '>' . $cf['label'] . '</option>';
+			}
+			$out .= '</optgroup>';
+		}
+
+		return $out;
+
 	}
 
 

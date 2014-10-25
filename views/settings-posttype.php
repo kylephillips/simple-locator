@@ -43,7 +43,7 @@
 	<th scope="row"><?php _e('Latitude Field', 'wpsimplelocator'); ?></th>
 	<td>
 		<select id="lat_select">';
-			<?php $this->show_field_options('wpsl_lat_field'); ?>
+			<?php echo $this->show_field_options('wpsl_lat_field'); ?>
 		</select>
 	</td>
 </tr>
@@ -51,7 +51,7 @@
 	<th scope="row"><?php _e('Longitude Field', 'wpsimplelocator'); ?></th>
 	<td>
 		<select id="lng_select">
-			<?php $this->show_field_options('wpsl_lng_field'); ?>
+			<?php echo $this->show_field_options('wpsl_lng_field'); ?>
 		</select>
 
 		<input type="hidden" id="wpsl_lat_field" name="wpsl_lat_field" 

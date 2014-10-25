@@ -1,5 +1,7 @@
 <?php
-$output = '
+$output = "";
+if ( isset($widget_instance) ) $output .= '<div class="simple-locator-widget">';
+$output .= '
 <form id="wpslsearch" class="simple-locator-form">
 	<div id="searcherror" class="alert alert-error" style="display:none;"></div>
 	<div class="zip">
@@ -21,3 +23,4 @@ $output = '
 	</form>
 <div id="locatormap"></div>
 <div id="locatorresults" class="loading"></div>';
+if ( isset($widget_instance) ) $output .= '</div><!-- .simple-locator-widget -->';

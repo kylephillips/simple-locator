@@ -6,6 +6,7 @@ require_once('class-sl-settings.php');
 require_once('class-sl-metafields.php');
 require_once('class-sl-posttype.php');
 require_once('class-sl-dependencies.php');
+require_once('class-sl-widget.php');
 
 /**
 * Primary Plugin Class
@@ -32,6 +33,7 @@ class WPSL_SimpleLocator {
 		new WPSL_MetaFields;
 		new WPSL_Settings;
 		new WPSL_Shortcode;
+		add_action( 'widgets_init', array($this, 'registerWidget'));
 	}
 
 
@@ -55,6 +57,15 @@ class WPSL_SimpleLocator {
   		$settings_link = '<a href="options-general.php?page=wp_simple_locator">Settings</a>'; 
   		array_unshift($links, $settings_link); 
   		return $links; 
+	}
+
+
+	/**
+	* Register the Widget
+	*/
+	public function registerWidget()
+	{
+		register_widget( 'WPSL_Widget' );
 	}
 
 

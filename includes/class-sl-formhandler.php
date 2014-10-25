@@ -109,6 +109,7 @@ class WPSL_Handler {
 		$this->query_data['lat_field'] = get_option('wpsl_lat_field');
 		$this->query_data['lng_field'] = get_option('wpsl_lng_field');
 		$this->query_data['diameter'] = ( $this->data['unit'] == "miles" ) ? 3959 : 6371;
+		$this->query_data['distance_unit'] = ( $this->data['unit'] == "miles" ) ? 69 : 111.045;
 	}
 
 
@@ -134,8 +135,8 @@ class WPSL_Handler {
 			$sql .= "
 			lat.meta_value AS latitude,
 			lng.meta_value AS longitude,
-			( " . $this->query_data['diameter'] . " * acos( cos( radians(" . $this->query_data['userlat'] . ") ) * cos( radians( lat.meta_value ) ) 
-			* cos( radians( lng.meta_value ) - radians(" . $this->query_data['userlong'] . ") ) + sin( radians(" . $this->query_data['userlat'] . ") ) * sin(radians(lat.meta_value)) ) )
+			( " . $this->query_data['diameter'] . " * acos( cos( radians(@origlat) ) * cos( radians( lat.meta_value ) ) 
+			* cos( radians( lng.meta_value ) - radians(@origlng) ) + sin( radians(@origlat) ) * sin(radians(lat.meta_value)) ) )
 			AS distance
 			FROM " . $this->query_data['post_table'] . " AS p
 			LEFT JOIN " . $this->query_data['meta_table'] . " AS lat
@@ -158,10 +159,16 @@ class WPSL_Handler {
 			ON p.ID = w.post_ID AND w.meta_key = 'wpsl_website'";
 			endif;
 			$sql .= "
-			WHERE `post_type` = '" . $this->query_data['post_type'] . "'
+			WHERE lat.meta_value
+				BETWEEN @origlat - (@distance / @dist_unit)
+				AND @origlat + (@distance / @dist_unit)
+			AND lng.meta_value
+				BETWEEN @origlng - (@distance / (@dist_unit * cos(radians(@origlat))))
+				AND @origlng + (@distance / (@dist_unit * cos(radians(@origlat))))
+			AND `post_type` = '" . $this->query_data['post_type'] . "'
 			AND `post_status` = 'publish'
-			HAVING distance < " . $this->query_data['distance'] . "
-			ORDER BY distance
+			HAVING distance < @distance
+			ORDER BY distance;
 		";
 		$this->sql = $sql;
 	}
@@ -173,6 +180,14 @@ class WPSL_Handler {
 	private function runQuery()
 	{
 		global $wpdb;
+
+		// Set the SQL Vars
+		$wpdb->query("SET @origlat = " . $this->query_data['userlat'] . ";");
+		$wpdb->query("SET @origlng = " . $this->query_data['userlong'] . ";");
+		$wpdb->query("SET @distance = " . $this->query_data['distance'] . ";");
+		$wpdb->query("SET @dist_unit = " . $this->query_data['distance_unit'] . ";");
+		
+		// Run the Query
 		$results = $wpdb->get_results($this->sql);
 		$this->total_results = count($results);
 		$this->setResults($results);

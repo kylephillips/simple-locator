@@ -37,6 +37,10 @@ class WPSL_Widget extends WP_Widget {
 	private function setOptions()
 	{
 		$this->options['distances'] = '5,10,20,50,100';
+		$this->options['ziplabel'] = __('Zip/Postal Code', 'wpsimplelocator');
+		$this->options['mapcontainer'] = '.wpsl-map';
+		$this->options['resultscontainer'] = '.wpsl-results';
+		$this->options['buttontext'] = __('Search', 'wpsimplelocator');
 	}
 
 
@@ -62,6 +66,21 @@ class WPSL_Widget extends WP_Widget {
 	{
 		wp_enqueue_script('google-maps');
 		wp_enqueue_script('simple-locator');
+	}
+
+	/**
+	* Localize Options
+	*/ 
+	private function localizeOptions()
+	{
+		wp_localize_script( 
+			'simple-locator', 
+			'wpsl_locator_options', 
+			array( 
+				'mapcont' => $this->options['mapcontainer'],
+				'resultscontainer' => $this->options['resultscontainer']
+			)
+		);
 	}
 
 
@@ -101,6 +120,7 @@ class WPSL_Widget extends WP_Widget {
 		}
 		
 		$this->enqueueScripts();
+		$this->localizeOptions();
 		$widget_instance = true;
 		include( dirname( dirname(__FILE__) ) . '/views/simple-locator-form.php');
 		echo $output;

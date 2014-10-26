@@ -27,8 +27,9 @@ $output .= '
 		<button type="submit" class="wpslsubmit">' . html_entity_decode($this->options['buttontext']) . '</button>
 	</div>
 	</form>';
-
-$output .= ( isset($mapheight) && $mapheight !== "" ) ? '<div class="wpsl-map" style="height:' . $mapheight . 'px;"></div>' : '<div class="wpsl-map"></div>';
+if ( $this->options['mapcontainer'] === '.wpsl-map' ){
+	$output .= ( isset($mapheight) && $mapheight !== "" ) ? '<div class="wpsl-map" style="height:' . $mapheight . 'px;"></div>' : '<div class="wpsl-map"></div>';
+}
 
 $output .= '
 <div class="wpsl-results" class="loading"></div>

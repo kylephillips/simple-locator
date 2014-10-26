@@ -19,11 +19,15 @@ $('.wpslsubmit').on('click', function(e){
 */
 function setFormElements(form)
 {
-
+	if ( wpsl_locator_options.mapcont.charAt(0) === '.' ){
+		var mapcont = $(form).find(wpsl_locator_options.mapcont);
+	} else {
+		var mapcont = $(wpsl_locator_options.mapcont);
+	}
 	formelements = {
 		'parentdiv' : $(form),
 		'errordiv' : $(form).find('.wpsl-error'),
-		'map' : $(form).find(wpsl_locator_options.mapcont),
+		'map' : mapcont,
 		'results' : $(form).find('.wpsl-results'),
 		'distance' : $(form).find('.distanceselect'),
 		'zip' : $(form).find('.zipcode'),
@@ -159,12 +163,7 @@ function showLocationMap(data, formelements)
 {
 	var mapstyles = wpsl_locator.mapstyles;
 	var mapstyles = $.parseJSON(mapstyles);
-
-	if ( wpsl_locator_options.mapcont.charAt(0) === '.' ){
-		var mapcont = $(formelements.map)[0];
-	} else {
-		var mapcont = $(formelements.map);
-	}
+	var mapcont = $(formelements.map)[0];
 
 	var map;
 	var bounds = new google.maps.LatLngBounds();

@@ -99,13 +99,6 @@ class WPSL_Dependencies {
 				'mapstyles' => $mapstyles
 			)
 		);
-
-		// Add Map styles
-		
-		// $mapstyles = array(
-  //   		'l10n_print_after' => $mapstyles
-		// );
-		// wp_localize_script('simple-locator', 'mapstyles', $mapstyles);
 	}
 
 

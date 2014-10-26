@@ -46,7 +46,9 @@ class WPSL_Shortcode {
 	{
 		$this->options = shortcode_atts(array(
 			'distances' => '5,10,20,50,100',
-			'mapheight' => '250'
+			'mapheight' => '250',
+			'mapcontainer' => '.wpsl-map',
+			'resultscontainer' => '.wpsl-results'
 		), $options);
 	}
 
@@ -67,12 +69,29 @@ class WPSL_Shortcode {
 
 
 	/**
+	* Localize Shortcode Options
+	*/ 
+	private function localizeOptions()
+	{
+		wp_localize_script( 
+			'simple-locator', 
+			'wpsl_locator_options', 
+			array( 
+				'mapcont' => $this->options['mapcontainer'],
+				'resultscontainer' => $this->options['resultscontainer']
+			)
+		);
+	}
+
+
+	/**
 	* The View
 	*/
 	public function renderView($options)
 	{	
 		$this->setOptions($options);
 		$this->enqueueScripts();
+		$this->localizeOptions();
 		include( dirname( dirname(__FILE__) ) . '/views/simple-locator-form.php');
 		return $output;
 	}

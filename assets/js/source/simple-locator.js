@@ -19,10 +19,11 @@ $('.wpslsubmit').on('click', function(e){
 */
 function setFormElements(form)
 {
+
 	formelements = {
 		'parentdiv' : $(form),
 		'errordiv' : $(form).find('.wpsl-error'),
-		'map' : $(form).find('.wpsl-map'),
+		'map' : $(form).find(wpsl_locator_options.mapcont),
 		'results' : $(form).find('.wpsl-results'),
 		'distance' : $(form).find('.distanceselect'),
 		'zip' : $(form).find('.zipcode'),
@@ -40,7 +41,6 @@ function setFormElements(form)
 function geocodeZip(formelements)
 {
 	var zip = $(formelements.zip).val();
-	console.log(zip)
 	
 	geocoder = new google.maps.Geocoder();
 	geocoder.geocode({
@@ -160,7 +160,12 @@ function showLocationMap(data, formelements)
 	var mapstyles = wpsl_locator.mapstyles;
 	var mapstyles = $.parseJSON(mapstyles);
 
-	var mapcont = $(formelements.map)[0];
+	if ( wpsl_locator_options.mapcont.charAt(0) === '.' ){
+		var mapcont = $(formelements.map)[0];
+	} else {
+		var mapcont = $(formelements.map);
+	}
+
 	var map;
 	var bounds = new google.maps.LatLngBounds();
 	var mapOptions = {
@@ -169,10 +174,9 @@ function showLocationMap(data, formelements)
 			zoom: 8,
 			styles: mapstyles
 		}
-		console.log(mapOptions);
 	var locations = [];
 	var infoWindow = new google.maps.InfoWindow(), marker, i;
-	map = new google.maps.Map(mapcont, mapOptions);
+	map = new google.maps.Map( mapcont, mapOptions );
 	
 	// Array of locations
 	for (var i = 0, length = data.results.length; i < length; i++) {
@@ -191,7 +195,6 @@ function showLocationMap(data, formelements)
 		marker = new google.maps.Marker({
 			position: position,
 			map: map,
-			
 			title: locations[i][0]
 		});	
 

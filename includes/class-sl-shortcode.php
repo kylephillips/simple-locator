@@ -50,7 +50,8 @@ class WPSL_Shortcode {
 			'mapcontainer' => '.wpsl-map',
 			'resultscontainer' => '.wpsl-results',
 			'buttontext' => __('Search', 'wpsimplelocator'),
-			'ziplabel' => __('Zip/Postal Code', 'wpsimplelocator')
+			'ziplabel' => __('Zip/Postal Code', 'wpsimplelocator'),
+			'mapcontrols' => 'show'
 		), $options);
 	}
 
@@ -80,7 +81,8 @@ class WPSL_Shortcode {
 			'wpsl_locator_options', 
 			array( 
 				'mapcont' => $this->options['mapcontainer'],
-				'resultscontainer' => $this->options['resultscontainer']
+				'resultscontainer' => $this->options['resultscontainer'],
+				'mapcontrols' => $this->options['mapcontrols']
 			)
 		);
 	}

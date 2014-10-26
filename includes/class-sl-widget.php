@@ -78,7 +78,8 @@ class WPSL_Widget extends WP_Widget {
 			'wpsl_locator_options', 
 			array( 
 				'mapcont' => $this->options['mapcontainer'],
-				'resultscontainer' => $this->options['resultscontainer']
+				'resultscontainer' => $this->options['resultscontainer'],
+				'mapcontrols' => $this->options['mapcontrols']
 			)
 		);
 	}

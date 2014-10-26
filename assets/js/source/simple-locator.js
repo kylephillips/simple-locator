@@ -164,6 +164,7 @@ function showLocationMap(data, formelements)
 	var mapstyles = wpsl_locator.mapstyles;
 	var mapstyles = $.parseJSON(mapstyles);
 	var mapcont = $(formelements.map)[0];
+	var disablecontrols = ( wpsl_locator_options.mapcontrols === 'show') ? false : true;
 
 	var map;
 	var bounds = new google.maps.LatLngBounds();
@@ -171,7 +172,8 @@ function showLocationMap(data, formelements)
 			mapTypeId: 'roadmap',
 			mapTypeControl: false,
 			zoom: 8,
-			styles: mapstyles
+			styles: mapstyles,
+			disableDefaultUI: disablecontrols
 		}
 	var locations = [];
 	var infoWindow = new google.maps.InfoWindow(), marker, i;

@@ -23,3 +23,16 @@
 		</select>
 	</td>
 </tr>
+<tr valign="top">
+	<th scope="row"><?php _e('Output Nested Pages CSS', 'wpsimplelocator'); ?></th>
+	<td>
+		<label>
+			<input type="radio" value="true" name="wpsl_output_css" <?php if ( get_option('wpsl_output_css') == 'true') echo 'checked'; ?> />
+			<?php _e('Yes', 'wpsimplelocator'); ?>
+		</label><br />
+		<label>
+			<input type="radio" value="false" name="wpsl_output_css" <?php if ( get_option('wpsl_output_css') !== 'true') echo 'checked'; ?> />
+			<?php _e('No', 'wpsimplelocator'); ?>
+		</label>
+	</td>
+</tr>

@@ -10,11 +10,11 @@ $output .= '
 <div class="simple-locator-form">
 <form>
 	<div class="wpsl-error alert alert-error" style="display:none;"></div>
-	<div class="zip">
+	<div class="zip form-field">
 		<label for="zip">' . __('Zip/Postal Code', 'wpsimplelocator') . '</label>
 		<input type="tel" name="zip" class="zipcode" />
 	</div>
-	<div class="distance">
+	<div class="distance form-field">
 		<label for="distance">' . __('Distance', 'wpsimplelocator'). '</label>
 		<select name="distance" class="distanceselect">' .
 			$this->distanceOptions() . 

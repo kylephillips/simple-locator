@@ -57,12 +57,14 @@ class WPSL_Dependencies {
 	*/
 	public function styles()
 	{
-		wp_enqueue_style(
-			'simple-locator', 
-			$this->plugin_dir . '/assets/css/simple-locator.css', 
-			'', 
-			'1.0'
-		);
+		if ( get_option('wpsl_output_css') == "true" ){
+			wp_enqueue_style(
+				'simple-locator', 
+				$this->plugin_dir . '/assets/css/simple-locator.css', 
+				'', 
+				'1.0'
+			);
+		}
 	}
 
 
@@ -71,6 +73,8 @@ class WPSL_Dependencies {
 	*/
 	public function scripts()
 	{
+		wp_enqueue_script('jquery');
+		
 		$this->addGoogleMaps();
 		
 		$mapstyles = get_option('wpsl_map_styles');

@@ -75,6 +75,9 @@ class WPSL_Activation {
 		if ( !get_option('wpsl_lng_field') ){
 			update_option('wpsl_lng_field', 'wpsl_longitude');
 		}
+		if ( !get_option('wpsl_output_css') ){
+			update_option('wpsl_output_css', 'true');
+		}
 	}
 
 

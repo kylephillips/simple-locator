@@ -6,6 +6,7 @@ function openInfoWindow(id){
 	googlemap.panTo(markers[id].getPosition());
 	googlemap.fitBounds(markers[id].getPosition());
 	googlemap.setZoom(12);
+	return false;
 }
 var markers = [];
 var googlemap = '';
@@ -156,7 +157,7 @@ function loadLocationResults(data, formelements)
 				output = output + '<br /><a href="' + website + '" target="_blank">' + website + '</a>';
 			}
 
-			output += '<br /><a href="#" class="infowindow-open" onClick="openInfoWindow(' + i + ');">' + wpsl_locator.showonmap + '</a>';
+			output += '<br /><a href="#" class="infowindow-open map-link" onClick="event.preventDefault(); openInfoWindow(' + i + ');">' + wpsl_locator.showonmap + '</a>';
 			output = output + '</li>';
 		}
 

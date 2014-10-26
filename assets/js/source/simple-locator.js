@@ -24,11 +24,18 @@ function setFormElements(form)
 	} else {
 		var mapcont = $(wpsl_locator_options.mapcont);
 	}
+
+	if ( wpsl_locator_options.resultscontainer.charAt(0) === '.' ){
+		var resultscontainer = $(form).find(wpsl_locator_options.resultscontainer);
+	} else {
+		var resultscontainer = $(wpsl_locator_options.resultscontainer);
+	}
+
 	formelements = {
 		'parentdiv' : $(form),
 		'errordiv' : $(form).find('.wpsl-error'),
 		'map' : mapcont,
-		'results' : $(form).find('.wpsl-results'),
+		'results' : resultscontainer,
 		'distance' : $(form).find('.distanceselect'),
 		'zip' : $(form).find('.zipcode'),
 		'latitude' : $(form).find('.latitude'),

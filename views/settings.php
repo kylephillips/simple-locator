@@ -7,7 +7,7 @@
 		<a class="nav-tab <?php if ( $tab == 'map' ) echo 'nav-tab-active'; ?>" href="options-general.php?page=wp_simple_locator&tab=map"><?php _e('Map Settings', 'wpsimplelocator'); ?></a>
 	</h2>
 
-	<form method="post" action="options.php">
+	<form method="post" enctype="multipart/form-data" action="options.php">
 		<table class="form-table">
 			<?php
 			$view = 'settings-' . $tab . '.php';

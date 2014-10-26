@@ -78,6 +78,9 @@ class WPSL_Activation {
 		if ( !get_option('wpsl_output_css') ){
 			update_option('wpsl_output_css', 'true');
 		}
+		if ( !get_option('wpsl_map_pin') ){
+			update_option('wpsl_map_pin', '');
+		}
 	}
 
 

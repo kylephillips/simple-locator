@@ -48,7 +48,8 @@ class WPSL_Shortcode {
 			'distances' => '5,10,20,50,100',
 			'mapheight' => '250',
 			'mapcontainer' => '.wpsl-map',
-			'resultscontainer' => '.wpsl-results'
+			'resultscontainer' => '.wpsl-results',
+			'buttontext' => 'Search'
 		), $options);
 	}
 

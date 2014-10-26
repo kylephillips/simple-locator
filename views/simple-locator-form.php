@@ -24,7 +24,7 @@ $output .= '
 		<input type="hidden" name="latitude" class="latitude" />
 		<input type="hidden" name="longitude" class="longitude" />
 		<input type="hidden" name="unit" value="' . $this->unit . '" class="unit" />
-		<button type="submit" class="wpslsubmit">' . $this->options['buttontext'] . '</button>
+		<button type="submit" class="wpslsubmit">' . html_entity_decode($this->options['buttontext']) . '</button>
 	</div>
 	</form>';
 

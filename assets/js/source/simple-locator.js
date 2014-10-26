@@ -1,3 +1,10 @@
+function openInfoWindow(id){
+	google.maps.event.trigger(markers[id], 'click');
+	googlemap.panTo(markers[id].getPosition());
+}
+var markers = [];
+var googlemap = '';
+
 jQuery(function($){
 
 
@@ -107,8 +114,6 @@ function sendFormData(formelements)
 }
 
 
-
-
 /**
 * Load the results into the view
 */
@@ -145,6 +150,8 @@ function loadLocationResults(data, formelements)
 			if ( website ){
 				output = output + '<br /><a href="' + website + '" target="_blank">' + website + '</a>';
 			}
+
+			output += '<br /><a href="#" class="infowindow-open" onClick="openInfoWindow(' + i + ');">' + wpsl_locator.showonmap + '</a>';
 			output = output + '</li>';
 		}
 
@@ -153,6 +160,7 @@ function loadLocationResults(data, formelements)
 		$(formelements.results).removeClass('loading').html(output);
 
 		$(formelements.map).show();
+		$(formelements.zip).val('').blur();
 		showLocationMap(data, formelements);
 
 	} else {
@@ -168,6 +176,7 @@ function loadLocationResults(data, formelements)
 */
 function showLocationMap(data, formelements)
 {
+	markers = [];
 	var mapstyles = wpsl_locator.mapstyles;
 	var mapstyles = $.parseJSON(mapstyles);
 	var mapcont = $(formelements.map)[0];
@@ -181,10 +190,12 @@ function showLocationMap(data, formelements)
 			mapTypeControl: false,
 			zoom: 8,
 			styles: mapstyles,
+			panControl : false,
 			disableDefaultUI: disablecontrols,
 		}
 	var locations = [];
 	var infoWindow = new google.maps.InfoWindow(), marker, i;
+	
 	map = new google.maps.Map( mapcont, mapOptions );
 	
 	// Array of locations
@@ -192,7 +203,8 @@ function showLocationMap(data, formelements)
 		var title = data.results[i].title;
 		var lat = data.results[i].latitude;
 		var lng = data.results[i].longitude;
-		var location = [title,lat,lng];
+		var link = data.results[i].permalink;
+		var location = [title,lat,lng,link];
 		locations.push(location);
 	}
 	
@@ -211,10 +223,13 @@ function showLocationMap(data, formelements)
 		// Info window for each marker 
 		google.maps.event.addListener(marker, 'click', (function(marker, i) {
 			return function() {
-				infoWindow.setContent(locations[i][0]);
+				infoWindow.setContent('<h4>' + locations[i][0] + '</h4><p><a href="' + locations[i][3] + '">' + wpsl_locator.viewlocation + '</a></p>');
 				infoWindow.open(map, marker);
 			}
 		})(marker, i));
+
+		 // Push the marker to the global 'markers' array
+        markers.push(marker);
 		
 		// Automatically center the map fitting all markers on the screen
 		map.fitBounds(bounds);
@@ -224,6 +239,10 @@ function showLocationMap(data, formelements)
 	var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
 		google.maps.event.removeListener(boundsListener);
 	});
+
+	// Set the global map var
+	googlemap = map;
+
 }
 
 }); // jQuery

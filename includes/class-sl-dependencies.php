@@ -103,6 +103,8 @@ class WPSL_Dependencies {
 				'locations' => __('locations', 'wpsimplelocator'),
 				'found_within' => __('found within', 'wpsimplelocator'),
 				'phone' => __('Phone', 'wpsimplelocator'),
+				'showonmap' => __('Show on Map', 'wpsimplelocator'),
+				'viewlocation' => __('View Location', 'wpsimplelocator'),
 				'mappin' => get_option('wpsl_map_pin'),
 				'mapstyles' => $mapstyles
 			)

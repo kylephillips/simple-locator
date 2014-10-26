@@ -72,6 +72,11 @@ class WPSL_Dependencies {
 	public function scripts()
 	{
 		$this->addGoogleMaps();
+		
+		$mapstyles = get_option('wpsl_map_styles');
+		if ( $mapstyles ){
+			$mapstyles = str_replace(array("\n", "\t", "\r"), '', $mapstyles);
+		}
 
 		wp_register_script(
 			'simple-locator', 
@@ -90,9 +95,17 @@ class WPSL_Dependencies {
 				'location' => __('location', 'wpsimplelocator'),
 				'locations' => __('locations', 'wpsimplelocator'),
 				'found_within' => __('found within', 'wpsimplelocator'),
-				'phone' => __('Phone', 'wpsimplelocator')
+				'phone' => __('Phone', 'wpsimplelocator'),
+				'mapstyles' => $mapstyles
 			)
 		);
+
+		// Add Map styles
+		
+		// $mapstyles = array(
+  //   		'l10n_print_after' => $mapstyles
+		// );
+		// wp_localize_script('simple-locator', 'mapstyles', $mapstyles);
 	}
 
 

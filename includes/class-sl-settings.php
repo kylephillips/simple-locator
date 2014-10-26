@@ -83,6 +83,7 @@ class WPSL_Settings {
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_field_type' );
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_lat_field' );
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_lng_field' );
+		register_setting( 'wpsimplelocator-map', 'wpsl_map_styles' );
 	}
 
 
@@ -110,6 +111,26 @@ class WPSL_Settings {
 			
 		}
 		return $post_types;
+	}
+
+
+	/**
+	* Get all custom fields associated with a post type
+	* @param string post_type
+	*/
+	private function getFieldsForPostType($post_type)
+	{
+		global $wpdb;
+		$post_table = $wpdb->prefix . 'posts';
+		$sql = "SELECT DISTINCT meta_key FROM wp_posts AS p LEFT JOIN wp_postmeta AS m ON m.post_id = p.id WHERE p.post_type = '$post_type' AND meta_key NOT LIKE '\_%'";
+		$results = $wpdb->get_results($sql);
+		
+		$exclude = array('_wp_page_template', '_edit_lock', '_edit_last', '_wp_trash_meta_status', '_wp_trash_meta_time', 'layout', 'position', 'rule', 'hide_on_screen');
+		
+		foreach ( $results as $field )
+		{
+			if ( !in_array($field->meta_key, $exclude) ) echo $field->meta_key . '<br>';
+		}
 	}
 
 

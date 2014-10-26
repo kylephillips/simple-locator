@@ -157,16 +157,19 @@ function loadLocationResults(data, formelements)
 */
 function showLocationMap(data, formelements)
 {
-	var mapcont = $(formelements.map)[0];
-	console.log(mapcont);
+	var mapstyles = wpsl_locator.mapstyles;
+	var mapstyles = $.parseJSON(mapstyles);
 
+	var mapcont = $(formelements.map)[0];
 	var map;
 	var bounds = new google.maps.LatLngBounds();
 	var mapOptions = {
 			mapTypeId: 'roadmap',
 			mapTypeControl: false,
-			zoom: 8
+			zoom: 8,
+			styles: mapstyles
 		}
+		console.log(mapOptions);
 	var locations = [];
 	var infoWindow = new google.maps.InfoWindow(), marker, i;
 	map = new google.maps.Map(mapcont, mapOptions);

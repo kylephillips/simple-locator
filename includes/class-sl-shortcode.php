@@ -49,7 +49,8 @@ class WPSL_Shortcode {
 			'mapheight' => '250',
 			'mapcontainer' => '.wpsl-map',
 			'resultscontainer' => '.wpsl-results',
-			'buttontext' => 'Search'
+			'buttontext' => __('Search', 'wpsimplelocator'),
+			'ziplabel' => __('Zip/Postal Code', 'wpsimplelocator')
 		), $options);
 	}
 

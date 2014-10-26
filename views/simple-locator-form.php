@@ -11,7 +11,7 @@ $output .= '
 <form>
 	<div class="wpsl-error alert alert-error" style="display:none;"></div>
 	<div class="zip form-field">
-		<label for="zip">' . __('Zip/Postal Code', 'wpsimplelocator') . '</label>
+		<label for="zip">' . $this->options['ziplabel'] . '</label>
 		<input type="tel" name="zip" class="zipcode" />
 	</div>
 	<div class="distance form-field">

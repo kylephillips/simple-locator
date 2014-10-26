@@ -106,7 +106,7 @@ jQuery(function($){
 
 	/**
 	* ------------------------------------------------------
-	* Settings Page
+	* Settings Page – Post Type & Geocode Fields
 	* ------------------------------------------------------
 	*/
 	$(document).ready(function(){
@@ -157,6 +157,40 @@ jQuery(function($){
 	$(document).on('change', '#lng_select', function(){
 		var value = $(this).val();
 		$('#wpsl_lng_field').val(value);
+	});
+
+
+
+	/**
+	* ------------------------------------------------------
+	* Settings Page - Map Pin
+	* ------------------------------------------------------
+	*/
+	$(document).ready(function() {
+		$(document).on('click', '#upload_image_button', function() {
+			formfield = $('#upload_image').attr('name');
+			tb_show('', 'media-upload.php?type=image&TB_iframe=true');
+			return false;
+		});
+
+		window.send_to_editor = function(html) {
+			imgurl = $('img',html).attr('src');
+			var imagehtml = '<img src="' + imgurl + '" id="map-pin-image" />';
+			imagehtml += '<input id="remove_map_pin" type="button" value="Remove" class="button action" style="margin-right:5px;margin-left:10px;" />';
+			$('#map-pin-image-cont').append(imagehtml);
+			$('#upload_image_button').remove();
+			$('#wpsl_map_pin').val(imgurl);
+			tb_remove();
+		}
+
+	});
+
+	$(document).on('click', '#remove_map_pin', function(e){
+		e.preventDefault();
+		$('#map-pin-image').remove();
+		$('#wpsl_map_pin').prop('value', '');
+		$('#map-pin-image-cont').append('<input id="upload_image_button" type="button" value="Upload" class="button action" />');
+		$(this).remove();
 	});
 	
 

@@ -165,6 +165,7 @@ function showLocationMap(data, formelements)
 	var mapstyles = $.parseJSON(mapstyles);
 	var mapcont = $(formelements.map)[0];
 	var disablecontrols = ( wpsl_locator_options.mapcontrols === 'show') ? false : true;
+	var mappin = ( wpsl_locator.mappin ) ? wpsl_locator.mappin : '';
 
 	var map;
 	var bounds = new google.maps.LatLngBounds();
@@ -173,7 +174,7 @@ function showLocationMap(data, formelements)
 			mapTypeControl: false,
 			zoom: 8,
 			styles: mapstyles,
-			disableDefaultUI: disablecontrols
+			disableDefaultUI: disablecontrols,
 		}
 	var locations = [];
 	var infoWindow = new google.maps.InfoWindow(), marker, i;
@@ -184,8 +185,8 @@ function showLocationMap(data, formelements)
 		var title = data.results[i].title;
 		var lat = data.results[i].latitude;
 		var lng = data.results[i].longitude;
-		var counselor = [title,lat,lng];
-		locations.push(counselor);
+		var location = [title,lat,lng];
+		locations.push(location);
 	}
 	
 	// Loop through array of markers & place each one on the map  
@@ -196,7 +197,8 @@ function showLocationMap(data, formelements)
 		marker = new google.maps.Marker({
 			position: position,
 			map: map,
-			title: locations[i][0]
+			title: locations[i][0],
+			icon: mappin
 		});	
 
 		// Info window for each marker 

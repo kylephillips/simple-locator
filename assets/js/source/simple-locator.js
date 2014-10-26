@@ -1,6 +1,11 @@
+/**
+* Open a map info window, panto and zoom to bounds when a result is clicked
+*/
 function openInfoWindow(id){
 	google.maps.event.trigger(markers[id], 'click');
 	googlemap.panTo(markers[id].getPosition());
+	googlemap.fitBounds(markers[id].getPosition());
+	googlemap.setZoom(12);
 }
 var markers = [];
 var googlemap = '';
@@ -176,9 +181,13 @@ function loadLocationResults(data, formelements)
 */
 function showLocationMap(data, formelements)
 {
+	// Reset the global markers array
 	markers = [];
+
+	// Set the optional user parameters
 	var mapstyles = wpsl_locator.mapstyles;
-	var mapstyles = $.parseJSON(mapstyles);
+	if ( mapstyles !== "" ) var mapstyles = $.parseJSON(mapstyles);
+	
 	var mapcont = $(formelements.map)[0];
 	var disablecontrols = ( wpsl_locator_options.mapcontrols === 'show') ? false : true;
 	var mappin = ( wpsl_locator.mappin ) ? wpsl_locator.mappin : '';

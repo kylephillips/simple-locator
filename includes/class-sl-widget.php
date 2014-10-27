@@ -41,6 +41,7 @@ class WPSL_Widget extends WP_Widget {
 		$this->options['mapcontainer'] = '.wpsl-map';
 		$this->options['resultscontainer'] = '.wpsl-results';
 		$this->options['buttontext'] = __('Search', 'wpsimplelocator');
+		$this->options['mapcontrols'] = 'show';
 	}
 
 

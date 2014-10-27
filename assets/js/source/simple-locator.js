@@ -11,6 +11,15 @@ function openInfoWindow(id){
 var markers = [];
 var googlemap = '';
 
+/**
+* Callback functions available to users
+* Place in Theme scripts to perform actions after map has rendered
+*/
+function wpsl_after_render(){}
+function wpsl_click_marker(marker, i){}
+
+
+
 jQuery(function($){
 
 
@@ -137,7 +146,7 @@ function loadLocationResults(data, formelements)
 		
 		for( i = 0; i < data.results.length; i++ ) {
 			
-			output = output + '<li><strong>';
+			output = output + '<li data-result=' + i + '><strong>';
 			output = output + '<a href="' + data.results[i].permalink + '">';
 			output = output + data.results[i].title;
 			output = output + '</a></strong><br />';
@@ -168,6 +177,7 @@ function loadLocationResults(data, formelements)
 		$(formelements.map).show();
 		$(formelements.zip).val('').blur();
 		showLocationMap(data, formelements);
+		wpsl_after_render();
 
 	} else {
 		// No results were returned
@@ -235,13 +245,16 @@ function showLocationMap(data, formelements)
 			return function() {
 				infoWindow.setContent('<h4>' + locations[i][0] + '</h4><p><a href="' + locations[i][3] + '">' + wpsl_locator.viewlocation + '</a></p>');
 				infoWindow.open(map, marker);
+
+				// Callback function
+				wpsl_click_marker(marker, i);
 			}
 		})(marker, i));
 
 		 // Push the marker to the global 'markers' array
         markers.push(marker);
 		
-		// Automatically center the map fitting all markers on the screen
+		// Center the Map
 		map.fitBounds(bounds);
 	}
 

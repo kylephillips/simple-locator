@@ -104,8 +104,7 @@ class WPSL_Settings {
 	{
 		$tab = ( isset($_GET['tab']) ) ? $_GET['tab'] : 'general';
 		include( dirname( dirname(__FILE__) ) . '/views/settings.php');
-	}
-	
+	}	
 
 
 }

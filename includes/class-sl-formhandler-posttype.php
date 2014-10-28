@@ -1,6 +1,7 @@
 <?php
 /**
 * Ajax Handler for choosing post type fields in settings
+* Returns a response with html option list
 */
 require_once('class-sl-repository-field.php');
 

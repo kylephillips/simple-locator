@@ -109,7 +109,7 @@ class WPSL_Handler {
 		$this->query_data['lat_field'] = get_option('wpsl_lat_field');
 		$this->query_data['lng_field'] = get_option('wpsl_lng_field');
 		$this->query_data['diameter'] = ( $this->data['unit'] == "miles" ) ? 3959 : 6371;
-		$this->query_data['distance_unit'] = ( $this->data['unit'] == "miles" ) ? 69 : 111.045;
+		$this->query_data['distance_unit'] = ( $this->data['unit'] == "miles" ) ? 69 : 111.045;		
 	}
 
 
@@ -122,17 +122,13 @@ class WPSL_Handler {
 			SELECT 
 			p.post_title AS title,
 			p.ID AS id,
-			p.post_content AS content,";
-			if ( $this->query_data['post_type'] == 'location' ) :
-			$sql .= "
+			p.post_content AS content,
 			t.meta_value AS phone,
 			a.meta_value AS address,
 			c.meta_value AS city,
 			s.meta_value AS state,
 			z.meta_value AS zip,
-			w.meta_value AS website,";
-			endif;
-			$sql .= "
+			w.meta_value AS website,
 			lat.meta_value AS latitude,
 			lng.meta_value AS longitude,
 			( " . $this->query_data['diameter'] . " * acos( cos( radians(@origlat) ) * cos( radians( lat.meta_value ) ) 
@@ -142,9 +138,7 @@ class WPSL_Handler {
 			LEFT JOIN " . $this->query_data['meta_table'] . " AS lat
 			ON p.ID = lat.post_id AND lat.meta_key = '" . $this->query_data['lat_field'] . "'
 			LEFT JOIN " . $this->query_data['meta_table'] . " AS lng
-			ON p.ID = lng.post_id AND lng.meta_key = '" . $this->query_data['lng_field'] . "'";
-			if ( $this->query_data['post_type'] == 'location' ) :
-			$sql .= "
+			ON p.ID = lng.post_id AND lng.meta_key = '" . $this->query_data['lng_field'] . "'
 			LEFT JOIN " . $this->query_data['meta_table'] . " AS c
 			ON p.ID = c.post_id AND c.meta_key = 'wpsl_city'
 			LEFT JOIN " . $this->query_data['meta_table'] . " AS a
@@ -156,9 +150,7 @@ class WPSL_Handler {
 			LEFT JOIN " . $this->query_data['meta_table'] . " AS t
 			ON p.ID = t.post_id AND t.meta_key = 'wpsl_phone'
 			LEFT JOIN " . $this->query_data['meta_table'] . " AS w
-			ON p.ID = w.post_ID AND w.meta_key = 'wpsl_website'";
-			endif;
-			$sql .= "
+			ON p.ID = w.post_ID AND w.meta_key = 'wpsl_website'
 			WHERE lat.meta_value
 				BETWEEN @origlat - (@distance / @dist_unit)
 				AND @origlat + (@distance / @dist_unit)

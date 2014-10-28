@@ -74,6 +74,6 @@
 		value="<?php echo ( get_option('wpsl_lat_field') ) ? get_option('wpsl_lat_field') : 'wpsl_latitude'; ?>" />
 
 		<input type="hidden" id="wpsl_lng_field" name="wpsl_lng_field"
-		value="<?php echo ( get_option('wpsl_lng_field') ) ? get_option('wpsl_lat_field') : 'wpsl_longitude'; ?>" />
+		value="<?php echo ( get_option('wpsl_lng_field') ) ? get_option('wpsl_lng_field') : 'wpsl_longitude'; ?>" />
 	</td>
 </tr>

@@ -6,7 +6,8 @@ class WPSL_PostType {
 
 	function __construct()
 	{
-		add_action( 'init', array( $this, 'register') );
+		add_action( 'init', array( $this, 'registerLocation') );
+		add_action( 'init', array( $this, 'registerMaps') );
 		add_filter( 'manage_location_posts_columns', array($this,'locations_table_head'));
 		add_action( 'manage_location_posts_custom_column', array($this, 'locations_table_columns'), 10, 2);
 	}
@@ -15,28 +16,51 @@ class WPSL_PostType {
 	/**
 	* Register the Location Post Type
 	*/
-	public function register()
+	public function registerLocation()
 	{
 		$labels = array(
 			'name' => __('Locations'),  
-		    'singular_name' => __('Location'),
+			'singular_name' => __('Location'),
 			'add_new_item'=> 'Add Location',
 			'edit_item' => 'Edit Location',
 			'view_item' => 'View Location'
 		);
 		$args = array(
-		 	'labels' => $labels,
-		    'public' => true,  
-		    'show_ui' => $this->check_post_type(),
+			'labels' => $labels,
+			'public' => true,  
+			'show_ui' => $this->check_post_type(),
 			'menu_position' => 5,
 			'menu_icon' => 'dashicons-post-status',
-		    'capability_type' => 'post',  
-		    'hierarchical' => false,  
-		    'has_archive' => true,
-		    'supports' => array('title','editor','thumbnail'),
-		    'rewrite' => array('slug' => 'location', 'with_front' => false)
+			'capability_type' => 'post',  
+			'hierarchical' => false,  
+			'has_archive' => true,
+			'supports' => array('title','editor','thumbnail'),
+			'rewrite' => array('slug' => 'location', 'with_front' => false)
 		);
 		register_post_type( 'location' , $args );
+	}
+
+
+	/**
+	* Register the Maps Post Type
+	* (for setting custom map styles)
+	*/
+	public function registerMaps()
+	{
+		$labels = array(
+			'name' => __('Simple Locator Maps'),  
+			'singular_name' => __('Simple Locator Map')
+		);
+		$args = array(
+			'labels' => $labels,
+			'public' => false,  
+			'show_ui' => false,
+			'capability_type' => 'post',  
+			'hierarchical' => false,  
+			'has_archive' => false,
+			'supports' => array('title','editor','thumbnail'),
+		);
+		register_post_type( 'wpslmaps' , $args );
 	}
 
 

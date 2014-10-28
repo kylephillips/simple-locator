@@ -130,6 +130,7 @@ jQuery(function($){
 			$('.latlng').show();
 		} else {
 			$('#field_wpsl').removeAttr('disabled');
+			select_wpsl_fields();
 		}
 
 		// Load field selections with select post type's custom fields
@@ -142,8 +143,7 @@ jQuery(function($){
 		var type = $(this).val();
 		if ( type == 'wpsl' ){
 			$('.latlng').hide();
-			$('#wpsl_lat_field').val('wpsl_latitude');
-			$('#wpsl_lng_field').val('wpsl_longitude');
+			select_wpsl_fields();
 		} else {
 			$('.latlng').show();
 			update_lat_lng_values();
@@ -165,6 +165,19 @@ jQuery(function($){
 		var lng = $('#lng_select').val();
 		$('#wpsl_lat_field').val(lat);
 		$('#wpsl_lng_field').val(lng);
+	}
+
+	/**
+	* Select the WPSL latlng fields
+	*/
+	function select_wpsl_fields()
+	{	
+		$('#field_wpsl').attr('checked','checked');
+		$('#field_custom').removeAttr('checked','checked');
+		$('#wpsl_lat_field').val('wpsl_latitude');
+		$('#wpsl_lng_field').val('wpsl_longitude');
+		$('#lat_select').val('wpsl_latitude');
+		$('#lng_select').val('wpsl_longitude');
 	}
 
 
@@ -221,6 +234,9 @@ jQuery(function($){
 			success: function(data){
 				$('#lat_select, #lng_select').html(data.fields);
 				update_lat_lng_values();
+				if ( post_type === 'location' ){
+					select_wpsl_fields();
+				}
 			}
 		});
 	}

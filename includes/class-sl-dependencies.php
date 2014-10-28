@@ -51,6 +51,13 @@ class WPSL_Dependencies {
 				array('jquery'), 
 				'1.0'
 			);
+			wp_localize_script( 
+			'simple-locator-admin', 
+			'wpsl_locator', 
+			array( 
+				'locatorNonce' => wp_create_nonce( 'wpsl_locator-locator-nonce' )
+			)
+		);
 		}
 	}
 

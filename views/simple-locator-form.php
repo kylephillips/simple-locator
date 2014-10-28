@@ -1,11 +1,17 @@
 <?php
 $output = "";
+
+// Is this a widget form or a shortcode form
 if ( isset($widget_instance) ) {
 	$output .= '<div class="simple-locator-widget">';
 	$mapheight = $instance['map_height'];
+	$this->options['ziplabel'] = __('Zip/Postal Code', 'wpsimplelocator');
+	$this->options['mapcontainer'] = '.wpsl-map';
 } else {
 	$mapheight = $this->options['mapheight'];
 }
+
+
 $output .= '
 <div class="simple-locator-form">
 <form>

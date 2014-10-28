@@ -131,6 +131,10 @@ jQuery(function($){
 		} else {
 			$('#field_wpsl').removeAttr('disabled');
 		}
+
+		// Load field selections with select post type's custom fields
+		$('#lat_select, #lng_select').empty();
+		get_fields_for_posttype(value);
 	});
 
 
@@ -142,22 +146,26 @@ jQuery(function($){
 			$('#wpsl_lng_field').val('wpsl_longitude');
 		} else {
 			$('.latlng').show();
-			var lat = $('#lat_select').val();
-			var lng = $('#lng_select').val();
-			$('#wpsl_lat_field').val(lat);
-			$('#wpsl_lng_field').val(lng);
+			update_lat_lng_values();
 		}
 	});
 
 	// Update lat field on select change
-	$(document).on('change', '#lat_select', function(){
-		var value = $(this).val();
-		$('#wpsl_lat_field').val(value);
+	$(document).on('change', '#lat_select, #lng_select', function(){
+		update_lat_lng_values();
 	});
-	$(document).on('change', '#lng_select', function(){
-		var value = $(this).val();
-		$('#wpsl_lng_field').val(value);
-	});
+
+
+	/**
+	* Update the hidden latitude and longitude fields
+	*/
+	function update_lat_lng_values()
+	{
+		var lat = $('#lat_select').val();
+		var lng = $('#lng_select').val();
+		$('#wpsl_lat_field').val(lat);
+		$('#wpsl_lng_field').val(lng);
+	}
 
 
 
@@ -192,6 +200,31 @@ jQuery(function($){
 		$('#map-pin-image-cont').append('<input id="upload_image_button" type="button" value="Upload" class="button action" />');
 		$(this).remove();
 	});
+
+
+
+	/**
+	* ------------------------------------------------------
+	* Settings Page - AJAX Field List for Post Types
+	* ------------------------------------------------------
+	*/
+	function get_fields_for_posttype(post_type)
+	{
+		$.ajax({
+			type: 'GET',
+			url: ajaxurl,
+			data: {
+				action: 'wpslposttype',
+				nonce: wpsl_locator.locatorNonce,
+				post_type: post_type
+			},
+			success: function(data){
+				$('#lat_select, #lng_select').html(data.fields);
+				update_lat_lng_values();
+			}
+		});
+	}
+
 	
 
 }); // jQuery

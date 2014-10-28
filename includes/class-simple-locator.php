@@ -2,6 +2,7 @@
 require_once('class-sl-activation.php');
 require_once('class-sl-shortcode.php');
 require_once('class-sl-formhandler.php');
+require_once('class-sl-formhandler-posttype.php');
 require_once('class-sl-settings.php');
 require_once('class-sl-metafields.php');
 require_once('class-sl-posttype.php');
@@ -43,8 +44,13 @@ class WPSL_SimpleLocator {
 	public function formActions()
 	{
 		if ( is_admin() ) {
+
+			// Front End Form
 			add_action( 'wp_ajax_nopriv_locate', 'wpsl_form_handler' );
 			add_action( 'wp_ajax_locate', 'wpsl_form_handler' );
+
+			// Admin Settings Post Type Select
+			add_action( 'wp_ajax_wpslposttype', 'wpsl_posttype_handler' );
 		}
 	}
 

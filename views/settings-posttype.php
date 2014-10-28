@@ -10,7 +10,7 @@
 	<td>
 		<select name="wpsl_post_type" id="wpsl_post_type">
 		<?php
-		foreach ( $this->getPostTypes() as $type ){
+		foreach ( $this->field_repo->getPostTypes() as $type ){
 			$out = '<option value="' . $type['name'] . '"';
 			if ( $type['name'] == $this->post_type ) $out .= ' selected';
 			$out .= '>';
@@ -43,7 +43,15 @@
 	<th scope="row"><?php _e('Latitude Field', 'wpsimplelocator'); ?></th>
 	<td>
 		<select id="lat_select">';
-			<?php echo $this->show_field_options('wpsl_lat_field'); ?>
+			<?php 
+				$fields = $this->field_repo->getFieldsForPostType($this->post_type);
+				foreach ( $fields as $field ){
+					$out = '<option value="' . $field . '"';
+					if ( $field == get_option('wpsl_lat_field') ) $out .= ' selected';
+					$out .= '>' . $field . '</option>';
+					echo $out;
+				}
+			?>
 		</select>
 	</td>
 </tr>
@@ -51,7 +59,15 @@
 	<th scope="row"><?php _e('Longitude Field', 'wpsimplelocator'); ?></th>
 	<td>
 		<select id="lng_select">
-			<?php echo $this->show_field_options('wpsl_lng_field'); ?>
+			<?php 
+				$fields = $this->field_repo->getFieldsForPostType($this->post_type);
+				foreach ( $fields as $field ){
+					$out = '<option value="' . $field . '"';
+					if ( $field == get_option('wpsl_lng_field') ) $out .= ' selected';
+					$out .= '>' . $field . '</option>';
+					echo $out;
+				}
+			?>
 		</select>
 
 		<input type="hidden" id="wpsl_lat_field" name="wpsl_lat_field" 

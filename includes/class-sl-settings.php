@@ -22,6 +22,12 @@ class WPSL_Settings {
 	private $post_type;
 
 	/**
+	* Map Options
+	* @var array
+	*/
+	private $map_options;
+
+	/**
 	* Field Respository
 	*/
 	private $field_repo;
@@ -33,6 +39,7 @@ class WPSL_Settings {
 		$this->setUnit();
 		$this->setFieldType();
 		$this->setPostType();
+		$this->setMapOptions();
 		add_action( 'admin_menu', array( $this, 'registerPage' ) );
 		add_action( 'admin_init', array($this, 'registerSettings' ) );
 	}
@@ -66,6 +73,15 @@ class WPSL_Settings {
 
 
 	/**
+	* Set the Map Options
+	*/
+	private function setMapOptions()
+	{
+		$this->map_options['type'] = get_option('wpsl_map_styles_type');
+	}
+
+
+	/**
 	* Add the admin menu item
 	*/
 	public function registerPage()
@@ -93,6 +109,7 @@ class WPSL_Settings {
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_field_type' );
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_lat_field' );
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_lng_field' );
+		register_setting( 'wpsimplelocator-map', 'wpsl_map_styles_type' );
 		register_setting( 'wpsimplelocator-map', 'wpsl_map_styles' );
 	}
 

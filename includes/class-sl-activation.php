@@ -80,6 +80,9 @@ class WPSL_Activation {
 		}
 		if ( !get_option('wpsl_map_pin') ){
 			update_option('wpsl_map_pin', '');
+		} 
+		if ( !get_option('wpsl_map_styles_type') ){
+			update_option('wpsl_map_styles_type', 'none');
 		}
 	}
 

@@ -18,6 +18,7 @@
 <tr valign="top" id="map-styles-choice" <?php if ( $this->map_options['type'] !== 'choice' ) echo 'style="display:none;"'; ?>>
 	<td colspan="2" style="padding:0;">
 		<h3>Choose a Style</h3>
+		<ul id="map-styles"></ul>
 	</td>
 </tr>
 <tr valign="top" id="map-styles-custom" <?php if ( $this->map_options['type'] !== 'custom' ) echo 'style="display:none;"'; ?>>

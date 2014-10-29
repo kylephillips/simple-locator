@@ -1,0 +1,1 @@
+jQuery(function(o){o(document).ready(function(){console.log(wpsl_locator_mapstyles)})});

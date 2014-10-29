@@ -2,6 +2,8 @@
 /**
 * Styles & Scripts required by Simple Locator
 */
+require_once('class-sl-repository-mapstyles.php');
+
 class WPSL_Dependencies {
 
 	/**
@@ -52,12 +54,27 @@ class WPSL_Dependencies {
 				'1.0'
 			);
 			wp_localize_script( 
-			'simple-locator-admin', 
-			'wpsl_locator', 
-			array( 
-				'locatorNonce' => wp_create_nonce( 'wpsl_locator-locator-nonce' )
-			)
-		);
+				'simple-locator-admin', 
+				'wpsl_locator', 
+				array( 
+					'locatorNonce' => wp_create_nonce( 'wpsl_locator-locator-nonce' )
+				)
+			);
+		}
+
+		// Maps
+		if ( $screen->id == 'settings_page_wp_simple_locator' ){
+			wp_enqueue_script(
+				'simple-locator-admin-maps', 
+				$this->plugin_dir . '/assets/js/simple-locator-admin-maps.js', 
+				array('jquery'), 
+				'1.0'
+			);
+			wp_localize_script( 
+				'simple-locator-admin-maps', 
+				'wpsl_locator_mapstyles', 
+				$this->mapStyleData()
+			);
 		}
 	}
 
@@ -116,6 +133,17 @@ class WPSL_Dependencies {
 				'mapstyles' => $mapstyles
 			)
 		);
+	}
+
+
+	/**
+	* Get Map Style Data
+	* for use in settings page display of google maps
+	*/
+	private function mapStyleData()
+	{
+		$maps = new WPSL_Repository_MapStyles;
+		return $maps->getAllStyles();
 	}
 
 

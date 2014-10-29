@@ -1,11 +1,12 @@
 <?php
-
+require_once('class-sl-migration-maps.php');
 class WPSL_Activation {
 
 	/**
 	* Plugin Version
 	*/
 	private $version;
+
 
 	public function __construct()
 	{
@@ -22,6 +23,7 @@ class WPSL_Activation {
 	{
 		$this->checkVersions();
 		$this->setOptions();
+		$this->migrateMaps();
 	}
 
 
@@ -86,5 +88,13 @@ class WPSL_Activation {
 		}
 	}
 
+
+	/**
+	* Migrate Map Styles
+	*/
+	private function migrateMaps()
+	{
+		new WPSL_Migration_Maps;
+	}
 
 }

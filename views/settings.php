@@ -15,5 +15,5 @@
 			?>
 		</table>
 		<?php submit_button(); ?>
-	</form>
+	</form>	
 </div>

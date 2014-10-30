@@ -26,6 +26,6 @@ License: GPLv2 or later.
 */
 require('vendor/autoload.php');
 if ( !class_exists('WPSL_SimpleLocator') ) :
-	require_once('SimpleLocator/class-simple-locator.php');
+	require_once('SimpleLocator/SimpleLocator.php');
 	$wpsimplelocator = new WPSL_SimpleLocator;
 endif;

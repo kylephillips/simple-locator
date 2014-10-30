@@ -18,6 +18,7 @@ class WPSL_Repository_MapStyles {
 			$styles[$i]['title'] = get_the_title();
 			$styles[$i]['styles'] = get_the_content();
 			$styles[$i]['id'] = get_the_id();
+			$styles[$i]['selected'] = ( get_option('wpsl_map_styles_choice') == get_the_id() ) ? true : false;
 			$i++;
 		endwhile; endif; wp_reset_postdata();
 		return $styles;

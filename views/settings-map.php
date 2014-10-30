@@ -19,6 +19,7 @@
 	<td colspan="2" style="padding:0;">
 		<h3>Choose a Style</h3>
 		<ul id="map-styles"></ul>
+		<input type="hidden" id="wpsl_map_styles_choice" name="wpsl_map_styles_choice" />
 	</td>
 </tr>
 <tr valign="top" id="map-styles-custom" <?php if ( $this->map_options['type'] !== 'custom' ) echo 'style="display:none;"'; ?>>

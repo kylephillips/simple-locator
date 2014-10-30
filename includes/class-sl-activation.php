@@ -86,6 +86,9 @@ class WPSL_Activation {
 		if ( !get_option('wpsl_map_styles_type') ){
 			update_option('wpsl_map_styles_type', 'none');
 		}
+		if ( !get_option('wpsl_map_styles_choice') ){
+			update_option('wpsl_map_styles_choice', '');
+		}
 	}
 
 

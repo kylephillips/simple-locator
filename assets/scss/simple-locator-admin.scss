@@ -110,6 +110,7 @@
 			background-size: 40px;
 			background-position: center;
 			box-sizing: border-box;
+			transition: all 200ms ease;
 		}
 		h4 {
 			margin: 0 0 5px 0;
@@ -122,6 +123,7 @@
 			color: #fff;
 			text-decoration: none;
 			transition: all 200ms ease;
+			box-sizing: border-box;
 			&:hover {
 				background-color: #0074a2;
 			}
@@ -130,10 +132,12 @@
 			.map {
 				border: 4px solid #0074a2;
 				border-bottom: 0;
+				transition: all 200ms ease;
 			}
 			.choose-style {
 				border: 4px solid #0074a2;
 				border-top: 0;
+				border-bottom: 0;
 				background-color: #0074a2;
 			}
 		}

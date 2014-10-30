@@ -7,12 +7,30 @@ jQuery(function($){
 		loopMaps();
 	});
 
+
+	$(document).on('click', '.choose-style', function(e){
+		e.preventDefault();
+		selectMapStyle($(this));
+	});
+
+	/**
+	* Select a Map Style
+	*/
+	function selectMapStyle(item)
+	{
+		var style_id = $(item).attr('href');
+		$('#wpsl_map_styles_choice').val(style_id);
+		$('#map-styles li').removeClass('active');
+		$(item).parent('li').addClass('active');
+	}
+
 	/**
 	* Load the Map Choices
 	*/
 	function loopMaps()
 	{
 		$.each(wpsl_locator_mapstyles, function(i, map){
+			console.log(map);
 			buildDOM(i, map);
 			loadMap(map);
 		});
@@ -24,13 +42,14 @@ jQuery(function($){
 	*/
 	function buildDOM(i, map)
 	{
-		var out = '<li';
-		if ( i % 3 === 0 ) out += ' class="first"';
-		out += '>';
+		var out = '<li class="';
+		if ( i % 3 === 0 ) out += 'first';
+		if ( map.selected ) out += ' active';
+		out += '">';
 		out += '<h4>' + map.title + '</h4>';
 		out += '<div class="map" id="map_' + map.id + '"></div>';
 		out += '<a href="' + map.id + '" class="choose-style">';
-		out += 'Choose';
+		out += 'Use Style';
 		out += '</a>';
 		out += '</li>';
 		$('#map-styles').append(out);

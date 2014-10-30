@@ -16,6 +16,7 @@ class WPSL_Shortcode {
 	public function __construct()
 	{
 		$this->setUnit();
+		$this->styles_repo = new WPSL_Repository_MapStyles;
 		add_shortcode('wp_simple_locator', array($this, 'renderView'));
 	}
 
@@ -76,14 +77,15 @@ class WPSL_Shortcode {
 	*/ 
 	private function localizeOptions()
 	{
+		$localized_data = array(
+			'mapcont' => $this->options['mapcontainer'],
+			'resultscontainer' => $this->options['resultscontainer'],
+			'mapcontrols' => $this->options['mapcontrols']
+		);
 		wp_localize_script( 
 			'simple-locator', 
 			'wpsl_locator_options', 
-			array( 
-				'mapcont' => $this->options['mapcontainer'],
-				'resultscontainer' => $this->options['resultscontainer'],
-				'mapcontrols' => $this->options['mapcontrols']
-			)
+			$localized_data
 		);
 	}
 

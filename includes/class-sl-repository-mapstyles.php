@@ -24,4 +24,32 @@ class WPSL_Repository_MapStyles {
 		return $styles;
 	}
 
+
+	/**
+	* Get Styles for JS Localization
+	*/
+	public function getLocalizedStyles()
+	{
+		$style_type = get_option('wpsl_map_styles_type');
+		if ( $style_type == 'none' ) return '';
+		if ( $style_type == 'choice' ) return $this->getSelectedStyles();
+		return ( get_option('wpsl_map_styles') ) ? json_decode(get_option('wpsl_map_styles')) : '';
+	}
+
+
+	/**
+	* Get the selected style
+	*/
+	private function getSelectedStyles()
+	{
+		$style_query = new WP_Query(array(
+			'post_type' => 'wpslmaps',
+			'p' => get_option('wpsl_map_styles_choice'),
+			'posts_per_page' => 1
+		));
+		if ( $style_query->have_posts() ) : while ( $style_query->have_posts() ) : $style_query->the_post();
+			return json_decode(get_the_content());
+		endwhile; endif; wp_reset_postdata();
+	}
+
 }

@@ -7,10 +7,13 @@ jQuery(function($){
 		loopMaps();
 	});
 
-
 	$(document).on('click', '.choose-style', function(e){
 		e.preventDefault();
 		selectMapStyle($(this));
+	});
+
+	$(document).on('change', '#wpsl_map_styles_type', function(){
+		if ( $(this).val() === 'choice' ) loopMaps();
 	});
 
 	/**
@@ -29,8 +32,8 @@ jQuery(function($){
 	*/
 	function loopMaps()
 	{
+		$('#map-styles').empty();
 		$.each(wpsl_locator_mapstyles, function(i, map){
-			console.log(map);
 			buildDOM(i, map);
 			loadMap(map);
 		});

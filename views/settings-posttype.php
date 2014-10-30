@@ -34,7 +34,7 @@
 		<p>
 			<label for="field_custom" class="wpsl-field-type">
 				<input type="radio" name="wpsl_field_type" id="field_custom" value="custom" <?php if ( $this->field_type == 'custom' ) echo ' checked'; ?>>
-				<?php _e('Use Other Custom Fields', 'wpsimplelocator'); ?>
+				<?php _e('Use Custom Fields', 'wpsimplelocator'); ?>
 			</label>
 		</p>
 	</td>

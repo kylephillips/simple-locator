@@ -41,16 +41,22 @@ $('.wpslsubmit').on('click', function(e){
 */
 function setFormElements(form)
 {
-	if ( wpsl_locator_options.mapcont.charAt(0) === '.' ){
-		var mapcont = $(form).find(wpsl_locator_options.mapcont);
-	} else {
-		var mapcont = $(wpsl_locator_options.mapcont);
-	}
+	var mapcont = '.wpsl-map';
+	var resultscontainer = '.wpsl-results';
 
-	if ( wpsl_locator_options.resultscontainer.charAt(0) === '.' ){
-		var resultscontainer = $(form).find(wpsl_locator_options.resultscontainer);
-	} else {
-		var resultscontainer = $(wpsl_locator_options.resultscontainer);
+	// Get the DOM elements for results. Either a class within the form or a unique ID
+	if ( (typeof wpsl_locator_options != "undefined") ){ // Not the Widget
+		if ( wpsl_locator_options.mapcont.charAt(0) === '.' ){
+			var mapcont = $(form).find(wpsl_locator_options.mapcont);
+		} else {
+			var mapcont = $(wpsl_locator_options.mapcont);
+		}
+
+		if ( wpsl_locator_options.resultscontainer.charAt(0) === '.' ){
+			var resultscontainer = $(form).find(wpsl_locator_options.resultscontainer);
+		} else {
+			var resultscontainer = $(wpsl_locator_options.resultscontainer);
+		}
 	}
 
 	formelements = {
@@ -137,11 +143,7 @@ function loadLocationResults(data, formelements)
 {
 	if ( data.result_count > 0 ){
 
-		if ( data.result_count === 1 ){
-			var location = wpsl_locator.location;
-		} else {
-			var location = wpsl_locator.locations;
-		}
+		var location = ( data.result_count === 1 ) ? wpsl_locator.location : wpsl_locator.locations;
 
 		var output = '<h3>' + data.result_count + ' ' + location + ' ' + wpsl_locator.found_within + ' ' + data.distance + ' ' + data.unit + ' of ' + data.zip + '</h3><ul>';
 		
@@ -178,6 +180,8 @@ function loadLocationResults(data, formelements)
 		$(formelements.map).show();
 		$(formelements.zip).val('').blur();
 		showLocationMap(data, formelements);
+
+		// Simple Locator Callback function after results have rendered
 		wpsl_after_render();
 
 	} else {
@@ -197,13 +201,16 @@ function showLocationMap(data, formelements)
 	markers = [];
 
 	// Set the optional user parameters
-	var mapstyles = wpsl_locator.mapstyles;
-	if ( mapstyles !== "" ) var mapstyles = $.parseJSON(mapstyles);
-	
+	var mapstyles = wpsl_locator.mapstyles;	
 	var mapcont = $(formelements.map)[0];
-	var disablecontrols = ( wpsl_locator_options.mapcontrols === 'show') ? false : true;
+	
+	if ( typeof wpsl_locator_options != 'undefined' ){
+		var disablecontrols = ( wpsl_locator_options.mapcontrols === 'show') ? false : true;
+	} else {
+		var disablecontrols = false;
+	}
+	
 	var mappin = ( wpsl_locator.mappin ) ? wpsl_locator.mappin : '';
-
 	var map;
 	var bounds = new google.maps.LatLngBounds();
 	var mapOptions = {
@@ -247,7 +254,7 @@ function showLocationMap(data, formelements)
 				infoWindow.setContent('<h4>' + locations[i][0] + '</h4><p><a href="' + locations[i][3] + '">' + wpsl_locator.viewlocation + '</a></p>');
 				infoWindow.open(map, marker);
 
-				// Callback function
+				// Simple Locator Callback function for click event
 				wpsl_click_marker(marker, i);
 			}
 		})(marker, i));

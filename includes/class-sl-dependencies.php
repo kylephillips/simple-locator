@@ -4,6 +4,7 @@
 */
 require_once('class-sl-repository-mapstyles.php');
 
+
 class WPSL_Dependencies {
 
 	/**
@@ -11,8 +12,16 @@ class WPSL_Dependencies {
 	*/
 	private $plugin_dir;
 
+	/**
+	* Map Styles Repository
+	* @var object
+	*/
+	private $styles_repo;
+
+
 	public function __construct()
 	{
+		$this->styles_repo = new WPSL_Repository_MapStyles;
 		$this->plugin_dir = plugins_url() . '/wp-simple-locator';
 		add_action( 'admin_enqueue_scripts', array( $this, 'adminStyles' ));
 		add_action( 'admin_enqueue_scripts', array( $this, 'adminScripts' ));
@@ -62,7 +71,7 @@ class WPSL_Dependencies {
 			);
 		}
 
-		// Maps
+		// Map Style Choices
 		if ( $screen->id == 'settings_page_wp_simple_locator' ){
 			wp_enqueue_script(
 				'simple-locator-admin-maps', 
@@ -101,13 +110,7 @@ class WPSL_Dependencies {
 	public function scripts()
 	{
 		wp_enqueue_script('jquery');
-		
 		$this->addGoogleMaps();
-		
-		$mapstyles = get_option('wpsl_map_styles');
-		if ( $mapstyles ){
-			$mapstyles = str_replace(array("\n", "\t", "\r"), '', $mapstyles);
-		}
 
 		wp_register_script(
 			'simple-locator', 
@@ -115,23 +118,25 @@ class WPSL_Dependencies {
 			'jquery', '1.0', 
 			true
 		);
+
+		$localized_data = array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'locatorNonce' => wp_create_nonce( 'wpsl_locator-locator-nonce' ),
+			'distance' => __( 'Distance', 'wpsimplelocator' ), 
+			'website' => __('Website', 'wpsimplelocator'),
+			'location' => __('location', 'wpsimplelocator'),
+			'locations' => __('locations', 'wpsimplelocator'),
+			'found_within' => __('found within', 'wpsimplelocator'),
+			'phone' => __('Phone', 'wpsimplelocator'),
+			'showonmap' => __('Show on Map', 'wpsimplelocator'),
+			'viewlocation' => __('View Location', 'wpsimplelocator'),
+			'mappin' => get_option('wpsl_map_pin')
+		);
+		$localized_data['mapstyles'] = $this->styles_repo->getLocalizedStyles();
 		wp_localize_script( 
 			'simple-locator', 
 			'wpsl_locator', 
-			array( 
-				'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'locatorNonce' => wp_create_nonce( 'wpsl_locator-locator-nonce' ),
-				'distance' => __( 'Distance', 'wpsimplelocator' ), 
-				'website' => __('Website', 'wpsimplelocator'),
-				'location' => __('location', 'wpsimplelocator'),
-				'locations' => __('locations', 'wpsimplelocator'),
-				'found_within' => __('found within', 'wpsimplelocator'),
-				'phone' => __('Phone', 'wpsimplelocator'),
-				'showonmap' => __('Show on Map', 'wpsimplelocator'),
-				'viewlocation' => __('View Location', 'wpsimplelocator'),
-				'mappin' => get_option('wpsl_map_pin'),
-				'mapstyles' => $mapstyles
-			)
+			$localized_data
 		);
 	}
 
@@ -142,8 +147,7 @@ class WPSL_Dependencies {
 	*/
 	private function mapStyleData()
 	{
-		$maps = new WPSL_Repository_MapStyles;
-		return $maps->getAllStyles();
+		return $this->styles_repo->getAllStyles();
 	}
 
 

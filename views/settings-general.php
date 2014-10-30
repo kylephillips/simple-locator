@@ -43,7 +43,7 @@
 	</td>
 </tr>
 <tr valign="top">
-	<th scope="row"><?php _e('Output Nested Pages CSS', 'wpsimplelocator'); ?></th>
+	<th scope="row"><?php _e('Output Simple Locator CSS', 'wpsimplelocator'); ?></th>
 	<td>
 		<label>
 			<input type="radio" value="true" name="wpsl_output_css" <?php if ( get_option('wpsl_output_css') == 'true') echo 'checked'; ?> />

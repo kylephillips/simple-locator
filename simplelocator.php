@@ -24,7 +24,8 @@ License: GPLv2 or later.
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+require('vendor/autoload.php');
 if ( !class_exists('WPSL_SimpleLocator') ) :
-	require_once('includes/class-simple-locator.php');
+	require_once('SimpleLocator/class-simple-locator.php');
 	$wpsimplelocator = new WPSL_SimpleLocator;
 endif;

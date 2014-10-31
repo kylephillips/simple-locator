@@ -1,10 +1,11 @@
-<?php
+<?php namespace SimpleLocator;
+
+use SimpleLocator\Repositories\Fields;
+
 /**
 * Settings page
 */
-require_once('class-sl-repository-field.php');
-
-class WPSL_Settings {
+class Settings {
 
 	/**
 	* Selected Unit of Measurement
@@ -35,7 +36,7 @@ class WPSL_Settings {
 
 	public function __construct()
 	{
-		$this->field_repo = new WPSL_Field_Repository;
+		$this->field_repo = new Fields;
 		$this->setUnit();
 		$this->setFieldType();
 		$this->setPostType();

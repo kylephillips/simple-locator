@@ -1,8 +1,8 @@
-<?php
+<?php namespace SimpleLocator\Repositories;
 /**
 * Get the default map style included with plugin
 */
-class WPSL_Repository_MapStyles {
+class MapStyles {
 
 	/**
 	* Output the necessary JS object
@@ -10,7 +10,7 @@ class WPSL_Repository_MapStyles {
 	public function getAllStyles()
 	{
 		$styles = array();
-		$map_query = new WP_Query(array(
+		$map_query = new \WP_Query(array(
 			'post_type' => 'wpslmaps',
 			'posts_per_page' => -1
 		));
@@ -42,7 +42,7 @@ class WPSL_Repository_MapStyles {
 	*/
 	private function getSelectedStyles()
 	{
-		$style_query = new WP_Query(array(
+		$style_query = new \WP_Query(array(
 			'post_type' => 'wpslmaps',
 			'p' => get_option('wpsl_map_styles_choice'),
 			'posts_per_page' => 1

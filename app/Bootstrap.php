@@ -1,18 +1,8 @@
-<?php
-require_once('class-sl-activation.php');
-require_once('class-sl-shortcode.php');
-require_once('class-sl-formhandler.php');
-require_once('class-sl-formhandler-posttype.php');
-require_once('class-sl-settings.php');
-require_once('class-sl-metafields.php');
-require_once('class-sl-posttype.php');
-require_once('class-sl-dependencies.php');
-require_once('class-sl-widget.php');
-
+<?php namespace SimpleLocator;
 /**
 * Primary Plugin Class
 */
-class WPSL_SimpleLocator {
+class Bootstrap {
 
 	function __construct()
 	{
@@ -28,12 +18,12 @@ class WPSL_SimpleLocator {
 	*/
 	public function init()
 	{
-		new WPSL_Activation;
-		new WPSL_Dependencies;
-		new WPSL_PostType;
-		new WPSL_MetaFields;
-		new WPSL_Settings;
-		new WPSL_Shortcode;
+		new \SimpleLocator\Migrations\Activation;
+		new Dependencies;
+		new \SimpleLocator\WPData\PostTypes;
+		new \SimpleLocator\WPData\MetaFields;
+		new Settings;
+		new Shortcode;
 		add_action( 'widgets_init', array($this, 'registerWidget'));
 	}
 
@@ -46,11 +36,11 @@ class WPSL_SimpleLocator {
 		if ( is_admin() ) {
 
 			// Front End Form
-			add_action( 'wp_ajax_nopriv_locate', 'wpsl_form_handler' );
-			add_action( 'wp_ajax_locate', 'wpsl_form_handler' );
+			add_action( 'wp_ajax_nopriv_locate', array($this, 'wpsl_form_handler' ));
+			add_action( 'wp_ajax_locate', array($this, 'wpsl_form_handler' ));
 
 			// Admin Settings Post Type Select
-			add_action( 'wp_ajax_wpslposttype', 'wpsl_posttype_handler' );
+			add_action( 'wp_ajax_wpslposttype', array($this, 'wpsl_posttype_handler' ));
 		}
 	}
 
@@ -71,7 +61,7 @@ class WPSL_SimpleLocator {
 	*/
 	public function registerWidget()
 	{
-		register_widget( 'WPSL_Widget' );
+		register_widget( 'SimpleLocator\Widget' );
 	}
 
 
@@ -81,6 +71,22 @@ class WPSL_SimpleLocator {
 	public function localize()
 	{
 		load_plugin_textdomain('wpsimplelocator', false, 'wp-simple-locator' . '/languages' );
+	}
+
+	/**
+	* Map Form Handler
+	*/
+	public function wpsl_form_handler()
+	{
+		new Forms\Map;
+	}
+
+	/**
+	* Post Type Form Handler (Settings)
+	*/
+	public function wpsl_posttype_handler()
+	{
+		new Forms\PostType;
 	}
 
 }

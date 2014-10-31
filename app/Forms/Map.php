@@ -1,19 +1,9 @@
-<?php
+<?php namespace SimpleLocator\Forms;
 /**
 * Front-end form handler for simple locator lookup
 * @return JSON Response
 */
-function wpsl_form_handler()
-{
-	new WPSL_Handler;
-}
-
-require_once('class-sl-validation.php');
-
-/**
-* Processes the form data and return results
-*/
-class WPSL_Handler {
+class Map {
 
 	/**
 	* Form Data
@@ -58,7 +48,7 @@ class WPSL_Handler {
 
 	public function __construct()
 	{
-		$this->validator = new WPSL_Validation;
+		$this->validator = new Validation;
 		$this->setData();
 		$this->validateData();
 		$this->setQueryData();

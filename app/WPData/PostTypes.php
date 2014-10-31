@@ -1,8 +1,8 @@
-<?php
+<?php namespace SimpleLocator\WPData;
 /**
 * Locations Post Type
 */
-class WPSL_PostType {
+class PostTypes {
 
 	function __construct()
 	{

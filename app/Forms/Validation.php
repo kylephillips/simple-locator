@@ -1,8 +1,8 @@
-<?php
+<?php namespace SimpleLocator\Forms;
 /**
 * Form Validation
 */
-class WPSL_Validation {
+class Validation {
 
 	/**
 	* Form Data

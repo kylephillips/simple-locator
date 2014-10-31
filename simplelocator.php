@@ -24,8 +24,21 @@ License: GPLv2 or later.
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-require('vendor/autoload.php');
-if ( !class_exists('WPSL_SimpleLocator') ) :
-	require_once('SimpleLocator/SimpleLocator.php');
-	$wpsimplelocator = new WPSL_SimpleLocator;
+
+// Check versions before Instantiating Class
+register_activation_hook( dirname( dirname(__FILE__) ) . '/simplelocator.php', 'wpsimplelocator_checkVersions' );
+function wpsimplelocator_checkVersions( $wp = '3.8', $php = '5.3.0' ) {
+    global $wp_version;
+    if ( version_compare( PHP_VERSION, $php, '<' ) ) $flag = 'PHP';
+    elseif ( version_compare( $wp_version, $wp, '<' ) ) $flag = 'WordPress';
+    else return;
+    $version = 'PHP' == $flag ? $php : $wp;
+    deactivate_plugins( basename( __FILE__ ) );
+    wp_die('<p><strong>Simple Locator</strong> plugin requires'.$flag.'  version '.$version.' or greater.</p>','Plugin Activation Error',  array( 'response'=>200, 'back_link'=>TRUE ) );
+}
+
+if ( !class_exists('SimpleLocator') ) :
+    require('vendor/autoload.php');
+	require_once('app/bootstrap.php');
+	$wpsimplelocator = new SimpleLocator\Bootstrap;
 endif;

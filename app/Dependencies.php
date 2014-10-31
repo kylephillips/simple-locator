@@ -1,11 +1,10 @@
-<?php
+<?php namespace SimpleLocator;
+
+use SimpleLocator\Repositories\MapStyles;
 /**
 * Styles & Scripts required by Simple Locator
 */
-require_once('class-sl-repository-mapstyles.php');
-
-
-class WPSL_Dependencies {
+class Dependencies {
 
 	/**
 	* Plugin Directory
@@ -21,7 +20,7 @@ class WPSL_Dependencies {
 
 	public function __construct()
 	{
-		$this->styles_repo = new WPSL_Repository_MapStyles;
+		$this->styles_repo = new MapStyles;
 		$this->plugin_dir = plugins_url() . '/wp-simple-locator';
 		add_action( 'admin_enqueue_scripts', array( $this, 'adminStyles' ));
 		add_action( 'admin_enqueue_scripts', array( $this, 'adminScripts' ));
@@ -72,7 +71,7 @@ class WPSL_Dependencies {
 		}
 
 		// Map Style Choices
-		if ( $screen->id == 'settings_page_wp_simple_locator' ){
+		if ( ($screen->id == 'settings_page_wp_simple_locator') && (isset($_GET['tab'])) && ($_GET['tab'] == 'map') ){
 			wp_enqueue_script(
 				'simple-locator-admin-maps', 
 				$this->plugin_dir . '/assets/js/simple-locator-admin-maps.js', 

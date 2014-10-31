@@ -232,6 +232,7 @@ jQuery(function($){
 				post_type: post_type
 			},
 			success: function(data){
+				console.log(data);
 				$('#lat_select, #lng_select').html(data.fields);
 				update_lat_lng_values();
 				if ( post_type === 'location' ){

@@ -124,7 +124,6 @@ function sendFormData(formelements)
 			unit: $(formelements.unit).val()
 		},
 		success: function(data){
-			console.log(data);
 			if (data.status === 'error'){
 				$(formelements.errordiv).text(data.message).show();
 				$(formelements.results).hide();

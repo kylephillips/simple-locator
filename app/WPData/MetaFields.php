@@ -1,8 +1,8 @@
-<?php
+<?php namespace SimpleLocator\WPData;
 /**
 * Custom Meta Fields for Location Post Type
 */
-class WPSL_MetaFields {
+class MetaFields {
 
 	/**
 	* Meta Data
@@ -65,7 +65,7 @@ class WPSL_MetaFields {
 	{
 		$this->setData($post);
 		wp_nonce_field( 'my_wpsl_meta_box_nonce', 'wpsl_meta_box_nonce' );
-		include( dirname(dirname(__FILE__)) . '/views/location-meta.php' );
+		include( dirname(dirname(dirname(__FILE__))) . '/views/location-meta.php' );
 	}
 
 

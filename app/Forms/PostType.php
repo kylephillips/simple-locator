@@ -1,16 +1,12 @@
-<?php
+<?php namespace SimpleLocator\Forms;
+
+use \SimpleLocator\Repositories\Fields;
+
 /**
 * Ajax Handler for choosing post type fields in settings
 * Returns a response with html option list
 */
-require_once('class-sl-repository-field.php');
-
-function wpsl_posttype_handler()
-{
-	new WPSL_Handler_PostType;
-}
-
-class WPSL_Handler_PostType {
+class PostType {
 
 	/**
 	* Field Repository
@@ -33,7 +29,7 @@ class WPSL_Handler_PostType {
 
 	public function __construct()
 	{
-		$this->field_repo = new WPSL_Field_Repository;
+		$this->field_repo = new Fields;
 		$this->setData();
 		$this->validateNonce();
 		$this->getFields();

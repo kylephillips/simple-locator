@@ -1,8 +1,8 @@
-<?php
+<?php namespace SimpleLocator\Migrations;
 /**
 * Add the Google Maps Style Choices
 */
-class WPSL_Migration_Maps {
+class MapStyles {
 
 	/**
 	* The directory where the styles are
@@ -51,7 +51,7 @@ class WPSL_Migration_Maps {
 	*/
 	private function loopFiles()
 	{
-		$files = new DirectoryIterator($this->directory);
+		$files = new \DirectoryIterator($this->directory);
 		foreach ($files as $file){
 			if ( !$file->isDot() ){
 				$this->setFileID($file);
@@ -76,7 +76,7 @@ class WPSL_Migration_Maps {
 	*/
 	private function mapExists()
 	{
-		$map_query = new WP_Query(array(
+		$map_query = new \WP_Query(array(
 			'post_type' => 'wpslmaps',
 			'posts_per_page' => -1,
 			'meta_key' => 'wpsl_map_id',

@@ -1,6 +1,8 @@
-<?php
+<?php namespace SimpleLocator;
 
-class WPSL_Shortcode {
+use SimpleLocator\Repositories\MapStyles;
+
+class Shortcode {
 
 	/**
 	* Unit of Measurement
@@ -16,7 +18,7 @@ class WPSL_Shortcode {
 	public function __construct()
 	{
 		$this->setUnit();
-		$this->styles_repo = new WPSL_Repository_MapStyles;
+		$this->styles_repo = new MapStyles;
 		add_shortcode('wp_simple_locator', array($this, 'renderView'));
 	}
 

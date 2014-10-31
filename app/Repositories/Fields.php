@@ -1,8 +1,8 @@
-<?php
+<?php namespace SimpleLocator\Repositories;
 /**
 * Field Repository Class
 */
-class WPSL_Field_Repository {
+class Fields {
 
 
 	/**

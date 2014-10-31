@@ -1,6 +1,6 @@
-<?php namespace SimpleLocator;
+<?php namespace SimpleLocator\API;
 
-use SimpleLocator\Repositories\MapStyles;
+use \SimpleLocator\Repositories\MapStyles;
 
 class Shortcode {
 

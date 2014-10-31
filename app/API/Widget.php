@@ -1,4 +1,4 @@
-<?php namespace SimpleLocator;
+<?php namespace SimpleLocator\API;
 
 class Widget extends \WP_Widget {
 

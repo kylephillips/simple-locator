@@ -23,7 +23,7 @@ class Bootstrap {
 		new \SimpleLocator\WPData\PostTypes;
 		new \SimpleLocator\WPData\MetaFields;
 		new Settings;
-		new Shortcode;
+		new \SimpleLocator\API\Shortcode;
 		add_action( 'widgets_init', array($this, 'registerWidget'));
 	}
 
@@ -50,7 +50,7 @@ class Bootstrap {
 	*/
 	public function settingsLink($links)
 	{ 
-  		$settings_link = '<a href="options-general.php?page=wp_simple_locator">Settings</a>'; 
+  		$settings_link = '<a href="options-general.php?page=wp_simple_locator">' . __('Settings','wpsimplelocator') . '</a>'; 
   		array_unshift($links, $settings_link); 
   		return $links; 
 	}
@@ -61,7 +61,7 @@ class Bootstrap {
 	*/
 	public function registerWidget()
 	{
-		register_widget( 'SimpleLocator\Widget' );
+		register_widget( 'SimpleLocator\API\Widget' );
 	}
 
 

@@ -51,7 +51,9 @@ class Bootstrap {
 	public function settingsLink($links)
 	{ 
   		$settings_link = '<a href="options-general.php?page=wp_simple_locator">' . __('Settings','wpsimplelocator') . '</a>'; 
-  		array_unshift($links, $settings_link); 
+  		$help_link = '<a href="http://locatewp.com">' . __('FAQ','wpsimplelocator') . '</a>'; 
+  		array_unshift($links, $help_link); 
+  		array_unshift($links, $settings_link);
   		return $links; 
 	}
 

@@ -64,8 +64,7 @@ class MetaFields {
 	public function displayMeta($post)
 	{
 		$this->setData($post);
-		wp_nonce_field( 'my_wpsl_meta_box_nonce', 'wpsl_meta_box_nonce' );
-		include( dirname(dirname(dirname(__FILE__))) . '/views/location-meta.php' );
+		include( \SimpleLocator\Helpers::view('location-meta') );
 	}
 
 

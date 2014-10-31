@@ -75,7 +75,7 @@ class Widget extends \WP_Widget {
 		$title = ( isset($instance['title']) ) ? $instance[ 'title' ] : '';
 		$distance_options = ( isset($instance['distance_options']) ) ? $instance[ 'distance_options' ] : '';
 		$map_height = ( isset($instance['map_height']) ) ? $instance[ 'map_height' ] : '';
-		include( dirname(dirname(__FILE__)) . '/views/widget_options.php' );
+		include( \SimpleLocator\Helpers::view('widget-options') );
 	}
 
 
@@ -105,7 +105,7 @@ class Widget extends \WP_Widget {
 		
 		$this->enqueueScripts();
 		$widget_instance = true;
-		include( dirname( dirname(__FILE__) ) . '/views/simple-locator-form.php');
+		include( \SimpleLocator\Helpers::view('simple-locator-form') );
 		echo $output;
 
 		echo $args['after_widget'];

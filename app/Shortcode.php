@@ -100,7 +100,7 @@ class Shortcode {
 		$this->setOptions($options);
 		$this->enqueueScripts();
 		$this->localizeOptions();
-		include( dirname( dirname(__FILE__) ) . '/views/simple-locator-form.php');
+		include ( \SimpleLocator\Helpers::view('simple-locator-form') );
 		return $output;
 	}
 

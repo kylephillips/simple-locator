@@ -21,7 +21,7 @@ class Dependencies {
 	public function __construct()
 	{
 		$this->styles_repo = new MapStyles;
-		$this->plugin_dir = plugins_url() . '/wp-simple-locator';
+		$this->plugin_dir = \SimpleLocator\Helpers::plugin_url();
 		add_action( 'admin_enqueue_scripts', array( $this, 'adminStyles' ));
 		add_action( 'admin_enqueue_scripts', array( $this, 'adminScripts' ));
 		add_action( 'wp_enqueue_scripts', array( $this, 'styles' ));

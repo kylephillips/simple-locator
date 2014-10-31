@@ -89,4 +89,5 @@ class Bootstrap {
 		new Forms\PostType;
 	}
 
+
 }

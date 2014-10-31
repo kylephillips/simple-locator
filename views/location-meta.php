@@ -1,3 +1,4 @@
+<?php wp_nonce_field( 'my_wpsl_meta_box_nonce', 'wpsl_meta_box_nonce' ); ?>
 <div class="wpsl-meta">
 	<p class="full">
 		<label for="wpsl_address"><?php _e('Street Address', 'wpsimplelocator'); ?></label>

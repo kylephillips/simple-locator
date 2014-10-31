@@ -122,7 +122,7 @@ class Settings {
 	public function settingsPage()
 	{
 		$tab = ( isset($_GET['tab']) ) ? $_GET['tab'] : 'general';
-		include( dirname( dirname(__FILE__) ) . '/views/settings.php');
+		include( \SimpleLocator\Helpers::view('settings') );
 	}	
 
 

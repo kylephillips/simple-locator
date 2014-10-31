@@ -208,6 +208,13 @@ function showLocationMap(data, formelements)
 	} else {
 		var disablecontrols = false;
 	}
+
+	// Control Position
+	if ( typeof wpsl_locator_options != 'undefined' ){
+		var controlposition = google.maps.ControlPosition[wpsl_locator_options.mapcontrolsposition];
+	} else {
+		var controlposition = TOP_LEFT;
+	}
 	
 	var mappin = ( wpsl_locator.mappin ) ? wpsl_locator.mappin : '';
 	var map;
@@ -219,6 +226,10 @@ function showLocationMap(data, formelements)
 			styles: mapstyles,
 			panControl : false,
 			disableDefaultUI: disablecontrols,
+			zoomControlOptions : {
+				style: google.maps.ZoomControlStyle.SMALL,
+				position : controlposition
+			}
 		}
 	var locations = [];
 	var infoWindow = new google.maps.InfoWindow(), marker, i;

@@ -54,7 +54,8 @@ class Shortcode {
 			'resultscontainer' => '.wpsl-results',
 			'buttontext' => __('Search', 'wpsimplelocator'),
 			'ziplabel' => __('Zip/Postal Code', 'wpsimplelocator'),
-			'mapcontrols' => 'show'
+			'mapcontrols' => 'show',
+			'mapcontrolsposition' => 'TOP_LEFT'
 		), $options);
 	}
 
@@ -82,7 +83,8 @@ class Shortcode {
 		$localized_data = array(
 			'mapcont' => $this->options['mapcontainer'],
 			'resultscontainer' => $this->options['resultscontainer'],
-			'mapcontrols' => $this->options['mapcontrols']
+			'mapcontrols' => $this->options['mapcontrols'],
+			'mapcontrolsposition' => $this->options['mapcontrolsposition']
 		);
 		wp_localize_script( 
 			'simple-locator', 

@@ -11,12 +11,26 @@ function openInfoWindow(id){
 var markers = [];
 var googlemap = '';
 
+
 /**
 * Callback functions available to users
 * Place in Theme scripts to perform actions after map has rendered
 */
+
+// Runs after map & results render
 function wpsl_after_render(){}
+
+// Runs on click event on a map marker
 function wpsl_click_marker(marker, i){}
+
+// Runs if no results were returned from the query
+function wpsl_no_results(searchterm){}
+
+// Runs on form error
+function wpsl_error(message){}
+
+// Runs immediately on form success, pre-render of map/results
+function wpsl_success(resultcount, results){}
 
 
 
@@ -97,7 +111,8 @@ function geocodeZip(formelements)
 			sendFormData(formelements);
 
 		} else {
-			$(formelements.errordiv).text('Address could not be found at this time.').show();
+			wpsl_error('Address not found.');
+			$(formelements.errordiv).text('Address not found.').show();
 			$(formelements.results).hide();
 		}
 	});
@@ -124,10 +139,13 @@ function sendFormData(formelements)
 			unit: $(formelements.unit).val()
 		},
 		success: function(data){
+			console.log(data);
 			if (data.status === 'error'){
+				wpsl_error(data.message);
 				$(formelements.errordiv).text(data.message).show();
 				$(formelements.results).hide();
 			} else {
+				wpsl_success(data.result_count, data.results);
 				loadLocationResults(data, formelements);
 			}
 		}
@@ -185,6 +203,7 @@ function loadLocationResults(data, formelements)
 
 	} else {
 		// No results were returned
+		wpsl_no_results(data.zip);
 		$(formelements.errordiv).text('No results found.').show();
 		$(formelements.results).hide();
 	}

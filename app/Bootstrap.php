@@ -23,7 +23,8 @@ class Bootstrap {
 		new \SimpleLocator\WPData\PostTypes;
 		new \SimpleLocator\WPData\MetaFields;
 		new Settings;
-		new \SimpleLocator\API\Shortcode;
+		new \SimpleLocator\API\ShortcodeForm;
+		new \SimpleLocator\API\ShortcodeMap;
 		new \SimpleLocator\Post\Singular;
 		add_action( 'widgets_init', array($this, 'registerWidget'));
 	}

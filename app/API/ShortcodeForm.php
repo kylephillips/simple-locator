@@ -2,7 +2,7 @@
 
 use \SimpleLocator\Repositories\MapStyles;
 
-class Shortcode {
+class ShortcodeForm {
 
 	/**
 	* Unit of Measurement

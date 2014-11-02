@@ -38,6 +38,7 @@ class Singular {
 	*/
 	private function setLocationData()
 	{
+		$this->location_data['additionalfields'] = 'show';
 		$this->location_data['title'] = get_the_title();
 		$this->location_data['latitude'] = get_post_meta( get_the_id(), get_option('wpsl_lat_field'), true );
 		$this->location_data['longitude'] = get_post_meta( get_the_id(), get_option('wpsl_lng_field'), true );

@@ -24,7 +24,7 @@ function wpsl_after_render(active_form){}
 function wpsl_click_marker(marker, i, active_form){}
 
 // Runs if no results were returned from the query
-function wpsl_no_results(searchterm, active_form){}
+function wpsl_no_results(location, active_form){}
 
 // Runs on form error
 function wpsl_error(message, active_form){}
@@ -207,7 +207,7 @@ function loadLocationResults(data, formelements)
 
 	} else {
 		// No results were returned
-		wpsl_no_results(data.zip, active_form);
+		wpsl_no_results(data.formatted_address, active_form);
 		$(formelements.errordiv).text('No results found.').show();
 		$(formelements.results).hide();
 	}

@@ -30,7 +30,7 @@
 </tr>
 <tr valign="top" id="map-styles-custom" <?php if ( $this->map_options['type'] !== 'custom' ) echo 'style="display:none;"'; ?>>
 	<td colspan="2" style="padding:0;">
-		<p><?php _e('Styles must be properly formatted Javascript Object. Visit', 'wpsimplelocator'); ?> <a href="http://gmaps-samples-v3.googlecode.com/svn/trunk/styledmaps/wizard/index.html" target="_blank"><?php _e('the Google Maps Style Wizard', 'wpsimplelocator'); ?></a> <?php _e('for an easy way to generate properly formatted styles','wpsimplelocator'); ?>.</p>
+		<p><?php _e('Styles must be properly a formatted Javascript array. Visit', 'wpsimplelocator'); ?> <a href="http://gmaps-samples-v3.googlecode.com/svn/trunk/styledmaps/wizard/index.html" target="_blank"><?php _e('the Google Maps Style Wizard', 'wpsimplelocator'); ?></a> <?php _e('for an easy way to generate properly formatted styles','wpsimplelocator'); ?>.</p>
 		<textarea name="wpsl_map_styles" id="wpsl_map_styles" class="widefat" style="height:200px;margin-top:20px;">
 			<?php echo get_option('wpsl_map_styles'); ?>
 		</textarea>

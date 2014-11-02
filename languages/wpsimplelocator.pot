@@ -1,0 +1,278 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Simple Locator\n"
+"POT-Creation-Date: 2014-11-02 10:15-0500\n"
+"PO-Revision-Date: 2014-11-02 10:15-0500\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: app/API/Shortcode.php:55 app/API/Widget.php:41
+msgid "Search"
+msgstr ""
+
+#: app/API/Shortcode.php:56 views/simple-locator-form.php:8
+msgid "Zip/Postal Code"
+msgstr ""
+
+#: app/API/Widget.php:21
+msgid "Simple Locator"
+msgstr ""
+
+#: app/API/Widget.php:22
+msgid "Display the Simple Locator Form"
+msgstr ""
+
+#: app/Bootstrap.php:53
+msgid "Settings"
+msgstr ""
+
+#: app/Bootstrap.php:54
+msgid "FAQ"
+msgstr ""
+
+#: app/Dependencies.php:124 views/simple-locator-form.php:25
+msgid "Distance"
+msgstr ""
+
+#: app/Dependencies.php:125 views/location-meta.php:38
+msgid "Website"
+msgstr ""
+
+#: app/Dependencies.php:126
+msgid "location"
+msgstr ""
+
+#: app/Dependencies.php:127
+msgid "locations"
+msgstr ""
+
+#: app/Dependencies.php:128
+msgid "found within"
+msgstr ""
+
+#: app/Dependencies.php:129
+msgid "Phone"
+msgstr ""
+
+#: app/Dependencies.php:130
+msgid "Show on Map"
+msgstr ""
+
+#: app/Dependencies.php:131
+msgid "View Location"
+msgstr ""
+
+#: app/Dependencies.php:132
+msgid "Address not found"
+msgstr ""
+
+#: app/WPData/PostTypes.php:22
+msgid "Locations"
+msgstr ""
+
+#: app/WPData/PostTypes.php:23
+msgid "Location"
+msgstr ""
+
+#: app/WPData/PostTypes.php:51
+msgid "Simple Locator Maps"
+msgstr ""
+
+#: app/WPData/PostTypes.php:52
+msgid "Simple Locator Map"
+msgstr ""
+
+#: views/location-meta.php:4
+msgid "Street Address"
+msgstr ""
+
+#: views/location-meta.php:8
+msgid "City"
+msgstr ""
+
+#: views/location-meta.php:12
+msgid "State"
+msgstr ""
+
+#: views/location-meta.php:16
+msgid "Zip"
+msgstr ""
+
+#: views/location-meta.php:22
+msgid ""
+"Geocode values will update on save. Fields are for display purpose only."
+msgstr ""
+
+#: views/location-meta.php:24
+msgid "Latitude"
+msgstr ""
+
+#: views/location-meta.php:28
+msgid "Longitude"
+msgstr ""
+
+#: views/location-meta.php:34
+msgid "Phone Number"
+msgstr ""
+
+#: views/location-meta.php:43
+msgid "Additional Info"
+msgstr ""
+
+#: views/settings-general.php:4
+msgid "Google Maps API Key"
+msgstr ""
+
+#: views/settings-general.php:5
+msgid ""
+"While not required, it's a good idea to sign up for a Google Maps API key. "
+"If your website receives a spike in traffic, this will allow you to monitor "
+"the usage of the API and possibly prevent the cutoff of access."
+msgstr ""
+
+#: views/settings-general.php:5
+msgid "How to obtain an API key"
+msgstr ""
+
+#: views/settings-general.php:9
+msgid "API Key"
+msgstr ""
+
+#: views/settings-general.php:18
+msgid "Measurement Unit"
+msgstr ""
+
+#: views/settings-general.php:21
+msgid "Miles"
+msgstr ""
+
+#: views/settings-general.php:22
+msgid "Kilometers"
+msgstr ""
+
+#: views/settings-general.php:27
+msgid "Custom Map Pin"
+msgstr ""
+
+#: views/settings-general.php:46
+msgid "Output Simple Locator CSS"
+msgstr ""
+
+#: views/settings-general.php:50
+msgid "Yes"
+msgstr ""
+
+#: views/settings-general.php:54
+msgid "No"
+msgstr ""
+
+#: views/settings-map.php:4 views/settings-map.php:9 views/settings.php:7
+msgid "Map Styles"
+msgstr ""
+
+#: views/settings-map.php:5
+msgid ""
+"Change the appearance of the generated maps by choosing a theme, or pasting "
+"your custom style code."
+msgstr ""
+
+#: views/settings-map.php:13
+msgid "None (Default Google Maps)"
+msgstr ""
+
+#: views/settings-map.php:16
+msgid "Choose from List"
+msgstr ""
+
+#: views/settings-map.php:19
+msgid "Paste my own styles"
+msgstr ""
+
+#: views/settings-map.php:26
+msgid "Choose a Style"
+msgstr ""
+
+#: views/settings-map.php:33
+msgid "Styles must be properly a formatted Javascript array. Visit"
+msgstr ""
+
+#: views/settings-map.php:33
+msgid "the Google Maps Style Wizard"
+msgstr ""
+
+#: views/settings-map.php:33
+msgid "for an easy way to generate properly formatted styles"
+msgstr ""
+
+#: views/settings-posttype.php:4
+msgid "Location Post Type"
+msgstr ""
+
+#: views/settings-posttype.php:5
+msgid ""
+"Simple Locator comes with a post type of \"Locations\" with all the fields "
+"you need. If you'd like to use a custom post type, select it below. If you "
+"have existing fields for latitude and longitude, select those."
+msgstr ""
+
+#: views/settings-posttype.php:9
+msgid "Post Type for locations"
+msgstr ""
+
+#: views/settings-posttype.php:17
+msgid "Locations (Simple Locator Default)"
+msgstr ""
+
+#: views/settings-posttype.php:26
+msgid "Latitude & Longitude Fields"
+msgstr ""
+
+#: views/settings-posttype.php:31
+msgid "Use Simple Locator Fields"
+msgstr ""
+
+#: views/settings-posttype.php:37
+msgid "Use Custom Fields"
+msgstr ""
+
+#: views/settings-posttype.php:43
+msgid "Latitude Field"
+msgstr ""
+
+#: views/settings-posttype.php:59
+msgid "Longitude Field"
+msgstr ""
+
+#: views/settings.php:2
+msgid "Simple Locator Settings"
+msgstr ""
+
+#: views/settings.php:5
+msgid "General"
+msgstr ""
+
+#: views/settings.php:6
+msgid "Post Type & Geocode Fields"
+msgstr ""
+
+#: views/widget-options.php:2
+msgid "Title:"
+msgstr ""
+
+#: views/widget-options.php:6
+msgid "Distance Options <br> (Comma Separated Numbers)"
+msgstr ""
+
+#: views/widget-options.php:10
+msgid "Map Height (in Pixels)"
+msgstr ""

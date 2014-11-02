@@ -32,8 +32,14 @@ function wpsl_error(message, active_form){}
 // Runs immediately on form success, pre-render of map/results
 function wpsl_success(resultcount, results, active_form){}
 
+// Returns the Google Maps Response
+function wpsl_googlemaps_response(){
+	return googlemaps_response;
+}
+
 var active_form = '';
 var formatted_address = '';
+var googlemaps_response = '';
 
 jQuery(function($){
 
@@ -105,6 +111,7 @@ function geocodeAddress(formelements)
 	}, function(results, status){
 
 		if ( status == google.maps.GeocoderStatus.OK ){
+			googlemaps_response = results;
 			var latitude = results[0].geometry.location.lat();
 			var longitude = results[0].geometry.location.lng();
 			formatted_address = results[0].formatted_address;

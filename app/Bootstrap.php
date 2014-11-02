@@ -72,7 +72,7 @@ class Bootstrap {
 	*/
 	public function localize()
 	{
-		load_plugin_textdomain('wpsimplelocator', false, 'wp-simple-locator' . '/languages' );
+		load_plugin_textdomain('wpsimplelocator', false, dirname(dirname(plugin_basename(__FILE__))) . '/languages' );
 	}
 
 	/**

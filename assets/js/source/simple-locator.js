@@ -18,21 +18,21 @@ var googlemap = '';
 */
 
 // Runs after map & results render
-function wpsl_after_render(){}
+function wpsl_after_render(active_form){}
 
 // Runs on click event on a map marker
-function wpsl_click_marker(marker, i){}
+function wpsl_click_marker(marker, i, active_form){}
 
 // Runs if no results were returned from the query
-function wpsl_no_results(searchterm){}
+function wpsl_no_results(searchterm, active_form){}
 
 // Runs on form error
-function wpsl_error(message){}
+function wpsl_error(message, active_form){}
 
 // Runs immediately on form success, pre-render of map/results
-function wpsl_success(resultcount, results){}
+function wpsl_success(resultcount, results, active_form){}
 
-
+var active_form = '';
 
 jQuery(function($){
 
@@ -40,6 +40,7 @@ jQuery(function($){
 $('.wpslsubmit').on('click', function(e){
 	e.preventDefault();
 	var form = $(this).parents('.simple-locator-form');
+	active_form = form;
 	var formelements = setFormElements(form);
 
 	$(formelements.errordiv).hide();
@@ -59,7 +60,7 @@ function setFormElements(form)
 	var resultscontainer = '.wpsl-results';
 
 	// Get the DOM elements for results. Either a class within the form or a unique ID
-	if ( (typeof wpsl_locator_options != "undefined") ){ // Not the Widget
+	if ( ( $(active_form).siblings('#widget').length < 1 ) ){ // Not the Widget
 		if ( wpsl_locator_options.mapcont.charAt(0) === '.' ){
 			var mapcont = $(form).find(wpsl_locator_options.mapcont);
 		} else {
@@ -71,6 +72,8 @@ function setFormElements(form)
 		} else {
 			var resultscontainer = $(wpsl_locator_options.resultscontainer);
 		}
+	} else { // Its the widget
+		var resultscontainer = $(form).find(resultscontainer);
 	}
 
 	formelements = {
@@ -111,7 +114,7 @@ function geocodeZip(formelements)
 			sendFormData(formelements);
 
 		} else {
-			wpsl_error('Address not found.');
+			wpsl_error('Address not found.', active_form);
 			$(formelements.errordiv).text('Address not found.').show();
 			$(formelements.results).hide();
 		}
@@ -139,13 +142,12 @@ function sendFormData(formelements)
 			unit: $(formelements.unit).val()
 		},
 		success: function(data){
-			console.log(data);
 			if (data.status === 'error'){
-				wpsl_error(data.message);
+				wpsl_error(data.message, active_form);
 				$(formelements.errordiv).text(data.message).show();
 				$(formelements.results).hide();
 			} else {
-				wpsl_success(data.result_count, data.results);
+				wpsl_success(data.result_count, data.results, active_form);
 				loadLocationResults(data, formelements);
 			}
 		}
@@ -199,11 +201,11 @@ function loadLocationResults(data, formelements)
 		showLocationMap(data, formelements);
 
 		// Simple Locator Callback function after results have rendered
-		wpsl_after_render();
+		wpsl_after_render(active_form);
 
 	} else {
 		// No results were returned
-		wpsl_no_results(data.zip);
+		wpsl_no_results(data.zip, active_form);
 		$(formelements.errordiv).text('No results found.').show();
 		$(formelements.results).hide();
 	}
@@ -284,7 +286,7 @@ function showLocationMap(data, formelements)
 				infoWindow.open(map, marker);
 
 				// Simple Locator Callback function for click event
-				wpsl_click_marker(marker, i);
+				wpsl_click_marker(marker, i, active_form);
 			}
 		})(marker, i));
 

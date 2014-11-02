@@ -1,4 +1,4 @@
-<?php namespace SimpleLocator;
+<?php namespace SimpleLocator\Dependencies;
 
 use SimpleLocator\Repositories\MapStyles;
 /**

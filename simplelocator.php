@@ -39,6 +39,6 @@ function wpsimplelocator_check_versions( $wp = '3.8', $php = '5.3.0' ) {
 
 if ( !class_exists('SimpleLocator') ) :
 	require('vendor/autoload.php');
-	require_once('app/bootstrap.php');
-	$wpsimplelocator = new SimpleLocator\Bootstrap;
+	require_once('app/SimpleLocator.php');
+	$wpsimplelocator = new SimpleLocator\SimpleLocator;
 endif;

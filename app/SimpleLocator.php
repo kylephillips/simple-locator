@@ -2,7 +2,7 @@
 /**
 * Primary Plugin Class
 */
-class Bootstrap {
+class SimpleLocator {
 
 	function __construct()
 	{
@@ -19,10 +19,10 @@ class Bootstrap {
 	public function init()
 	{
 		new \SimpleLocator\Migrations\Activation;
-		new Dependencies;
+		new \SimpleLocator\Dependencies\Dependencies;
 		new \SimpleLocator\WPData\PostTypes;
 		new \SimpleLocator\WPData\MetaFields;
-		new Settings;
+		new \SimpleLocator\Settings\Settings;
 		new \SimpleLocator\API\ShortcodeForm;
 		new \SimpleLocator\API\ShortcodeMap;
 		new \SimpleLocator\Post\Singular;

@@ -1,4 +1,4 @@
-<?php namespace SimpleLocator;
+<?php namespace SimpleLocator\Settings;
 
 use SimpleLocator\Repositories\Fields;
 

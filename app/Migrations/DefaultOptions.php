@@ -36,6 +36,9 @@ class DefaultOptions {
 		if ( !get_option('wpsl_map_styles_choice') ){
 			update_option('wpsl_map_styles_choice', '');
 		}
+		if ( !get_option('wpsl_singular_data') ){
+			update_option('wpsl_singular_data', 'true');
+		}
 	}
 
 }

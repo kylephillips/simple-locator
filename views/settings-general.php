@@ -55,3 +55,16 @@
 		</label>
 	</td>
 </tr>
+<tr valign="top">
+	<th scope="row"><?php _e('Display Map in Singular View', 'wpsimplelocator'); ?></th>
+	<td>
+		<label>
+			<input type="radio" value="true" name="wpsl_singular_data" <?php if ( get_option('wpsl_singular_data') == 'true') echo 'checked'; ?> />
+			<?php _e('Yes', 'wpsimplelocator'); ?>
+		</label><br />
+		<label>
+			<input type="radio" value="false" name="wpsl_singular_data" <?php if ( get_option('wpsl_singular_data') !== 'true') echo 'checked'; ?> />
+			<?php _e('No', 'wpsimplelocator'); ?>
+		</label>
+	</td>
+</tr>

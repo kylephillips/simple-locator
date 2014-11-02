@@ -24,6 +24,7 @@ class Bootstrap {
 		new \SimpleLocator\WPData\MetaFields;
 		new Settings;
 		new \SimpleLocator\API\Shortcode;
+		new \SimpleLocator\Post\Singular;
 		add_action( 'widgets_init', array($this, 'registerWidget'));
 	}
 

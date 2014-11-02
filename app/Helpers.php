@@ -18,4 +18,14 @@ class Helpers {
 		return dirname(dirname(__FILE__)) . '/views/' . $file . '.php';
 	}
 
+	/**
+	* Check URL Format
+	*/
+	public static function checkURL($url)
+	{
+		$parsed = parse_url($url);
+		if (empty($parsed['scheme'])) $url = 'http://' . ltrim($url, '/');
+		return $url;
+	}
+
 }

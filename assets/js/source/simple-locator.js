@@ -80,7 +80,8 @@ function setFormElements(form)
 			var resultscontainer = $(wpsl_locator_options.resultscontainer);
 		}
 	} else { // Its the widget
-		var resultscontainer = $(form).find(resultscontainer);
+		var mapcont = $(active_form).find(mapcont);
+		var resultscontainer = $(active_form).find(resultscontainer);
 	}
 
 	formelements = {
@@ -243,7 +244,7 @@ function showLocationMap(data, formelements)
 	if ( typeof wpsl_locator_options != 'undefined' ){
 		var controlposition = google.maps.ControlPosition[wpsl_locator_options.mapcontrolsposition];
 	} else {
-		var controlposition = TOP_LEFT;
+		var controlposition = "TOP_LEFT";
 	}
 	
 	var mappin = ( wpsl_locator.mappin ) ? wpsl_locator.mappin : '';

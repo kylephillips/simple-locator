@@ -5,7 +5,7 @@ $output = "";
 if ( isset($widget_instance) ) {
 	$output .= '<div class="simple-locator-widget">';
 	$mapheight = ( isset($instance['map_height']) ) ? $instance['map_height'] : 200;
-	$this->options['ziplabel'] = __('Zip/Postal Code', 'wpsimplelocator');
+	$this->options['addresslabel'] = __('Zip/Postal Code', 'wpsimplelocator');
 	$this->options['mapcontainer'] = '.wpsl-map';
 	$output .= '<span id="widget"></span>';
 } else {
@@ -17,9 +17,9 @@ $output .= '
 <div class="simple-locator-form">
 <form>
 	<div class="wpsl-error alert alert-error" style="display:none;"></div>
-	<div class="zip form-field">
-		<label for="zip">' . $this->options['ziplabel'] . '</label>
-		<input type="tel" name="zip" class="zipcode" />
+	<div class="address-input form-field">
+		<label for="zip">' . $this->options['addresslabel'] . '</label>
+		<input type="tel" name="address" class="address" />
 	</div>
 	<div class="distance form-field">
 		<label for="distance">' . __('Distance', 'wpsimplelocator'). '</label>

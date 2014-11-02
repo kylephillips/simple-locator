@@ -65,7 +65,8 @@ class Map {
 	{
 		$this->data = array(
 			'nonce' => sanitize_text_field($_POST['locatorNonce']),
-			'zip' => sanitize_text_field($_POST['zip']),
+			'address' => sanitize_text_field($_POST['address']),
+			'formatted_address' => sanitize_text_field($_POST['formatted_address']),
 			'distance' => sanitize_text_field($_POST['distance']),
 			'latitude' => sanitize_text_field($_POST['latitude']),
 			'longitude' => sanitize_text_field($_POST['longitude']),
@@ -206,12 +207,12 @@ class Map {
 	private function sendResponse()
 	{
 		return wp_send_json(array(
-			'status' => 'success',
-			'zip'=> $this->data['zip'], 
+			'status' => 'success', 
 			'distance'=> $this->data['distance'],
 			'latitude' => $this->data['latitude'],
 			'longitude' => $this->data['longitude'],
 			'unit' => $this->data['unit'],
+			'formatted_address' => $this->data['formatted_address'],
 			'results' => $this->results,
 			'result_count' => $this->total_results
 		));

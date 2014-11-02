@@ -129,6 +129,7 @@ class Dependencies {
 			'phone' => __('Phone', 'wpsimplelocator'),
 			'showonmap' => __('Show on Map', 'wpsimplelocator'),
 			'viewlocation' => __('View Location', 'wpsimplelocator'),
+			'notfounderror' => __('Address not found', 'wpsimplelocator'),
 			'mappin' => get_option('wpsl_map_pin')
 		);
 		$localized_data['mapstyles'] = $this->styles_repo->getLocalizedStyles();

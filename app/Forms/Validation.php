@@ -37,11 +37,6 @@ class Validation {
 	*/
 	private function form()
 	{
-		// Zip
-		if ( !preg_match("#[0-9]{5}#", $this->data['zip']) ){
-			$this->error('Please enter a valid 5-digit zip code');
-		}
-
 		// Latitude & Longitude
 		if ( !is_numeric($this->data['latitude']) || !is_numeric($this->data['longitude']) ) {
 			$this->error('The address could not be located at this time.');

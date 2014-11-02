@@ -33,6 +33,7 @@ function wpsl_error(message, active_form){}
 function wpsl_success(resultcount, results, active_form){}
 
 var active_form = '';
+var formatted_address = '';
 
 jQuery(function($){
 
@@ -47,7 +48,7 @@ $('.wpslsubmit').on('click', function(e){
 	$(formelements.map).hide();
 	$(formelements.results).empty().addClass('loading').show();
 
-	geocodeZip(formelements);
+	geocodeAddress(formelements);
 });
 
 
@@ -82,7 +83,7 @@ function setFormElements(form)
 		'map' : mapcont,
 		'results' : resultscontainer,
 		'distance' : $(form).find('.distanceselect'),
-		'zip' : $(form).find('.zipcode'),
+		'address' : $(form).find('.address'),
 		'latitude' : $(form).find('.latitude'),
 		'longitude' : $(form).find('.longitude'),
 		'unit' : $(form).find('.unit')
@@ -92,21 +93,21 @@ function setFormElements(form)
 
 
 /**
-* Geocode the zip prior to submitting the search form
+* Geocode the address prior to submitting the search form
 */
-function geocodeZip(formelements)
+function geocodeAddress(formelements)
 {
-	var zip = $(formelements.zip).val();
+	var address = $(formelements.address).val();
 	
 	geocoder = new google.maps.Geocoder();
 	geocoder.geocode({
-		'address' : zip
+		'address' : address
 	}, function(results, status){
 
 		if ( status == google.maps.GeocoderStatus.OK ){
-
 			var latitude = results[0].geometry.location.lat();
 			var longitude = results[0].geometry.location.lng();
+			formatted_address = results[0].formatted_address;
 			
 			$(formelements.latitude).val(latitude);
 			$(formelements.longitude).val(longitude);
@@ -114,8 +115,8 @@ function geocodeZip(formelements)
 			sendFormData(formelements);
 
 		} else {
-			wpsl_error('Address not found.', active_form);
-			$(formelements.errordiv).text('Address not found.').show();
+			wpsl_error(wpsl_locator.notfounderror, active_form);
+			$(formelements.errordiv).text(wpsl_locator.notfounderror).show();
 			$(formelements.results).hide();
 		}
 	});
@@ -133,13 +134,14 @@ function sendFormData(formelements)
 		type: 'post',
 		datatype: 'json',
 		data: {
-			action: 'locate',
-			zip: $(formelements.zip).val(),
+			action : 'locate',
+			address : $(formelements.address).val(),
+			formatted_address : formatted_address,
 			locatorNonce : wpsl_locator.locatorNonce,
-			distance: $(formelements.distance).val(),
-			latitude: $(formelements.latitude).val(),
-			longitude: $(formelements.longitude).val(),
-			unit: $(formelements.unit).val()
+			distance : $(formelements.distance).val(),
+			latitude : $(formelements.latitude).val(),
+			longitude : $(formelements.longitude).val(),
+			unit : $(formelements.unit).val()
 		},
 		success: function(data){
 			if (data.status === 'error'){
@@ -164,7 +166,7 @@ function loadLocationResults(data, formelements)
 
 		var location = ( data.result_count === 1 ) ? wpsl_locator.location : wpsl_locator.locations;
 
-		var output = '<h3>' + data.result_count + ' ' + location + ' ' + wpsl_locator.found_within + ' ' + data.distance + ' ' + data.unit + ' of ' + data.zip + '</h3><ul>';
+		var output = '<h3>' + data.result_count + ' ' + location + ' ' + wpsl_locator.found_within + ' ' + data.distance + ' ' + data.unit + ' of ' + data.formatted_address + '</h3><ul>';
 		
 		for( i = 0; i < data.results.length; i++ ) {
 			
@@ -297,7 +299,7 @@ function showLocationMap(data, formelements)
 		map.fitBounds(bounds);
 	}
 
-	// Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+	// Fit the map bounds to all the pins
 	var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
 		google.maps.event.removeListener(boundsListener);
 	});

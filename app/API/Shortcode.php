@@ -53,7 +53,7 @@ class Shortcode {
 			'mapcontainer' => '.wpsl-map',
 			'resultscontainer' => '.wpsl-results',
 			'buttontext' => __('Search', 'wpsimplelocator'),
-			'ziplabel' => __('Zip/Postal Code', 'wpsimplelocator'),
+			'addresslabel' => __('Zip/Postal Code', 'wpsimplelocator'),
 			'mapcontrols' => 'show',
 			'mapcontrolsposition' => 'TOP_LEFT'
 		), $options);

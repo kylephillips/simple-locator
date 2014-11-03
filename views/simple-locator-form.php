@@ -35,7 +35,9 @@ $output .= '
 	</div>
 	</form>';
 if ( $this->options['mapcontainer'] === '.wpsl-map' ){
-	$output .= ( isset($mapheight) && $mapheight !== "" ) ? '<div class="wpsl-map" style="height:' . $mapheight . 'px;"></div>' : '<div class="wpsl-map"></div>';
+	$output .= ( isset($mapheight) && $mapheight !== "" ) 
+		? '<div class="wpsl-map" style="height:' . $mapheight . 'px;"></div>' 
+		: '<div class="wpsl-map"></div>';
 }
 
 $output .= '

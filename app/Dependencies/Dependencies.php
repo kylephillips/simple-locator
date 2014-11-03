@@ -1,8 +1,7 @@
 <?php namespace SimpleLocator\Dependencies;
-
 use SimpleLocator\Repositories\MapStyles;
 /**
-* Styles & Scripts required by Simple Locator
+* Register & Enqueue Styles & Scripts
 */
 class Dependencies {
 

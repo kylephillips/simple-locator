@@ -1,13 +1,13 @@
 <?php namespace SimpleLocator;
 /**
-* Primary Plugin Class
+* Plugin Bootstrap
 */
 class SimpleLocator {
 
 	function __construct()
 	{
 		$this->init();
-		$this->formActions();
+		$this->setFormActions();
 		add_filter( 'plugin_action_links_' . 'wp-simple-locator/simplelocator.php', array($this, 'settingsLink' ) );
 		add_action( 'init', array($this, 'localize') );
 	}
@@ -23,27 +23,19 @@ class SimpleLocator {
 		new \SimpleLocator\WPData\PostTypes;
 		new \SimpleLocator\WPData\MetaFields;
 		new \SimpleLocator\Settings\Settings;
-		new \SimpleLocator\API\ShortcodeForm;
-		new \SimpleLocator\API\ShortcodeMap;
+		new \SimpleLocator\Shortcodes\Form;
+		new \SimpleLocator\Shortcodes\Map;
 		new \SimpleLocator\Post\Singular;
-		add_action( 'widgets_init', array($this, 'registerWidget'));
+		add_action( 'widgets_init', array($this, 'formWidget'));
 	}
 
 
 	/**
 	* Set Form Actions & Handlers
 	*/
-	public function formActions()
+	public function setFormActions()
 	{
-		if ( is_admin() ) {
-
-			// Front End Form
-			add_action( 'wp_ajax_nopriv_locate', array($this, 'wpsl_form_handler' ));
-			add_action( 'wp_ajax_locate', array($this, 'wpsl_form_handler' ));
-
-			// Admin Settings Post Type Select
-			add_action( 'wp_ajax_wpslposttype', array($this, 'wpsl_posttype_handler' ));
-		}
+		if ( is_admin() ) new Forms\Handlers;
 	}
 
 
@@ -63,9 +55,9 @@ class SimpleLocator {
 	/**
 	* Register the Widget
 	*/
-	public function registerWidget()
+	public function formWidget()
 	{
-		register_widget( 'SimpleLocator\API\Widget' );
+		register_widget( 'SimpleLocator\Widgets\Form' );
 	}
 
 
@@ -76,22 +68,5 @@ class SimpleLocator {
 	{
 		load_plugin_textdomain('wpsimplelocator', false, dirname(dirname(plugin_basename(__FILE__))) . '/languages' );
 	}
-
-	/**
-	* Map Form Handler
-	*/
-	public function wpsl_form_handler()
-	{
-		new Forms\Map;
-	}
-
-	/**
-	* Post Type Form Handler (Settings)
-	*/
-	public function wpsl_posttype_handler()
-	{
-		new Forms\PostType;
-	}
-
 
 }

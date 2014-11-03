@@ -1,6 +1,6 @@
-<?php namespace SimpleLocator\API;
+<?php namespace SimpleLocator\Widgets;
 
-class Widget extends \WP_Widget {
+class Form extends \WP_Widget {
 
 	/**
 	* Unit of Measurement

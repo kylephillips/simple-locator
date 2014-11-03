@@ -1,8 +1,8 @@
-<?php namespace SimpleLocator\API;
+<?php namespace SimpleLocator\Shortcodes;
 
 use \SimpleLocator\Repositories\MapStyles;
 
-class ShortcodeForm {
+class Form {
 
 	/**
 	* Unit of Measurement

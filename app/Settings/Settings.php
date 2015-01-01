@@ -1,6 +1,6 @@
 <?php namespace SimpleLocator\Settings;
 
-use SimpleLocator\Repositories\Fields;
+use SimpleLocator\Repositories\FieldRepository;
 
 /**
 * Settings page
@@ -36,7 +36,7 @@ class Settings {
 
 	public function __construct()
 	{
-		$this->field_repo = new Fields;
+		$this->field_repo = new FieldRepository;
 		$this->setUnit();
 		$this->setFieldType();
 		$this->setPostType();

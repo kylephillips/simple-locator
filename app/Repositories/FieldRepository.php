@@ -2,7 +2,7 @@
 /**
 * Field Repository Class
 */
-class Fields {
+class FieldRepository {
 
 
 	/**
@@ -27,7 +27,6 @@ class Fields {
 	* Get all custom fields associated with a post type
 	* @param string post_type
 	* @return array
-	* @todo exclude wpsl fields
 	*/
 	public function getFieldsForPostType($post_type)
 	{

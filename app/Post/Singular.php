@@ -34,6 +34,15 @@ class Singular {
 
 
 	/**
+	* Filter the Content
+	*/
+	private function filterContent()
+	{
+		add_filter('the_content', array($this, 'addFilteredContent'));
+	}
+
+
+	/**
 	* Set the location data for use in map
 	*/
 	private function setLocationData()
@@ -51,14 +60,6 @@ class Singular {
 			$this->location_data['website'] = get_post_meta( get_the_id(), 'wpsl_website', true);
 			$this->location_data['additionalinfo'] = get_post_meta( get_the_id(), 'wpsl_additionalinfo', true);
 		}
-	}
-
-	/**
-	* Filter the Content
-	*/
-	private function filterContent()
-	{
-		add_filter('the_content', array($this, 'addFilteredContent'));
 	}
 
 

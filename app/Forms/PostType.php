@@ -1,6 +1,6 @@
 <?php namespace SimpleLocator\Forms;
 
-use \SimpleLocator\Repositories\Fields;
+use \SimpleLocator\Repositories\FieldRepository;
 
 /**
 * Ajax Handler for choosing post type fields in settings
@@ -29,7 +29,7 @@ class PostType {
 
 	public function __construct()
 	{
-		$this->field_repo = new Fields;
+		$this->field_repo = new FieldRepository;
 		$this->setData();
 		$this->validateNonce();
 		$this->getFields();

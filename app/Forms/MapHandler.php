@@ -3,7 +3,7 @@
 * Front-end form handler for simple locator lookup
 * @return JSON Response
 */
-class Map {
+class MapHandler {
 
 	/**
 	* Form Data

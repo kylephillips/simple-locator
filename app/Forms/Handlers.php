@@ -1,4 +1,7 @@
 <?php namespace SimpleLocator\Forms;
+
+use SimpleLocator\Forms\MapHandler;
+use SimpleLocator\Forms\PostTypeFieldsHandler;
 /**
 * Wordpress Form Handlers
 */
@@ -19,7 +22,7 @@ class Handlers {
 	*/
 	public function wpsl_form_handler()
 	{
-		new Map;
+		new MapHandler;
 	}
 
 	/**
@@ -27,7 +30,7 @@ class Handlers {
 	*/
 	public function wpsl_posttype_handler()
 	{
-		new PostType;
+		new PostTypeFieldsHandler;
 	}
 
 }

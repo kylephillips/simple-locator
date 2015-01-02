@@ -6,7 +6,7 @@ use \SimpleLocator\Repositories\FieldRepository;
 * Ajax Handler for choosing post type fields in settings
 * Returns a response with html option list
 */
-class PostType {
+class PostTypeFieldsHandler {
 
 	/**
 	* Field Repository

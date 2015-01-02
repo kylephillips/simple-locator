@@ -3,13 +3,13 @@
 Plugin Name: Simple Locator
 Plugin URI: http://locatewp.com/
 Description: Simple locator for Wordpress. Can be used for store or any other type of location. Simply add the shortcode [wp_simple_locator] to add the locator.
-Version: 1.0
+Version: 1.0.0
 Author: Kyle Phillips
 Author URI: https://github.com/kylephillips
 License: GPLv2 or later.
 */
 
-/*  Copyright 2014 Kyle Phillips  (email : support@locatewp.com)
+/*  Copyright 2015 Kyle Phillips  (email : support@locatewp.com)
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License, version 2, as 
@@ -37,8 +37,9 @@ function wpsimplelocator_check_versions( $wp = '3.8', $php = '5.3.2' ) {
 	wp_die('<p><strong>Simple Locator</strong> plugin requires'.$flag.'  version '.$version.' or greater.</p>','Plugin Activation Error',  array( 'response'=>200, 'back_link'=>TRUE ) );
 }
 
-if ( !class_exists('SimpleLocator') ) :
+if ( !class_exists('Bootstrap') ) :
+	wpsimplelocator_check_versions();
 	require('vendor/autoload.php');
 	require_once('app/SimpleLocator.php');
-	$wpsimplelocator = new SimpleLocator\SimpleLocator;
+	SimpleLocator::init();
 endif;

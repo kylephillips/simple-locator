@@ -27,7 +27,7 @@ class Validation {
 	private function nonce()
 	{
 		if ( ! wp_verify_nonce( $this->data['nonce'], 'wpsl_locator-locator-nonce' ) ){
-			$this->error('Incorrect Form Field');
+			$this->error('Incorrect Form Field', 'wpsimplelocator');
 		}
 	}
 
@@ -39,17 +39,17 @@ class Validation {
 	{
 		// Latitude & Longitude
 		if ( !is_numeric($this->data['latitude']) || !is_numeric($this->data['longitude']) ) {
-			$this->error('The address could not be located at this time.');
+			$this->error(__('The address could not be located at this time.', 'wpsimplelocator'));
 		}
 
 		// Distance
 		if ( !ctype_digit($this->data['distance']) ) {
-			$this->error('Please enter a valid distance.');
+			$this->error(__('Please enter a valid distance.'));
 		}
 
 		// Unit
 		if ( ($this->data['unit'] !== 'miles') && ($this->data['unit'] !== 'kilometers') ){
-			$this->error('Invalid unit.');
+			$this->error(__('Invalid unit.', 'wpsimplelocator'));
 		}
 
 		return true;

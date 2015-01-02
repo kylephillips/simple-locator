@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Simple Locator\n"
-"POT-Creation-Date: 2014-11-02 10:15-0500\n"
-"PO-Revision-Date: 2014-11-02 10:15-0500\n"
+"POT-Creation-Date: 2015-01-01 19:29-0500\n"
+"PO-Revision-Date: 2015-01-01 19:29-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,64 +16,69 @@ msgstr ""
 "_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: app/API/Shortcode.php:55 app/API/Widget.php:41
-msgid "Search"
-msgstr ""
-
-#: app/API/Shortcode.php:56 views/simple-locator-form.php:8
-msgid "Zip/Postal Code"
-msgstr ""
-
-#: app/API/Widget.php:21
-msgid "Simple Locator"
-msgstr ""
-
-#: app/API/Widget.php:22
-msgid "Display the Simple Locator Form"
-msgstr ""
-
-#: app/Bootstrap.php:53
+#: app/Bootstrap.php:47
 msgid "Settings"
 msgstr ""
 
-#: app/Bootstrap.php:54
+#: app/Bootstrap.php:48
 msgid "FAQ"
 msgstr ""
 
-#: app/Dependencies.php:124 views/simple-locator-form.php:25
+#: app/Dependencies/Dependencies.php:123 views/simple-locator-form.php:25
 msgid "Distance"
 msgstr ""
 
-#: app/Dependencies.php:125 views/location-meta.php:38
+#: app/Dependencies/Dependencies.php:124 views/location-meta.php:38
+#: views/singular-post.php:29
 msgid "Website"
 msgstr ""
 
-#: app/Dependencies.php:126
+#: app/Dependencies/Dependencies.php:125
 msgid "location"
 msgstr ""
 
-#: app/Dependencies.php:127
+#: app/Dependencies/Dependencies.php:126
 msgid "locations"
 msgstr ""
 
-#: app/Dependencies.php:128
+#: app/Dependencies/Dependencies.php:127
 msgid "found within"
 msgstr ""
 
-#: app/Dependencies.php:129
+#: app/Dependencies/Dependencies.php:128 views/singular-post.php:37
 msgid "Phone"
 msgstr ""
 
-#: app/Dependencies.php:130
+#: app/Dependencies/Dependencies.php:129
 msgid "Show on Map"
 msgstr ""
 
-#: app/Dependencies.php:131
+#: app/Dependencies/Dependencies.php:130
 msgid "View Location"
 msgstr ""
 
-#: app/Dependencies.php:132
+#: app/Dependencies/Dependencies.php:131
 msgid "Address not found"
+msgstr ""
+
+#: app/Forms/Validation.php:42
+msgid "The address could not be located at this time."
+msgstr ""
+
+#: app/Forms/Validation.php:47
+msgid "Please enter a valid distance."
+msgstr ""
+
+#: app/Forms/Validation.php:52
+msgid "Invalid unit."
+msgstr ""
+
+#: app/Shortcodes/Form.php:55 app/Widgets/Form.php:41
+msgid "Search"
+msgstr ""
+
+#: app/Shortcodes/Form.php:56 views/simple-locator-form.php:8
+msgid "Zip/Postal Code"
 msgstr ""
 
 #: app/WPData/PostTypes.php:22
@@ -90,6 +95,14 @@ msgstr ""
 
 #: app/WPData/PostTypes.php:52
 msgid "Simple Locator Map"
+msgstr ""
+
+#: app/Widgets/Form.php:21
+msgid "Simple Locator"
+msgstr ""
+
+#: app/Widgets/Form.php:22
+msgid "Display the Simple Locator Form"
 msgstr ""
 
 #: views/location-meta.php:4
@@ -130,50 +143,58 @@ msgid "Additional Info"
 msgstr ""
 
 #: views/settings-general.php:4
+msgid "Simple Locator Version"
+msgstr ""
+
+#: views/settings-general.php:9
 msgid "Google Maps API Key"
 msgstr ""
 
-#: views/settings-general.php:5
+#: views/settings-general.php:10
 msgid ""
 "While not required, it's a good idea to sign up for a Google Maps API key. "
 "If your website receives a spike in traffic, this will allow you to monitor "
 "the usage of the API and possibly prevent the cutoff of access."
 msgstr ""
 
-#: views/settings-general.php:5
+#: views/settings-general.php:10
 msgid "How to obtain an API key"
 msgstr ""
 
-#: views/settings-general.php:9
+#: views/settings-general.php:14
 msgid "API Key"
 msgstr ""
 
-#: views/settings-general.php:18
+#: views/settings-general.php:23
 msgid "Measurement Unit"
 msgstr ""
 
-#: views/settings-general.php:21
+#: views/settings-general.php:26
 msgid "Miles"
 msgstr ""
 
-#: views/settings-general.php:22
+#: views/settings-general.php:27
 msgid "Kilometers"
 msgstr ""
 
-#: views/settings-general.php:27
+#: views/settings-general.php:32
 msgid "Custom Map Pin"
 msgstr ""
 
-#: views/settings-general.php:46
+#: views/settings-general.php:51
 msgid "Output Simple Locator CSS"
 msgstr ""
 
-#: views/settings-general.php:50
+#: views/settings-general.php:55 views/settings-general.php:68
 msgid "Yes"
 msgstr ""
 
-#: views/settings-general.php:54
+#: views/settings-general.php:59 views/settings-general.php:72
 msgid "No"
+msgstr ""
+
+#: views/settings-general.php:64
+msgid "Display Map in Singular View"
 msgstr ""
 
 #: views/settings-map.php:4 views/settings-map.php:9 views/settings.php:7

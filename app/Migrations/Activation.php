@@ -1,5 +1,7 @@
 <?php namespace SimpleLocator\Migrations;
 
+use SimpleLocator\Migrations\DefaultOptions;
+
 /**
 * Plugin Activation
 */
@@ -13,9 +15,19 @@ class Activation {
 
 	public function __construct()
 	{
-		$this->version = 1.0;
+		global $simple_locator_version;
+		$this->version = $simple_locator_version;
 		$this->setVersion();
+		$this->setDefaultOptions();
 		register_activation_hook( dirname(dirname( dirname(__FILE__) )) . '/simplelocator.php', array($this, 'install') );
+	}
+
+	/**
+	* Default Options
+	*/
+	private function setDefaultOptions()
+	{
+		new DefaultOptions;
 	}
 
 
@@ -24,7 +36,6 @@ class Activation {
 	*/
 	public function install()
 	{
-		new DefaultOptions;
 		$this->migrateMaps();
 	}
 
@@ -34,12 +45,7 @@ class Activation {
 	*/
 	private function setVersion()
 	{
-		if ( !get_option('wpsl_version') ){
-			update_option('wpsl_version', $this->version);
-		}
-		elseif ( get_option('wpsl_version') < $this->version ){
-			update_option('wpsl_version', $this->version);	
-		}
+		update_option('wpsl_version', $this->version);
 	}
 
 

@@ -1,5 +1,10 @@
 <?php settings_fields( 'wpsimplelocator-general' ); ?>
 <tr valign="top">
+	<td colspan="2" style="padding:10px 0;">
+		<strong><?php _e('Simple Locator Version', 'wpsimplelocator'); echo '</strong> ' . get_option('wpsl_version'); ?> 
+	</td>
+</tr>
+<tr valign="top">
 	<td colspan="2" style="padding:0;">
 		<h3><?php _e('Google Maps API Key', 'wpsimplelocator'); ?></h3>
 		<p><?php _e('While not required, it\'s a good idea to sign up for a Google Maps API key. If your website receives a spike in traffic, this will allow you to monitor the usage of the API and possibly prevent the cutoff of access.', 'wpsimplelocator'); ?> <a href="https://developers.google.com/maps/documentation/javascript/tutorial#api_key" target="_blank"><?php _e('How to obtain an API key', 'wpsimplelocator'); ?></a></p>

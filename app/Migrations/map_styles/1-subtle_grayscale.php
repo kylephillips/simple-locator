@@ -4,7 +4,7 @@
 * @link http://snazzymaps.com/style/15/subtle-grayscale
 */
 $map = array(
-	'post_title' => 'Subtle Gray',
+	'post_title' => __('Subtle Gray', 'wpsimplelocator'),
 	'post_status' => 'publish',
 	'post_type' => 'wpslmaps',
 	'ping_status' => 'closed',

@@ -197,7 +197,7 @@ jQuery(function($){
 		window.send_to_editor = function(html) {
 			imgurl = $('img',html).attr('src');
 			var imagehtml = '<img src="' + imgurl + '" id="map-pin-image" />';
-			imagehtml += '<input id="remove_map_pin" type="button" value="Remove" class="button action" style="margin-right:5px;margin-left:10px;" />';
+			imagehtml += '<input id="remove_map_pin" type="button" value="' + wpsl_locator.remove + '" class="button action" style="margin-right:5px;margin-left:10px;" />';
 			$('#map-pin-image-cont').append(imagehtml);
 			$('#upload_image_button').remove();
 			$('#wpsl_map_pin').val(imgurl);
@@ -210,7 +210,7 @@ jQuery(function($){
 		e.preventDefault();
 		$('#map-pin-image').remove();
 		$('#wpsl_map_pin').prop('value', '');
-		$('#map-pin-image-cont').append('<input id="upload_image_button" type="button" value="Upload" class="button action" />');
+		$('#map-pin-image-cont').append('<input id="upload_image_button" type="button" value="' + wpsl_locator.upload + '" class="button action" />');
 		$(this).remove();
 	});
 

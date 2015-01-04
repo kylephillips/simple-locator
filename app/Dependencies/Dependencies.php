@@ -16,10 +16,16 @@ class Dependencies {
 	*/
 	private $styles_repo;
 
+	/**
+	* Plugin Version
+	*/
+	private $version;
+
 
 	public function __construct()
 	{
 		$this->styles_repo = new MapStyles;
+		$this->setVersion();
 		$this->plugin_dir = \SimpleLocator\Helpers::plugin_url();
 		add_action( 'admin_enqueue_scripts', array( $this, 'adminStyles' ));
 		add_action( 'admin_enqueue_scripts', array( $this, 'adminScripts' ));
@@ -41,6 +47,15 @@ class Dependencies {
 		);
 	}
 
+	/**
+	* Set the Plugin Version for dependency versioning
+	*/
+	private function setVersion()
+	{
+		global $simple_locator_version;
+		$this->version = $simple_locator_version;
+	}
+
 
 	/**
 	* Admin Scripts
@@ -58,13 +73,15 @@ class Dependencies {
 				'simple-locator-admin', 
 				$this->plugin_dir . '/assets/js/simple-locator-admin.js', 
 				array('jquery'), 
-				'1.0'
+				$this->version
 			);
 			wp_localize_script( 
 				'simple-locator-admin', 
 				'wpsl_locator', 
 				array( 
-					'locatorNonce' => wp_create_nonce( 'wpsl_locator-locator-nonce' )
+					'locatorNonce' => wp_create_nonce( 'wpsl_locator-locator-nonce' ),
+					'upload' => __('Upload', 'wpsimplelocator'),
+					'remove' => __('Remove', 'wpsimplelocator')
 				)
 			);
 		}
@@ -75,7 +92,7 @@ class Dependencies {
 				'simple-locator-admin-maps', 
 				$this->plugin_dir . '/assets/js/simple-locator-admin-maps.js', 
 				array('jquery'), 
-				'1.0'
+				$this->version
 			);
 			wp_localize_script( 
 				'simple-locator-admin-maps', 
@@ -96,7 +113,7 @@ class Dependencies {
 				'simple-locator', 
 				$this->plugin_dir . '/assets/css/simple-locator.css', 
 				'', 
-				'1.0'
+				$this->version
 			);
 		}
 	}
@@ -113,7 +130,7 @@ class Dependencies {
 		wp_register_script(
 			'simple-locator', 
 			$this->plugin_dir . '/assets/js/simple-locator.js', 
-			'jquery', '1.0', 
+			'jquery', $this->version, 
 			true
 		);
 

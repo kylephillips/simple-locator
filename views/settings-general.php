@@ -40,7 +40,7 @@
 		</div>
 		<?php 
 		if ( get_option('wpsl_map_pin') ){
-			echo '<input id="remove_map_pin" type="button" value="Remove" class="button action" style="margin-right:5px;margin-left:10px;" />';
+			echo '<input id="remove_map_pin" type="button" value="' . __('Remove', 'wpsimplelocator') . '" class="button action" style="margin-right:5px;margin-left:10px;" />';
 		} else {
 			echo '<input id="upload_image_button" type="button" value="Upload" class="button action" />';
 		} ?>

@@ -9,7 +9,7 @@ class Bootstrap {
 		$this->init();
 		$this->setFormActions();
 		add_filter( 'plugin_action_links_' . 'wp-simple-locator/simplelocator.php', array($this, 'settingsLink' ) );
-		add_action( 'init', array($this, 'localize') );
+		add_action( 'plugins_loaded', array($this, 'addLocalization') );
 	}
 
 
@@ -62,11 +62,14 @@ class Bootstrap {
 
 
 	/**
-	* Localization Text Domain
+	* Localization Domain
 	*/
-	public function localize()
+	public function addLocalization()
 	{
-		load_plugin_textdomain('wpsimplelocator', false, dirname(dirname(plugin_basename(__FILE__))) . '/languages' );
+		load_plugin_textdomain(
+			'wpsimplelocator', 
+			false, 
+			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages' );
 	}
 
 }

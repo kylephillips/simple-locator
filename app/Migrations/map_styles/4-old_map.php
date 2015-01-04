@@ -4,7 +4,7 @@
 * @link http://snazzymaps.com/style/99/old-map
 */
 $map = array(
-	'post_title' => 'Old Map',
+	'post_title' => __('Old Map', 'wpsimplelocator'),
 	'post_status' => 'publish',
 	'post_type' => 'wpslmaps',
 	'ping_status' => 'closed',

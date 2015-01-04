@@ -4,7 +4,7 @@
 * @link https://snazzymaps.com/style/1706/nightrider
 */
 $map = array(
-	'post_title' => 'Night Rider',
+	'post_title' => __('Night Rider', 'wpsimplelocator'),
 	'post_status' => 'publish',
 	'post_type' => 'wpslmaps',
 	'ping_status' => 'closed',

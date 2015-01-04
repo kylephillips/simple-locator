@@ -4,7 +4,7 @@
 * @link https://snazzymaps.com/style/38/shades-of-grey
 */
 $map = array(
-	'post_title' => 'Shades of Grey',
+	'post_title' => __('Shades of Grey', 'wpsimplelocator'),
 	'post_status' => 'publish',
 	'post_type' => 'wpslmaps',
 	'ping_status' => 'closed',

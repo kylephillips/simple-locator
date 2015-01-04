@@ -4,7 +4,7 @@
 * @link http://snazzymaps.com/style/42/apple-maps-esque
 */
 $map = array(
-	'post_title' => 'Apple Maps-esque',
+	'post_title' => __('Apple Maps-esque', 'wpsimplelocator'),
 	'post_status' => 'publish',
 	'post_type' => 'wpslmaps',
 	'ping_status' => 'closed',

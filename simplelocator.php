@@ -6,6 +6,8 @@ Description: Location search in WordPress, made simple. Can be used for store or
 Version: 1.0.0
 Author: Kyle Phillips
 Author URI: https://github.com/kylephillips
+Text Domain: wpsimplelocator
+Domain Path: /languages/
 License: GPLv2 or later.
 */
 

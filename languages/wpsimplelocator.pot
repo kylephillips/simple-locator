@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Simple Locator\n"
-"POT-Creation-Date: 2015-01-01 19:29-0500\n"
-"PO-Revision-Date: 2015-01-01 19:29-0500\n"
+"POT-Creation-Date: 2015-01-03 20:19-0500\n"
+"PO-Revision-Date: 2015-01-03 20:19-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -24,40 +24,49 @@ msgstr ""
 msgid "FAQ"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:123 views/simple-locator-form.php:25
+#: app/Dependencies/Dependencies.php:83
+msgid "Upload"
+msgstr ""
+
+#: app/Dependencies/Dependencies.php:84 views/settings-general.php:43
+msgid "Remove"
+msgstr ""
+
+#: app/Dependencies/Dependencies.php:140 views/simple-locator-form.php:25
 msgid "Distance"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:124 views/location-meta.php:38
-#: views/singular-post.php:29
+#: app/Dependencies/Dependencies.php:141 app/WPData/PostTypes.php:83
+#: views/location-meta.php:38 views/singular-post.php:29
 msgid "Website"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:125
+#: app/Dependencies/Dependencies.php:142 app/WPData/PostTypes.php:38
 msgid "location"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:126
+#: app/Dependencies/Dependencies.php:143
 msgid "locations"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:127
+#: app/Dependencies/Dependencies.php:144
 msgid "found within"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:128 views/singular-post.php:37
+#: app/Dependencies/Dependencies.php:145 app/WPData/PostTypes.php:82
+#: views/singular-post.php:37
 msgid "Phone"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:129
+#: app/Dependencies/Dependencies.php:146
 msgid "Show on Map"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:130
+#: app/Dependencies/Dependencies.php:147 app/WPData/PostTypes.php:26
 msgid "View Location"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:131
+#: app/Dependencies/Dependencies.php:148
 msgid "Address not found"
 msgstr ""
 
@@ -71,6 +80,30 @@ msgstr ""
 
 #: app/Forms/Validation.php:52
 msgid "Invalid unit."
+msgstr ""
+
+#: app/Migrations/map_styles/1-subtle_grayscale.php:7
+msgid "Subtle Gray"
+msgstr ""
+
+#: app/Migrations/map_styles/2-blue_water.php:7
+msgid "Blue Water"
+msgstr ""
+
+#: app/Migrations/map_styles/3-apple_maps_esque.php:7
+msgid "Apple Maps-esque"
+msgstr ""
+
+#: app/Migrations/map_styles/4-old_map.php:7
+msgid "Old Map"
+msgstr ""
+
+#: app/Migrations/map_styles/5-shades_of_gray.php:7
+msgid "Shades of Grey"
+msgstr ""
+
+#: app/Migrations/map_styles/6-night_rider.php:7
+msgid "Night Rider"
 msgstr ""
 
 #: app/Shortcodes/Form.php:55 app/Widgets/Form.php:41
@@ -89,12 +122,24 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
+#: app/WPData/PostTypes.php:24
+msgid "Add Location"
+msgstr ""
+
+#: app/WPData/PostTypes.php:25
+msgid "Edit Location"
+msgstr ""
+
 #: app/WPData/PostTypes.php:51
 msgid "Simple Locator Maps"
 msgstr ""
 
 #: app/WPData/PostTypes.php:52
 msgid "Simple Locator Map"
+msgstr ""
+
+#: app/WPData/PostTypes.php:81
+msgid "Address"
 msgstr ""
 
 #: app/Widgets/Form.php:21

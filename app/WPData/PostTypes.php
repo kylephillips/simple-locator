@@ -19,11 +19,11 @@ class PostTypes {
 	public function registerLocation()
 	{
 		$labels = array(
-			'name' => __('Locations'),  
-			'singular_name' => __('Location'),
-			'add_new_item'=> 'Add Location',
-			'edit_item' => 'Edit Location',
-			'view_item' => 'View Location'
+			'name' => __('Locations', 'wpsimplelocator'),  
+			'singular_name' => __('Location', 'wpsimplelocator'),
+			'add_new_item'=> __('Add Location', 'wpsimplelocator'),
+			'edit_item' => __('Edit Location', 'wpsimplelocator'),
+			'view_item' => __('View Location', 'wpsimplelocator')
 		);
 		$args = array(
 			'labels' => $labels,
@@ -35,7 +35,7 @@ class PostTypes {
 			'hierarchical' => false,  
 			'has_archive' => true,
 			'supports' => array('title','editor','thumbnail'),
-			'rewrite' => array('slug' => 'location', 'with_front' => false)
+			'rewrite' => array('slug' => __('location', 'wpsimplelocator'), 'with_front' => false)
 		);
 		register_post_type( 'location' , $args );
 	}
@@ -78,9 +78,9 @@ class PostTypes {
 	*/	
 	public function locations_table_head( $defaults )
 	{
-	    $defaults['address']  = 'Address';
-	    $defaults['phone']    = 'Phone';
-	    $defaults['website']  = 'Website';
+	    $defaults['address']  = __('Address', 'wpsimplelocator');
+	    $defaults['phone']    = __('Phone', 'wpsimplelocator');
+	    $defaults['website']  = __('Website', 'wpsimplelocator');
 	    return $defaults;
 	}
 

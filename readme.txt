@@ -74,13 +74,19 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 == Changelog ==
 
-= 1.0 =
+= 1.0.1 =
+* Localization bug fixes
+
+= 1.0.0 =
 * Initial release 
 
 
 == Upgrade Notice ==
 
-= 1.0 =
+= 1.0.1 =
+Minor Localization bug fixes
+
+= 1.0.0 =
 Initial release
 
 

@@ -32,7 +32,8 @@ class FieldRepository {
 	{
 		global $wpdb;
 		$post_table = $wpdb->prefix . 'posts';
-		$sql = "SELECT DISTINCT meta_key FROM wp_posts AS p LEFT JOIN wp_postmeta AS m ON m.post_id = p.id WHERE p.post_type = '$post_type' AND meta_key NOT LIKE '\_%'";
+		$meta_table = $wpdb->prefix . 'postmeta';
+		$sql = "SELECT DISTINCT meta_key FROM $post_table AS p LEFT JOIN $meta_table AS m ON m.post_id = p.id WHERE p.post_type = '$post_type' AND meta_key NOT LIKE '\_%'";
 		$results = $wpdb->get_results($sql);
 		$fields = ( $results ) ? $this->fieldsArray($results) : array();
 		return $fields;

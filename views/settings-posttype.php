@@ -8,6 +8,11 @@
 <tr valign="top">
 	<th scope="row"><?php _e('Post Type for locations', 'wpsimplelocator'); ?></th>
 	<td>
+		<label style="display:block;margin-bottom:5px;">
+			<input type="checkbox" name="wpsl_show_hidden" value="true" id="wpsl_show_hidden" <?php if ( get_option('wpsl_show_hidden') == 'true' ) echo 'checked'; ?>> 
+			<?php _e('Show Hidden Fields', 'wpsimplelocator'); ?>
+		</label>
+		
 		<select name="wpsl_post_type" id="wpsl_post_type">
 		<?php
 		foreach ( $this->field_repo->getPostTypes() as $type ){

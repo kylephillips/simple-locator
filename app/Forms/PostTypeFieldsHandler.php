@@ -41,9 +41,11 @@ class PostTypeFieldsHandler {
 	*/
 	private function setData()
 	{
+		$show_hidden = ( $_GET['show_hidden'] == 'true' ) ? true : false;
 		$this->data = array(
 			'nonce' => sanitize_text_field($_GET['nonce']),
 			'post_type' => sanitize_text_field($_GET['post_type']),
+			'show_hidden' => $show_hidden
 		);
 	}
 
@@ -64,7 +66,7 @@ class PostTypeFieldsHandler {
 	*/
 	private function getFields()
 	{
-		$fields = $this->field_repo->displayFieldOptions($this->data['post_type']);
+		$fields = $this->field_repo->displayFieldOptions($this->data['post_type'], $this->data['show_hidden']);
 		$response = array('status'=>'success', 'fields'=>$fields);
 		$this->sendResponse($response);
 	}

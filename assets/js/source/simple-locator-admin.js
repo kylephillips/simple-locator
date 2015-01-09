@@ -122,8 +122,16 @@ jQuery(function($){
 	});
 
 	// Prevent the selection of wspl geo fields if another post type is selected
-	$(document).on('change', '#wpsl_post_type', function(){
-		var value = $(this).val();
+	$(document).on('change', '#wpsl_post_type, #wpsl_show_hidden', function(){
+		load_posttype_fields();
+	});
+
+	/**
+	* Load the post type meta fields
+	*/
+	function load_posttype_fields()
+	{
+		var value = $('#wpsl_post_type').val();
 		if ( value !== 'location' ){
 			$('#field_wpsl').attr('disabled', 'disabled').removeAttr('checked');
 			$('#field_custom').attr('checked','checked');
@@ -136,7 +144,7 @@ jQuery(function($){
 		// Load field selections with select post type's custom fields
 		$('#lat_select, #lng_select').empty();
 		get_fields_for_posttype(value);
-	});
+	}
 
 
 	$(document).on('change', 'input[name="wpsl_field_type"]:radio', function(){
@@ -223,13 +231,15 @@ jQuery(function($){
 	*/
 	function get_fields_for_posttype(post_type)
 	{
+		var showHidden = ( $('#wpsl_show_hidden').is(':checked') ) ? 'true' : 'false';
 		$.ajax({
 			type: 'GET',
 			url: ajaxurl,
 			data: {
 				action: 'wpslposttype',
 				nonce: wpsl_locator.locatorNonce,
-				post_type: post_type
+				post_type: post_type,
+				show_hidden: showHidden
 			},
 			success: function(data){
 				console.log(data);

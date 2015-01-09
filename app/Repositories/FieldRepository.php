@@ -28,12 +28,16 @@ class FieldRepository {
 	* @param string post_type
 	* @return array
 	*/
-	public function getFieldsForPostType($post_type)
+	public function getFieldsForPostType($post_type, $show_hidden = false)
 	{
 		global $wpdb;
 		$post_table = $wpdb->prefix . 'posts';
 		$meta_table = $wpdb->prefix . 'postmeta';
-		$sql = "SELECT DISTINCT meta_key FROM $post_table AS p LEFT JOIN $meta_table AS m ON m.post_id = p.id WHERE p.post_type = '$post_type' AND meta_key NOT LIKE '\_%'";
+		if ( $show_hidden ){
+			$sql = "SELECT DISTINCT meta_key FROM $post_table AS p LEFT JOIN $meta_table AS m ON m.post_id = p.id WHERE p.post_type = '$post_type' AND meta_key NOT LIKE ''";
+		} else {
+			$sql = "SELECT DISTINCT meta_key FROM $post_table AS p LEFT JOIN $meta_table AS m ON m.post_id = p.id WHERE p.post_type = '$post_type' AND meta_key NOT LIKE '\_%'";
+		}
 		$results = $wpdb->get_results($sql);
 		$fields = ( $results ) ? $this->fieldsArray($results) : array();
 		return $fields;
@@ -60,9 +64,9 @@ class FieldRepository {
 	* @param string post_type
 	* @return html
 	*/
-	public function displayFieldOptions($post_type)
+	public function displayFieldOptions($post_type, $show_hidden = false)
 	{
-		$fields = $this->getFieldsForPostType($post_type);
+		$fields = $this->getFieldsForPostType($post_type, $show_hidden);
 		$out = '';
 		foreach($fields as $field){
 			$out .= '<option value="' . $field . '">' . $field . '</option>';

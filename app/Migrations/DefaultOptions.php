@@ -39,6 +39,9 @@ class DefaultOptions {
 		if ( !get_option('wpsl_singular_data') ){
 			update_option('wpsl_singular_data', 'true');
 		}
+		if ( !get_option('wpsl_show_hidden') ){
+			update_option('wpsl_show_hidden', 'false');
+		}
 	}
 
 }

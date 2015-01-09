@@ -108,6 +108,7 @@ class Settings {
 		register_setting( 'wpsimplelocator-general', 'wpsl_map_pin' );
 		register_setting( 'wpsimplelocator-general', 'wpsl_singular_data' );
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_post_type' );
+		register_setting( 'wpsimplelocator-posttype', 'wpsl_show_hidden' );
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_field_type' );
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_lat_field' );
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_lng_field' );

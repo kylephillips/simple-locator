@@ -43,7 +43,7 @@ class Dependencies {
 			'simplelocator', 
 			$this->plugin_dir . '/assets/css/simple-locator-admin.css', 
 			array(), 
-			'1.0'
+			$this->version
 		);
 	}
 

@@ -49,7 +49,8 @@
 	<td>
 		<select id="lat_select">';
 			<?php 
-				$fields = $this->field_repo->getFieldsForPostType($this->post_type);
+				$show_hidden = ( get_option('wpsl_show_hidden') == 'true' ) ? true : false;
+				$fields = $this->field_repo->getFieldsForPostType($this->post_type, $show_hidden);
 				foreach ( $fields as $field ){
 					$out = '<option value="' . $field . '"';
 					if ( $field == get_option('wpsl_lat_field') ) $out .= ' selected';
@@ -65,7 +66,7 @@
 	<td>
 		<select id="lng_select">
 			<?php 
-				$fields = $this->field_repo->getFieldsForPostType($this->post_type);
+				$fields = $this->field_repo->getFieldsForPostType($this->post_type, $show_hidden);
 				foreach ( $fields as $field ){
 					$out = '<option value="' . $field . '"';
 					if ( $field == get_option('wpsl_lng_field') ) $out .= ' selected';

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Simple Locator\n"
-"POT-Creation-Date: 2015-01-03 20:19-0500\n"
-"PO-Revision-Date: 2015-01-03 20:19-0500\n"
+"POT-Creation-Date: 2015-01-12 20:12-0500\n"
+"PO-Revision-Date: 2015-01-12 20:12-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -24,49 +24,49 @@ msgstr ""
 msgid "FAQ"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:83
+#: app/Dependencies/Dependencies.php:99
 msgid "Upload"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:84 views/settings-general.php:43
+#: app/Dependencies/Dependencies.php:100 views/settings-general.php:43
 msgid "Remove"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:140 views/simple-locator-form.php:25
+#: app/Dependencies/Dependencies.php:156 views/simple-locator-form.php:25
 msgid "Distance"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:141 app/WPData/PostTypes.php:83
+#: app/Dependencies/Dependencies.php:157 app/WPData/PostTypes.php:108
 #: views/location-meta.php:38 views/singular-post.php:29
 msgid "Website"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:142 app/WPData/PostTypes.php:38
+#: app/Dependencies/Dependencies.php:158 app/Migrations/DefaultOptions.php:53
 msgid "location"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:143
+#: app/Dependencies/Dependencies.php:159
 msgid "locations"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:144
+#: app/Dependencies/Dependencies.php:160
 msgid "found within"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:145 app/WPData/PostTypes.php:82
+#: app/Dependencies/Dependencies.php:161 app/WPData/PostTypes.php:107
 #: views/singular-post.php:37
 msgid "Phone"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:146
+#: app/Dependencies/Dependencies.php:162
 msgid "Show on Map"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:147 app/WPData/PostTypes.php:26
+#: app/Dependencies/Dependencies.php:163 app/Migrations/DefaultOptions.php:52
 msgid "View Location"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:148
+#: app/Dependencies/Dependencies.php:164
 msgid "Address not found"
 msgstr ""
 
@@ -80,6 +80,22 @@ msgstr ""
 
 #: app/Forms/Validation.php:52
 msgid "Invalid unit."
+msgstr ""
+
+#: app/Migrations/DefaultOptions.php:48
+msgid "Locations"
+msgstr ""
+
+#: app/Migrations/DefaultOptions.php:49
+msgid "Location"
+msgstr ""
+
+#: app/Migrations/DefaultOptions.php:50
+msgid "Add Location"
+msgstr ""
+
+#: app/Migrations/DefaultOptions.php:51
+msgid "Edit Location"
 msgstr ""
 
 #: app/Migrations/map_styles/1-subtle_grayscale.php:7
@@ -114,31 +130,15 @@ msgstr ""
 msgid "Zip/Postal Code"
 msgstr ""
 
-#: app/WPData/PostTypes.php:22
-msgid "Locations"
-msgstr ""
-
-#: app/WPData/PostTypes.php:23
-msgid "Location"
-msgstr ""
-
-#: app/WPData/PostTypes.php:24
-msgid "Add Location"
-msgstr ""
-
-#: app/WPData/PostTypes.php:25
-msgid "Edit Location"
-msgstr ""
-
-#: app/WPData/PostTypes.php:51
+#: app/WPData/PostTypes.php:76
 msgid "Simple Locator Maps"
 msgstr ""
 
-#: app/WPData/PostTypes.php:52
+#: app/WPData/PostTypes.php:77
 msgid "Simple Locator Map"
 msgstr ""
 
-#: app/WPData/PostTypes.php:81
+#: app/WPData/PostTypes.php:106
 msgid "Address"
 msgstr ""
 
@@ -295,28 +295,80 @@ msgstr ""
 msgid "Post Type for locations"
 msgstr ""
 
-#: views/settings-posttype.php:17
+#: views/settings-posttype.php:13
+msgid "Show Hidden Fields"
+msgstr ""
+
+#: views/settings-posttype.php:22
 msgid "Locations (Simple Locator Default)"
 msgstr ""
 
-#: views/settings-posttype.php:26
+#: views/settings-posttype.php:31
 msgid "Latitude & Longitude Fields"
 msgstr ""
 
-#: views/settings-posttype.php:31
+#: views/settings-posttype.php:36
 msgid "Use Simple Locator Fields"
 msgstr ""
 
-#: views/settings-posttype.php:37
+#: views/settings-posttype.php:42
 msgid "Use Custom Fields"
 msgstr ""
 
-#: views/settings-posttype.php:43
+#: views/settings-posttype.php:48
 msgid "Latitude Field"
 msgstr ""
 
-#: views/settings-posttype.php:59
+#: views/settings-posttype.php:65
 msgid "Longitude Field"
+msgstr ""
+
+#: views/settings-posttype.php:88
+msgid "Location Post Type Name & Labels"
+msgstr ""
+
+#: views/settings-posttype.php:89
+msgid ""
+"Important: Changing the name or slug will remove content already published "
+"under existing post type from view. For more information, visit"
+msgstr ""
+
+#: views/settings-posttype.php:93
+msgid "Post Type"
+msgstr ""
+
+#: views/settings-posttype.php:99
+msgid "Post Type Label"
+msgstr ""
+
+#: views/settings-posttype.php:105
+msgid "Post Type Singular Label"
+msgstr ""
+
+#: views/settings-posttype.php:111
+msgid "Add New Label"
+msgstr ""
+
+#: views/settings-posttype.php:117
+msgid "Edit Label"
+msgstr ""
+
+#: views/settings-posttype.php:123
+msgid "View Label"
+msgstr ""
+
+#: views/settings-posttype.php:129
+msgid "Slug"
+msgstr ""
+
+#: views/settings-posttype.php:135
+msgid "Menu Position"
+msgstr ""
+
+#: views/settings-posttype.php:142
+msgid ""
+"Post type & slug must be all lower case, with no special characters or "
+"spaces."
 msgstr ""
 
 #: views/settings.php:2

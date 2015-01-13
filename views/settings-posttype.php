@@ -90,43 +90,43 @@
 	</td>
 </tr>
 <tr valign="top" class="wpsl-label-row">
-	<th><?php _e('Post Type');?>*</th>
+	<th><?php _e('Post Type', 'wpsimplelocator');?>*</th>
 	<td>
 		<input type="text" name="wpsl_posttype_labels[name]" value="<?php echo $this->getLabel('name', 'location'); ?>">
 	</td>
 </tr>
 <tr valign="top" class="wpsl-label-row">
-	<th><?php _e('Post Type Label');?></th>
+	<th><?php _e('Post Type Label', 'wpsimplelocator');?></th>
 	<td>
 		<input type="text" name="wpsl_posttype_labels[label]" value="<?php echo $this->getLabel('label', 'Locations'); ?>">
 	</td>
 </tr>
 <tr valign="top" class="wpsl-label-row">
-	<th><?php _e('Post Type Singular Label');?></th>
+	<th><?php _e('Post Type Singular Label', 'wpsimplelocator');?></th>
 	<td>
 		<input type="text" name="wpsl_posttype_labels[singular]" value="<?php echo $this->getLabel('singular', 'Location'); ?>">
 	</td>
 </tr>
 <tr valign="top" class="wpsl-label-row">
-	<th><?php _e('Add New Label');?></th>
+	<th><?php _e('Add New Label', 'wpsimplelocator');?></th>
 	<td>
 		<input type="text" name="wpsl_posttype_labels[add_new_item]" value="<?php echo $this->getLabel('add_new_item', 'New Location'); ?>">
 	</td>
 </tr>
 <tr valign="top" class="wpsl-label-row">
-	<th><?php _e('Edit Label');?></th>
+	<th><?php _e('Edit Label', 'wpsimplelocator');?></th>
 	<td>
 		<input type="text" name="wpsl_posttype_labels[edit_item]" value="<?php echo $this->getLabel('edit_item', 'Edit Location'); ?>">
 	</td>
 </tr>
 <tr valign="top" class="wpsl-label-row">
-	<th><?php _e('View Label');?></th>
+	<th><?php _e('View Label', 'wpsimplelocator');?></th>
 	<td>
 		<input type="text" name="wpsl_posttype_labels[view_item]" value="<?php echo $this->getLabel('view_item', 'View Location'); ?>">
 	</td>
 </tr>
 <tr valign="top" class="wpsl-label-row">
-	<th><?php _e('Slug');?>*</th>
+	<th><?php _e('Slug', 'wpsimplelocator');?>*</th>
 	<td>
 		<input type="text" name="wpsl_posttype_labels[slug]" value="<?php echo $this->getLabel('slug', 'location'); ?>">
 	</td>

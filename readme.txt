@@ -17,7 +17,7 @@ Add Google Maps location search functionality for any post type.
 
 Simple locator is ideal for developers who are looking for a way to implement location search for any post type. Simple locator is different in that it allows the selection of any existing custom fields for use as the geocoded data sources.
 
-Don't have an existing post type with geocoded latitude and longitude fields? Simple Locator includes a default "Locations" post type with fields for latitutde, longitude, address, phone number, website, & more.
+Don't have an existing post type with geocoded latitude and longitude fields? Simple Locator includes a default "Locations" post type with fields for latitutde, longitude, address, phone number, website, & more. This post type's name and labels are configurable through the plugin settings.
 
 Simple Locator also offers developer-friendly options for adding custom Google Maps styling. Select from an existing list, leave the default styles, or add your own JSON styles.
 

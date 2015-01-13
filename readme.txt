@@ -74,6 +74,9 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 == Changelog ==
 
+= 1.0.6 =
+* Options added to customize the included locations post type and its labels
+
 = 1.0.5 =
 * Minor Bug fixes in compatibility with other plugins
 
@@ -94,6 +97,9 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 
 == Upgrade Notice ==
+
+= 1.0.6 =
+Options added to customize the included locations post type and its labels
 
 = 1.0.5 =
 Minor Bug fixes in compatibility with other plugins

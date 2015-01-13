@@ -83,3 +83,59 @@
 		value="<?php echo ( get_option('wpsl_lng_field') ) ? get_option('wpsl_lng_field') : 'wpsl_longitude'; ?>" />
 	</td>
 </tr>
+<tr valign="top" class="wpsl-label-row">
+	<td colspan="2" style="padding:30px 0;">
+		<h3><?php _e('Location Post Type Name & Labels', 'wpsimplelocator'); ?></h3>
+		<p><?php _e('Important: Changing the name or slug will remove content already published under existing post type from view.', 'wpsimplelocator'); ?></p>
+	</td>
+</tr>
+<tr valign="top" class="wpsl-label-row">
+	<th><?php _e('Post Type');?>*</th>
+	<td>
+		<input type="text" name="wpsl_posttype_labels[name]" value="<?php echo $this->getLabel('name', 'location'); ?>">
+	</td>
+</tr>
+<tr valign="top" class="wpsl-label-row">
+	<th><?php _e('Post Type Label');?></th>
+	<td>
+		<input type="text" name="wpsl_posttype_labels[label]" value="<?php echo $this->getLabel('label', 'Locations'); ?>">
+	</td>
+</tr>
+<tr valign="top" class="wpsl-label-row">
+	<th><?php _e('Post Type Singular Label');?></th>
+	<td>
+		<input type="text" name="wpsl_posttype_labels[singular]" value="<?php echo $this->getLabel('singular', 'Location'); ?>">
+	</td>
+</tr>
+<tr valign="top" class="wpsl-label-row">
+	<th><?php _e('Add New Label');?></th>
+	<td>
+		<input type="text" name="wpsl_posttype_labels[add_new_item]" value="<?php echo $this->getLabel('add_new_item', 'New Location'); ?>">
+	</td>
+</tr>
+<tr valign="top" class="wpsl-label-row">
+	<th><?php _e('Edit Label');?></th>
+	<td>
+		<input type="text" name="wpsl_posttype_labels[edit_item]" value="<?php echo $this->getLabel('edit_item', 'Edit Location'); ?>">
+	</td>
+</tr>
+<tr valign="top" class="wpsl-label-row">
+	<th><?php _e('View Label');?></th>
+	<td>
+		<input type="text" name="wpsl_posttype_labels[view_item]" value="<?php echo $this->getLabel('view_item', 'View Location'); ?>">
+	</td>
+</tr>
+<tr valign="top" class="wpsl-label-row">
+	<th><?php _e('Slug');?>*</th>
+	<td>
+		<input type="text" name="wpsl_posttype_labels[slug]" value="<?php echo $this->getLabel('slug', 'location'); ?>">
+	</td>
+</tr>
+<tr valign="top" class="wpsl-label-row">
+	<td colspan="2" style="padding:0;">
+		<p style="font-style:oblique">*<?php _e('Post type & slug must be all lower case, with no special characters or spaces.', 'wpsimplelocator');?></p>
+	</td>
+</tr>
+
+
+

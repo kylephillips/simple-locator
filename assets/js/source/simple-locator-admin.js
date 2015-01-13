@@ -110,6 +110,7 @@ jQuery(function($){
 	* ------------------------------------------------------
 	*/
 	$(document).ready(function(){
+		post_type_labels();
 		var pt = $('#wpsl_post_type').val();
 		if ( pt !== 'location' ){
 			$('#field_wpsl').attr('disabled', 'disabled').removeAttr('checked');
@@ -124,6 +125,7 @@ jQuery(function($){
 	// Prevent the selection of wspl geo fields if another post type is selected
 	$(document).on('change', '#wpsl_post_type, #wpsl_show_hidden', function(){
 		load_posttype_fields();
+		post_type_labels();
 	});
 
 	/**
@@ -186,6 +188,18 @@ jQuery(function($){
 		$('#wpsl_lng_field').val('wpsl_longitude');
 		$('#lat_select').val('wpsl_latitude');
 		$('#lng_select').val('wpsl_longitude');
+	}
+
+	/**
+	* Show/Hide the Post Type Label Fields
+	*/
+	function post_type_labels()
+	{
+		if ( $('#wpsl_post_type').val() === 'location' ){
+			$('.wpsl-label-row').show();
+		} else {
+			$('.wpsl-label-row').hide();
+		}
 	}
 
 

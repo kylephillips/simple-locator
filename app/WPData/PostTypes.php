@@ -4,12 +4,36 @@
 */
 class PostTypes {
 
+	/**
+	* Post Type Option
+	* @var array
+	*/
+	private $pt_labels;
+
 	function __construct()
 	{
+		$this->setLabels();
 		add_action( 'init', array( $this, 'registerLocation') );
 		add_action( 'init', array( $this, 'registerMaps') );
 		add_filter( 'manage_location_posts_columns', array($this,'locations_table_head'));
 		add_action( 'manage_location_posts_custom_column', array($this, 'locations_table_columns'), 10, 2);
+	}
+
+	/**
+	* Set the Post Type Labels from the option
+	* @since 1.0.6
+	*/
+	private function setLabels()
+	{
+		$labels = get_option('wpsl_posttype_labels');
+		$this->pt_labels = new \StdClass();
+		$this->pt_labels->name = ( $labels['name'] !== "" ) ? $labels['name'] : 'location';
+		$this->pt_labels->label = ( $labels['label'] !== "" ) ? $labels['label'] : 'Locations';
+		$this->pt_labels->singular = ( $labels['singular'] !== "" ) ? $labels['singular'] : 'Location';
+		$this->pt_labels->add_new = ( $labels['add_new_item'] !== "" ) ? $labels['add_new_item'] : 'Add Location';
+		$this->pt_labels->edit_item = ( $labels['edit_item'] !== "" ) ? $labels['edit_item'] : 'Edit Location';
+		$this->pt_labels->view_item = ( $labels['view_item'] !== "" ) ? $labels['view_item'] : 'View Location';
+		$this->pt_labels->slug = ( $labels['slug'] !== "" ) ? $labels['slug'] : 'location';
 	}
 
 
@@ -19,11 +43,11 @@ class PostTypes {
 	public function registerLocation()
 	{
 		$labels = array(
-			'name' => __('Locations', 'wpsimplelocator'),  
-			'singular_name' => __('Location', 'wpsimplelocator'),
-			'add_new_item'=> __('Add Location', 'wpsimplelocator'),
-			'edit_item' => __('Edit Location', 'wpsimplelocator'),
-			'view_item' => __('View Location', 'wpsimplelocator')
+			'name' => $this->pt_labels->label,  
+			'singular_name' => $this->pt_labels->singular,
+			'add_new_item'=> $this->pt_labels->add_new,
+			'edit_item' => $this->pt_labels->edit_item,
+			'view_item' => $this->pt_labels->view_item
 		);
 		$args = array(
 			'labels' => $labels,
@@ -35,9 +59,9 @@ class PostTypes {
 			'hierarchical' => false,  
 			'has_archive' => true,
 			'supports' => array('title','editor','thumbnail'),
-			'rewrite' => array('slug' => __('location', 'wpsimplelocator'), 'with_front' => false)
+			'rewrite' => array('slug' =>  $this->pt_labels->slug, 'with_front' => false)
 		);
-		register_post_type( 'location' , $args );
+		register_post_type(  $this->pt_labels->name , $args );
 	}
 
 

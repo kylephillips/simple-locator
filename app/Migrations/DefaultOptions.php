@@ -42,6 +42,17 @@ class DefaultOptions {
 		if ( !get_option('wpsl_show_hidden') ){
 			update_option('wpsl_show_hidden', 'false');
 		}
+		if ( !get_option('wpsl_posttype_labels') ){
+			update_option('wpsl_posttype_labels', array(
+				'name' => 'location',
+				'label' => __('Locations', 'wpsimplelocator'),
+				'singular'=> __('Location', 'wpsimplelocator'),
+				'add_new_item'=> __('Add Location', 'wpsimplelocator'),
+				'edit_item' => __('Edit Location', 'wpsimplelocator'),
+				'view_item' => __('View Location', 'wpsimplelocator'),
+				'slug' => __('location', 'wpsimplelocator')
+			));
+		}
 	}
 
 }

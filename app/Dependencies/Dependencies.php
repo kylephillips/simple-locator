@@ -21,11 +21,17 @@ class Dependencies {
 	*/
 	private $version;
 
+	/**
+	* Post Type for Locations
+	*/
+	private $post_type;
+
 
 	public function __construct()
 	{
 		$this->styles_repo = new MapStyles;
 		$this->setVersion();
+		$this->setPostType();
 		$this->plugin_dir = \SimpleLocator\Helpers::plugin_url();
 		add_action( 'admin_enqueue_scripts', array( $this, 'adminStyles' ));
 		add_action( 'admin_enqueue_scripts', array( $this, 'adminScripts' ));
@@ -56,6 +62,16 @@ class Dependencies {
 		$this->version = $simple_locator_version;
 	}
 
+	/**
+	* Set the Post Type from Options
+	* @since 1.0.6
+	*/
+	private function setPostType()
+	{
+		$labels = get_option('wpsl_posttype_labels');
+		$this->post_type = ( isset($labels['name']) ) ? $labels['name'] : 'location';
+	}
+
 
 	/**
 	* Admin Scripts
@@ -63,7 +79,7 @@ class Dependencies {
 	public function adminScripts()
 	{
 		$screen = get_current_screen();
-		if ( ($screen->post_type == 'location') || ($screen->id == 'settings_page_wp_simple_locator') ) {
+		if ( ($screen->post_type == $this->post_type) || ($screen->id == 'settings_page_wp_simple_locator') ) {
 			$this->addGoogleMaps();
 			wp_enqueue_script('google-maps');
 			wp_enqueue_script('media-upload');

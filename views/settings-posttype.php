@@ -86,7 +86,7 @@
 <tr valign="top" class="wpsl-label-row">
 	<td colspan="2" style="padding:30px 0;">
 		<h3><?php _e('Location Post Type Name & Labels', 'wpsimplelocator'); ?></h3>
-		<p><?php _e('Important: Changing the name or slug will remove content already published under existing post type from view.', 'wpsimplelocator'); ?></p>
+		<p><?php _e('Important: Changing the name or slug will remove content already published under existing post type from view. For more information, visit', 'wpsimplelocator'); ?><a href="http://codex.wordpress.org/Function_Reference/register_post_type" target="_blank"> wordpress.org</a></p>
 	</td>
 </tr>
 <tr valign="top" class="wpsl-label-row">
@@ -129,6 +129,12 @@
 	<th><?php _e('Slug');?>*</th>
 	<td>
 		<input type="text" name="wpsl_posttype_labels[slug]" value="<?php echo $this->getLabel('slug', 'location'); ?>">
+	</td>
+</tr>
+<tr valign="top" class="wpsl-label-row">
+	<th><?php _e('Menu Position', 'wpsimplelocator');?></th>
+	<td>
+		<input type="text" name="wpsl_posttype_labels[menu_position]" value="<?php echo $this->getLabel('menu_position', '6'); ?>">
 	</td>
 </tr>
 <tr valign="top" class="wpsl-label-row">

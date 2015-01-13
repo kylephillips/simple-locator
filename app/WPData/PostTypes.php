@@ -34,6 +34,7 @@ class PostTypes {
 		$this->pt_labels->edit_item = ( $labels['edit_item'] !== "" ) ? $labels['edit_item'] : 'Edit Location';
 		$this->pt_labels->view_item = ( $labels['view_item'] !== "" ) ? $labels['view_item'] : 'View Location';
 		$this->pt_labels->slug = ( $labels['slug'] !== "" ) ? $labels['slug'] : 'location';
+		$this->pt_labels->menu_position = ( $labels['menu_position'] !== "" ) ? intval($labels['menu_position']) : 6;
 	}
 
 
@@ -53,7 +54,7 @@ class PostTypes {
 			'labels' => $labels,
 			'public' => true,  
 			'show_ui' => $this->check_post_type(),
-			'menu_position' => 5,
+			'menu_position' => $this->pt_labels->menu_position,
 			'menu_icon' => 'dashicons-post-status',
 			'capability_type' => 'post',  
 			'hierarchical' => false,  

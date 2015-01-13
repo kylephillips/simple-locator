@@ -50,7 +50,8 @@ class DefaultOptions {
 				'add_new_item'=> __('Add Location', 'wpsimplelocator'),
 				'edit_item' => __('Edit Location', 'wpsimplelocator'),
 				'view_item' => __('View Location', 'wpsimplelocator'),
-				'slug' => __('location', 'wpsimplelocator')
+				'slug' => __('location', 'wpsimplelocator'),
+				'menu_position' => 6
 			));
 		}
 	}

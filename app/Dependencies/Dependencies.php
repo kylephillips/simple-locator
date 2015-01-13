@@ -97,7 +97,8 @@ class Dependencies {
 				array( 
 					'locatorNonce' => wp_create_nonce( 'wpsl_locator-locator-nonce' ),
 					'upload' => __('Upload', 'wpsimplelocator'),
-					'remove' => __('Remove', 'wpsimplelocator')
+					'remove' => __('Remove', 'wpsimplelocator'),
+					'posttype' => $this->post_type
 				)
 			);
 		}

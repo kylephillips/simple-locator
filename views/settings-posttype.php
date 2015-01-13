@@ -19,7 +19,7 @@
 			$out = '<option value="' . $type['name'] . '"';
 			if ( $type['name'] == $this->post_type ) $out .= ' selected';
 			$out .= '>';
-			$out .= ( $type['name'] == 'location' ) ? __('Locations (Simple Locator Default)', 'wpsimplelocator') : $type['label'];
+			$out .= ( $type['name'] == $this->getLabel('name', 'location') ) ? $this->getLabel('label', 'Locations') : $type['label'];
 			$out .= '</option>';
 			echo $out;
 		}

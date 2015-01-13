@@ -112,7 +112,7 @@ jQuery(function($){
 	$(document).ready(function(){
 		post_type_labels();
 		var pt = $('#wpsl_post_type').val();
-		if ( pt !== 'location' ){
+		if ( pt !== wpsl_locator.posttype ){
 			$('#field_wpsl').attr('disabled', 'disabled').removeAttr('checked');
 			$('#field_custom').attr('checked','checked');
 		}
@@ -134,7 +134,7 @@ jQuery(function($){
 	function load_posttype_fields()
 	{
 		var value = $('#wpsl_post_type').val();
-		if ( value !== 'location' ){
+		if ( value !== wpsl_locator.posttype ){
 			$('#field_wpsl').attr('disabled', 'disabled').removeAttr('checked');
 			$('#field_custom').attr('checked','checked');
 			$('.latlng').show();
@@ -195,7 +195,7 @@ jQuery(function($){
 	*/
 	function post_type_labels()
 	{
-		if ( $('#wpsl_post_type').val() === 'location' ){
+		if ( $('#wpsl_post_type').val() === wpsl_locator.posttype ){
 			$('.wpsl-label-row').show();
 		} else {
 			$('.wpsl-label-row').hide();

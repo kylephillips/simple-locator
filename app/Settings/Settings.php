@@ -43,6 +43,7 @@ class Settings {
 		$this->setMapOptions();
 		add_action( 'admin_menu', array( $this, 'registerPage' ) );
 		add_action( 'admin_init', array($this, 'registerSettings' ) );
+		add_action( 'updated_option', array($this, 'flushRewrites'), 10, 1);
 	}
 
 
@@ -136,7 +137,18 @@ class Settings {
 	{
 		$tab = ( isset($_GET['tab']) ) ? $_GET['tab'] : 'general';
 		include( \SimpleLocator\Helpers::view('settings') );
-	}	
+	}
+
+
+	/**
+	* Flush the rewrite rules when saving post type
+	*/
+	public function flushRewrites($option)
+	{
+		if ( $option == 'wpsl_post_type' ){
+			flush_rewrite_rules(false);
+		}
+	}
 
 
 }

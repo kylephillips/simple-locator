@@ -93,7 +93,7 @@ class MetaFields {
 			// Save Custom Fields
 			foreach ( $this->fields as $key => $field )
 			{
-				if ( isset( $_POST[$field] ) ) update_post_meta( $post_id, $field, esc_attr( $_POST[$field] ) );
+				if ( isset($_POST[$field]) && $_POST[$field] !== "" ) update_post_meta( $post_id, $field, esc_attr( $_POST[$field] ) );
 			}
 		endif;
 	} 

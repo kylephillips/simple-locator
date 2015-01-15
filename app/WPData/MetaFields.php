@@ -19,7 +19,7 @@ class MetaFields {
 	{
 		$this->setFields();
 		add_action( 'add_meta_boxes', array( $this, 'metaBox' ));
-		add_action( 'save_post_location', array($this, 'savePost' ));
+		add_action( 'save_post', array($this, 'savePost' ));
 	}
 
 
@@ -51,7 +51,7 @@ class MetaFields {
     		'wpsl-meta-box', 
     		'Location Information', 
     		array($this, 'displayMeta'), 
-    		'location', 
+    		$this->getPostType(), 
     		'normal', 
     		'high' 
     	);
@@ -85,14 +85,27 @@ class MetaFields {
 	*/
 	public function savePost( $post_id ) 
 	{
-		if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return $post_id;
-		if( !isset( $_POST['wpsl_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['wpsl_meta_box_nonce'], 'my_wpsl_meta_box_nonce' ) ) return $post_id;
+		global $post;
+		if ( $post->post_type == $this->getPostType() ) :
+			if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return $post_id;
+			if( !isset( $_POST['wpsl_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['wpsl_meta_box_nonce'], 'my_wpsl_meta_box_nonce' ) ) return $post_id;
 
-		// Save Custom Fields
-		foreach ( $this->fields as $key => $field )
-		{
-			if ( isset( $_POST[$field] ) ) update_post_meta( $post_id, $field, esc_attr( $_POST[$field] ) );
-		}
+			// Save Custom Fields
+			foreach ( $this->fields as $key => $field )
+			{
+				if ( isset( $_POST[$field] ) ) update_post_meta( $post_id, $field, esc_attr( $_POST[$field] ) );
+			}
+		endif;
 	} 
+
+
+	/**
+	* Get the Location Post Type
+	*/
+	private function getPostType()
+	{
+		$posttype = get_option('wpsl_post_type');
+		return ( $posttype !== "" ) ? $posttype : 'location';
+	}
 
 }

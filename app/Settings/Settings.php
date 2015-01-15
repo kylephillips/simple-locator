@@ -125,7 +125,7 @@ class Settings {
 	private function getLabel($field, $default = "")
 	{
 		$labels = get_option('wpsl_posttype_labels');
-		return ( $labels[$field] !== "" ) ? $labels[$field] : $default;
+		return ( isset($labels[$field]) && $labels[$field] !== "" ) ? $labels[$field] : $default;
 	}
 
 

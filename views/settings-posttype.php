@@ -132,6 +132,12 @@
 	</td>
 </tr>
 <tr valign="top" class="wpsl-label-row">
+	<th><?php _e('Menu Icon', 'wpsimplelocator');?></th>
+	<td>
+		<input type="text" name="wpsl_posttype_labels[menu_icon]" value="<?php echo $this->getLabel('menu_icon', 'dashicons-post-status'); ?>">
+	</td>
+</tr>
+<tr valign="top" class="wpsl-label-row">
 	<th><?php _e('Menu Position', 'wpsimplelocator');?></th>
 	<td>
 		<input type="text" name="wpsl_posttype_labels[menu_position]" value="<?php echo $this->getLabel('menu_position', '6'); ?>">

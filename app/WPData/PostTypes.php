@@ -26,6 +26,7 @@ class PostTypes {
 	private function setLabels()
 	{
 		$labels = get_option('wpsl_posttype_labels');
+		if ( !isset($labels['menu_icon']) ) $labels['menu_icon'] = 'dashicons-post-status';
 		$this->pt_labels = new \StdClass();
 		$this->pt_labels->name = ( $labels['name'] !== "" ) ? $labels['name'] : 'location';
 		$this->pt_labels->label = ( $labels['label'] !== "" ) ? $labels['label'] : 'Locations';
@@ -34,6 +35,7 @@ class PostTypes {
 		$this->pt_labels->edit_item = ( $labels['edit_item'] !== "" ) ? $labels['edit_item'] : 'Edit Location';
 		$this->pt_labels->view_item = ( $labels['view_item'] !== "" ) ? $labels['view_item'] : 'View Location';
 		$this->pt_labels->slug = ( $labels['slug'] !== "" ) ? $labels['slug'] : 'location';
+		$this->pt_labels->menu_icon = ( $labels['menu_icon'] !== "" ) ? $labels['menu_icon'] : 'dashicons-post-status';
 		$this->pt_labels->menu_position = ( $labels['menu_position'] !== "" ) ? intval($labels['menu_position']) : 6;
 	}
 
@@ -53,9 +55,9 @@ class PostTypes {
 		$args = array(
 			'labels' => $labels,
 			'public' => true,  
-			'show_ui' => $this->check_post_type(),
+			'show_ui' => true,
 			'menu_position' => $this->pt_labels->menu_position,
-			'menu_icon' => 'dashicons-post-status',
+			'menu_icon' => $this->pt_labels->menu_icon,
 			'capability_type' => 'post',  
 			'hierarchical' => false,  
 			'has_archive' => true,

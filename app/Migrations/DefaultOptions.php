@@ -51,6 +51,7 @@ class DefaultOptions {
 				'edit_item' => __('Edit Location', 'wpsimplelocator'),
 				'view_item' => __('View Location', 'wpsimplelocator'),
 				'slug' => __('location', 'wpsimplelocator'),
+				'menu_icon' => 'dashicons-post-status',
 				'menu_position' => 6
 			));
 		}

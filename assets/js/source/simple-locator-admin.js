@@ -103,6 +103,28 @@ jQuery(function($){
 		});
 	}
 
+	/**
+	* ------------------------------------------------------
+	* Settings Page – Hide/Show location button text
+	* ------------------------------------------------------
+	*/
+	function hideGeoText()
+	{
+		if ( $('#wpsl_geo_button_enable').is(':checked') ){
+			$('.wpsl-location-text').show();
+		} else {
+			$('.wpsl-location-text').hide();
+		}
+	}
+
+	$('#wpsl_geo_button_enable').on('change', function(){
+		hideGeoText();
+	});
+
+	$(document).ready(function(){
+		hideGeoText();
+	});
+
 
 	/**
 	* ------------------------------------------------------

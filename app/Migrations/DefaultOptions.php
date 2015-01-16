@@ -42,6 +42,12 @@ class DefaultOptions {
 		if ( !get_option('wpsl_show_hidden') ){
 			update_option('wpsl_show_hidden', 'false');
 		}
+		if ( !get_option('wpsl_geo_button') ){
+			update_option('wpsl_geo_button', array(
+				'enabled' => '',
+				'text'=> __('Use my location', 'wpsimplelocator')
+			));
+		}
 		if ( !get_option('wpsl_posttype_labels') ){
 			update_option('wpsl_posttype_labels', array(
 				'name' => 'location',

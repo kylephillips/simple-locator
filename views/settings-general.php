@@ -1,4 +1,9 @@
-<?php settings_fields( 'wpsimplelocator-general' ); ?>
+<?php 
+settings_fields( 'wpsimplelocator-general' ); 
+$location_btn = get_option('wpsl_geo_button');
+if ( !isset($location_btn['enabled']) || $location_btn['enabled'] == "" ) $location_btn['enabled'] = false;
+if ( !isset($location_btn['text']) || $location_btn['text'] == "" ) $location_btn['text'] = __('Use my location', 'wpsimplelocator');
+?>
 <tr valign="top">
 	<td colspan="2" style="padding:10px 0;">
 		<strong><?php _e('Simple Locator Version', 'wpsimplelocator'); echo '</strong> ' . get_option('wpsl_version'); ?> 
@@ -71,5 +76,21 @@
 			<input type="radio" value="false" name="wpsl_singular_data" <?php if ( get_option('wpsl_singular_data') !== 'true') echo 'checked'; ?> />
 			<?php _e('No', 'wpsimplelocator'); ?>
 		</label>
+	</td>
+</tr>
+<tr valign="top">
+	<th scope="row"><?php _e('Location Button', 'wpsimplelocator'); ?></th>
+	<td>
+		<label>
+			<input type="checkbox" id="wpsl_geo_button_enable" name="wpsl_geo_button[enabled]" value="true" <?php if ( $location_btn['enabled'] ) echo 'checked'; ?> />
+			<?php _e('Display location button on geolocation enabled devices/browsers', 'wpsimplelocator');?>
+
+		</label>
+	</td>
+</tr>
+<tr valign="top" class="wpsl-location-text">
+	<th scope="row"><?php _e('Location Button Text', 'wpsimplelocator'); ?></th>
+	<td>
+		<input type="text" name="wpsl_geo_button[text]" value="<?php echo $location_btn['text']; ?>" />
 	</td>
 </tr>

@@ -1,5 +1,7 @@
 <?php namespace SimpleLocator\Widgets;
 
+use \SimpleLocator\Repositories\SettingsRepository;
+
 class Form extends \WP_Widget {
 
 	/**
@@ -12,10 +14,16 @@ class Form extends \WP_Widget {
 	*/
 	public $options;
 
+	/**
+	* Settings Repository
+	*/
+	private $settings_repo;
+
 
 	public function __construct()
 	{
 		$this->setUnit();
+		$this->settings_repo = new SettingsRepository();
 		parent::__construct(
 			'simple_locator',
 			__('Simple Locator', 'wpsimplelocator'),
@@ -40,6 +48,8 @@ class Form extends \WP_Widget {
 		$this->options['distances'] = '5,10,20,50,100';
 		$this->options['buttontext'] = __('Search', 'wpsimplelocator');
 		$this->options['mapcontrols'] = 'show';
+		$this->options['showgeobutton'] = $this->settings_repo->showGeoButton('enabled');
+		$this->options['geobuttontext'] = $this->settings_repo->showGeoButton('text');
 	}
 
 

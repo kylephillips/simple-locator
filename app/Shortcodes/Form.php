@@ -1,6 +1,7 @@
 <?php namespace SimpleLocator\Shortcodes;
 
 use \SimpleLocator\Repositories\MapStyles;
+use \SimpleLocator\Repositories\SettingsRepository;
 
 class Form {
 
@@ -14,11 +15,17 @@ class Form {
 	*/
 	public $options;
 
+	/**
+	* Settings Repository
+	*/
+	private $settings_repo;
+
 
 	public function __construct()
 	{
 		$this->setUnit();
 		$this->styles_repo = new MapStyles;
+		$this->settings_repo = new SettingsRepository();
 		add_shortcode('wp_simple_locator', array($this, 'renderView'));
 	}
 
@@ -55,7 +62,9 @@ class Form {
 			'buttontext' => __('Search', 'wpsimplelocator'),
 			'addresslabel' => __('Zip/Postal Code', 'wpsimplelocator'),
 			'mapcontrols' => 'show',
-			'mapcontrolsposition' => 'TOP_LEFT'
+			'mapcontrolsposition' => 'TOP_LEFT',
+			'showgeobutton' => $this->settings_repo->showGeoButton('enabled'),
+			'geobuttontext' => $this->settings_repo->showGeoButton('text')
 		), $options);
 	}
 

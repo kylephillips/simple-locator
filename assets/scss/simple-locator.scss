@@ -38,8 +38,14 @@
 		}
 	}
 	.submit {
+		float: left;
 		clear: both;
 		padding-top: 20px;
+	}
+	.geo_button_cont {
+		float: left;
+		padding-top: 20px;
+		margin-left: 10px;
 	}
 }
 
@@ -69,6 +75,10 @@
 	.wpsl-results.loading {
 		background: url('../images/loading-white.gif') no-repeat;
 		background-position: center;
+	}
+
+	.geo_button_cont {
+		margin: 0;
 	}
 
 }

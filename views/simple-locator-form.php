@@ -31,12 +31,9 @@ $output .= '
 		<input type="hidden" name="latitude" class="latitude" />
 		<input type="hidden" name="longitude" class="longitude" />
 		<input type="hidden" name="unit" value="' . $this->unit . '" class="unit" />
-		<button type="submit" class="wpslsubmit">' . html_entity_decode($this->options['buttontext']) . '</button>';
-		if ( $this->options['showgeobutton'] == "true" ){
-			$output .= 'show geo button';
-		}
-		$output .= '
+		<button type="submit" class="wpslsubmit">' . html_entity_decode($this->options['buttontext']) . '</button>
 	</div>
+	<div class="geo_button_cont"></div>
 	</form>';
 if ( $this->options['mapcontainer'] === '.wpsl-map' ){
 	$output .= ( isset($mapheight) && $mapheight !== "" ) 

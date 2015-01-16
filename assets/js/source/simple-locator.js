@@ -317,4 +317,22 @@ function showLocationMap(data, formelements)
 
 }
 
+/**
+* ======================================================
+* Geolocation button
+* ======================================================
+*/
+function append_geo_button()
+{
+	if ( wpsl_locator.showgeobutton !== 'true' ) return false;
+	if (navigator.geolocation){
+		var html = '<button class="wpsl-geo-button">' + wpsl_locator.geobuttontext + '</button>';
+		$('.geo_button_cont').html(html);
+	}
+
+}
+$(document).ready(function(){
+	append_geo_button();
+});
+
 }); // jQuery

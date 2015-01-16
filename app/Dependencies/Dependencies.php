@@ -1,5 +1,7 @@
 <?php namespace SimpleLocator\Dependencies;
 use SimpleLocator\Repositories\MapStyles;
+use \SimpleLocator\Repositories\SettingsRepository;
+
 /**
 * Register & Enqueue Styles & Scripts
 */
@@ -26,10 +28,16 @@ class Dependencies {
 	*/
 	private $post_type;
 
+	/**
+	* Settings Repository
+	*/
+	private $settings_repo;
+
 
 	public function __construct()
 	{
 		$this->styles_repo = new MapStyles;
+		$this->settings_repo = new SettingsRepository();
 		$this->setVersion();
 		$this->setPostType();
 		$this->plugin_dir = \SimpleLocator\Helpers::plugin_url();
@@ -163,7 +171,9 @@ class Dependencies {
 			'showonmap' => __('Show on Map', 'wpsimplelocator'),
 			'viewlocation' => __('View Location', 'wpsimplelocator'),
 			'notfounderror' => __('Address not found', 'wpsimplelocator'),
-			'mappin' => get_option('wpsl_map_pin')
+			'mappin' => get_option('wpsl_map_pin'),
+			'showgeobutton'=> $this->settings_repo->showGeoButton('enabled'),
+			'geobuttontext'=> $this->settings_repo->showGeoButton('text')
 		);
 		$localized_data['mapstyles'] = $this->styles_repo->getLocalizedStyles();
 		wp_localize_script( 

@@ -17,4 +17,6 @@
 		</table>
 		<?php submit_button(); ?>
 	</form>	
+
+	<p class="wpsl-plugin-version"><?php _e('Simple Locator Version', 'wpsimplelocator'); echo ' ' . get_option('wpsl_version'); ?></p>
 </div>

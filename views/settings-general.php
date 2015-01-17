@@ -105,6 +105,6 @@ if ( !isset($location_btn['text']) || $location_btn['text'] == "" ) $location_bt
 <tr valign="top" class="wpsl-location-text">
 	<th scope="row"><?php _e('Location Button Text', 'wpsimplelocator'); ?></th>
 	<td>
-		<input type="text" name="wpsl_geo_button[text]" value="<?php echo $location_btn['text']; ?>" />
+		<input type="text" name="wpsl_geo_button[text]" value="<?php echo esc_html($location_btn['text']); ?>" />
 	</td>
 </tr>

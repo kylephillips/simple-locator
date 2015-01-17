@@ -1,0 +1,452 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Simple Locator\n"
+"POT-Creation-Date: 2015-01-16 21:39-0500\n"
+"PO-Revision-Date: 2015-01-17 17:03-0000\n"
+"Last-Translator: Luis Martins <luis.martins@multiweb.pt>\n"
+"Language-Team: Luis Martins <kimipt@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.3\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: pt_PT\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: app/Bootstrap.php:47
+msgid "Settings"
+msgstr "Definições"
+
+#: app/Bootstrap.php:48
+msgid "FAQ"
+msgstr "FAQ"
+
+#: app/Dependencies/Dependencies.php:109
+msgid "Upload"
+msgstr "﻿Enviar"
+
+#: app/Dependencies/Dependencies.php:110 views/settings-general.php:48
+msgid "Remove"
+msgstr "Remover"
+
+#: app/Dependencies/Dependencies.php:167 views/simple-locator-form.php:25
+msgid "Distance"
+msgstr "﻿Distância"
+
+#: app/Dependencies/Dependencies.php:168 app/WPData/PostTypes.php:110
+#: views/location-meta.php:38 views/singular-post.php:29
+msgid "Website"
+msgstr "Website"
+
+#: app/Dependencies/Dependencies.php:169 app/Migrations/DefaultOptions.php:62
+msgid "location"
+msgstr "localização"
+
+#: app/Dependencies/Dependencies.php:170
+msgid "locations"
+msgstr "localizações"
+
+#: app/Dependencies/Dependencies.php:171
+msgid "found within"
+msgstr "encontrado dentro"
+
+#: app/Dependencies/Dependencies.php:172 app/WPData/PostTypes.php:109
+#: views/singular-post.php:37
+msgid "Phone"
+msgstr "Telefone"
+
+#: app/Dependencies/Dependencies.php:173
+msgid "Show on Map"
+msgstr "Mostrar no mapa"
+
+#: app/Dependencies/Dependencies.php:174 app/Migrations/DefaultOptions.php:61
+msgid "View Location"
+msgstr "Ver Localização"
+
+#: app/Dependencies/Dependencies.php:175
+msgid "Address not found"
+msgstr "﻿Endereço não encontrado"
+
+#: app/Dependencies/Dependencies.php:179
+msgid "your location"
+msgstr "﻿a sua localização"
+
+#: app/Forms/Validation.php:42
+msgid "The address could not be located at this time."
+msgstr "De momento não foi possível localizar o endereço"
+
+#: app/Forms/Validation.php:47
+msgid "Please enter a valid distance."
+msgstr "﻿Por favor, insira uma distância válida."
+
+#: app/Forms/Validation.php:52
+msgid "Invalid unit."
+msgstr "﻿Unidade inválida."
+
+#: app/Migrations/DefaultOptions.php:51
+#: app/Repositories/SettingsRepository.php:18 views/settings-general.php:5
+msgid "Use my location"
+msgstr "﻿Usar a minha localização"
+
+#: app/Migrations/DefaultOptions.php:57
+msgid "Locations"
+msgstr "Localizações"
+
+#: app/Migrations/DefaultOptions.php:58
+msgid "Location"
+msgstr "Localização"
+
+#: app/Migrations/DefaultOptions.php:59
+msgid "Add Location"
+msgstr "Adicionar Localização"
+
+#: app/Migrations/DefaultOptions.php:60
+msgid "Edit Location"
+msgstr "Editar Localização"
+
+#: app/Migrations/map_styles/1-subtle_grayscale.php:7
+msgid "Subtle Gray"
+msgstr "Cinza subtil"
+
+#: app/Migrations/map_styles/2-blue_water.php:7
+msgid "Blue Water"
+msgstr "Azul água"
+
+#: app/Migrations/map_styles/3-apple_maps_esque.php:7
+msgid "Apple Maps-esque"
+msgstr "Similar Apple maps"
+
+#: app/Migrations/map_styles/4-old_map.php:7
+msgid "Old Map"
+msgstr "Mapa antigo"
+
+#: app/Migrations/map_styles/5-shades_of_gray.php:7
+msgid "Shades of Grey"
+msgstr "Escala de cinzas"
+
+#: app/Migrations/map_styles/6-night_rider.php:7
+msgid "Night Rider"
+msgstr "﻿Night Rider"
+
+#: app/Shortcodes/Form.php:62 app/Widgets/Form.php:49
+msgid "Search"
+msgstr "Pesquisar"
+
+#: app/Shortcodes/Form.php:63 views/simple-locator-form.php:8
+msgid "Zip/Postal Code"
+msgstr "Código Postal"
+
+#: app/WPData/PostTypes.php:78
+msgid "Simple Locator Maps"
+msgstr "Mapas Simple Locator"
+
+#: app/WPData/PostTypes.php:79
+msgid "Simple Locator Map"
+msgstr "Mapa Simple Locator"
+
+#: app/WPData/PostTypes.php:108
+msgid "Address"
+msgstr "Endereço"
+
+#: app/Widgets/Form.php:29
+msgid "Simple Locator"
+msgstr "Simple Locator"
+
+#: app/Widgets/Form.php:30
+msgid "Display the Simple Locator Form"
+msgstr "﻿Apresentar o formulário Simple Locator"
+
+#: views/location-meta.php:4
+msgid "Street Address"
+msgstr "Rua"
+
+#: views/location-meta.php:8
+msgid "City"
+msgstr "Cidade"
+
+#: views/location-meta.php:12
+msgid "State"
+msgstr "Distrito"
+
+#: views/location-meta.php:16
+msgid "Zip"
+msgstr "Código Postal"
+
+#: views/location-meta.php:22
+msgid ""
+"Geocode values will update on save. Fields are for display purpose only."
+msgstr ""
+"Coordenadas serão actualizadas ao guardar. Os campos apresentados são "
+"meramente informativos."
+
+#: views/location-meta.php:24
+msgid "Latitude"
+msgstr "﻿Latitude"
+
+#: views/location-meta.php:28
+msgid "Longitude"
+msgstr "﻿Longitude"
+
+#: views/location-meta.php:34
+msgid "Phone Number"
+msgstr "﻿Nº de Telefone"
+
+#: views/location-meta.php:43
+msgid "Additional Info"
+msgstr "Informação Adicional"
+
+#: views/settings-general.php:9
+msgid "Simple Locator Version"
+msgstr "Versão do Simple Locator"
+
+#: views/settings-general.php:14
+msgid "Google Maps API Key"
+msgstr "﻿Google Maps API Key"
+
+#: views/settings-general.php:15
+msgid ""
+"While not required, it's a good idea to sign up for a Google Maps API key. "
+"If your website receives a spike in traffic, this will allow you to monitor "
+"the usage of the API and possibly prevent the cutoff of access."
+msgstr ""
+"﻿Embora não seja obrigatório, é uma boa idéia obter uma chave API do Google "
+"Maps. Se o seu site conseguir um aumento substancial de tráfego, ela irá "
+"permitirá que supervisione o uso da API e, possivelmente, evitar a "
+"suspensão do acesso pela Google."
+
+#: views/settings-general.php:15
+msgid "How to obtain an API key"
+msgstr "Como obter uma chave API"
+
+#: views/settings-general.php:19
+msgid "API Key"
+msgstr "﻿Chave API"
+
+#: views/settings-general.php:28
+msgid "Measurement Unit"
+msgstr "Unidade de Medição"
+
+#: views/settings-general.php:31
+msgid "Miles"
+msgstr "Milhas"
+
+#: views/settings-general.php:32
+msgid "Kilometers"
+msgstr "Kilómetros"
+
+#: views/settings-general.php:37
+msgid "Custom Map Pin"
+msgstr "Pin personalizado"
+
+#: views/settings-general.php:56
+msgid "Output Simple Locator CSS"
+msgstr "CSS gerado por Simple Locator"
+
+#: views/settings-general.php:60 views/settings-general.php:73
+#: views/settings-general.php:87
+msgid "Yes"
+msgstr "Sim"
+
+#: views/settings-general.php:64 views/settings-general.php:77
+#: views/settings-general.php:91
+msgid "No"
+msgstr "Não"
+
+#: views/settings-general.php:69
+msgid "Include Google Maps API"
+msgstr "Incluir Google Maps API"
+
+#: views/settings-general.php:79
+msgid ""
+"The Google Maps API is required for Simple Locator to function. If another "
+"plugin in use includes the Google Maps API, disable it here to avoid it "
+"being included multiple times on the front end of your site."
+msgstr ""
+"﻿A API do Google Maps é necessária para o funcionamento do  Simple Locator. "
+"Se outro plugin no seu website já usa a API do Google Maps, desactive-a "
+"aqui para evitar que seja incluída várias vezes no seu site."
+
+#: views/settings-general.php:83
+msgid "Display Map in Singular View"
+msgstr "Mostrar mapa em Visão Singular"
+
+#: views/settings-general.php:96
+msgid "Location Button"
+msgstr "Botão de Localização"
+
+#: views/settings-general.php:100
+msgid "Display location button on geolocation enabled devices/browsers"
+msgstr ""
+"Mostrar botão de localização em dispositivos com capacidades de localização"
+
+#: views/settings-general.php:106
+msgid "Location Button Text"
+msgstr "Texto do botão de localização"
+
+#: views/settings-map.php:4 views/settings-map.php:9 views/settings.php:7
+msgid "Map Styles"
+msgstr "Estilos do Mapa"
+
+#: views/settings-map.php:5
+msgid ""
+"Change the appearance of the generated maps by choosing a theme, or pasting "
+"your custom style code."
+msgstr ""
+"Alterar a aparência dos mapas gerados escolhendo um tema, ou aplicado as "
+"suas definições pessoais."
+
+#: views/settings-map.php:13
+msgid "None (Default Google Maps)"
+msgstr "﻿Nenhum (padrão do Google Maps)"
+
+#: views/settings-map.php:16
+msgid "Choose from List"
+msgstr "﻿Escolher da Lista"
+
+#: views/settings-map.php:19
+msgid "Paste my own styles"
+msgstr "Colar as minhas definições"
+
+#: views/settings-map.php:26
+msgid "Choose a Style"
+msgstr "Escolher um Estilo"
+
+#: views/settings-map.php:33
+msgid "Styles must be properly a formatted Javascript array. Visit"
+msgstr ""
+"Os Estilos têm de ser um array Javascript correctamente formatado. Visite"
+
+#: views/settings-map.php:33
+msgid "the Google Maps Style Wizard"
+msgstr "﻿o Assistente de Estilo Google Maps"
+
+#: views/settings-map.php:33
+msgid "for an easy way to generate properly formatted styles"
+msgstr "para um assistente de estilos automático"
+
+#: views/settings-posttype.php:4
+msgid "Location Post Type"
+msgstr "Tipo de Post para Localização"
+
+#: views/settings-posttype.php:5
+msgid ""
+"Simple Locator comes with a post type of \"Locations\" with all the fields "
+"you need. If you'd like to use a custom post type, select it below. If you "
+"have existing fields for latitude and longitude, select those."
+msgstr ""
+"O Simple Locator inclui o tipo de post \"Localizações\" com todos os campos "
+"que necessita. Se desejar um tipo de post personalizado, seleccione abaixo. "
+"Se já existirem campos para latitude e longitude seleccione-os."
+
+#: views/settings-posttype.php:9
+msgid "Post Type for locations"
+msgstr "Tipo de Post para localizações"
+
+#: views/settings-posttype.php:13
+msgid "Show Hidden Fields"
+msgstr "Mostrar campos ocultos"
+
+#: views/settings-posttype.php:31
+msgid "Latitude & Longitude Fields"
+msgstr "Campos de Latitude & Longitude"
+
+#: views/settings-posttype.php:36
+msgid "Use Simple Locator Fields"
+msgstr "Usar os campos Simple Locator"
+
+#: views/settings-posttype.php:42
+msgid "Use Custom Fields"
+msgstr "Usar Campos personalizados"
+
+#: views/settings-posttype.php:48
+msgid "Latitude Field"
+msgstr "Campo de Latitude"
+
+#: views/settings-posttype.php:65
+msgid "Longitude Field"
+msgstr "Campo de Longitude"
+
+#: views/settings-posttype.php:88
+msgid "Location Post Type Name & Labels"
+msgstr "Nome do tipo de Post para localização e etiquetas"
+
+#: views/settings-posttype.php:89
+msgid ""
+"Important: Changing the name or slug will remove content already published "
+"under existing post type from view. For more information, visit"
+msgstr ""
+"Importante: Alterar o nome ou slug irá remover conteúdo já publicado no "
+"respectivo tipo de post. Para mais informações visite"
+
+#: views/settings-posttype.php:93
+msgid "Post Type"
+msgstr "Tipo de Post"
+
+#: views/settings-posttype.php:99
+msgid "Post Type Label"
+msgstr "Etiqueta do Tipo de Post"
+
+#: views/settings-posttype.php:105
+msgid "Post Type Singular Label"
+msgstr "Etiqueta singular do Tipo de Post"
+
+#: views/settings-posttype.php:111
+msgid "Add New Label"
+msgstr "Adicionar nova Etiqueta"
+
+#: views/settings-posttype.php:117
+msgid "Edit Label"
+msgstr "Editar Etiqueta"
+
+#: views/settings-posttype.php:123
+msgid "View Label"
+msgstr "Ver Etiqueta"
+
+#: views/settings-posttype.php:129
+msgid "Slug"
+msgstr "Slug"
+
+#: views/settings-posttype.php:135
+msgid "Menu Icon"
+msgstr "Ícone do Menu"
+
+#: views/settings-posttype.php:141
+msgid "Menu Position"
+msgstr "Posição do Menu"
+
+#: views/settings-posttype.php:148
+msgid ""
+"Post type & slug must be all lower case, with no special characters or "
+"spaces."
+msgstr ""
+"Tipo de Post e Slug devem ser todos em letra minúscula, sem caracteres "
+"especiais ou espaços."
+
+#: views/settings.php:2
+msgid "Simple Locator Settings"
+msgstr "Configurações do Simple Locator"
+
+#: views/settings.php:5
+msgid "General"
+msgstr "Geral"
+
+#: views/settings.php:6
+msgid "Post Type & Geocode Fields"
+msgstr "Tipo de Post e campos geográficos"
+
+#: views/widget-options.php:2
+msgid "Title:"
+msgstr "Título"
+
+#: views/widget-options.php:6
+msgid "Distance Options <br> (Comma Separated Numbers)"
+msgstr "Opções de Distância <br> (Número separados por vírgula)"
+
+#: views/widget-options.php:10
+msgid "Map Height (in Pixels)"
+msgstr "Altura do Mapa (em pixeis)"

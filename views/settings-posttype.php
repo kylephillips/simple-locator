@@ -1,19 +1,14 @@
 <?php settings_fields( 'wpsimplelocator-posttype' ); ?>
 <tr valign="top">
-	<td colspan="2" style="padding:0;">
+	<td colspan="2" style="padding:0 0 20px 0;">
 		<h3><?php _e('Location Post Type', 'wpsimplelocator'); ?></h3>
 		<p><?php _e('Simple Locator comes with a post type of "Locations" with all the fields you need. If you\'d like to use a custom post type, select it below. If you have existing fields for latitude and longitude, select those.', 'wpsimplelocator'); ?></p>
 	</td>
 </tr>
 <tr valign="top">
-	<th scope="row"><?php _e('Post Type for locations', 'wpsimplelocator'); ?></th>
-	<td>
-		<label style="display:block;margin-bottom:5px;">
-			<input type="checkbox" name="wpsl_show_hidden" value="true" id="wpsl_show_hidden" <?php if ( get_option('wpsl_show_hidden') == 'true' ) echo 'checked'; ?>> 
-			<?php _e('Show Hidden Fields', 'wpsimplelocator'); ?>
-		</label>
-		
-		<select name="wpsl_post_type" id="wpsl_post_type">
+	<td colspan="2" style="padding:0 0 20px 0;">		
+		<label for="wpsl_post_type" class="wpsl-block-label"><?php _e('Post Type for locations', 'wpsimplelocator'); ?></label>
+		<select name="wpsl_post_type" id="wpsl_post_type" style="width:100%;max-width:540px;">
 		<?php
 		foreach ( $this->field_repo->getPostTypes() as $type ){
 			$out = '<option value="' . $type['name'] . '"';
@@ -28,8 +23,8 @@
 	</td>
 </tr>
 <tr valign="top">
-	<th scope="row"><?php _e('Latitude & Longitude Fields', 'wpsimplelocator'); ?></th>
-	<td>
+	<td colspan="2" style="padding:0;">
+		<label class="wpsl-block-label"><?php _e('Latitude & Longitude Fields', 'wpsimplelocator'); ?></label>
 		<p>
 			<label for="field_wpsl" class="wpsl-field-type">
 				<input type="radio" name="wpsl_field_type" id="field_wpsl" value="wpsl" <?php if ( $this->field_type == 'wpsl' ) echo ' checked'; ?>>
@@ -44,9 +39,16 @@
 		</p>
 	</td>
 </tr>
-<tr valign="top" class="latlng">
-	<th scope="row"><?php _e('Latitude Field', 'wpsimplelocator'); ?></th>
-	<td>
+</table>
+
+<div class="latlng">
+	<label class="wpsl-show-hidden">
+		<input type="checkbox" name="wpsl_show_hidden" value="true" id="wpsl_show_hidden" <?php if ( get_option('wpsl_show_hidden') == 'true' ) echo 'checked'; ?>> 
+		<?php _e('Show Hidden Fields', 'wpsimplelocator'); ?>
+	</label>
+
+	<div class="wpsl-left-field">
+		<label class="wpsl-block-label"><?php _e('Latitude Field', 'wpsimplelocator'); ?></label>
 		<select id="lat_select">';
 			<?php 
 				$show_hidden = ( get_option('wpsl_show_hidden') == 'true' ) ? true : false;
@@ -59,11 +61,10 @@
 				}
 			?>
 		</select>
-	</td>
-</tr>
-<tr valign="top" class="latlng">
-	<th scope="row"><?php _e('Longitude Field', 'wpsimplelocator'); ?></th>
-	<td>
+	</div>
+
+	<div class="wpsl-right-field">
+		<label class="wpsl-block-label"><?php _e('Longitude Field', 'wpsimplelocator'); ?></label>
 		<select id="lng_select">
 			<?php 
 				$fields = $this->field_repo->getFieldsForPostType($this->post_type, $show_hidden);
@@ -75,15 +76,16 @@
 				}
 			?>
 		</select>
+	</div>
 
-		<input type="hidden" id="wpsl_lat_field" name="wpsl_lat_field" 
-		value="<?php echo ( get_option('wpsl_lat_field') ) ? get_option('wpsl_lat_field') : 'wpsl_latitude'; ?>" />
+	<input type="hidden" id="wpsl_lat_field" name="wpsl_lat_field" 
+	value="<?php echo ( get_option('wpsl_lat_field') ) ? get_option('wpsl_lat_field') : 'wpsl_latitude'; ?>" />
 
-		<input type="hidden" id="wpsl_lng_field" name="wpsl_lng_field"
-		value="<?php echo ( get_option('wpsl_lng_field') ) ? get_option('wpsl_lng_field') : 'wpsl_longitude'; ?>" />
-	</td>
-</tr>
-</table>
+	<input type="hidden" id="wpsl_lng_field" name="wpsl_lng_field"
+	value="<?php echo ( get_option('wpsl_lng_field') ) ? get_option('wpsl_lng_field') : 'wpsl_longitude'; ?>" />
+		
+</div><!-- .latlng -->
+
 <div class="wpsl-posttype-fields wpsl-label-row">
 	<h3><?php _e('Location Post Type Name & Labels', 'wpsimplelocator'); ?></h3>
 	<p><?php _e('Important: Changing the name or slug will remove content already published under existing post type from view. For more information, visit', 'wpsimplelocator'); ?><a href="http://codex.wordpress.org/Function_Reference/register_post_type" target="_blank"> wordpress.org</a></p>

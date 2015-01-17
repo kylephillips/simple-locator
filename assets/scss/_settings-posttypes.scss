@@ -1,7 +1,40 @@
 //
 // Post Type Settings
 // --------------------------------------------------
+.latlng {
+	background-color: darken($white, 10%);
+	max-width: 500px;
+	padding: 20px;
+	margin-top: 20px;
+	@include clearfix;
+}
 
+.wpsl-show-hidden {
+	display: block;
+	margin-bottom: 20px;
+}
+
+.wpsl-left-field,
+.wpsl-right-field {
+	float: left;
+	width: 45%;
+	select {
+		width: 100%;
+	}
+	label {
+		margin: 0;
+	}
+}
+
+.wpsl-right-field {
+	float: right;
+}
+
+.wpsl-block-label {
+	display: block;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
 .wpsl-posttype-fields {
 	background-color: $white;
 	padding: 20px;

@@ -12,8 +12,21 @@ var uglify = require('gulp-uglify');
 var scss = 'assets/scss/**/*';
 var css = 'assets/css/';
 
-var js_source = 'assets/js/source/*';
+var js_source = [
+	'assets/js/source/simple-locator.js',
+	'assets/js/source/simple-locator-single.js'
+]
+
+var js_admin_source = [
+	'assets/js/source/bs-transition.js',
+	'assets/js/source/bs-modal.js',
+	'assets/js/source/simple-locator-admin.js'
+];
+
+var js_admin_maps_source = 'assets/js/source/simple-locator-admin-maps.js';
+
 var js_compiled = 'assets/js/';
+
 
 /**
 * Smush the admin Styles and output
@@ -29,14 +42,35 @@ gulp.task('scss', function(){
 });
 
 /**
-* Smush the JS and output
+* Admin JS
 */
-gulp.task('scripts', function(){
-	return gulp.src(js_source)
+gulp.task('admin_scripts', function(){
+	return gulp.src(js_admin_source)
+		.pipe(concat('simple-locator-admin.js'))
 		.pipe(gulp.dest(js_compiled))
 		.pipe(uglify())
 		.pipe(gulp.dest(js_compiled))
-		.pipe(notify('Simple Locator scripts compiles & compressed.'));
+});
+
+/**
+* Admin Maps JS
+*/
+gulp.task('admin_maps_scripts', function(){
+	return gulp.src(js_admin_source)
+		.pipe(gulp.dest(js_compiled))
+		.pipe(uglify())
+		.pipe(gulp.dest(js_compiled))
+});
+
+
+/**
+* Front end js
+*/
+gulp.task('scripts', function(){
+	return gulp.src(js_admin_maps_source)
+		.pipe(gulp.dest(js_compiled))
+		.pipe(uglify())
+		.pipe(gulp.dest(js_compiled))
 });
 
 
@@ -47,9 +81,12 @@ gulp.task('watch', function(){
 	livereload.listen(8000);
 	gulp.watch(scss, ['scss']);
 	gulp.watch(js_source, ['scripts']);
+	gulp.watch(js_admin_source, ['admin_scripts']);
+	gulp.watch(js_admin_maps_source, ['admin_maps_scripts']);
 });
+
 
 /**
 * Default
 */
-gulp.task('default', ['scss', 'scripts', 'watch']);
+gulp.task('default', ['scss', 'scripts', 'admin_scripts', 'admin_maps_scripts', 'watch']);

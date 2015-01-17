@@ -44,3 +44,4 @@
 		<textarea name="wpsl_additionalinfo" id="wpsl_additionalinfo"><?php echo $this->meta['additionalinfo']; ?></textarea>
 	</p>
 </div>
+<?php include('error-modal.php');?>

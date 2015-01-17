@@ -1,5 +1,7 @@
 jQuery(function($){
 
+	var lookupaddress = true;
+
 	/**
 	* ------------------------------------------------------
 	* Location Post Type Entry Map Functions
@@ -42,16 +44,38 @@ jQuery(function($){
 			'address' : address
 		}, 
 		function(results, status){
-			if ( status == google.maps.GeocoderStatus.OK ){
-				var lat = results[0].geometry.location.lat();
-				var lng = results[0].geometry.location.lng();
-				setFormCoordinates(lat, lng);
-				$('#publish').unbind('click').click();
+			if ( lookupaddress == true ){
+				if ( status == google.maps.GeocoderStatus.OK ){
+					var lat = results[0].geometry.location.lat();
+					var lng = results[0].geometry.location.lng();
+					setFormCoordinates(lat, lng);
+					$('#publish').unbind('click').click();
+				} else {
+					displayErrorModal();
+				}
 			} else {
-				alert('The address could not be located.');
+				$('#publish').unbind('click').click();
 			}
 		});
 	}
+
+	/**
+	* Display the error modal
+	*/
+	function displayErrorModal()
+	{
+		$('#wpsl-error-modal').modal('show');
+	}
+
+	/**
+	* Save the post without location data
+	*/
+	$('.wpsl-address-confirm').on('click', function(e){
+		e.preventDefault()
+		$('#wpsl-error-modal').modal('hide');
+		lookupaddress = false;
+		$('#publish').unbind('click').click();
+	});
 
 
 	/**

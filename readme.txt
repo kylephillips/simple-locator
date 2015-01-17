@@ -74,6 +74,9 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 == Changelog ==
 
+= 1.0.9 =
+* Portuguese translation (Luis Martens)
+
 = 1.0.8 =
 * Option added to remove Google Maps API script from output (to prevent conflicts with other plugins already outputting the script)
 * Option added to include geolocation button in search form, with customizable button text
@@ -104,6 +107,9 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 
 == Upgrade Notice ==
+
+= 1.0.9 =
+* Portuguese Translation (Provided by Luis Martens)
 
 = 1.0.8 =
 Optional geolocation button added with customizable text, option to disable output of Google Maps API call (for compatibility with other plugins)

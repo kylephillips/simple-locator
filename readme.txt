@@ -75,6 +75,7 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 == Changelog ==
 
 = 1.0.9 =
+* Option to add default empty map below search form on page load (visit Simple Locator settings to configure a default map)
 * Minor UI Enhancements
 * Portuguese translation (Luis Martens)
 
@@ -110,7 +111,7 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 == Upgrade Notice ==
 
 = 1.0.9 =
-* Portuguese Translation (Provided by Luis Martens)
+Option added to enable a default map before search results are loaded. Portuguese Translation (Provided by Luis Martens)
 
 = 1.0.8 =
 Optional geolocation button added with customizable text, option to disable output of Google Maps API call (for compatibility with other plugins)

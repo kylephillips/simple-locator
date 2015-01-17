@@ -4,7 +4,7 @@ Donate link: http://locatewp.com/
 Tags: location, store locator, google maps, store map
 Requires at least: 3.8
 Tested up to: 4.1
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -104,6 +104,9 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 
 == Upgrade Notice ==
+
+= 1.0.8 =
+Optional geolocation button added with customizable text, option to disable output of Google Maps API call (for compatibility with other plugins)
 
 = 1.0.7 =
 Minor bug fixes in custom post types

@@ -64,6 +64,14 @@ class DefaultOptions {
 				'menu_position' => 6
 			));
 		}
+		if ( !get_option('wpsl_default_map') ){
+			update_option('wpsl_default_map', array(
+				'show' => 'false',
+				'latitude' => '33.786637',
+				'longitude' => '-84.383160',
+				'zoom' => '15'
+			));
+		}
 	}
 
 }

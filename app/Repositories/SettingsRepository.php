@@ -28,4 +28,27 @@ class SettingsRepository {
 		return ( $option == 'true' ) ? true : false;
 	}
 
+	/**
+	* Show a default map?
+	* @return boolean
+	*/
+	public function showDefaultMap()
+	{
+		$option = get_option('wpsl_default_map');
+		return ( isset($option['show']) && $option['show'] == "true" ) ? true : false;
+	}
+
+	/**
+	* Default map coordinates & zoom
+	* @return string
+	* @param string - what field to return
+	*/
+	public function defaultMap($return = 'latitude')
+	{
+		$option = get_option('wpsl_default_map');
+		if ( $return == 'latitude' ) return $option['latitude'];
+		if ( $return == 'longitude' ) return $option['longitude'];
+		if ( $return == 'zoom' ) return $option['zoom'];
+	}
+
 }

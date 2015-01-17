@@ -1,0 +1,31 @@
+//
+// Default Map Settings
+// --------------------------------------------------
+.wpsl-default-map {
+	display: none;
+	background-color: $white;
+	border: 1px solid darken($white, 10%);
+	padding: 8px;
+	input[type="text"]{
+		float: left;
+		width: 80%;
+		margin: 0 0 10px 0;
+	}
+	button {
+		float: right;
+		width: 18%;
+	}
+	p {
+		clear: both;
+		font-size: 13px !important;
+		font-style: oblique;
+		color: darken($white, 60%);
+	}
+}
+
+#wpsl-default {
+	clear: both;
+	height: 250px;
+	background: url('../images/loading.gif') no-repeat;
+	background-position: center;
+}

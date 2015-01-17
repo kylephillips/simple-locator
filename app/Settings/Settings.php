@@ -126,6 +126,7 @@ class Settings {
 		register_setting( 'wpsimplelocator-map', 'wpsl_map_styles_type' );
 		register_setting( 'wpsimplelocator-map', 'wpsl_map_styles' );
 		register_setting( 'wpsimplelocator-map', 'wpsl_map_styles_choice' );
+		register_setting( 'wpsimplelocator-default', 'wpsl_default_map' );
 	}
 
 	/**

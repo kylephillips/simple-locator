@@ -75,6 +75,7 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 == Changelog ==
 
 = 1.0.9 =
+* Minor UI Enhancements
 * Portuguese translation (Luis Martens)
 
 = 1.0.8 =

@@ -127,6 +127,29 @@ class Dependencies {
 				$this->mapStyleData()
 			);
 		}
+
+		// Default Map
+		if ( ($screen->id == 'settings_page_wp_simple_locator') && (isset($_GET['tab'])) && ($_GET['tab'] == 'defaultmap') ){
+			wp_enqueue_script(
+				'simple-locator-admin-defaultmap', 
+				$this->plugin_dir . '/assets/js/simple-locator-admin-defaultmap.js', 
+				array('jquery'), 
+				$this->version
+			);
+			wp_localize_script( 
+				'simple-locator-admin-defaultmap', 
+				'wpsl_locator_defaultmap', 
+				array(
+					'enabled' => $this->settings_repo->showDefaultMap(),
+					'latitude' => $this->settings_repo->defaultMap('latitude'),
+					'longitude' => $this->settings_repo->defaultMap('longitude'),
+					'zoom' => intval($this->settings_repo->defaultMap('zoom')),
+					'searchtext' => __('Search for a location', 'wpsimplelocator'),
+					'styles' => $this->styles_repo->getLocalizedStyles(),
+					'mappin' => get_option('wpsl_map_pin')
+				)
+			);
+		}
 	}
 
 

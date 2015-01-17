@@ -24,6 +24,7 @@ var js_admin_source = [
 ];
 
 var js_admin_maps_source = 'assets/js/source/simple-locator-admin-maps.js';
+var js_admin_defaultmap_source = 'assets/js/source/simple-locator-admin-defaultmap.js';
 
 var js_compiled = 'assets/js/';
 
@@ -56,7 +57,17 @@ gulp.task('admin_scripts', function(){
 * Admin Maps JS
 */
 gulp.task('admin_maps_scripts', function(){
-	return gulp.src(js_admin_source)
+	return gulp.src(js_admin_maps_source)
+		.pipe(gulp.dest(js_compiled))
+		.pipe(uglify())
+		.pipe(gulp.dest(js_compiled))
+});
+
+/**
+* Admin Default Map
+*/
+gulp.task('admin_default_map_scripts', function(){
+	return gulp.src(js_admin_defaultmap_source)
 		.pipe(gulp.dest(js_compiled))
 		.pipe(uglify())
 		.pipe(gulp.dest(js_compiled))
@@ -83,10 +94,18 @@ gulp.task('watch', function(){
 	gulp.watch(js_source, ['scripts']);
 	gulp.watch(js_admin_source, ['admin_scripts']);
 	gulp.watch(js_admin_maps_source, ['admin_maps_scripts']);
+	gulp.watch(js_admin_defaultmap_source, ['admin_default_map_scripts']);
 });
 
 
 /**
 * Default
 */
-gulp.task('default', ['scss', 'scripts', 'admin_scripts', 'admin_maps_scripts', 'watch']);
+gulp.task('default', [
+	'scss', 
+	'scripts', 
+	'admin_scripts', 
+	'admin_maps_scripts', 
+	'admin_default_map_scripts',
+	'watch'
+]);

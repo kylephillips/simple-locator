@@ -1,0 +1,25 @@
+//
+// Post Type Settings
+// --------------------------------------------------
+
+.wpsl-posttype-fields {
+	background-color: $white;
+	padding: 20px;
+	margin-top: 30px;
+	max-width: 500px;
+	h3 {
+		margin: 0;
+	}
+	table {
+		background-color: darken($white, 10%);
+	}
+	tr td, tr th {
+		padding: 5px 10px;
+	}
+	tr th {
+		padding-top: 10px;
+	}
+	table tr:nth-child(even) {
+		background-color: darken($white, 6%);
+	}
+}

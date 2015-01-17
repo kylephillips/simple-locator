@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Simple Locator\n"
-"POT-Creation-Date: 2015-01-12 20:12-0500\n"
-"PO-Revision-Date: 2015-01-12 20:12-0500\n"
+"POT-Creation-Date: 2015-01-16 21:39-0500\n"
+"PO-Revision-Date: 2015-01-16 21:39-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -24,50 +24,54 @@ msgstr ""
 msgid "FAQ"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:99
+#: app/Dependencies/Dependencies.php:109
 msgid "Upload"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:100 views/settings-general.php:43
+#: app/Dependencies/Dependencies.php:110 views/settings-general.php:48
 msgid "Remove"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:156 views/simple-locator-form.php:25
+#: app/Dependencies/Dependencies.php:167 views/simple-locator-form.php:25
 msgid "Distance"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:157 app/WPData/PostTypes.php:108
+#: app/Dependencies/Dependencies.php:168 app/WPData/PostTypes.php:110
 #: views/location-meta.php:38 views/singular-post.php:29
 msgid "Website"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:158 app/Migrations/DefaultOptions.php:53
+#: app/Dependencies/Dependencies.php:169 app/Migrations/DefaultOptions.php:62
 msgid "location"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:159
+#: app/Dependencies/Dependencies.php:170
 msgid "locations"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:160
+#: app/Dependencies/Dependencies.php:171
 msgid "found within"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:161 app/WPData/PostTypes.php:107
+#: app/Dependencies/Dependencies.php:172 app/WPData/PostTypes.php:109
 #: views/singular-post.php:37
 msgid "Phone"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:162
+#: app/Dependencies/Dependencies.php:173
 msgid "Show on Map"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:163 app/Migrations/DefaultOptions.php:52
+#: app/Dependencies/Dependencies.php:174 app/Migrations/DefaultOptions.php:61
 msgid "View Location"
 msgstr ""
 
-#: app/Dependencies/Dependencies.php:164
+#: app/Dependencies/Dependencies.php:175
 msgid "Address not found"
+msgstr ""
+
+#: app/Dependencies/Dependencies.php:179
+msgid "your location"
 msgstr ""
 
 #: app/Forms/Validation.php:42
@@ -82,19 +86,24 @@ msgstr ""
 msgid "Invalid unit."
 msgstr ""
 
-#: app/Migrations/DefaultOptions.php:48
+#: app/Migrations/DefaultOptions.php:51
+#: app/Repositories/SettingsRepository.php:18 views/settings-general.php:5
+msgid "Use my location"
+msgstr ""
+
+#: app/Migrations/DefaultOptions.php:57
 msgid "Locations"
 msgstr ""
 
-#: app/Migrations/DefaultOptions.php:49
+#: app/Migrations/DefaultOptions.php:58
 msgid "Location"
 msgstr ""
 
-#: app/Migrations/DefaultOptions.php:50
+#: app/Migrations/DefaultOptions.php:59
 msgid "Add Location"
 msgstr ""
 
-#: app/Migrations/DefaultOptions.php:51
+#: app/Migrations/DefaultOptions.php:60
 msgid "Edit Location"
 msgstr ""
 
@@ -122,31 +131,31 @@ msgstr ""
 msgid "Night Rider"
 msgstr ""
 
-#: app/Shortcodes/Form.php:55 app/Widgets/Form.php:41
+#: app/Shortcodes/Form.php:62 app/Widgets/Form.php:49
 msgid "Search"
 msgstr ""
 
-#: app/Shortcodes/Form.php:56 views/simple-locator-form.php:8
+#: app/Shortcodes/Form.php:63 views/simple-locator-form.php:8
 msgid "Zip/Postal Code"
 msgstr ""
 
-#: app/WPData/PostTypes.php:76
+#: app/WPData/PostTypes.php:78
 msgid "Simple Locator Maps"
 msgstr ""
 
-#: app/WPData/PostTypes.php:77
+#: app/WPData/PostTypes.php:79
 msgid "Simple Locator Map"
 msgstr ""
 
-#: app/WPData/PostTypes.php:106
+#: app/WPData/PostTypes.php:108
 msgid "Address"
 msgstr ""
 
-#: app/Widgets/Form.php:21
+#: app/Widgets/Form.php:29
 msgid "Simple Locator"
 msgstr ""
 
-#: app/Widgets/Form.php:22
+#: app/Widgets/Form.php:30
 msgid "Display the Simple Locator Form"
 msgstr ""
 
@@ -187,59 +196,84 @@ msgstr ""
 msgid "Additional Info"
 msgstr ""
 
-#: views/settings-general.php:4
+#: views/settings-general.php:9
 msgid "Simple Locator Version"
 msgstr ""
 
-#: views/settings-general.php:9
+#: views/settings-general.php:14
 msgid "Google Maps API Key"
 msgstr ""
 
-#: views/settings-general.php:10
+#: views/settings-general.php:15
 msgid ""
 "While not required, it's a good idea to sign up for a Google Maps API key. "
 "If your website receives a spike in traffic, this will allow you to monitor "
 "the usage of the API and possibly prevent the cutoff of access."
 msgstr ""
 
-#: views/settings-general.php:10
+#: views/settings-general.php:15
 msgid "How to obtain an API key"
 msgstr ""
 
-#: views/settings-general.php:14
+#: views/settings-general.php:19
 msgid "API Key"
 msgstr ""
 
-#: views/settings-general.php:23
+#: views/settings-general.php:28
 msgid "Measurement Unit"
 msgstr ""
 
-#: views/settings-general.php:26
+#: views/settings-general.php:31
 msgid "Miles"
 msgstr ""
 
-#: views/settings-general.php:27
+#: views/settings-general.php:32
 msgid "Kilometers"
 msgstr ""
 
-#: views/settings-general.php:32
+#: views/settings-general.php:37
 msgid "Custom Map Pin"
 msgstr ""
 
-#: views/settings-general.php:51
+#: views/settings-general.php:56
 msgid "Output Simple Locator CSS"
 msgstr ""
 
-#: views/settings-general.php:55 views/settings-general.php:68
+#: views/settings-general.php:60 views/settings-general.php:73
+#: views/settings-general.php:87
 msgid "Yes"
 msgstr ""
 
-#: views/settings-general.php:59 views/settings-general.php:72
+#: views/settings-general.php:64 views/settings-general.php:77
+#: views/settings-general.php:91
 msgid "No"
 msgstr ""
 
-#: views/settings-general.php:64
+#: views/settings-general.php:69
+msgid "Include Google Maps API"
+msgstr ""
+
+#: views/settings-general.php:79
+msgid ""
+"The Google Maps API is required for Simple Locator to function. If another "
+"plugin in use includes the Google Maps API, disable it here to avoid it "
+"being included multiple times on the front end of your site."
+msgstr ""
+
+#: views/settings-general.php:83
 msgid "Display Map in Singular View"
+msgstr ""
+
+#: views/settings-general.php:96
+msgid "Location Button"
+msgstr ""
+
+#: views/settings-general.php:100
+msgid "Display location button on geolocation enabled devices/browsers"
+msgstr ""
+
+#: views/settings-general.php:106
+msgid "Location Button Text"
 msgstr ""
 
 #: views/settings-map.php:4 views/settings-map.php:9 views/settings.php:7
@@ -297,10 +331,6 @@ msgstr ""
 
 #: views/settings-posttype.php:13
 msgid "Show Hidden Fields"
-msgstr ""
-
-#: views/settings-posttype.php:22
-msgid "Locations (Simple Locator Default)"
 msgstr ""
 
 #: views/settings-posttype.php:31
@@ -362,10 +392,14 @@ msgid "Slug"
 msgstr ""
 
 #: views/settings-posttype.php:135
+msgid "Menu Icon"
+msgstr ""
+
+#: views/settings-posttype.php:141
 msgid "Menu Position"
 msgstr ""
 
-#: views/settings-posttype.php:142
+#: views/settings-posttype.php:148
 msgid ""
 "Post type & slug must be all lower case, with no special characters or "
 "spaces."

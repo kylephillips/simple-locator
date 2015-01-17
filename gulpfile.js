@@ -78,7 +78,7 @@ gulp.task('admin_default_map_scripts', function(){
 * Front end js
 */
 gulp.task('scripts', function(){
-	return gulp.src(js_admin_maps_source)
+	return gulp.src(js_source)
 		.pipe(gulp.dest(js_compiled))
 		.pipe(uglify())
 		.pipe(gulp.dest(js_compiled))

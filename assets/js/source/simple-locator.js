@@ -42,9 +42,14 @@ var formatted_address = '';
 var googlemaps_response = '';
 var geolocation = false;
 
+
 jQuery(function($){
 
+$(document).ready(function(){
+	if ( wpsl_locator.default_enabled ) loadDefault();
+});
 
+// Process the Search Form
 $('.wpslsubmit').on('click', function(e){
 	e.preventDefault();
 	geolocation = false;
@@ -53,11 +58,39 @@ $('.wpslsubmit').on('click', function(e){
 	var formelements = setFormElements(form);
 
 	$(formelements.errordiv).hide();
-	$(formelements.map).hide();
+
+	if ( wpsl_locator.default_enabled ){
+		$(formelements.map).find('.gm-style').remove();
+	} else {
+		$(formelements.map).hide();
+	}
+
 	$(formelements.results).empty().addClass('loading').show();
 
 	geocodeAddress(formelements);
 });
+
+
+/**
+* Load default map if enabled
+*/
+function loadDefault()
+{
+	var forms = $('.simple-locator-form');
+	$.each(forms, function(i, v){
+		formelements = setFormElements(this);
+		formelements.map.show();
+		var center = new google.maps.LatLng(wpsl_locator.default_latitude, wpsl_locator.default_longitude);
+		var mapOptions = {
+			center: center,
+			zoom: parseInt(wpsl_locator.default_zoom),
+			mapTypeControl: false,
+			streetViewControl: false,
+			styles: wpsl_locator.mapstyles
+		}
+		var map = new google.maps.Map(formelements.map[0],mapOptions);
+	});
+}
 
 
 /**
@@ -362,7 +395,13 @@ $(document).on('click', '.wpsl-geo-button', function(e){
 	var formelements = setFormElements(form);
 
 	$(formelements.errordiv).hide();
-	$(formelements.map).hide();
+	
+	if ( wpsl_locator.default_enabled ){
+		$(formelements.map).find('.gm-style').remove();
+	} else {
+		$(formelements.map).hide();
+	}
+	
 	$(formelements.results).empty().addClass('loading').show();
 
 	navigator.geolocation.getCurrentPosition(function(position){

@@ -16,7 +16,7 @@
 <tr valign="top">
 	<td colspan="2">
 		<div class="wpsl-default-map">
-			<input type="text" id="wpsl_default_search" placeholder="<?php _e('Search for a location', 'wpsimplelocator'); ?>">
+			<input type="text" id="wpsl_default_search" placeholder="<?php _e('Set location', 'wpsimplelocator'); ?>">
 			<button id="wpsl_default_submit" class="button"><?php _e('Search', 'wpsimplelocator'); ?></button>
 			<div id="wpsl-default"></div>
 			<p><?php _e('Zoom level will be saved', 'wpsimplelocator'); ?></p>

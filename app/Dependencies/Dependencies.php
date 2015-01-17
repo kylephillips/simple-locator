@@ -199,7 +199,11 @@ class Dependencies {
 			'mappin' => get_option('wpsl_map_pin'),
 			'showgeobutton'=> $this->settings_repo->showGeoButton('enabled'),
 			'geobuttontext'=> $this->settings_repo->showGeoButton('text'),
-			'yourlocation' => __('your location', 'wpsimplelocator')
+			'yourlocation' => __('your location', 'wpsimplelocator'),
+			'default_enabled' => $this->settings_repo->showDefaultMap(),
+			'default_latitude' => $this->settings_repo->defaultMap('latitude'),
+			'default_longitude' => $this->settings_repo->defaultMap('longitude'),
+			'default_zoom' => intval($this->settings_repo->defaultMap('zoom')),
 		);
 		$localized_data['mapstyles'] = $this->styles_repo->getLocalizedStyles();
 		wp_localize_script( 

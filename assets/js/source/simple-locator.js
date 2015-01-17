@@ -331,8 +331,23 @@ function append_geo_button()
 	}
 
 }
+
+function process_geo_button(position)
+{
+	var long = position.coords.longitude;
+	var lat = position.coords.latitude;
+	console.log(position);
+}
+
 $(document).ready(function(){
 	append_geo_button();
 });
+
+$(document).on('click', '.wpsl-geo-button', function(e){
+	e.preventDefault();
+	navigator.geolocation.getCurrentPosition(function(position){
+		process_geo_button(position);
+	});
+});	
 
 }); // jQuery

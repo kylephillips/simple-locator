@@ -1,6 +1,7 @@
 <?php namespace SimpleLocator\Settings;
 
 use SimpleLocator\Repositories\FieldRepository;
+use SimpleLocator\Repositories\SettingsRepository;
 
 /**
 * Settings page
@@ -32,11 +33,17 @@ class Settings {
 	* Field Respository
 	*/
 	private $field_repo;
+
+	/**
+	* Settings Repository
+	*/
+	private $settings_repo;
 	
 
 	public function __construct()
 	{
 		$this->field_repo = new FieldRepository;
+		$this->settings_repo = new SettingsRepository;
 		$this->setUnit();
 		$this->setFieldType();
 		$this->setPostType();
@@ -109,6 +116,7 @@ class Settings {
 		register_setting( 'wpsimplelocator-general', 'wpsl_map_pin' );
 		register_setting( 'wpsimplelocator-general', 'wpsl_singular_data' );
 		register_setting( 'wpsimplelocator-general', 'wpsl_geo_button' );
+		register_setting( 'wpsimplelocator-general', 'wpsl_gmaps_api' );
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_post_type' );
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_show_hidden' );
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_field_type' );

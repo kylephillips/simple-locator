@@ -66,6 +66,20 @@ if ( !isset($location_btn['text']) || $location_btn['text'] == "" ) $location_bt
 	</td>
 </tr>
 <tr valign="top">
+	<th scope="row"><?php _e('Include Google Maps API', 'wpsimplelocator'); ?>*</th>
+	<td>
+		<label>
+			<input type="radio" value="true" name="wpsl_gmaps_api" <?php if ( get_option('wpsl_gmaps_api') == 'true') echo 'checked'; ?> />
+			<?php _e('Yes', 'wpsimplelocator'); ?>
+		</label><br />
+		<label>
+			<input type="radio" value="false" name="wpsl_gmaps_api" <?php if ( get_option('wpsl_gmaps_api') !== 'true') echo 'checked'; ?> />
+			<?php _e('No', 'wpsimplelocator'); ?>
+		</label>
+		<p style="font-style:oblique;font-size:13px;"><?php _e('The Google Maps API is required for Simple Locator to function. If another plugin in use includes the Google Maps API, disable it here to avoid it being included multiple times on the front end of your site.', 'wpsimplelocator'); ?></p>
+	</td>
+</tr>
+<tr valign="top">
 	<th scope="row"><?php _e('Display Map in Singular View', 'wpsimplelocator'); ?></th>
 	<td>
 		<label>

@@ -18,4 +18,14 @@ class SettingsRepository {
 		return ( !isset($option['text']) || $option['text'] == "" ) ? __('Use my location', 'wpsimplelocator') : $option['text'];
 	}
 
+	/**
+	* Output the Google Maps API
+	* @return boolean
+	*/
+	public function outputGMaps()
+	{
+		$option = get_option('wpsl_gmaps_api');
+		return ( $option == 'true' ) ? true : false;
+	}
+
 }

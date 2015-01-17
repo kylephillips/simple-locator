@@ -88,7 +88,9 @@ class Dependencies {
 	{
 		$screen = get_current_screen();
 		if ( ($screen->post_type == $this->post_type) || ($screen->id == 'settings_page_wp_simple_locator') ) {
+			
 			$this->addGoogleMaps();
+
 			wp_enqueue_script('google-maps');
 			wp_enqueue_script('media-upload');
 			wp_enqueue_script('thickbox');
@@ -197,9 +199,11 @@ class Dependencies {
 	/**
 	* Register the Google Maps Script
 	* Only Enqueue when needed
+	* @param $override boolean - whether to check the option or not
 	*/
 	private function addGoogleMaps()
 	{
+		if ( !$this->settings_repo->outputGMaps() ) return;
 		$maps_url = 'http://maps.google.com/maps/api/js?';
 		$maps_url .= ( get_option('wpsl_google_api_key') ) ? 'key=' . get_option('wpsl_google_api_key') . '&' : '';
 		$maps_url .= 'sensor=false';

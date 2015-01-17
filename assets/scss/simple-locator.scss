@@ -41,11 +41,12 @@
 		float: left;
 		clear: both;
 		padding-top: 20px;
+		margin-bottom: 20px;
 	}
 	.geo_button_cont {
 		float: left;
 		padding-top: 20px;
-		margin-left: 10px;
+		margin: 0px 0px 20px 10px;
 	}
 }
 
@@ -86,13 +87,14 @@
 // Map
 .wpsl-map, #locationmap {
 	display: none;
+	clear: both;
 	width: 100%;
 	height: 250px;
 	background: url('../images/loading.gif') no-repeat;
 	background-position: center;
 	border: 3px solid #ddd;
 	border-radius: 3px;
-	margin-bottom: 20px;
+	margin: 20px 0px;
 	img {
 		width: auto;
 		max-width: none !important;
@@ -107,6 +109,7 @@
 // Results
 .wpsl-results {
 	display: none;
+	clear: both;
 	&.loading {
 		min-height: 70px;
 		background: url('../images/loading.gif') no-repeat;

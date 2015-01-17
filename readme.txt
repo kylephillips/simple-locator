@@ -74,6 +74,10 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 == Changelog ==
 
+= 1.0.8 =
+* Option added to remove Google Maps API script from output (to prevent conflicts with other plugins already outputting the script)
+* Option added to include geolocation button in search form, with customizable button text
+
 = 1.0.7 =
 * Bug fixes in location fields when using a custom post type other than location. Option added to set menu icon for location/custom post type
 

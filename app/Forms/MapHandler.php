@@ -70,7 +70,8 @@ class MapHandler {
 			'distance' => sanitize_text_field($_POST['distance']),
 			'latitude' => sanitize_text_field($_POST['latitude']),
 			'longitude' => sanitize_text_field($_POST['longitude']),
-			'unit' => sanitize_text_field($_POST['unit'])
+			'unit' => sanitize_text_field($_POST['unit']),
+			'geolocation' => sanitize_text_field($_POST['geolocation'])
 		);
 	}
 
@@ -214,7 +215,8 @@ class MapHandler {
 			'unit' => $this->data['unit'],
 			'formatted_address' => $this->data['formatted_address'],
 			'results' => $this->results,
-			'result_count' => $this->total_results
+			'result_count' => $this->total_results,
+			'using_geolocation' => $this->data['geolocation']
 		));
 	}
 

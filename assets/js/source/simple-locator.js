@@ -40,12 +40,14 @@ function wpsl_googlemaps_response(){
 var active_form = '';
 var formatted_address = '';
 var googlemaps_response = '';
+var geolocation = false;
 
 jQuery(function($){
 
 
 $('.wpslsubmit').on('click', function(e){
 	e.preventDefault();
+	geolocation = false;
 	var form = $(this).parents('.simple-locator-form');
 	active_form = form;
 	var formelements = setFormElements(form);
@@ -149,7 +151,8 @@ function sendFormData(formelements)
 			distance : $(formelements.distance).val(),
 			latitude : $(formelements.latitude).val(),
 			longitude : $(formelements.longitude).val(),
-			unit : $(formelements.unit).val()
+			unit : $(formelements.unit).val(),
+			geolocation : geolocation
 		},
 		success: function(data){
 			if (data.status === 'error'){
@@ -174,7 +177,9 @@ function loadLocationResults(data, formelements)
 
 		var location = ( data.result_count === 1 ) ? wpsl_locator.location : wpsl_locator.locations;
 
-		var output = '<h3>' + data.result_count + ' ' + location + ' ' + wpsl_locator.found_within + ' ' + data.distance + ' ' + data.unit + ' of ' + data.formatted_address + '</h3><ul>';
+		var output = '<h3>' + data.result_count + ' ' + location + ' ' + wpsl_locator.found_within + ' ' + data.distance + ' ' + data.unit + ' of ';
+		output += ( data.using_geolocation === "true" ) ? wpsl_locator.yourlocation : data.formatted_address;
+		output += '</h3><ul>';
 		
 		for( i = 0; i < data.results.length; i++ ) {
 			
@@ -332,11 +337,17 @@ function append_geo_button()
 
 }
 
-function process_geo_button(position)
+function process_geo_button(position, formelements)
 {
-	var long = position.coords.longitude;
-	var lat = position.coords.latitude;
-	console.log(position);
+	var longitude = position.coords.longitude;
+	var latitude = position.coords.latitude;
+
+	$(formelements.latitude).val(latitude);
+	$(formelements.longitude).val(longitude);
+
+	geolocation = true;
+	
+	sendFormData(formelements);
 }
 
 $(document).ready(function(){
@@ -345,8 +356,17 @@ $(document).ready(function(){
 
 $(document).on('click', '.wpsl-geo-button', function(e){
 	e.preventDefault();
+	
+	var form = $(this).parents('.simple-locator-form');
+	active_form = form;
+	var formelements = setFormElements(form);
+
+	$(formelements.errordiv).hide();
+	$(formelements.map).hide();
+	$(formelements.results).empty().addClass('loading').show();
+
 	navigator.geolocation.getCurrentPosition(function(position){
-		process_geo_button(position);
+		process_geo_button(position, formelements);
 	});
 });	
 

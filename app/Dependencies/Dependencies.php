@@ -175,7 +175,8 @@ class Dependencies {
 			'notfounderror' => __('Address not found', 'wpsimplelocator'),
 			'mappin' => get_option('wpsl_map_pin'),
 			'showgeobutton'=> $this->settings_repo->showGeoButton('enabled'),
-			'geobuttontext'=> $this->settings_repo->showGeoButton('text')
+			'geobuttontext'=> $this->settings_repo->showGeoButton('text'),
+			'yourlocation' => __('your location', 'wpsimplelocator')
 		);
 		$localized_data['mapstyles'] = $this->styles_repo->getLocalizedStyles();
 		wp_localize_script( 

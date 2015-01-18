@@ -72,6 +72,16 @@ class DefaultOptions {
 				'zoom' => '15'
 			));
 		}
+		if ( !get_option('wpsl_results_fields') ){
+			update_option('wpsl_results_fields', array(
+				'wpsl_address',
+				'wpsl_city',
+				'wpsl_state',
+				'wpsl_zip',
+				'wpsl_phone',
+				'wpsl_website'
+			));
+		}
 	}
 
 }

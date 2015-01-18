@@ -1,3 +1,14 @@
 //
 // Settings - Results Fields
 // --------------------------------------------------
+
+// Outer Container
+.wpsl-results-fields {
+	padding-top: 20px;
+}
+
+// List of fields
+.wpsl-results-selection {
+	@include unstyled;
+	background-color: $white;
+}

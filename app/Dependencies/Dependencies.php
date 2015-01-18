@@ -91,6 +91,9 @@ class Dependencies {
 			
 			$this->addGoogleMaps();
 
+			wp_enqueue_script('jquery-ui-core');
+			wp_enqueue_style('jquery-ui-sortable');
+
 			wp_enqueue_script('google-maps');
 			wp_enqueue_script('media-upload');
 			wp_enqueue_script('thickbox');
@@ -98,7 +101,7 @@ class Dependencies {
 			wp_enqueue_script(
 				'simple-locator-admin', 
 				$this->plugin_dir . '/assets/js/simple-locator-admin.js', 
-				array('jquery'), 
+				array('jquery', 'jquery-ui-sortable'), 
 				$this->version
 			);
 			wp_localize_script( 

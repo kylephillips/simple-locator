@@ -256,6 +256,7 @@ jQuery(function($){
 	* ------------------------------------------------------
 	*/
 	$(document).ready(function() {
+
 		$(document).on('click', '#upload_image_button', function() {
 			formfield = $('#upload_image').attr('name');
 			tb_show('', 'media-upload.php?type=image&TB_iframe=true');
@@ -334,6 +335,22 @@ jQuery(function($){
 			$('#map-styles-choice').show();
 			$('#map-styles-custom').hide();
 		}
+	}
+
+
+	/**
+	* ------------------------------------------------------
+	* Settings Page - Results Fields
+	* ------------------------------------------------------
+	*/
+	$(document).ready(function(){
+		sortable_results();
+	});
+	function sortable_results()
+	{
+		$('.wpsl-results-selection').sortable({
+			items : 'li'
+		});
 	}
 
 	

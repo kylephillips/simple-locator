@@ -51,4 +51,13 @@ class SettingsRepository {
 		if ( $return == 'zoom' ) return $option['zoom'];
 	}
 
+	/**
+	* Get an array of fields to display
+	*/
+	public function resultsFieldsArray()
+	{
+		$option = get_option('wpsl_results_fields');
+		return $option['fields'];
+	}
+
 }

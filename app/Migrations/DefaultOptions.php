@@ -74,12 +74,39 @@ class DefaultOptions {
 		}
 		if ( !get_option('wpsl_results_fields') ){
 			update_option('wpsl_results_fields', array(
-				'wpsl_address',
-				'wpsl_city',
-				'wpsl_state',
-				'wpsl_zip',
-				'wpsl_phone',
-				'wpsl_website'
+				'fields' => array(
+					array(
+						'field' => 'wpsl_address',
+						'before' => '<p>',
+						'after' => '<br>'
+					),
+					array(
+						'field' => 'wpsl_city',
+						'before' => '',
+						'after' => ', '
+					),
+					array(
+						'field' => 'wpsl_state',
+						'before' => '',
+						'after' => ' '
+					),
+					array(
+						'field' => 'wpsl_zip',
+						'before' => '',
+						'after'=> '</p>'
+					),
+					array(
+						'field' => 'wpsl_phone',
+						'before' => '<p>',
+						'after' => '<br>'
+					),
+					array(
+						'field' => 'wpsl_website',
+						'before' => '',
+						'after' => '</p>'
+					)
+				),
+				'limit' => 30
 			));
 		}
 	}

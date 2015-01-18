@@ -16,7 +16,13 @@
 			include($view);
 			?>
 		</table>
-		<?php submit_button(); ?>
+		<?php 
+			if ( $tab !== 'resultsfields' ){
+				submit_button(); 
+			} else {
+				echo '<button class="wpsl-save-results-fields button-primary">' . __('Save Changes', 'wpsimplelocator') . '</button>';
+			}
+		?>
 	</form>	
 
 	<p class="wpsl-plugin-version"><?php _e('Simple Locator Version', 'wpsimplelocator'); echo ' ' . get_option('wpsl_version'); ?></p>

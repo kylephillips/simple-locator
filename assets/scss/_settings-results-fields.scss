@@ -7,8 +7,77 @@
 	padding-top: 20px;
 }
 
+.wpsl-results-fields-selection {
+	float: left;
+	width: 45%;
+	p {
+		clear: both;
+		padding-top: 8px;
+		color: darken($white, 50%);
+		font-style: oblique;
+	}
+}
+
 // List of fields
 .wpsl-results-selection {
 	@include unstyled;
 	background-color: $white;
-}
+	box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.08);
+	border-radius: 3px;
+	margin-bottom: 10px;
+	li {
+		@include clearfix;
+		border-top: 1px solid darken($white, 12%);
+		padding: 5px 10px 5px 0;
+		margin: 0;
+		background-color: $white;
+		&:first-child {
+			border: 0;
+		}
+		&:nth-child(even){
+			background-color: darken($white, 5%);
+		}
+	}
+	select {
+		margin: 0;
+		width: 60%;
+	}
+	.handle {
+		display: block;
+		width: 40px;
+		margin: -5px 10px 0px 0px;
+		float: left;
+		cursor: pointer;
+		text-align: center;
+		font-size: 16px;
+		color: darken($white, 50%);
+		padding-top: 10px;
+	}
+	.wpsl-remove-field {
+		float: right;
+		font-size: 10px;
+		margin-left: 8px;
+	}
+	.wpsl-toggle-code {
+		float: right;
+	}
+	.wpsl-before-after {
+		display: none;
+		padding: 10px 5px 10px 10px;
+		input[type="text"] {
+			width: 48%;
+		}
+	}
+	.wpsl-before-text {
+		float: left;
+	}
+	.wpsl-after-text {
+		float: right;
+	}
+
+} // .wpsl-results-selection
+
+
+
+
+

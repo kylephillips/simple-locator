@@ -346,12 +346,43 @@ jQuery(function($){
 	$(document).ready(function(){
 		sortable_results();
 	});
+
+	/**
+	* Make the fields sortable
+	*/
 	function sortable_results()
 	{
 		$('.wpsl-results-selection').sortable({
 			items : 'li'
 		});
 	}
+
+	/**
+	* Append a new row
+	*/
+	$(document).on('click', '.wpsl-add-field', function(e){
+		e.preventDefault();
+		$('.wpsl-results-selection li:first-child').clone().appendTo('.wpsl-results-selection');
+	});
+
+	/**
+	* Remove a row
+	*/
+	$(document).on('click', '.wpsl-remove-field', function(e){
+		e.preventDefault();
+		$(this).parent('li').fadeOut('fast', function(){
+			$(this).remove();
+		});
+	});
+
+	/**
+	* Toggle Before/after fields
+	*/
+	$(document).on('click', '.wpsl-toggle-code', function(e){
+		e.preventDefault();
+		$(this).parent('li').find('.wpsl-before-after').toggle();
+	});
+	
 
 	
 

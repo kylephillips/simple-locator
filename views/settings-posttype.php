@@ -78,6 +78,8 @@
 		</select>
 	</div>
 
+	<p class="wpsl-degree-info"><?php _e('Latitude and Longitude fields must be separate fields. Entries must be formatted in decimal degree format (not DMS format).', 'wpsimplelocator'); ?></p>
+
 	<input type="hidden" id="wpsl_lat_field" name="wpsl_lat_field" 
 	value="<?php echo ( get_option('wpsl_lat_field') ) ? get_option('wpsl_lat_field') : 'wpsl_latitude'; ?>" />
 

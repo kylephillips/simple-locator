@@ -1,5 +1,4 @@
 <div class="wrap">
-	<?php //global $current_screen; var_dump($current_screen); ?>
 	<h1><?php _e('Simple Locator Settings', 'wpsimplelocator'); ?></h1>
 
 	<h2 class="nav-tab-wrapper">
@@ -11,8 +10,6 @@
 	</h2>
 	
 	<form method="post" enctype="multipart/form-data" action="options.php">
-	
-
 		<table class="form-table">
 			<?php
 			$view = 'settings-' . $tab . '.php';

@@ -1,7 +1,6 @@
 <?php 
 settings_fields( 'wpsimplelocator-results' ); 
 $post_type_fields = $this->field_repo->getFieldsForPostType($this->post_type);
-//var_dump($this->settings_repo->resultsFieldsArray());
 ?>
 <div class="wpsl-results-fields">
 
@@ -24,9 +23,7 @@ $post_type_fields = $this->field_repo->getFieldsForPostType($this->post_type);
 				<a href="#" class="wpsl-remove-field button"><i class="sl-icon-minus"></i></a>
 				<a href="#" class="wpsl-toggle-code button"><i class="sl-icon-embed2"></i></a>
 				<div class="wpsl-before-after">
-					
 					<input type="text" name="wpsl_results_fields[fields][<?php echo $key; ?>][before]" class="wpsl-before-text" placeholder="<?php _e('Before Field', 'wpsimplelocator'); ?>*" value="<?php echo esc_html($chosen_field['before']); ?>">
-
 					<input type="text" name="wpsl_results_fields[fields][<?php echo $key; ?>][after]" class="wpsl-after-text" placeholder="<?php _e('After Field', 'wpsimplelocator'); ?>*" value="<?php echo esc_html($chosen_field['after']); ?>" />
 				</div>
 			</li>

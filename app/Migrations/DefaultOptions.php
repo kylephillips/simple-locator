@@ -75,32 +75,32 @@ class DefaultOptions {
 		if ( !get_option('wpsl_results_fields') ){
 			update_option('wpsl_results_fields', array(
 				'fields' => array(
-					array(
+					0 => array(
 						'field' => 'wpsl_address',
 						'before' => '<p>',
 						'after' => '<br>'
 					),
-					array(
+					1 => array(
 						'field' => 'wpsl_city',
 						'before' => '',
 						'after' => ', '
 					),
-					array(
+					2 => array(
 						'field' => 'wpsl_state',
 						'before' => '',
 						'after' => ' '
 					),
-					array(
+					3 => array(
 						'field' => 'wpsl_zip',
 						'before' => '',
 						'after'=> '</p>'
 					),
-					array(
+					4 => array(
 						'field' => 'wpsl_phone',
 						'before' => '<p>',
 						'after' => '<br>'
 					),
-					array(
+					5 =>array(
 						'field' => 'wpsl_website',
 						'before' => '',
 						'after' => '</p>'

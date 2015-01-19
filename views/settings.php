@@ -1,4 +1,5 @@
 <div class="wrap">
+	<?php //global $current_screen; var_dump($current_screen); ?>
 	<h1><?php _e('Simple Locator Settings', 'wpsimplelocator'); ?></h1>
 
 	<h2 class="nav-tab-wrapper">
@@ -8,21 +9,17 @@
 		<a class="nav-tab <?php if ( $tab == 'defaultmap' ) echo 'nav-tab-active'; ?>" href="options-general.php?page=wp_simple_locator&tab=defaultmap"><?php _e('Default Map', 'wpsimplelocator'); ?></a>
 		<a class="nav-tab <?php if ( $tab == 'resultsfields' ) echo 'nav-tab-active'; ?>" href="options-general.php?page=wp_simple_locator&tab=resultsfields"><?php _e('Results Display', 'wpsimplelocator'); ?></a>
 	</h2>
-
+	
 	<form method="post" enctype="multipart/form-data" action="options.php">
+	
+
 		<table class="form-table">
 			<?php
 			$view = 'settings-' . $tab . '.php';
 			include($view);
 			?>
 		</table>
-		<?php 
-			if ( $tab !== 'resultsfields' ){
-				submit_button(); 
-			} else {
-				echo '<button class="wpsl-save-results-fields button-primary">' . __('Save Changes', 'wpsimplelocator') . '</button>';
-			}
-		?>
+		<?php submit_button(); ?>
 	</form>	
 
 	<p class="wpsl-plugin-version"><?php _e('Simple Locator Version', 'wpsimplelocator'); echo ' ' . get_option('wpsl_version'); ?></p>

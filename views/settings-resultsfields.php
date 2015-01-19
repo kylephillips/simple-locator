@@ -8,10 +8,10 @@ $post_type_fields = $this->field_repo->getFieldsForPostType($this->post_type);
 	<div class="wpsl-results-fields-selection">
 		<h4><?php _e('Drag and drop to configure results display below.', 'wpsimplelocator'); ?></h4>
 		<ul class="wpsl-results-selection">
-			<?php foreach($this->settings_repo->resultsFieldsArray() as $chosen_field) : ?>
-			<li>
+			<?php foreach($this->settings_repo->resultsFieldsArray() as $key => $chosen_field) : ?>
+			<li class="field">
 				<i class="sl-icon-menu handle"></i>
-				<select name="wpsl_results_fields[field]">
+				<select name="wpsl_results_fields[fields][<?php echo $key; ?>][field]">
 					<?php 
 						foreach($post_type_fields as $field){
 							$out = '<option value="' . $field . '"';
@@ -24,8 +24,10 @@ $post_type_fields = $this->field_repo->getFieldsForPostType($this->post_type);
 				<a href="#" class="wpsl-remove-field button"><i class="sl-icon-minus"></i></a>
 				<a href="#" class="wpsl-toggle-code button"><i class="sl-icon-embed2"></i></a>
 				<div class="wpsl-before-after">
-					<input type="text" class="wpsl-before-text" placeholder="<?php _e('After Field', 'wpsimplelocator'); ?>*" value="<?php echo esc_html($chosen_field['before']); ?>">
-					<input type="text" class="wpsl-after-text" placeholder="<?php _e('Before Field', 'wpsimplelocator'); ?>*" value="<?php echo esc_html($chosen_field['after']); ?>" />
+					
+					<input type="text" name="wpsl_results_fields[fields][<?php echo $key; ?>][before]" class="wpsl-before-text" placeholder="<?php _e('Before Field', 'wpsimplelocator'); ?>*" value="<?php echo esc_html($chosen_field['before']); ?>">
+
+					<input type="text" name="wpsl_results_fields[fields][<?php echo $key; ?>][after]" class="wpsl-after-text" placeholder="<?php _e('After Field', 'wpsimplelocator'); ?>*" value="<?php echo esc_html($chosen_field['after']); ?>" />
 				</div>
 			</li>
 			<?php endforeach; ?>

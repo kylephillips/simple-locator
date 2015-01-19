@@ -353,7 +353,11 @@ jQuery(function($){
 	function sortable_results()
 	{
 		$('.wpsl-results-selection').sortable({
-			items : 'li'
+			items : 'li',
+			handle: '.handle',
+			stop : function(){
+				renumber_fields();
+			}
 		});
 	}
 
@@ -363,6 +367,7 @@ jQuery(function($){
 	$(document).on('click', '.wpsl-add-field', function(e){
 		e.preventDefault();
 		$('.wpsl-results-selection li:first-child').clone().appendTo('.wpsl-results-selection');
+		renumber_fields();
 	});
 
 	/**
@@ -382,7 +387,21 @@ jQuery(function($){
 		e.preventDefault();
 		$(this).parent('li').find('.wpsl-before-after').toggle();
 	});
-	
+
+	/**
+	* Renumber the fields
+	*/
+	function renumber_fields()
+	{
+		$(".field").each(function(index){
+			console.log(index);
+			var prefix = "wpsl_results_fields[fields][" + index + "]";
+			$(this).find("input, select").each(function() {
+				console.log(this);
+				this.name = this.name.replace(/wpsl_results_fields\[fields\]\[\d*?\]/, prefix);   
+        	});
+    	});
+	}
 
 	
 

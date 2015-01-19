@@ -1,6 +1,7 @@
 <?php 
 settings_fields( 'wpsimplelocator-results' ); 
 $post_type_fields = $this->field_repo->getFieldsForPostType($this->post_type);
+$limit = ( $this->settings_repo->resultsLimit() !== "" ) ? $this->settings_repo->resultsLimit() : '-1';
 ?>
 <div class="wpsl-results-fields">
 
@@ -33,6 +34,11 @@ $post_type_fields = $this->field_repo->getFieldsForPostType($this->post_type);
 		<a href="#" class="wpsl-add-field button-primary"><?php _e('Add Field', 'wpsimplelocator');?></a>
 
 		<p>*<?php _e('Text before and after fields can be used for formatting display (HTML is permitted)', 'wpsimplelocator'); ?></p>
+
+		<p class="wpsl-limit-setting">
+			<label for="wpsl_results_fields_limit"><?php _e('Number of Results to Show (-1 for unlimited results)', 'wpsimplelocator'); ?></label>
+			<input type="text" name="wpsl_results_fields[limit]" id="wpsl_results_fields_limit" value="<?php echo $limit; ?>" />
+		</p>
 	</div>
 
 </div><!-- .wpsl-results-fields -->

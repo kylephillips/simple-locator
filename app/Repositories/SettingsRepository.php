@@ -60,4 +60,13 @@ class SettingsRepository {
 		return $option['fields'];
 	}
 
+	/**
+	* Results Limit
+	*/
+	public function resultsLimit()
+	{
+		$option = get_option('wpsl_results_fields');
+		return $option['limit'];
+	}
+
 }

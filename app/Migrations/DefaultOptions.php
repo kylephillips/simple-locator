@@ -96,23 +96,25 @@ class DefaultOptions {
 					3 => array(
 						'field' => 'wpsl_zip',
 						'before' => '',
-						'after'=> '</p>',
+						'after'=> '',
 						'type' => 'text'
 					),
 					4 => array(
 						'field' => 'wpsl_phone',
-						'before' => '<p>',
+						'before' => '<br>',
 						'after' => '<br>',
 						'type' => 'text'
 					),
 					5 =>array(
 						'field' => 'wpsl_website',
 						'before' => '',
-						'after' => '</p>',
+						'after' => '',
 						'type' => 'url'
 					)
 				),
 				'limit' => -1,
+				'before_item' => '<p>',
+				'after_item' => '</p>',
 				'show_distance' => 'true',
 				'link_title' => 'true'
 			));

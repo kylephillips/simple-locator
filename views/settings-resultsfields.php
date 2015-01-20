@@ -47,6 +47,16 @@ $limit = ( $this->settings_repo->resultsOption('limit') !== "" ) ? $this->settin
 		<a href="#" class="wpsl-add-field button-primary"><?php _e('Add Field', 'wpsimplelocator');?></a>
 
 		<p class="wpsl-limit-setting">
+			<label for="wpsl_results_fields_before"><?php _e('Formatting before each result', 'wpsimplelocator'); ?></label>
+			<input type="text" name="wpsl_results_fields[before_item]" id="wpsl_results_fields_before" value="<?php echo esc_html($this->settings_repo->resultsOption('before_item')); ?>" />
+		</p>
+
+		<p class="wpsl-limit-setting">
+			<label for="wpsl_results_fields_after"><?php _e('Formatting after each result', 'wpsimplelocator'); ?></label>
+			<input type="text" name="wpsl_results_fields[after_item]" id="wpsl_results_fields_after" value="<?php echo esc_html($this->settings_repo->resultsOption('after_item')); ?>" />
+		</p>
+
+		<p class="wpsl-limit-setting">
 			<label for="wpsl_results_fields_limit"><?php _e('Number of Results to Show (-1 for unlimited results)', 'wpsimplelocator'); ?></label>
 			<input type="text" name="wpsl_results_fields[limit]" id="wpsl_results_fields_limit" value="<?php echo $limit; ?>" />
 		</p>

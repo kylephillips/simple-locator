@@ -38,6 +38,16 @@ class MapHandler {
 	private $limit;
 
 	/**
+	* Before Formatting
+	*/
+	private $before_formatting;
+
+	/**
+	* After Formatting
+	*/
+	private $after_formatting;
+
+	/**
 	* Query Data
 	* @var array
 	*/
@@ -88,6 +98,8 @@ class MapHandler {
 	{
 		$this->results_fields = $this->settings_repo->resultsFieldsArray();
 		$this->limit = $this->settings_repo->resultsOption();
+		$this->before_formatting = $this->settings_repo->resultsOption('before_item');
+		$this->after_formatting = $this->settings_repo->resultsOption('after_item');
 	}
 
 
@@ -257,19 +269,19 @@ class MapHandler {
 	private function formatOutput($result)
 	{
 		$output = "";
+		$output .= $this->before_formatting;
 		foreach($this->results_fields as $field){
 			$rfield = $field['field'];
 			$found = $result->$rfield;
 			if ( !$found ) continue;
-			
-			if ( isset($field['before']) ) $output .= $field['before'];
-			
+
+			if ( isset($field['before']) ) $output .= $field['before'];			
 			if ( $field['type'] == 'url' ) $output .= '<a href="' . Helpers::checkURL($found) . '">';
 			$output .= $found;
-			if ( $field['type'] == 'url' ) $output .= '</a>';
-			
+			if ( $field['type'] == 'url' ) $output .= '</a>';			
 			if ( isset($field['after']) ) $output .= $field['after'];
 		}
+		$output .= $this->after_formatting;
 		return $output;
 	}
 

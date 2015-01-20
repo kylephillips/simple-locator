@@ -112,7 +112,9 @@ class DefaultOptions {
 						'type' => 'url'
 					)
 				),
-				'limit' => -1
+				'limit' => -1,
+				'show_distance' => 'true',
+				'link_title' => 'true'
 			));
 		}
 	}

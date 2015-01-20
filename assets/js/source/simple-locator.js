@@ -221,7 +221,10 @@ function loadLocationResults(data, formelements)
 			output = output + '<a href="' + data.results[i].permalink + '">';
 			output = output + data.results[i].title;
 			output = output + '</a></strong><br />';
-			output = output + '<em>' + wpsl_locator.distance + ': ' + data.results[i].distance + ' ' + data.unit + '</em><br />';
+
+			if ( data.results[i].distance ){
+				output = output + '<em>' + wpsl_locator.distance + ': ' + data.results[i].distance + ' ' + data.unit + '</em><br />';
+			}
 
 			output = output + data.results[i].output;
 

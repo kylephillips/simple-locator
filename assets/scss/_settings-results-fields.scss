@@ -9,7 +9,7 @@
 
 .wpsl-results-fields-selection {
 	float: left;
-	width: 45%;
+	width: 55%;
 	p {
 		clear: both;
 		padding-top: 8px;
@@ -68,11 +68,24 @@
 			width: 48%;
 		}
 	}
-	.wpsl-before-text {
+	.wpsl-before-text,
+	.wpsl-after-text,
+	.wpsl-field-type {
 		float: left;
+		width: 30%;
+		margin: 0 5% 10px 0;
+		clear: none;
+		label {
+			display: block;
+		}
+		input[type="text"],
+		select {
+			width: 100%;
+		}
 	}
-	.wpsl-after-text {
+	.wpsl-field-type {
 		float: right;
+		margin-right: 0;
 	}
 
 } // .wpsl-results-selection

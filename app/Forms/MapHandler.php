@@ -86,7 +86,7 @@ class MapHandler {
 	private function setResultsFields()
 	{
 		$this->results_fields = $this->settings_repo->resultsFieldsArray();
-		$this->limit = $this->settings_repo->resultsLimit();
+		$this->limit = $this->settings_repo->resultsOption();
 	}
 
 
@@ -241,11 +241,11 @@ class MapHandler {
 			$location = array(
 				'title' => $result->title,
 				'permalink' => get_permalink($result->id),
-				'distance' => round($result->distance, 2),
 				'latitude' => $result->latitude,
 				'longitude' => $result->longitude,
 				'output'=> $this->formatOutput($result)
 			);
+			if ( $this->settings_repo->resultsOption('show_distance') == 'true' ) $location['distance'] = round($result->distance, 2);
 			$this->results[] = $location;
 		endforeach;
 	}

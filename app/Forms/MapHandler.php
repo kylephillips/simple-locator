@@ -1,6 +1,7 @@
 <?php namespace SimpleLocator\Forms;
 
 use SimpleLocator\Repositories\SettingsRepository;
+use SimpleLocator\Helpers;
 
 /**
 * Front-end form handler for simple locator lookup
@@ -260,8 +261,13 @@ class MapHandler {
 			$rfield = $field['field'];
 			$found = $result->$rfield;
 			if ( !$found ) continue;
+			
 			if ( isset($field['before']) ) $output .= $field['before'];
+			
+			if ( $field['type'] == 'url' ) $output .= '<a href="' . Helpers::checkURL($found) . '">';
 			$output .= $found;
+			if ( $field['type'] == 'url' ) $output .= '</a>';
+			
 			if ( isset($field['after']) ) $output .= $field['after'];
 		}
 		return $output;

@@ -188,6 +188,7 @@ function sendFormData(formelements)
 			geolocation : geolocation
 		},
 		success: function(data){
+			console.log(data);
 			if (data.status === 'error'){
 				wpsl_error(data.message, active_form);
 				$(formelements.errordiv).text(data.message).show();
@@ -222,19 +223,7 @@ function loadLocationResults(data, formelements)
 			output = output + '</a></strong><br />';
 			output = output + '<em>' + wpsl_locator.distance + ': ' + data.results[i].distance + ' ' + data.unit + '</em><br />';
 
-			if ( data.results[i].address ){
-			output = output + data.results[i].address + '<br />' + data.results[i].city + ', ' + data.results[i].state + ' ' + data.results[i].zip;
-			}
-
-			var phone = data.results[i].phone;
-			var website = data.results[i].website;
-			
-			if ( phone ){
-				output = output + '<br />' + wpsl_locator.phone + ': ' + phone;
-			}
-			if ( website ){
-				output = output + '<br /><a href="' + website + '" target="_blank">' + website + '</a>';
-			}
+			output = output + data.results[i].output;
 
 			output += '<br /><a href="#" class="infowindow-open map-link" onClick="event.preventDefault(); openInfoWindow(' + i + ');">' + wpsl_locator.showonmap + '</a>';
 			output = output + '</li>';

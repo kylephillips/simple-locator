@@ -1,4 +1,7 @@
 <?php namespace SimpleLocator\Forms;
+
+use SimpleLocator\Repositories\SettingsRepository;
+
 /**
 * Front-end form handler for simple locator lookup
 * @return JSON Response
@@ -15,6 +18,23 @@ class MapHandler {
 	* Validator
 	*/
 	private $validator;
+
+	/**
+	* Settings Repository
+	* @var object
+	*/
+	private $settings_repo;
+
+	/**
+	* Results Fields from Settings
+	* @var array
+	*/
+	private $results_fields;
+
+	/**
+	* SQL Limit
+	*/
+	private $limit;
 
 	/**
 	* Query Data
@@ -48,13 +68,25 @@ class MapHandler {
 
 	public function __construct()
 	{
+		$this->settings_repo = new SettingsRepository;
 		$this->validator = new Validation;
+		$this->setResultsFields();
 		$this->setData();
 		$this->validateData();
 		$this->setQueryData();
 		$this->setQuery();
 		$this->runQuery();
 		$this->sendResponse();
+	}
+
+
+	/**
+	* Set the results fields
+	*/
+	private function setResultsFields()
+	{
+		$this->results_fields = $this->settings_repo->resultsFieldsArray();
+		$this->limit = $this->settings_repo->resultsLimit();
 	}
 
 
@@ -106,6 +138,45 @@ class MapHandler {
 
 
 	/**
+	* Set the Field Variables for the SQL using fields chosen in settings
+	*/
+	private function sqlFieldVars()
+	{
+		$statement = "";
+		foreach($this->results_fields as $key=>$field){
+			$fieldname = $field['field'];
+			$statement .= "$fieldname.meta_value AS $fieldname,\n";
+		}
+		return $statement;
+	}
+
+
+	/**
+	* Set the Join statement for field vars in sql using fields chosen in settings
+	*/
+	private function sqlFieldJoins()
+	{
+		$statement = "";
+		foreach($this->results_fields as $key=>$field){
+			$fieldname = $field['field'];
+			$statement .= "\nLEFT JOIN " . $this->query_data['meta_table'] . " AS $fieldname
+			ON p.ID = $fieldname.post_id AND $fieldname.meta_key = " . "'" . $fieldname . "'" . "\n";
+		}
+		return $statement;
+	}
+
+
+	/**
+	* Set the SQL Limit
+	*/
+	private function sqlLimit()
+	{
+		if ( $this->limit == -1 ) return;
+		if ( is_numeric(intval($this->limit)) ) return "LIMIT " . intval($this->limit);
+	}
+
+
+	/**
 	* Set the Query
 	*/
 	private function setQuery()
@@ -113,14 +184,8 @@ class MapHandler {
 		$sql = "
 			SELECT 
 			p.post_title AS title,
-			p.ID AS id,
-			p.post_content AS content,
-			t.meta_value AS phone,
-			a.meta_value AS address,
-			c.meta_value AS city,
-			s.meta_value AS state,
-			z.meta_value AS zip,
-			w.meta_value AS website,
+			p.ID AS id," .
+			$this->sqlFieldVars() . "
 			lat.meta_value AS latitude,
 			lng.meta_value AS longitude,
 			( " . $this->query_data['diameter'] . " * acos( cos( radians(@origlat) ) * cos( radians( lat.meta_value ) ) 
@@ -130,19 +195,8 @@ class MapHandler {
 			LEFT JOIN " . $this->query_data['meta_table'] . " AS lat
 			ON p.ID = lat.post_id AND lat.meta_key = '" . $this->query_data['lat_field'] . "'
 			LEFT JOIN " . $this->query_data['meta_table'] . " AS lng
-			ON p.ID = lng.post_id AND lng.meta_key = '" . $this->query_data['lng_field'] . "'
-			LEFT JOIN " . $this->query_data['meta_table'] . " AS c
-			ON p.ID = c.post_id AND c.meta_key = 'wpsl_city'
-			LEFT JOIN " . $this->query_data['meta_table'] . " AS a
-			ON p.ID = a.post_id AND a.meta_key = 'wpsl_address'
-			LEFT JOIN " . $this->query_data['meta_table'] . " AS s
-			ON p.ID = s.post_id AND s.meta_key = 'wpsl_state'
-			LEFT JOIN " . $this->query_data['meta_table'] . " AS z
-			ON p.ID = z.post_id AND z.meta_key = 'wpsl_zip'
-			LEFT JOIN " . $this->query_data['meta_table'] . " AS t
-			ON p.ID = t.post_id AND t.meta_key = 'wpsl_phone'
-			LEFT JOIN " . $this->query_data['meta_table'] . " AS w
-			ON p.ID = w.post_ID AND w.meta_key = 'wpsl_website'
+			ON p.ID = lng.post_id AND lng.meta_key = '" . $this->query_data['lng_field'] . "'" . 
+			$this->sqlFieldJoins() . "		
 			WHERE lat.meta_value
 				BETWEEN @origlat - (@distance / @dist_unit)
 				AND @origlat + (@distance / @dist_unit)
@@ -152,8 +206,8 @@ class MapHandler {
 			AND `post_type` = '" . $this->query_data['post_type'] . "'
 			AND `post_status` = 'publish'
 			HAVING distance < @distance
-			ORDER BY distance;
-		";
+			ORDER BY distance\n" . 
+			$this->sqlLimit() . ";";
 		$this->sql = $sql;
 	}
 
@@ -188,17 +242,29 @@ class MapHandler {
 				'title' => $result->title,
 				'permalink' => get_permalink($result->id),
 				'distance' => round($result->distance, 2),
-				'address' => $result->address,
-				'city' => $result->city,
-				'state' => $result->state,
-				'zip' => $result->zip,
-				'phone' => $result->phone,
-				'website' => $result->website,
 				'latitude' => $result->latitude,
-				'longitude' => $result->longitude
+				'longitude' => $result->longitude,
+				'output'=> $this->formatOutput($result)
 			);
 			$this->results[] = $location;
 		endforeach;
+	}
+
+	/**
+	* Format the output
+	*/
+	private function formatOutput($result)
+	{
+		$output = "";
+		foreach($this->results_fields as $field){
+			$rfield = $field['field'];
+			$found = $result->$rfield;
+			if ( !$found ) continue;
+			if ( isset($field['before']) ) $output .= $field['before'];
+			$output .= $found;
+			if ( isset($field['after']) ) $output .= $field['after'];
+		}
+		return $output;
 	}
 
 

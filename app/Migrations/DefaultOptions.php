@@ -78,35 +78,41 @@ class DefaultOptions {
 					0 => array(
 						'field' => 'wpsl_address',
 						'before' => '<p>',
-						'after' => '<br>'
+						'after' => '<br>',
+						'type' => 'text'
 					),
 					1 => array(
 						'field' => 'wpsl_city',
 						'before' => '',
-						'after' => ', '
+						'after' => ', ',
+						'type' => 'text'
 					),
 					2 => array(
 						'field' => 'wpsl_state',
 						'before' => '',
-						'after' => ' '
+						'after' => ' ',
+						'type' => 'text'
 					),
 					3 => array(
 						'field' => 'wpsl_zip',
 						'before' => '',
-						'after'=> '</p>'
+						'after'=> '</p>',
+						'type' => 'text'
 					),
 					4 => array(
 						'field' => 'wpsl_phone',
 						'before' => '<p>',
-						'after' => '<br>'
+						'after' => '<br>',
+						'type' => 'text'
 					),
 					5 =>array(
 						'field' => 'wpsl_website',
 						'before' => '',
-						'after' => '</p>'
+						'after' => '</p>',
+						'type' => 'url'
 					)
 				),
-				'limit' => 30
+				'limit' => -1
 			));
 		}
 	}

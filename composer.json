@@ -1,4 +1,7 @@
 {
+	"require" : {
+		
+	},
 	"autoload" : {
 		"psr-4" : {
 			"SimpleLocator\\" : "app"

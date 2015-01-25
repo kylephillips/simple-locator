@@ -1,73 +1,57 @@
 <?php 
 settings_fields( 'wpsimplelocator-results' ); 
 $post_type_fields = $this->field_repo->getFieldsForPostType($this->post_type);
-$limit = ( $this->settings_repo->resultsOption('limit') !== "" ) ? $this->settings_repo->resultsOption('limit') : '-1';
+$post_type = get_post_type_object($this->post_type);
+$resultoutput = get_option('wpsl_results_fields_formatted');
+$resultoutput = $resultoutput['output'];
+$image_sizes = get_intermediate_image_sizes();
 ?>
 <div class="wpsl-results-fields">
 
 	<div class="wpsl-results-fields-selection">
-		<h4><?php _e('Drag and drop to configure results display below.', 'wpsimplelocator'); ?></h4>
-		<ul class="wpsl-results-selection">
-			<?php foreach($this->settings_repo->resultsFieldsArray() as $key => $chosen_field) : ?>
-			<li class="field">
-				<i class="sl-icon-menu handle"></i>
-				<select name="wpsl_results_fields[fields][<?php echo $key; ?>][field]">
+		<div class="wpsl-results-field-selector">
+			<div class="left">
+				<label for="wpsl-fields"><?php echo $post_type->labels->name; ?> <?php _e('Fields', 'wpsimplelocator'); ?></label>
+				<select id="wpsl-fields">
+					<option value="distance"><?php _e('Distance', 'wpsimplelocator'); ?></option>
+					<option value="show_on_map"><?php _e('Show on Map', 'wpsimplelocator'); ?></option>
 					<?php 
-						foreach($post_type_fields as $field){
-							$out = '<option value="' . $field . '"';
-							if ( $field == $chosen_field['field'] ) $out .= ' selected';
-							$out .= '>' . $field . '</option>';
-							echo $out;
+						foreach($post_type_fields as $field) {
+							echo '<option value="' . $field . '">' . $field . '</option>';
 						}
 					?>
 				</select>
-				<a href="#" class="wpsl-remove-field button"><i class="sl-icon-minus"></i></a>
-				<a href="#" class="wpsl-toggle-code button"><i class="sl-icon-embed2"></i></a>
-				<div class="wpsl-before-after">
-					<p class="wpsl-before-text">
-						<label for="wpsl_results_before"><?php _e('Before', 'wpsimplelocator'); ?></label>
-						<input type="text" id="wpsl_results_before" name="wpsl_results_fields[fields][<?php echo $key; ?>][before]" value="<?php echo esc_html($chosen_field['before']); ?>">
-					</p>
-					<p class="wpsl-after-text">
-						<label for="wpsl_results_after"><?php _e('After', 'wpsimplelocator'); ?></label>
-						<input type="text" id="wpsl_results_after" name="wpsl_results_fields[fields][<?php echo $key; ?>][after]" value="<?php echo esc_html($chosen_field['after']); ?>" />
-					</p>
-					<p class="wpsl-field-type">
-						<label for="wpsl_field_type"><?php _e('Field Type', 'wpsimplelocator'); ?></label>
-						<select id="wpsl_field_type" name="wpsl_results_fields[fields][<?php echo $key; ?>][type]">
-							<option value="text" <?php if ( $chosen_field['type'] == 'text' ) echo ' selected'; ?> ><?php _e('Text', 'wpsimplelocator'); ?></option>
-							<option value="url" <?php if ( $chosen_field['type'] == 'url' ) echo ' selected'; ?>><?php _e('URL', 'wpsimplelocator'); ?></option>
-						</select>
-					</p>
-				</div>
-			</li>
-			<?php endforeach; ?>
-		</ul><!-- .wpsl-results-selection -->
-		
-		<a href="#" class="wpsl-add-field button-primary"><?php _e('Add Field', 'wpsimplelocator');?></a>
-
-		<p class="wpsl-limit-setting">
-			<label for="wpsl_results_fields_before"><?php _e('Formatting before each result', 'wpsimplelocator'); ?></label>
-			<input type="text" name="wpsl_results_fields[before_item]" id="wpsl_results_fields_before" value="<?php echo esc_html($this->settings_repo->resultsOption('before_item')); ?>" />
-		</p>
-
-		<p class="wpsl-limit-setting">
-			<label for="wpsl_results_fields_after"><?php _e('Formatting after each result', 'wpsimplelocator'); ?></label>
-			<input type="text" name="wpsl_results_fields[after_item]" id="wpsl_results_fields_after" value="<?php echo esc_html($this->settings_repo->resultsOption('after_item')); ?>" />
-		</p>
+				<button class="wpsl-field-add button"><?php _e('Add', 'wpsimplelocator');?></button>
+			</div>
+			<div class="right">
+				<label for="wpsl-post-fields"><?php _e('Post Data', 'wpsimplelocator'); ?></label>
+				<select id="wpsl-post-fields">
+					<option value="post_title"><?php _e('Title', 'wpsimplelocator'); ?></option>
+					<option value="post_excerpt"><?php _e('Excerpt', 'wpsimplelocator'); ?></option>
+					<option value="post_permalink"><?php _e('Permalink', 'wpsimplelocator'); ?></option>
+					<?php foreach($image_sizes as $size) : ?>
+					<option value="post_thumbnail_<?php echo $size; ?>"><?php echo __('Thumbnail', 'wpsimplelocator') . ' - ' . $size; ?></option>
+					<?php endforeach; ?>
+				</select>
+				<button class="wpsl-post-field-add button"><?php _e('Add', 'wpsimplelocator');?></button>
+			</div>
+		</div>
+		<?php 
+			wp_editor($resultoutput, 'wpsl_results_fields_formatted', 
+				array(
+					'media_buttons' => false,
+					'textarea_name' => 'wpsl_results_fields_formatted[output]',
+					'tabindex' => 1,
+					'teeny' => true,
+					'wpautop' => true
+					)
+				); 
+			?>
 
 		<p class="wpsl-limit-setting">
 			<label for="wpsl_results_fields_limit"><?php _e('Number of Results to Show (-1 for unlimited results)', 'wpsimplelocator'); ?></label>
-			<input type="text" name="wpsl_results_fields[limit]" id="wpsl_results_fields_limit" value="<?php echo $limit; ?>" />
+			<input type="text" name="wpsl_results_options[limit]" id="wpsl_results_fields_limit" value="<?php echo $this->settings_repo->resultsLimit(); ?>" />
 		</p>
-		<p class="wpsl-limit-setting">
-			<label for="wpsl_results_fields_distance">
-				<input type="checkbox" name="wpsl_results_fields[show_distance]" value="true" <?php if ( $this->settings_repo->resultsOption('show_distance') == 'true' ) echo ' checked';?>>
-				<?php _e('Show the distance in results', 'wpsimplelocator'); ?>
-			</label>
-		</p>
-
-		<p><?php _e('Text before and after fields can be used for formatting display (HTML is permitted)', 'wpsimplelocator'); ?></p>
 	</div>
 
 </div><!-- .wpsl-results-fields -->

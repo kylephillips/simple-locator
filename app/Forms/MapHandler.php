@@ -2,6 +2,8 @@
 
 use SimpleLocator\Repositories\SettingsRepository;
 use SimpleLocator\Helpers;
+use SimpleLocator\Forms\ResultPresenter;
+use SimpleLocator\Forms\LocationQuery;
 
 /**
 * Front-end form handler for simple locator lookup
@@ -33,21 +35,6 @@ class MapHandler {
 	private $results_fields;
 
 	/**
-	* SQL Limit
-	*/
-	private $limit;
-
-	/**
-	* Before Formatting
-	*/
-	private $before_formatting;
-
-	/**
-	* After Formatting
-	*/
-	private $after_formatting;
-
-	/**
 	* Query Data
 	* @var array
 	*/
@@ -76,11 +63,17 @@ class MapHandler {
 	*/
 	private $response;
 
+	/**
+	* Result Presenter
+	*/
+	private $result_presenter;
+
 
 	public function __construct()
 	{
 		$this->settings_repo = new SettingsRepository;
 		$this->validator = new Validation;
+		$this->result_presenter = new ResultPresenter;
 		$this->setResultsFields();
 		$this->setData();
 		$this->validateData();
@@ -96,10 +89,7 @@ class MapHandler {
 	*/
 	private function setResultsFields()
 	{
-		$this->results_fields = $this->settings_repo->resultsFieldsArray();
-		$this->limit = $this->settings_repo->resultsOption();
-		$this->before_formatting = $this->settings_repo->resultsOption('before_item');
-		$this->after_formatting = $this->settings_repo->resultsOption('after_item');
+		$this->results_fields = $this->settings_repo->getResultsFieldArray();
 	}
 
 
@@ -157,7 +147,7 @@ class MapHandler {
 	{
 		$statement = "";
 		foreach($this->results_fields as $key=>$field){
-			$fieldname = $field['field'];
+			$fieldname = $field;
 			$statement .= "$fieldname.meta_value AS $fieldname,\n";
 		}
 		return $statement;
@@ -171,7 +161,7 @@ class MapHandler {
 	{
 		$statement = "";
 		foreach($this->results_fields as $key=>$field){
-			$fieldname = $field['field'];
+			$fieldname = $field;
 			$statement .= "\nLEFT JOIN " . $this->query_data['meta_table'] . " AS $fieldname
 			ON p.ID = $fieldname.post_id AND $fieldname.meta_key = " . "'" . $fieldname . "'" . "\n";
 		}
@@ -184,8 +174,9 @@ class MapHandler {
 	*/
 	private function sqlLimit()
 	{
-		if ( $this->limit == -1 ) return;
-		if ( is_numeric(intval($this->limit)) ) return "LIMIT " . intval($this->limit);
+		$limit = $this->settings_repo->resultsLimit();
+		if ( $limit == -1 ) return;
+		if ( is_numeric(intval($limit)) ) return "LIMIT " . intval($limit);
 	}
 
 
@@ -250,39 +241,12 @@ class MapHandler {
 	*/
 	private function setResults($results)
 	{
-		foreach ( $results as $result ) :
-			$location = array(
-				'title' => $result->title,
-				'permalink' => get_permalink($result->id),
-				'latitude' => $result->latitude,
-				'longitude' => $result->longitude,
-				'output'=> $this->formatOutput($result)
-			);
-			if ( $this->settings_repo->resultsOption('show_distance') == 'true' ) $location['distance'] = round($result->distance, 2);
+		$i = 0;
+		foreach ( $results as $result ) {
+			$location = $this->result_presenter->present($result, $i);
 			$this->results[] = $location;
-		endforeach;
-	}
-
-	/**
-	* Format the output
-	*/
-	private function formatOutput($result)
-	{
-		$output = "";
-		$output .= $this->before_formatting;
-		foreach($this->results_fields as $field){
-			$rfield = $field['field'];
-			$found = $result->$rfield;
-			if ( !$found ) continue;
-
-			if ( isset($field['before']) ) $output .= $field['before'];			
-			if ( $field['type'] == 'url' ) $output .= '<a href="' . Helpers::checkURL($found) . '">';
-			$output .= $found;
-			if ( $field['type'] == 'url' ) $output .= '</a>';			
-			if ( isset($field['after']) ) $output .= $field['after'];
+			$i++;
 		}
-		$output .= $this->after_formatting;
-		return $output;
 	}
 
 

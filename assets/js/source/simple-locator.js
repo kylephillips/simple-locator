@@ -46,8 +46,38 @@ var geolocation = false;
 jQuery(function($){
 
 $(document).ready(function(){
-	if ( wpsl_locator.default_enabled ) loadDefault();
+	queue_default_map();
 });
+
+/**
+* Queue the default map
+* @param boolean errors (geolocation errors) - if true, show default map (not user centered)
+*/
+function queue_default_map(errors)
+{
+	if ( wpsl_locator.default_enabled ) {
+		if ( wpsl_locator.default_user_center === 'true' && navigator.geolocation && !errors ){
+			var forms = $('.simple-locator-form');
+			$.each(forms, function(i, v){
+				var formelements = setFormElements($(this));
+				$(formelements.results).empty().addClass('loading').show();
+				navigator.geolocation.getCurrentPosition(function(position){
+					process_geo_button(position, formelements);
+				}, function(error){
+					queue_default_map(true);
+					$(formelements.results).empty().removeClass('loading').hide();
+				});
+			});
+		} else {
+			loadDefault();
+		}
+	}	
+}
+
+function default_load_results()
+{
+	var forms = $('.simple-locator-form');
+}
 
 // Process the Search Form
 $('.wpslsubmit').on('click', function(e){
@@ -73,14 +103,18 @@ $('.wpslsubmit').on('click', function(e){
 
 /**
 * Load default map if enabled
+* @param boolean
 */
-function loadDefault()
+function loadDefault(userlocation, position)
 {
+	var latitude = wpsl_locator.default_latitude;
+	var longitude = wpsl_locator.default_longitude;
+
 	var forms = $('.simple-locator-form');
 	$.each(forms, function(i, v){
 		formelements = setFormElements(this);
 		formelements.map.show();
-		var center = new google.maps.LatLng(wpsl_locator.default_latitude, wpsl_locator.default_longitude);
+		var center = new google.maps.LatLng(latitude, longitude);
 		var mapOptions = {
 			center: center,
 			zoom: parseInt(wpsl_locator.default_zoom),
@@ -188,7 +222,6 @@ function sendFormData(formelements)
 			geolocation : geolocation
 		},
 		success: function(data){
-			console.log(data);
 			if (data.status === 'error'){
 				wpsl_error(data.message, active_form);
 				$(formelements.errordiv).text(data.message).show();
@@ -216,20 +249,7 @@ function loadLocationResults(data, formelements)
 		output += '</h3><ul>';
 		
 		for( i = 0; i < data.results.length; i++ ) {
-			
-			output = output + '<li data-result=' + i + '><strong>';
-			output = output + '<a href="' + data.results[i].permalink + '">';
-			output = output + data.results[i].title;
-			output = output + '</a></strong><br />';
-
-			if ( data.results[i].distance ){
-				output = output + '<em>' + wpsl_locator.distance + ': ' + data.results[i].distance + ' ' + data.unit + '</em><br />';
-			}
-
-			output = output + data.results[i].output;
-
-			output += '<br /><a href="#" class="infowindow-open map-link" onClick="event.preventDefault(); openInfoWindow(' + i + ');">' + wpsl_locator.showonmap + '</a>';
-			output = output + '</li>';
+			output = output + '<li data-result=' + i + '>' + data.results[i].output + '</li>';
 		}
 
 		output = output + '</ul>';
@@ -346,6 +366,31 @@ function showLocationMap(data, formelements)
 	googlemap = map;
 
 }
+
+/**
+* ======================================================
+* Get User Location (for initial map load)
+* ======================================================
+*/
+
+/**
+* Returns user coordinates if available, false if not
+*/
+function get_user_coordinates()
+{
+	var coords = {};
+	if (navigator.geolocation){
+		navigator.geolocation.getCurrentPosition(function(position){
+			loadDefault(true, position);
+		});
+	}
+	return false;
+}
+function user_coordinates_found(position)
+{
+
+}
+
 
 /**
 * ======================================================

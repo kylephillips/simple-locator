@@ -69,54 +69,14 @@ class DefaultOptions {
 				'show' => 'false',
 				'latitude' => '33.786637',
 				'longitude' => '-84.383160',
-				'zoom' => '15'
+				'zoom' => '15',
+				'user_location' => 'false'
 			));
 		}
-		if ( !get_option('wpsl_results_fields') ){
-			update_option('wpsl_results_fields', array(
-				'fields' => array(
-					0 => array(
-						'field' => 'wpsl_address',
-						'before' => '<p>',
-						'after' => '<br>',
-						'type' => 'text'
-					),
-					1 => array(
-						'field' => 'wpsl_city',
-						'before' => '',
-						'after' => ', ',
-						'type' => 'text'
-					),
-					2 => array(
-						'field' => 'wpsl_state',
-						'before' => '',
-						'after' => ' ',
-						'type' => 'text'
-					),
-					3 => array(
-						'field' => 'wpsl_zip',
-						'before' => '',
-						'after'=> '',
-						'type' => 'text'
-					),
-					4 => array(
-						'field' => 'wpsl_phone',
-						'before' => '<br>',
-						'after' => '<br>',
-						'type' => 'text'
-					),
-					5 =>array(
-						'field' => 'wpsl_website',
-						'before' => '',
-						'after' => '',
-						'type' => 'url'
-					)
-				),
-				'limit' => -1,
-				'before_item' => '<p>',
-				'after_item' => '</p>',
-				'show_distance' => 'true',
-				'link_title' => 'true'
+		if ( !get_option('wpsl_results_fields_formatted') ){
+			update_option('wpsl_results_fields_formatted', array(
+				'output' => "<strong><a href='[post_permalink]'>[post_title]</a></strong>\r\n<em>Distance: [distance]</em>\r\n[wpsl_address]\r\n[wpsl_city], [wpsl_state] [wpsl_zip]\r\n[wpsl_phone]\r\n<a href='[wpsl_website]'>[wpsl_website]</a>\r\n[show_on_map]",
+				'limit' => -1
 			));
 		}
 	}

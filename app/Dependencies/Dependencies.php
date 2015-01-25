@@ -207,6 +207,7 @@ class Dependencies {
 			'default_latitude' => $this->settings_repo->defaultMap('latitude'),
 			'default_longitude' => $this->settings_repo->defaultMap('longitude'),
 			'default_zoom' => intval($this->settings_repo->defaultMap('zoom')),
+			'default_user_center' => $this->settings_repo->defaultMap('user_location')
 		);
 		$localized_data['mapstyles'] = $this->styles_repo->getLocalizedStyles();
 		wp_localize_script( 

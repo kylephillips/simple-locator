@@ -340,67 +340,28 @@ jQuery(function($){
 
 	/**
 	* ------------------------------------------------------
-	* Settings Page - Results Fields
+	* Settings Page - Results Fields (WYSIWYG)
 	* ------------------------------------------------------
 	*/
-	$(document).ready(function(){
-		sortable_results();
+	$(document).on('click', '.wpsl-field-add', function(e){
+		e.preventDefault();
+		add_result_field();
 	});
-
-	/**
-	* Make the fields sortable
-	*/
-	function sortable_results()
+	function add_result_field()
 	{
-		$('.wpsl-results-selection').sortable({
-			items : 'li',
-			handle: '.handle',
-			stop : function(){
-				renumber_fields();
-			}
-		});
+		var field = '[' + $('#wpsl-fields').val() + ']';
+		tinymce.activeEditor.execCommand('mceInsertContent', false, field);
 	}
 
-	/**
-	* Append a new row
-	*/
-	$(document).on('click', '.wpsl-add-field', function(e){
-		e.preventDefault();
-		$('.wpsl-results-selection li:first-child').clone().appendTo('.wpsl-results-selection');
-		renumber_fields();
-	});
 
-	/**
-	* Remove a row
-	*/
-	$(document).on('click', '.wpsl-remove-field', function(e){
+	$(document).on('click', '.wpsl-post-field-add', function(e){
 		e.preventDefault();
-		$(this).parent('li').fadeOut('fast', function(){
-			$(this).remove();
-		});
+		add_post_field();
 	});
-
-	/**
-	* Toggle Before/after fields
-	*/
-	$(document).on('click', '.wpsl-toggle-code', function(e){
-		e.preventDefault();
-		$(this).parent('li').find('.wpsl-before-after').toggle();
-	});
-
-	/**
-	* Renumber the fields
-	*/
-	function renumber_fields()
+	function add_post_field()
 	{
-		$(".field").each(function(index){
-			console.log(index);
-			var prefix = "wpsl_results_fields[fields][" + index + "]";
-			$(this).find("input, select").each(function() {
-				console.log(this);
-				this.name = this.name.replace(/wpsl_results_fields\[fields\]\[\d*?\]/, prefix);   
-        	});
-    	});
+		var field = '[' + $('#wpsl-post-fields').val() + ']';
+		tinymce.activeEditor.execCommand('mceInsertContent', false, field);
 	}
 
 	

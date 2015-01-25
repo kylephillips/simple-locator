@@ -85,8 +85,7 @@ class MetaFields {
 	*/
 	public function savePost( $post_id ) 
 	{
-		global $post;
-		if ( $post->post_type == $this->getPostType() ) :
+		if ( get_post_type($post_id) == $this->getPostType() ) :
 			if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return $post_id;
 			if( !isset( $_POST['wpsl_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['wpsl_meta_box_nonce'], 'my_wpsl_meta_box_nonce' ) ) return $post_id;
 

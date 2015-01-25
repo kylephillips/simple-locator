@@ -49,25 +49,49 @@ class SettingsRepository {
 		if ( $return == 'latitude' ) return $option['latitude'];
 		if ( $return == 'longitude' ) return $option['longitude'];
 		if ( $return == 'zoom' ) return $option['zoom'];
+		if ( $return == 'user_location' ){
+			return ( isset($option['user_location']) && $option['user_location'] == 'true' ) ? 'true' : 'false';	
+		} 
 	}
 
 	/**
-	* Get an array of fields to display
+	* Unit of Measurement
 	*/
-	public function resultsFieldsArray()
+	public function measurementUnit()
 	{
-		$option = get_option('wpsl_results_fields');
-		return $option['fields'];
+		$option = get_option('wpsl_measurement_unit');
+		return ( $option == 'miles' ) ? 'miles' : 'kilometers';
 	}
 
 	/**
 	* Results Limit
 	*/
-	public function resultsOption($selected = 'limit')
+	public function resultsLimit()
 	{
-		$option = get_option('wpsl_results_fields');
-		if ( isset($option[$selected]) ) return $option[$selected];
-		return;
+		$option = get_option('wpsl_results_fields_formatted');
+		return ( isset($option['limit']) ) ? $option['limit'] : -1;
+	}
+
+	/**
+	* Get the results fields from the formatted option
+	* @return array
+	*/
+	public function getResultsFieldArray()
+	{
+		$exclude = array('post_title','distance','post_excerpt','post_permalink','show_on_map','post_thumbnail' );
+		$resultoutput = get_option('wpsl_results_fields_formatted');
+		$resultoutput = $resultoutput['output'];
+		preg_match_all("/\[([^\]]*)\]/", $resultoutput, $matches);
+		return array_diff(array_unique($matches[1]), $exclude);
+	}
+
+	/**
+	* Get results field formatting option
+	*/
+	public function resultsFormatting()
+	{
+		$resultoutput = get_option('wpsl_results_fields_formatted');
+		return $resultoutput['output'];
 	}
 
 }

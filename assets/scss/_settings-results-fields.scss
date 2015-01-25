@@ -18,77 +18,31 @@
 	}
 }
 
-// List of fields
-.wpsl-results-selection {
-	@include unstyled;
-	background-color: $white;
-	box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.08);
-	border-radius: 3px;
-	margin-bottom: 10px;
-	li {
-		@include clearfix;
-		border-top: 1px solid darken($white, 12%);
-		padding: 5px 10px 5px 0;
-		margin: 0;
-		background-color: $white;
-		&:first-child {
-			border: 0;
-		}
-		&:nth-child(even){
-			background-color: darken($white, 5%);
-		}
-	}
-	select {
-		margin: 0;
-		width: 60%;
-	}
-	.handle {
-		display: block;
-		width: 40px;
-		margin: -5px 10px 0px 0px;
-		float: left;
-		cursor: pointer;
-		text-align: center;
-		font-size: 16px;
-		color: darken($white, 50%);
-		padding-top: 10px;
-	}
-	.wpsl-remove-field {
-		float: right;
-		font-size: 10px;
-		margin-left: 8px;
-	}
-	.wpsl-toggle-code {
-		float: right;
-	}
-	.wpsl-before-after {
-		display: none;
-		padding: 10px 5px 10px 10px;
-		input[type="text"] {
-			width: 48%;
-		}
-	}
-	.wpsl-before-text,
-	.wpsl-after-text,
-	.wpsl-field-type {
-		float: left;
-		width: 30%;
-		margin: 0 5% 10px 0;
-		clear: none;
+.wpsl-results-field-selector {
+	background-color: darken($white, 10%);
+	padding: 8px;
+	@include clearfix;
+	.left, .right {
 		label {
 			display: block;
+			font-weight: bold;
 		}
-		input[type="text"],
+		@include clearfix;
+		float: left;
+		width: 45%;
 		select {
-			width: 100%;
+			float: left;
+			width: 60%;
+		}
+		button {
+			float: right;
+			width: 37%;
 		}
 	}
-	.wpsl-field-type {
+	.right {
 		float: right;
-		margin-right: 0;
 	}
-
-} // .wpsl-results-selection
+}
 
 .wpsl-limit-setting {
 	input[type="text"]{

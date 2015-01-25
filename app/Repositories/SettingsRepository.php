@@ -60,7 +60,7 @@ class SettingsRepository {
 	public function measurementUnit()
 	{
 		$option = get_option('wpsl_measurement_unit');
-		return ( $option == 'miles' ) ? 'miles' : 'kilometers';
+		return ( $option == 'miles' || $option == 'Miles' ) ? 'miles' : 'kilometers';
 	}
 
 	/**

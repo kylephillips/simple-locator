@@ -1,10 +1,24 @@
 {
-	"require" : {
-		
+	"name": "kylephillips/simplelocator",
+	"description": "Simple Locator for WordPress",
+	"keywords": ["wordpress", "plugin", "store locator"],
+	"homepage": "http://locatewp.com",
+	"license": "GPL",
+	"authors": [
+		{
+			"name": "Kyle Phillips",
+			"email": "support@nestedpages.com",
+			"homepage": "https://github.com/kylephillips"
+		}
+	],
+	"type": "wordpress-plugin",
+	"require": {
+		"php": ">=5.3.2",
+		"composer/installers": "v1.0.6"
 	},
-	"autoload" : {
+	"autoload": {
 		"psr-4" : {
 			"SimpleLocator\\" : "app"
 		}
-	} 
+	}
 }

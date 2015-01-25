@@ -45,6 +45,9 @@ class DefaultOptions {
 		if ( !get_option('wpsl_gmaps_api') ){
 			update_option('wpsl_gmaps_api', 'true');
 		}
+		if ( !get_option('wpsl_measurement_unit') ){
+			update_option('wpsl_measurement_unit', 'miles');
+		}
 		if ( !get_option('wpsl_geo_button') ){
 			update_option('wpsl_geo_button', array(
 				'enabled' => '',

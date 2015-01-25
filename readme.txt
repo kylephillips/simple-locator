@@ -64,13 +64,17 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 3. The included "location" post type includes custom fields specific to locations.
 
-4. Includes options for Google Maps API Key, measurement unit (miles/kilometers), custom map pin image, whether to output the included CSS, and whether to display the map in the specified post type's singular view.
+4. Includes options for Google Maps API Key, measurement unit (miles/kilometers), custom map pin image, whether to output the included CSS, whether to display the map in the specified post type's singular view, and option to add a geolocation button on enabled devices.
 
 5. Use the included post type and latitude/longitude fields, or specify your own existing combination of type and fields. Works with Advanced Custom Fields. Ideal for developers looking for a customizable location search.
 
 6. Choose from a list of pre-defined map styles
 
 7. Or, paste your own JSON formatted styles.
+
+8. Optionally show a default map on page load, with a custom location. Additionally, results can be set to show automatically on page load if the user's device or browser has geolocation capabilities. If the user doesn't, or they deny location access, the default map will show if set to.
+
+9. Configure results display by adding custom fields from the chosen post type plus post data including the title, permalink, excerpt and thumbnails.
 
 == Changelog ==
 

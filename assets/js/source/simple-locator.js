@@ -355,6 +355,12 @@ function showLocationMap(data, formelements)
 		
 		// Center the Map
 		map.fitBounds(bounds);
+		var listener = google.maps.event.addListener(map, "idle", function() { 
+				if ( data.results.length < 2 ) {
+				map.setZoom(13);
+			}
+			google.maps.event.removeListener(listener); 
+		});
 	}
 
 	// Fit the map bounds to all the pins

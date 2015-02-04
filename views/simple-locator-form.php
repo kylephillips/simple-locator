@@ -30,7 +30,7 @@ $output .= '
 	<div class="submit">
 		<input type="hidden" name="latitude" class="latitude" />
 		<input type="hidden" name="longitude" class="longitude" />
-		<input type="hidden" name="unit" value="' . $this->unit . '" class="unit" />
+		<input type="hidden" name="unit" value="' . $this->unit_raw . '" class="unit" />
 		<button type="submit" class="wpslsubmit">' . html_entity_decode($this->options['buttontext']) . '</button>
 	</div>
 	<div class="geo_button_cont"></div>

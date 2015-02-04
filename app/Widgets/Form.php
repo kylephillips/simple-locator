@@ -10,6 +10,11 @@ class Form extends \WP_Widget {
 	private $unit;
 
 	/**
+	* Untranslated Unit
+	*/
+	private $unit_raw;
+
+	/**
 	* Widget Options
 	*/
 	public $options;
@@ -37,7 +42,14 @@ class Form extends \WP_Widget {
 	*/
 	private function setUnit()
 	{
-		$this->unit = ( get_option('wpsl_measurement_unit') ) ? get_option('wpsl_measurement_unit') : 'miles';
+		$unit = get_option('wpsl_measurement_unit');
+		if ( $unit == "" || $unit == 'miles' ) {
+			$this->unit_raw = 'miles';
+			$this->unit = __('Miles', 'wpsimplelocator');
+			return;
+		}
+		$this->unit_raw = 'kilometers';
+		$this->unit = __('Kilometers', 'wpsimplelocator');
 	}
 
 	/**

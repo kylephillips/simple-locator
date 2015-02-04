@@ -11,6 +11,11 @@ class Form {
 	private $unit;
 
 	/**
+	* Untranslated Unit
+	*/
+	private $unit_raw;
+
+	/**
 	* Shortcode Options
 	*/
 	public $options;
@@ -23,10 +28,19 @@ class Form {
 
 	public function __construct()
 	{
-		$this->setUnit();
 		$this->styles_repo = new MapStyles;
 		$this->settings_repo = new SettingsRepository();
+		add_action('init', array($this, 'init'));
 		add_shortcode('wp_simple_locator', array($this, 'renderView'));
+	}
+
+
+	/**
+	* Init
+	*/
+	public function init()
+	{
+		$this->setUnit();
 	}
 
 
@@ -36,8 +50,13 @@ class Form {
 	private function setUnit()
 	{
 		$unit = get_option('wpsl_measurement_unit');
-		if ( $unit == "" || $unit == 'miles' ) return $this->unit = __('miles', 'wpsimplelocator');
-		$this->unit = __('kilometers', 'wpsimplelocator');
+		if ( $unit == "" || $unit == 'miles' ) {
+			$this->unit_raw = 'miles';
+			$this->unit = __('Miles', 'wpsimplelocator');
+			return;
+		}
+		$this->unit_raw = 'kilometers';
+		$this->unit = __('Kilometers', 'wpsimplelocator');
 	}
 
 

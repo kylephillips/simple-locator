@@ -35,7 +35,9 @@ class Form {
 	*/
 	private function setUnit()
 	{
-		$this->unit = ( get_option('wpsl_measurement_unit') ) ? get_option('wpsl_measurement_unit') : 'miles';
+		$unit = get_option('wpsl_measurement_unit');
+		if ( $unit == "" || $unit == 'miles' ) return $this->unit = __('miles', 'wpsimplelocator');
+		$this->unit = __('kilometers', 'wpsimplelocator');
 	}
 
 

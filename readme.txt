@@ -78,6 +78,9 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 == Changelog ==
 
+= 1.0.10 =
+* Missing localized strings added for translations
+
 = 1.0.9 =
 * Option to add default empty map below search form on page load (visit Simple Locator settings to configure a default map)
 * Option to enable default results – if user has geolocation enabled and permits access to your site, results will automatically load using their location

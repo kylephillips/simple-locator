@@ -19,7 +19,7 @@ $output .= '
 	<div class="wpsl-error alert alert-error" style="display:none;"></div>
 	<div class="address-input form-field">
 		<label for="zip">' . $this->options['addresslabel'] . '</label>
-		<input type="tel" name="address" class="address" />
+		<input type="text" name="address" class="address" />
 	</div>
 	<div class="distance form-field">
 		<label for="distance">' . __('Distance', 'wpsimplelocator'). '</label>

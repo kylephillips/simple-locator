@@ -94,4 +94,13 @@ class SettingsRepository {
 		return $resultoutput['output'];
 	}
 
+	/**
+	* Get the Location Post Type
+	* @return string
+	*/
+	public function getLocationPostType()
+	{
+		return get_option('wpsl_post_type');
+	}
+
 }

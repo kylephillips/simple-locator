@@ -1,6 +1,7 @@
 <?php namespace SimpleLocator\API;
 
 use SimpleLocator\Repositories\PostRepository;
+use SimpleLocator\Repositories\SettingsRepository;
 
 /**
 * Shortcode for displaying a single location map
@@ -9,37 +10,32 @@ class MapShortcode {
 
 	/**
 	* Shortcode Options
+	* @var arrat
 	*/
 	public $options;
 
 	/**
-	* Shortcode Options
+	* Location Data
+	* @var array
 	*/
 	private $location_data;
-
-	/**
-	* Location Post Type
-	*/
-	private $post_type;
 
 	/**
 	* Post Repository
 	*/
 	private $post_repo;
 
+	/**
+	* Settings Repository
+	*/
+	private $settings_repo;
+
 
 	public function __construct()
 	{
 		$this->post_repo = new PostRepository;
+		$this->settings_repo = new SettingsRepository;
 		add_shortcode('wp_simple_locator_map', array($this, 'renderView'));
-	}
-
-	/**
-	* Post Type
-	*/
-	private function setPostType()
-	{
-		$this->post_type = get_option('wpsl_post_type');
 	}
 
 	/**
@@ -59,13 +55,12 @@ class MapShortcode {
 	private function setLocationData()
 	{
 		$this->location_data = $this->post_repo->getLocationData($this->options['post']);
-		$this->location_data['additionalfields'] = $this->options['additionalfields'];
 	}
 
 	/**
 	* Enqueue the single view script & add localized data
 	*/
-	private function enqueueScript()
+	private function enqueueScripts()
 	{
 		if ( (isset($this->location_data['latitude'])) && (isset($this->location_data['longitude'])) ){
 			wp_enqueue_script(
@@ -87,10 +82,9 @@ class MapShortcode {
 	*/
 	public function renderView($options)
 	{	
-		$this->setPostType();
 		$this->setOptions($options);
 		$this->setLocationData();
-		$this->enqueueScript();
+		$this->enqueueScripts();
 
 		include ( \SimpleLocator\Helpers::view('singular-post') );
 		return $out;

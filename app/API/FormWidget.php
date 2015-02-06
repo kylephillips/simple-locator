@@ -27,8 +27,8 @@ class FormWidget extends \WP_Widget {
 
 	public function __construct()
 	{
-		$this->setUnit();
 		$this->settings_repo = new SettingsRepository();
+		$this->setUnit();
 		parent::__construct(
 			'simple_locator',
 			__('Simple Locator', 'wpsimplelocator'),
@@ -42,14 +42,8 @@ class FormWidget extends \WP_Widget {
 	*/
 	private function setUnit()
 	{
-		$unit = get_option('wpsl_measurement_unit');
-		if ( $unit == "" || $unit == 'miles' ) {
-			$this->unit_raw = 'miles';
-			$this->unit = __('Miles', 'wpsimplelocator');
-			return;
-		}
-		$this->unit_raw = 'kilometers';
-		$this->unit = __('Kilometers', 'wpsimplelocator');
+		$this->unit_raw = $this->settings_repo->getDistanceUnit();
+		$this->unit = $this->settings_repo->getDistanceUnitLocalized();
 	}
 
 	/**

@@ -96,11 +96,36 @@ class SettingsRepository {
 
 	/**
 	* Get the Location Post Type
+	* @since 1.1.0
 	* @return string
 	*/
 	public function getLocationPostType()
 	{
 		return get_option('wpsl_post_type');
+	}
+
+	/**
+	* Get the distance unit
+	* @since 1.1.0
+	* @return string
+	*/
+	public function getDistanceUnit()
+	{
+		$unit = get_option('wpsl_measurement_unit');
+		if ( $unit == "" || $unit == 'miles' ) return 'miles';
+		return 'kilometers';
+	}
+
+	/**
+	* Get the localized distance unit
+	* @since 1.1.0
+	* @return string
+	*/
+	public function getDistanceUnitLocalized()
+	{
+		$unit = get_option('wpsl_measurement_unit');
+		if ( $unit == "" || $unit == 'miles' ) return __('Miles', 'wpsimplelocator');
+		return __('Kilometers', 'wpsimplelocator');
 	}
 
 }

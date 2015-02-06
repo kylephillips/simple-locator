@@ -1,8 +1,8 @@
-<?php namespace SimpleLocator\Shortcodes;
+<?php namespace SimpleLocator\API;
 /**
 * Shortcode for displaying a single location map
 */
-class Map {
+class MapShortcode {
 
 	/**
 	* Shortcode Options

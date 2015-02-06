@@ -1,8 +1,8 @@
-<?php namespace SimpleLocator\Widgets;
+<?php namespace SimpleLocator\API;
 
 use \SimpleLocator\Repositories\SettingsRepository;
 
-class Form extends \WP_Widget {
+class FormWidget extends \WP_Widget {
 
 	/**
 	* Unit of Measurement

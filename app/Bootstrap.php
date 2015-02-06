@@ -23,8 +23,8 @@ class Bootstrap {
 		new \SimpleLocator\WPData\PostTypes;
 		new \SimpleLocator\WPData\MetaFields;
 		new \SimpleLocator\Settings\Settings;
-		new \SimpleLocator\Shortcodes\Form;
-		new \SimpleLocator\Shortcodes\Map;
+		new \SimpleLocator\API\FormShortcode;
+		new \SimpleLocator\API\MapShortcode;
 		new \SimpleLocator\Post\Singular;
 		add_action( 'widgets_init', array($this, 'formWidget'));
 	}
@@ -57,7 +57,7 @@ class Bootstrap {
 	*/
 	public function formWidget()
 	{
-		register_widget( 'SimpleLocator\Widgets\Form' );
+		register_widget( 'SimpleLocator\API\FormWidget' );
 	}
 
 

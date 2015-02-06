@@ -78,6 +78,9 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 == Changelog ==
 
+= 1.1.0 =
+* A new shortcode [wpsl_all_locations] is now available. The shortcode displays a map with all locations, zoomed to fit.
+
 = 1.0.10 =
 * Missing localized strings added for translations
 
@@ -118,6 +121,9 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Important: the form widget namespace has changed. Any manual calls to the widget should be updated to the new namespace: SimpleLocator\API\FormWidget.
 
 = 1.0.9 =
 Multiple results configuration options added including default map/results, results field display, and more. Portuguese Translation (Provided by Luis Martens)

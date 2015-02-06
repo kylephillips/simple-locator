@@ -128,4 +128,12 @@ class SettingsRepository {
 		return __('Kilometers', 'wpsimplelocator');
 	}
 
+	/**
+	* Get Geocode Field
+	*/
+	public function getGeoField($field = 'lat')
+	{
+		return ( $field == 'lat' ) ? get_option('wpsl_lat_field') : get_option('wpsl_lng_field');
+	}
+
 }

@@ -2,7 +2,87 @@
 
 use \SimpleLocator\Repositories\MapStyles;
 use \SimpleLocator\Repositories\SettingsRepository;
+use \SimpleLocator\Repositories\PostRepository;
 
 class AllLocationsShortcode {
 	
+	/**
+	* Shortcode Options
+	* @var arrat
+	*/
+	public $options;
+
+	/**
+	* All Locations
+	*/
+	private $locations;
+
+	/**
+	* Post Repository
+	*/
+	private $post_repo;
+
+	/**
+	* Settings Repository
+	*/
+	private $settings_repo;
+
+
+	public function __construct()
+	{
+		$this->post_repo = new PostRepository;
+		$this->settings_repo = new SettingsRepository;
+		add_shortcode('wpsl_all_locations', array($this, 'renderView'));
+	}
+
+	/**
+	* Shortcode Options
+	*/
+	private function setOptions($options)
+	{
+		$this->options = shortcode_atts(array(
+			'limit' => '-1',
+		), $options);
+	}
+
+	/**
+	* Get all locations
+	*/
+	private function getAllLocations()
+	{
+		$this->locations = $this->post_repo->allLocations($this->options['limit']);
+	}
+
+
+	/**
+	* Enqueue the single view script & add localized data
+	*/
+	private function enqueueScripts()
+	{
+		if ( (isset($this->location_data['latitude'])) && (isset($this->location_data['longitude'])) ){
+			wp_enqueue_script(
+				'simple-locator-single', 
+				\SimpleLocator\Helpers::plugin_url(). '/assets/js/simple-locator-single.js', 
+				array('jquery'), 
+				'1.0'
+			);
+			wp_localize_script( 
+				'simple-locator-single', 
+				'wpsl_locator_single', 
+				$this->location_data
+			);
+		}
+	}
+
+	/**
+	* The View
+	*/
+	public function renderView($options)
+	{	
+		$this->setOptions($options);
+		$this->getAllLocations();
+		$this->enqueueScripts();
+		include ( \SimpleLocator\Helpers::view('all-locations') );
+	}
+
 }

@@ -1,6 +1,18 @@
 <?php namespace SimpleLocator\Repositories;
 
+use SimpleLocator\Repositories\SettingsRepository;
+
 class PostRepository {
+
+	/**
+	* Settings Repo
+	*/
+	private $settings_repo;
+
+	public function __construct()
+	{
+		$this->settings_repo = new SettingsRepository;
+	}
 	
 	/**
 	* Get the Location Data for a Post
@@ -21,6 +33,38 @@ class PostRepository {
 		$location_data['website'] = get_post_meta( $post_id, 'wpsl_website', true);
 		$location_data['additionalinfo'] = get_post_meta( $post_id, 'wpsl_additionalinfo', true);
 		return $location_data;
+	}
+
+
+	/**
+	* Get all locations
+	* @since 1.1.0
+	* @param int limit
+	* @return array of object
+	*/
+	public function allLocations($limit = '-1')
+	{
+		$args = array(
+			'post_type'=> $this->settings_repo->getLocationPostType(),
+			'posts_per_page' => $limit
+		);
+		/**
+		* @filter simple_locator_all_locations
+		*/
+		$location_query = new \WP_Query(apply_filters('simple_locator_all_locations', $args));
+		if ( $location_query->have_posts() ) : $c = 0;
+			while ( $location_query->have_posts() ) : $location_query->the_post();
+				$locations[$c] = new \stdClass();
+				$locations[$c]->id = get_the_id();
+				$locations[$c]->title = get_the_title();
+				$locations[$c]->permalink = get_the_permalink();
+				$locations[$c]->latitude = get_post_meta(get_the_id(), $this->settings_repo->getGeoField('lat'), true);
+				$locations[$c]->longitude = get_post_meta(get_the_id(), $this->settings_repo->getGeoField('lng'), true);
+			$c++;
+			endwhile; 
+			return $locations;
+		else : return false;
+		endif; wp_reset_postdata();
 	}
 
 }

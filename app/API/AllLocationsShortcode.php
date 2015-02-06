@@ -59,19 +59,19 @@ class AllLocationsShortcode {
 	*/
 	private function enqueueScripts()
 	{
-		if ( (isset($this->location_data['latitude'])) && (isset($this->location_data['longitude'])) ){
-			wp_enqueue_script(
-				'simple-locator-single', 
-				\SimpleLocator\Helpers::plugin_url(). '/assets/js/simple-locator-single.js', 
-				array('jquery'), 
-				'1.0'
-			);
-			wp_localize_script( 
-				'simple-locator-single', 
-				'wpsl_locator_single', 
-				$this->location_data
-			);
-		}
+		wp_enqueue_script(
+			'simple-locator-all', 
+			\SimpleLocator\Helpers::plugin_url(). '/assets/js/simple-locator-all-locations.js', 
+			array('jquery'), 
+			'1.0'
+		);
+		wp_localize_script( 
+			'simple-locator-all', 
+			'wpsl_locator_all', 
+			array(
+				'locations' => $this->locations
+			)
+		);
 	}
 
 	/**

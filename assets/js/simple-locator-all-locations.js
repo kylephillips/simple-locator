@@ -1,0 +1,1 @@
+jQuery(function(o){function n(){var o=wpsl_locator_all.locations;console.log(o)}o(document).ready(function(){n()})});

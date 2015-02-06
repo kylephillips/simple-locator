@@ -1,4 +1,7 @@
 <?php namespace SimpleLocator\API;
+
+use SimpleLocator\Repositories\PostRepository;
+
 /**
 * Shortcode for displaying a single location map
 */
@@ -19,9 +22,15 @@ class MapShortcode {
 	*/
 	private $post_type;
 
+	/**
+	* Post Repository
+	*/
+	private $post_repo;
+
 
 	public function __construct()
 	{
+		$this->post_repo = new PostRepository;
 		add_shortcode('wp_simple_locator_map', array($this, 'renderView'));
 	}
 
@@ -49,19 +58,8 @@ class MapShortcode {
 	*/
 	private function setLocationData()
 	{
+		$this->location_data = $this->post_repo->getLocationData($this->options['post']);
 		$this->location_data['additionalfields'] = $this->options['additionalfields'];
-		$this->location_data['title'] = get_the_title($this->options['post']);
-		$this->location_data['latitude'] = get_post_meta( $this->options['post'], get_option('wpsl_lat_field'), true );
-		$this->location_data['longitude'] = get_post_meta( $this->options['post'], get_option('wpsl_lng_field'), true );
-		if ( $this->post_type == 'location' ){
-			$this->location_data['address'] = get_post_meta( $this->options['post'], 'wpsl_address', true);
-			$this->location_data['city'] = get_post_meta( $this->options['post'], 'wpsl_city', true);
-			$this->location_data['state'] = get_post_meta( $this->options['post'], 'wpsl_state', true);
-			$this->location_data['zip'] = get_post_meta( $this->options['post'], 'wpsl_zip', true);
-			$this->location_data['phone'] = get_post_meta( $this->options['post'], 'wpsl_phone', true);
-			$this->location_data['website'] = get_post_meta( $this->options['post'], 'wpsl_website', true);
-			$this->location_data['additionalinfo'] = get_post_meta( $this->options['post'], 'wpsl_additionalinfo', true);
-		}
 	}
 
 	/**

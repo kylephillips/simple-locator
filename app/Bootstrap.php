@@ -24,7 +24,7 @@ class Bootstrap {
 		new \SimpleLocator\WPData\MetaFields;
 		new \SimpleLocator\Settings\Settings;
 		new \SimpleLocator\API\FormShortcode;
-		new \SimpleLocator\API\MapShortcode;
+		new \SimpleLocator\API\SingleLocationShortcode;
 		new \SimpleLocator\API\AllLocationsShortcode;
 		new \SimpleLocator\Post\Singular;
 		add_action( 'widgets_init', array($this, 'formWidget'));

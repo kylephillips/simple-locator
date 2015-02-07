@@ -6,7 +6,7 @@ use SimpleLocator\Repositories\SettingsRepository;
 /**
 * Shortcode for displaying a single location map
 */
-class MapShortcode {
+class SingleLocationShortcode {
 
 	/**
 	* Shortcode Options

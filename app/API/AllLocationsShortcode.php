@@ -82,7 +82,7 @@ class AllLocationsShortcode {
 		$this->setOptions($options);
 		$this->getAllLocations();
 		$this->enqueueScripts();
-		include ( \SimpleLocator\Helpers::view('all-locations') );
+		echo '<div id="alllocationsmap" class="wpsl-map" style="display:block;"></div>';
 	}
 
 }

@@ -32,7 +32,7 @@ class AllLocationsShortcode {
 	{
 		$this->post_repo = new PostRepository;
 		$this->settings_repo = new SettingsRepository;
-		add_shortcode('wpsl_all_locations', array($this, 'renderView'));
+		add_shortcode('simple_locator_all_locations', array($this, 'renderView'));
 	}
 
 	/**

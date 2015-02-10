@@ -78,6 +78,9 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 == Changelog ==
 
+= 1.1.1 =
+* Bug fix in singular view
+
 = 1.1.0 =
 * A new shortcode [simple_locator_all_locations] is now available. The shortcode displays a map with all locations, zoomed to fit.
 

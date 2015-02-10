@@ -1,4 +1,6 @@
 <?php namespace SimpleLocator\Post;
+
+use SimpleLocator\Repositories\SettingsRepository;
 /**
 * Add Map and Location data to single view
 */
@@ -16,10 +18,23 @@ class Singular {
 	*/
 	private $location_data;
 
+	/**
+	* Options
+	* @var array
+	*/
+	private $options;
+
+	/**
+	* Settings Repository
+	*/
+	private $settings_repo;
+
 
 	public function __construct()
 	{
+		$this->settings_repo = new SettingsRepository;
 		$this->setPostType();
+		$this->setOptions();
 		$this->filterContent();
 	}
 
@@ -30,6 +45,14 @@ class Singular {
 	private function setPostType()
 	{
 		$this->post_type = get_option('wpsl_post_type');
+	}
+
+	/**
+	* Set the View Options
+	*/
+	private function setOptions()
+	{
+		$this->options['additionalfields'] = false;
 	}
 
 

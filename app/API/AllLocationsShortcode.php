@@ -59,6 +59,8 @@ class AllLocationsShortcode {
 	*/
 	private function enqueueScripts()
 	{
+		wp_enqueue_script('google-maps');
+		wp_enqueue_script('simple-locator');
 		wp_enqueue_script(
 			'simple-locator-all', 
 			\SimpleLocator\Helpers::plugin_url(). '/assets/js/simple-locator-all-locations.js', 

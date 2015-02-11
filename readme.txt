@@ -78,6 +78,9 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 == Changelog ==
 
+= 1.1.2 =
+* Javascript Bug fix in all locations shortcode
+
 = 1.1.1 =
 * Bug fix in singular view
 

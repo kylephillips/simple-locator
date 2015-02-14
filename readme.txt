@@ -78,6 +78,9 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 == Changelog ==
 
+= 1.1.4=
+* German translation added (provided by Slava Klejman)
+
 = 1.1.3 =
 * Minor Javascript error fix in all locations script.
 

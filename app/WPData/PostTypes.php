@@ -45,6 +45,7 @@ class PostTypes {
 	*/
 	public function registerLocation()
 	{
+		if ( $this->hideDefaultPostType() ) return;
 		$labels = array(
 			'name' => $this->pt_labels->label,  
 			'singular_name' => $this->pt_labels->singular,
@@ -94,9 +95,9 @@ class PostTypes {
 	/**
 	* Check the post type option
 	*/
-	private function check_post_type()
+	private function hideDefaultPostType()
 	{
-		return ( get_option('wpsl_post_type') == 'location' ) ? true : false;
+		return ( get_option('wpsl_hide_default') == 'true' ) ? true : false;
 	}
 
 

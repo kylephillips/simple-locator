@@ -23,6 +23,14 @@
 	</td>
 </tr>
 <tr valign="top">
+	<td colspan="2" style="padding:0 0 20px 0;">
+		<label for="wpsl_hide_default">
+			<input type="checkbox" name="wpsl_hide_default" value="true" id="wpsl_hide_default" <?php if ( get_option('wpsl_hide_default') == 'true') echo 'checked'; ?> />
+			<?php _e('Hide Default Post Type', 'wpsimplelocator'); ?>
+		</label>
+	</td>
+</tr>
+<tr valign="top">
 	<td colspan="2" style="padding:0;">
 		<label class="wpsl-block-label"><?php _e('Latitude & Longitude Fields', 'wpsimplelocator'); ?></label>
 		<p>

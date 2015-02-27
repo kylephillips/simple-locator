@@ -50,7 +50,7 @@ class Settings {
 		$this->setMapOptions();
 		add_action( 'admin_menu', array( $this, 'registerPage' ) );
 		add_action( 'admin_init', array($this, 'registerSettings' ) );
-		add_action( 'updated_option', array($this, 'flushRewrites'), 10, 1);
+		add_action( 'updated_option', array($this, 'flushRewrites'), 10, 3);
 	}
 
 
@@ -157,9 +157,9 @@ class Settings {
 	/**
 	* Flush the rewrite rules when saving post type
 	*/
-	public function flushRewrites($option)
+	public function flushRewrites($option, $oldvalue, $_newvalue)
 	{
-		if ( $option == 'wpsl_post_type' ){
+		if ( $option == 'wpsl_post_type' || $option == 'wpsl_posttype_labels'){
 			flush_rewrite_rules(false);
 		}
 	}

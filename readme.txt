@@ -78,10 +78,11 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 == Changelog ==
 
-= 1.1.4=
+= 1.1.4 =
 * Conflict with nonce and page caching resolved
 * German translation added (provided by Slava Klejman)
 * Option added to hide default post type
+* Added post id to search result data, added to marker click callback function and data attribute on view location link
 
 = 1.1.3 =
 * Minor Javascript error fix in all locations script.

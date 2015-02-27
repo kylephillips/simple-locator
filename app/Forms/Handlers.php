@@ -2,6 +2,8 @@
 
 use SimpleLocator\Forms\MapHandler;
 use SimpleLocator\Forms\PostTypeFieldsHandler;
+use SimpleLocator\Forms\NonceHandler;
+
 /**
 * Wordpress Form Handlers
 */
@@ -12,6 +14,10 @@ class Handlers {
 		// Front End Form
 		add_action( 'wp_ajax_nopriv_locate', array($this, 'wpsl_form_handler' ));
 		add_action( 'wp_ajax_locate', array($this, 'wpsl_form_handler' ));
+
+		// Nonce Generation
+		add_action( 'wp_ajax_nopriv_locatornonce', array($this, 'wpsl_nonce_handler' ));
+		add_action( 'wp_ajax_locatornonce', array($this, 'wpsl_nonce_handler' ));
 
 		// Admin Settings Post Type Select
 		add_action( 'wp_ajax_wpslposttype', array($this, 'wpsl_posttype_handler' ));
@@ -31,6 +37,14 @@ class Handlers {
 	public function wpsl_posttype_handler()
 	{
 		new PostTypeFieldsHandler;
+	}
+
+	/**
+	* Generate a Nonce
+	*/
+	public function wpsl_nonce_handler()
+	{
+		new NonceHandler;
 	}
 
 }

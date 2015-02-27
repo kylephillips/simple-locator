@@ -79,6 +79,7 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 == Changelog ==
 
 = 1.1.4=
+* Conflict with nonce and page caching resolved
 * German translation added (provided by Slava Klejman)
 * Option added to hide default post type
 

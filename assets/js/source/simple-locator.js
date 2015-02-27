@@ -21,7 +21,7 @@ var googlemap = '';
 function wpsl_after_render(active_form){}
 
 // Runs on click event on a map marker
-function wpsl_click_marker(marker, i, active_form){}
+function wpsl_click_marker(marker, i, active_form, post_id){}
 
 // Runs if no results were returned from the query
 function wpsl_no_results(location, active_form){}
@@ -97,8 +97,30 @@ $('.wpslsubmit').on('click', function(e){
 
 	$(formelements.results).empty().addClass('loading').show();
 
-	geocodeAddress(formelements);
+	generate_nonce(form, formelements);
 });
+
+
+/**
+* Generate and Inject the Nonce
+*/
+function generate_nonce(form)
+{
+	$.ajax({
+		url: wpsl_locator.ajaxurl,
+		type: 'post',
+		datatype: 'json',
+		data: {
+			action : 'locatornonce'
+		},
+		success: function(data){
+			$('.locator-nonce').remove();
+			$(form).find('form').append('<input type="hidden" class="locator-nonce" name="nonce" value="' + data.nonce + '" />');
+			geocodeAddress(formelements);
+		}
+	});
+}
+
 
 
 /**
@@ -201,6 +223,8 @@ function geocodeAddress(formelements)
 
 
 
+
+
 /**
 * Send the form data to the form handler
 */
@@ -214,7 +238,7 @@ function sendFormData(formelements)
 			action : 'locate',
 			address : $(formelements.address).val(),
 			formatted_address : formatted_address,
-			locatorNonce : wpsl_locator.locatorNonce,
+			locatorNonce : $('.locator-nonce').val(),
 			distance : $(formelements.distance).val(),
 			latitude : $(formelements.latitude).val(),
 			longitude : $(formelements.longitude).val(),
@@ -323,7 +347,8 @@ function showLocationMap(data, formelements)
 		var lat = data.results[i].latitude;
 		var lng = data.results[i].longitude;
 		var link = data.results[i].permalink;
-		var location = [title,lat,lng,link];
+		var id = data.results[i].id;
+		var location = [title,lat,lng,link,id];
 		locations.push(location);
 	}
 	
@@ -342,11 +367,11 @@ function showLocationMap(data, formelements)
 		// Info window for each marker 
 		google.maps.event.addListener(marker, 'click', (function(marker, i) {
 			return function() {
-				infoWindow.setContent('<h4>' + locations[i][0] + '</h4><p><a href="' + locations[i][3] + '">' + wpsl_locator.viewlocation + '</a></p>');
+				infoWindow.setContent('<h4>' + locations[i][0] + '</h4><p><a href="' + locations[i][3] + '" data-location-id="' + locations[i][4] + '">' + wpsl_locator.viewlocation + '</a></p>');
 				infoWindow.open(map, marker);
 
 				// Simple Locator Callback function for click event
-				wpsl_click_marker(marker, i, active_form);
+				wpsl_click_marker(marker, i, active_form, locations[i][4]);
 			}
 		})(marker, i));
 

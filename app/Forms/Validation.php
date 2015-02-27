@@ -26,7 +26,7 @@ class Validation {
 	*/
 	private function nonce()
 	{
-		if ( ! wp_verify_nonce( $this->data['nonce'], 'wpsl_locator-locator-nonce' ) ){
+		if ( ! wp_verify_nonce( $this->data['nonce'], 'locatornonce' ) ){
 			$this->error('Incorrect Form Field', 'wpsimplelocator');
 		}
 	}

@@ -97,14 +97,14 @@ $('.wpslsubmit').on('click', function(e){
 
 	$(formelements.results).empty().addClass('loading').show();
 
-	generate_nonce(form, formelements);
+	generate_nonce(form, formelements, true);
 });
 
 
 /**
 * Generate and Inject the Nonce
 */
-function generate_nonce(form)
+function generate_nonce(form, formelements, processform)
 {
 	$.ajax({
 		url: wpsl_locator.ajaxurl,
@@ -116,7 +116,7 @@ function generate_nonce(form)
 		success: function(data){
 			$('.locator-nonce').remove();
 			$(form).find('form').append('<input type="hidden" class="locator-nonce" name="nonce" value="' + data.nonce + '" />');
-			geocodeAddress(formelements);
+			if ( processform ) geocodeAddress(formelements);
 		}
 	});
 }
@@ -453,6 +453,9 @@ function process_geo_button(position, formelements)
 
 $(document).ready(function(){
 	append_geo_button();
+	$('.simple-locator-form').each(function(){
+		generate_nonce($(this));
+	});
 });
 
 $(document).on('click', '.wpsl-geo-button', function(e){

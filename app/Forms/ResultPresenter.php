@@ -71,6 +71,7 @@ class ResultPresenter {
 	private function setData()
 	{
 		$location = array(
+			'id' => $this->result->id,
 			'title' => $this->result->title,
 			'permalink' => get_permalink($this->result->id),
 			'latitude' => $this->result->latitude,

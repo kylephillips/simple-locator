@@ -32,6 +32,7 @@ class PostTypeResetHandler {
 		delete_option('wpsl_field_type');
 		delete_option('wpsl_lng_field');
 		delete_option('wpsl_lat_field');
+		flush_rewrite_rules(false);
 	}
 
 	/**

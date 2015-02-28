@@ -78,6 +78,10 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 == Changelog ==
 
+= 1.1.5 =
+* Bug fix in singular location view that was preventing display of additional custom meta data when using the included location post type
+* "Reset to Default" button added to post type settings for resetting to plugin defaults in cases of inadvertently changing critical post type settings.
+
 = 1.1.4 =
 * Conflict with nonce and page caching resolved
 * German translation added (provided by Slava Klejman)

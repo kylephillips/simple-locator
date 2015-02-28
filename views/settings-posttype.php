@@ -100,7 +100,7 @@
 
 <div class="wpsl-posttype-fields wpsl-label-row">
 	<h3><?php _e('Location Post Type Name & Labels', 'wpsimplelocator'); ?></h3>
-	<p><?php _e('Important: Changing the name or slug will remove content already published under existing post type from view. For more information, visit', 'wpsimplelocator'); ?><a href="http://codex.wordpress.org/Function_Reference/register_post_type" target="_blank"> wordpress.org</a></p>
+	<p><strong class="wpsl-red"><?php _e('Important:', 'wpsimplelocator'); ?></strong> <?php _e('Changing the name or slug will remove content already published under existing post type from view. For more information, visit', 'wpsimplelocator'); ?><a href="http://codex.wordpress.org/Function_Reference/register_post_type" target="_blank"> wordpress.org</a>. <?php _e('If you change settings inadvertently and lose access to your location entries, you can reset to the plugin defaults using the "Reset to Default" button above.', 'wpsimplelocator'); ?></p>
 	<table class="form-table">
 	<tr valign="top" class="wpsl-label-row">
 		<th><?php _e('Post Type', 'wpsimplelocator');?>*</th>

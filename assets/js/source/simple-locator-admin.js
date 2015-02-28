@@ -248,6 +248,33 @@ jQuery(function($){
 		}
 	}
 
+	/**
+	* ------------------------------------------------------
+	* Settings Page - Reset to Default Post Type
+	* ------------------------------------------------------
+	*/
+	$('.wpsl-reset-posttype').on('click', function(e){
+		e.preventDefault();
+		if ( !confirm('Are you sure you want to reset to the default post type?') ) return false;
+		reset_posttype();
+	});
+
+	function reset_posttype()
+	{
+		console.log(wpsl_locator.locatorNonce);
+		$.ajax({
+			type: 'GET',
+			url: ajaxurl,
+			data: {
+				action: 'wpslresetposttype',
+				nonce: wpsl_locator.locatorNonce
+			},
+			success: function(data){
+				location.reload();
+			}
+		});
+	}
+
 
 
 	/**

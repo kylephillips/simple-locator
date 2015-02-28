@@ -3,6 +3,7 @@
 use SimpleLocator\Forms\MapHandler;
 use SimpleLocator\Forms\PostTypeFieldsHandler;
 use SimpleLocator\Forms\NonceHandler;
+use SimpleLocator\Forms\PostTypeResetHandler;
 
 /**
 * Wordpress Form Handlers
@@ -21,6 +22,7 @@ class Handlers {
 
 		// Admin Settings Post Type Select
 		add_action( 'wp_ajax_wpslposttype', array($this, 'wpsl_posttype_handler' ));
+		add_action( 'wp_ajax_wpslresetposttype', array($this, 'wpsl_reset_posttype' ));
 	}
 
 	/**
@@ -45,6 +47,14 @@ class Handlers {
 	public function wpsl_nonce_handler()
 	{
 		new NonceHandler;
+	}
+
+	/**
+	* Reset Post Type to Default
+	*/
+	public function wpsl_reset_posttype()
+	{
+		new PostTypeResetHandler;
 	}
 
 }

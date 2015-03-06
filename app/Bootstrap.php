@@ -22,6 +22,7 @@ class Bootstrap {
 		new \SimpleLocator\Dependencies\Dependencies;
 		new \SimpleLocator\WPData\PostTypes;
 		new \SimpleLocator\WPData\MetaFields;
+		new \SimpleLocator\WPData\UploadFilter;
 		new \SimpleLocator\Settings\Settings;
 		new \SimpleLocator\API\FormShortcode;
 		new \SimpleLocator\API\SingleLocationShortcode;

@@ -4,6 +4,7 @@ use SimpleLocator\Forms\MapHandler;
 use SimpleLocator\Forms\PostTypeFieldsHandler;
 use SimpleLocator\Forms\NonceHandler;
 use SimpleLocator\Forms\PostTypeResetHandler;
+use SimpleLocator\Forms\ImportFileHandler;
 
 /**
 * Wordpress Form Handlers
@@ -23,6 +24,9 @@ class Handlers {
 		// Admin Settings Post Type Select
 		add_action( 'wp_ajax_wpslposttype', array($this, 'wpsl_posttype_handler' ));
 		add_action( 'wp_ajax_wpslresetposttype', array($this, 'wpsl_reset_posttype' ));
+
+		// Import Handlers
+		add_action( 'admin_post_wpslimportupload', array($this, 'wpsl_import_file'));
 	}
 
 	/**
@@ -55,6 +59,14 @@ class Handlers {
 	public function wpsl_reset_posttype()
 	{
 		new PostTypeResetHandler;
+	}
+
+	/**
+	* Import File Handler
+	*/
+	public function wpsl_import_file()
+	{
+		new ImportFileHandler;
 	}
 
 }

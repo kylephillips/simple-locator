@@ -14,7 +14,8 @@
 	"type": "wordpress-plugin",
 	"require": {
 		"php": ">=5.3.2",
-		"composer/installers": "v1.0.6"
+		"composer/installers": "v1.0.6",
+		"league/csv": "7.0.*@dev"
 	},
 	"autoload": {
 		"psr-4" : {

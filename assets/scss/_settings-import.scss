@@ -1,0 +1,55 @@
+//
+// Import Styles
+// --------------------------------------------------
+.wpsl-step-title {
+	border-bottom: 1px solid darken($white, 15%);
+	padding: 8px 8px 8px 0;
+}
+
+.wpsl-import-instructions {
+	background-color: $white;
+	padding: 10px 10px 2px 10px;
+	margin-bottom: 20px;
+	h4 {
+		margin: 0 0 5px 0;
+		font-size: 15px;
+	}
+	h5 {
+		margin: 0 0 5px 0;
+		font-weight: bold;
+		font-size: 14px;
+	}
+	p {
+		margin: 0 0 15px 0;
+	}
+}
+
+.wpsl-import-column-description {
+	float: left;
+	width: 48%;
+	h5 {
+		background-color: darken($white, 50%);
+		margin: 0;
+		padding: 4px;
+		color: $white;
+	}
+	&.right {
+		float: right;
+	}
+	ul {
+		margin-top: 0;
+		background-color: darken($white, 6%);
+		padding: 8px;
+		li {
+			margin: 0;
+		}
+	}
+}
+
+.wpsl-upload-form {
+	background-color: $white;
+	padding: 8px;
+	h4 {
+		margin: 0;
+	}
+}

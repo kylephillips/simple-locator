@@ -21,7 +21,8 @@ var js_source = [
 var js_admin_source = [
 	'assets/js/source/bs-transition.js',
 	'assets/js/source/bs-modal.js',
-	'assets/js/source/simple-locator-admin.js'
+	'assets/js/source/simple-locator-admin.js',
+	'assets/js/source/simple-locator-import.js'
 ];
 
 var js_admin_maps_source = 'assets/js/source/simple-locator-admin-maps.js';

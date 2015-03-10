@@ -1,5 +1,10 @@
 <h3 class="wpsl-step-title"><?php _e('Step 1: Upload File', 'wpsimplelocator'); ?></h3>
 
+<?php 
+// Form Errors
+if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '</p></div>';
+?>
+
 <div class="wpsl-import-instructions">
 	<h4><?php _e('File Format', 'wpsimplelocator'); ?></h4>
 	<p><?php _e('File must be properly formatted CSV', 'wpsimplelocator'); ?>. <a href="<?php echo plugins_url(); ?>/simple-locator/assets/csv_template.csv"><?php _e('View a Template', 'wpsimplelocator'); ?></a></p>
@@ -7,7 +12,7 @@
 	<div class="wpsl-import-column-description">
 		<h5><strong><?php _e('Required Columns', 'wpsimplelocator'); ?></strong></h5>
 		<ul>
-			<li><?php _e('Address Line One', 'wpsimplelocator'); ?></li>
+			<li><?php _e('Street Address', 'wpsimplelocator'); ?></li>
 			<li><?php _e('City', 'wpsimplelocator'); ?></li>
 			<li><?php _e('State/Province', 'wpsimplelocator'); ?></li>
 			<li><?php _e('Zip/Postal Code', 'wpsimplelocator'); ?></li>
@@ -17,7 +22,6 @@
 	<div class="wpsl-import-column-description right">
 		<h5><strong><?php _e('Optional Columns', 'wpsimplelocator'); ?></strong></h5>
 		<ul>
-			<li><?php _e('Address Line Two', 'wpsimplelocator'); ?></li>
 			<li><?php _e('Telephone', 'wpsimplelocator'); ?></li>
 			<li><?php _e('Additional Information', 'wpsimplelocator'); ?></li>
 			<li><?php _e('Post Content', 'wpsimplelocator'); ?></li>
@@ -36,6 +40,12 @@
 	<h4><?php _e('Choose File', 'wpsimplelocator'); ?></h4>
 	<p>
 		<input type="file" name="file">
+	</p>
+	<p>
+		<label>
+			<input type="checkbox" name="mac_formatted" value="true">
+			<?php _e('CSV file created on Mac', 'wpsimplelocator'); ?>
+		</label>
 	</p>
 	<input type="submit" class="button" value="<?php _e('Upload File', 'wpsimplelocator'); ?>">
 </form>

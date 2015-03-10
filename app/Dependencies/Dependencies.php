@@ -88,12 +88,9 @@ class Dependencies {
 	{
 		$screen = get_current_screen();
 		if ( ($screen->post_type == $this->post_type) || ($screen->id == 'settings_page_wp_simple_locator') ) {
-			
 			$this->addGoogleMaps();
-
 			wp_enqueue_script('jquery-ui-core');
 			wp_enqueue_style('jquery-ui-sortable');
-
 			wp_enqueue_script('google-maps');
 			wp_enqueue_script('media-upload');
 			wp_enqueue_script('thickbox');
@@ -104,15 +101,17 @@ class Dependencies {
 				array('jquery', 'jquery-ui-sortable'), 
 				$this->version
 			);
+			$data = array( 
+				'locatorNonce' => wp_create_nonce( 'wpsl_locator-locator-nonce' ),
+				'upload' => __('Upload', 'wpsimplelocator'),
+				'remove' => __('Remove', 'wpsimplelocator'),
+				'posttype' => $this->post_type
+			);
+			$data = $this->importVars($data);
 			wp_localize_script( 
 				'simple-locator-admin', 
 				'wpsl_locator', 
-				array( 
-					'locatorNonce' => wp_create_nonce( 'wpsl_locator-locator-nonce' ),
-					'upload' => __('Upload', 'wpsimplelocator'),
-					'remove' => __('Remove', 'wpsimplelocator'),
-					'posttype' => $this->post_type
-				)
+				$data
 			);
 		}
 
@@ -244,6 +243,25 @@ class Dependencies {
 			'google-maps', 
 			$maps_url
 		);
+	}
+
+
+	/**
+	* Add vars needed for importing process
+	*/
+	private function importVars($data)
+	{
+		if ( !isset($_GET['tab']) || $_GET['tab'] !== "import" || !isset($_GET['step']) ){
+			$data['isimport'] = "false";
+			return $data;
+		} 
+
+		$data['isimport'] = "true";
+		$data['importstep'] = $_GET['step'];
+		$data['Row'] = 'Showing Row';
+		$data['pause'] = __('Pause', 'wpsimplelocator');
+		$data['pause_continue'] = __('Continue', 'wpsimplelocator');
+		return $data;
 	}
 
 

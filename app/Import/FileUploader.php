@@ -26,8 +26,6 @@ class FileUploader {
 
 		$this->setTransient($movefile['file']);
 		$this->success();
-		
-		//$this->loopRows($movefile['file']);
 	}
 
 	/**
@@ -36,22 +34,31 @@ class FileUploader {
 	*/
 	private function setTransient($file)
 	{
-		set_transient('wpsl_import_file', $file, 12 * HOUR_IN_SECONDS);
+		$mac = ( isset($_POST['mac_formatted']) ) ? true : false;
+		$rowcount = $this->rowCount($file, $mac);
+		$transient = array(
+			'file' => $file,
+			'mac' => $mac,
+			'row_count' => $rowcount,
+			'filename' => $_FILES['file']['name'],
+			'complete_rows' => 'false',
+			'error_rows' => array()
+		);
+		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 	}
 
 
 	/**
-	* Loop Rows
+	* Get total row count
 	*/
-	private function loopRows($file)
+	private function rowCount($file, $mac)
 	{
-		if (! ini_get("auto_detect_line_endings")) {
+		if ($mac && !ini_get("auto_detect_line_endings")) {
 			ini_set("auto_detect_line_endings", '1');
 		}
 		$csv = Reader::createFromPath($file);
-		$res = $csv->setLimit(2500)->fetchAll();
-
-    	var_dump($res); die();
+		$res = $csv->fetchAll();
+		return count($res);
 	}
 
 

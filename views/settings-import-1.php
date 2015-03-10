@@ -12,16 +12,17 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 	<div class="wpsl-import-column-description">
 		<h5><strong><?php _e('Required Columns', 'wpsimplelocator'); ?></strong></h5>
 		<ul>
+			<li><?php _e('Post Title', 'wpsimplelocator'); ?></li>
 			<li><?php _e('Street Address', 'wpsimplelocator'); ?></li>
 			<li><?php _e('City', 'wpsimplelocator'); ?></li>
 			<li><?php _e('State/Province', 'wpsimplelocator'); ?></li>
-			<li><?php _e('Zip/Postal Code', 'wpsimplelocator'); ?></li>
 		</ul>
 	</div>
 
 	<div class="wpsl-import-column-description right">
 		<h5><strong><?php _e('Optional Columns', 'wpsimplelocator'); ?></strong></h5>
 		<ul>
+			<li><?php _e('Zip/Postal Code', 'wpsimplelocator'); ?></li>
 			<li><?php _e('Telephone', 'wpsimplelocator'); ?></li>
 			<li><?php _e('Additional Information', 'wpsimplelocator'); ?></li>
 			<li><?php _e('Post Content', 'wpsimplelocator'); ?></li>

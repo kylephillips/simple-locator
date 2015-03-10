@@ -52,7 +52,7 @@ class Import {
 		foreach($res as $key => $row){
 			$import = new ImportRow($row, $this->transient);
 			if ( !$import ) $this->failed_imports++;
-			sleep(1); // for Google Map API rate limit
+			sleep(1); // for Google Map API rate limit - 5 requests per second
 		}
 	}
 

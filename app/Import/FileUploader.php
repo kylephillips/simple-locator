@@ -3,7 +3,7 @@
 use League\Csv\Reader;
 
 /**
-* Uploads a File for Importing Purposes
+* Uploads a File for Importing Purposes (Step 1 in import process)
 */
 class FileUploader {
 

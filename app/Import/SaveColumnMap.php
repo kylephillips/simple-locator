@@ -1,6 +1,6 @@
 <?php namespace SimpleLocator\Import;
 /**
-* Save the column mapping
+* Save the column mapping (Import Step 2)
 */
 class SaveColumnMap {
 

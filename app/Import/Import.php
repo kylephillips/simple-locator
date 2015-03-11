@@ -4,7 +4,7 @@ use SimpleLocator\Import\ImportRow;
 use League\Csv\Reader;
 
 /**
-* Primary Import Class
+* Primary Import Class (Called in Import step 3 via AJAX)
 */
 class Import {
 
@@ -23,6 +23,11 @@ class Import {
 	* Failed Imports
 	*/
 	private $failed_imports = 0;
+
+	/**
+	* Import Count
+	*/
+	private $import_count = 0;
 
 	public function __construct($offset)
 	{
@@ -47,13 +52,14 @@ class Import {
 	{
 		$this->setMacFormatting();
 		$csv = Reader::createFromPath($this->transient['file']);
-		$res = $csv->setOffset($this->offset)->setLimit(1)->fetchAll();
+		$res = $csv->setOffset($this->offset)->setLimit(5)->fetchAll();
 		if ( !$res ) $this->complete();
 		foreach($res as $key => $row){
 			$import = new ImportRow($row, $this->transient);
-			if ( !$import ) $this->failed_imports++;
-			sleep(1); // for Google Map API rate limit - 5 requests per second
+			if ( !$import )	$this->failed_imports++;
+			if ( $import ) $this->import_count++;
 		}
+		sleep(1); // for Google Map API rate limit - 5 requests per second
 	}
 
 	/**
@@ -73,7 +79,7 @@ class Import {
 	*/
 	private function sendResponse()
 	{
-		return wp_send_json(array('status'=>'success', 'failed'=>$this->failed_imports));
+		return wp_send_json(array('status'=>'success', 'failed'=>$this->failed_imports, 'import_count'=>$this->import_count));
 	}
 
 	/**

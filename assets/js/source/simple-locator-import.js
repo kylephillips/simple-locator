@@ -5,8 +5,9 @@ jQuery(function($){
 
 	var offset = 0;
 	var completecount = 0;
-	var errorcount = 0;
-	var pause = false;
+	var errorcount = 0; 
+	var pause = false; // pause import
+	var rowcount = 0; // for selecting a specific row from csv
 
 	/**
 	* ------------------------------------------------------
@@ -157,6 +158,9 @@ jQuery(function($){
 				console.log(data);
 				if ( data.status === 'complete' ){
 					complete();
+				} else if (data.status === 'apierror') {
+					$('.wpsl-import-error p').text(data.message);
+					$('.wpsl-import-error').show();
 				} else {
 					update_counts(data);
 				}
@@ -169,8 +173,8 @@ jQuery(function($){
 	*/
 	function update_counts(data)
 	{
-		offset = offset + 1;
-		var imported = 1 - data.failed;
+		offset = offset + 5;
+		var imported = data.import_count;
 		completecount = completecount + imported;
 		errorcount = errorcount + data.failed;
 		$('.progress-count').text(completecount);
@@ -195,7 +199,8 @@ jQuery(function($){
 	*/
 	function complete()
 	{
-		console.log('all done');
+		$('.wpsl-import-indicator').hide();
+		$('.wpsl-import-complete').show();
 	}
 
 	/**

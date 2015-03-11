@@ -3,7 +3,7 @@
 use League\Csv\Reader;
 
 /**
-* Return an array of CSV columns
+* Return an array of CSV columns for a given row
 */
 class CSVRow {
 

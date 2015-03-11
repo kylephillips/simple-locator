@@ -23,12 +23,12 @@ Simple Locator also offers developer-friendly options for adding custom Google M
 
 **Using Simple Locator**
 
-1. Add locations. This can either be the included "locations" post type or an existing custom post type with existing geocoded fields.
+1. Add locations. This can either be the included "locations" post type or an existing custom post type with existing geocoded fields. Locations can also be imported in bulk using the included CSV importer.
 2. Use the Shortcode [wp_simple_locator] or Widget to display a search form. The shortcode offers more options for map and form customization.
 
 For more information visit [locatewp.com](http://locatewp.com).
 
-**Important: Simple Locator requires WordPress version 3.8 or higher, and PHP version 5.3.2 or higher.**
+**Important: Simple Locator requires WordPress version 3.8 or higher, and PHP version 5.3.2 or higher. Import functionality requires PHP version 5.4.0 or higher.**
 
 
 == Installation ==
@@ -39,6 +39,9 @@ For more information visit [locatewp.com](http://locatewp.com).
 4. To change the post type, geocoded fields, or map styles, visit Settings > Simple Locator
 
 == Frequently Asked Questions ==
+
+= I have a LOT of locations. How can I get them imported in bulk? =
+As of version 1.2.0, Simple Locator includes a bulk CSV data importer. If you have your location data available in CSV format with separate address, city and state/province columns, you may use this tool to import your locations as posts and geocode the locations automatically. The Google Maps Geocoding API limits requests to 2500 per day, so if your file contains over 2500 rows, it may take multiple days to complete the import. See the [Simple Locator Website](http://locatewp.com) for details on importing locations.
 
 = What 3rd party services does this plugin use? =
 All geocoding and mapping functionality takes advantage of the Google Maps Javascript API V3. Unexpected changes in the API service may effect plugin functionality, but any changes will be monitored and addressed as needed.
@@ -77,6 +80,9 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 9. Configure results display by adding custom fields from the chosen post type plus post data including the title, permalink, excerpt and thumbnails.
 
 == Changelog ==
+
+= 1.2.0 =
+* CSV Import is now included for importing and geocoding locations. PHP version 5.4+ is required for import functionality. See the Simple Locator website for more details.
 
 = 1.1.5 =
 * Bug fix in singular location view that was preventing display of additional custom meta data when using the included location post type
@@ -140,6 +146,9 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+Bulk CSV import is now included. Import capabilities require PHP version 5.4+.
 
 = 1.1.0 =
 Important: the form widget namespace has changed. Any manual calls to the widget should be updated to the new namespace: SimpleLocator\API\FormWidget. The single map shortcode name and namespace have also changed. Any manual calls to this shortocde should be updated. The new name is 'SingleLocationShortcode'.

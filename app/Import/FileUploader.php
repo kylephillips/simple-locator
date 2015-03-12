@@ -9,7 +9,16 @@ class FileUploader {
 
 	public function __construct()
 	{
+		$this->verifyNonce();
 		$this->copyFile();
+	}
+
+	/**
+	* Verify the nonce
+	*/
+	private function verifyNonce()
+	{
+		if ( !wp_verify_nonce($_POST['nonce'], 'wpsl-import-nonce') ) $this->error(__('Incorrect Form Field', 'wpsimplelocator'));
 	}
 
 	/**

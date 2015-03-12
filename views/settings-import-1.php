@@ -1,5 +1,9 @@
 <h3 class="wpsl-step-title"><?php _e('Step 1: Upload File', 'wpsimplelocator'); ?></h3>
 
+<div class="error">
+	<p><strong><?php _e('Important', 'wpsimplelocator'); ?>:</strong> <?php _e('Before running an import, make a complete backup of your database.', 'wpsimplelocator'); ?></p>
+</div>
+
 <?php 
 // Form Errors
 if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '</p></div>';
@@ -30,10 +34,10 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 	</div>
 
 	<h4 style="clear:both;"><?php _e('Post Type', 'wpsimplelocator'); ?></h4>
-	<p><?php _e('Imported data will be posted to the included "locations" post type. If you have set another custom post type in the plugin settings, the imported data will not be visible or available. To reset the post type settings, select the "Post Type & Geocode Fields" tab and click the "Reset to Default" button.', 'wpsimplelocator'); ?></p>
+	<p><?php _e('Data will be imported to the included "locations" post type. If you have set another custom post type in the plugin settings, the imported posts will not be visible or available. To reset the post type, select the "Post Type & Geocode Fields" tab and click the "Reset to Default" button.', 'wpsimplelocator'); ?></p>
 
 	<h4><?php _e('Additional Information', 'wpsimplelocator'); ?></h4>
-	<p><?php _e('The Google Maps Geocoding API limits request to 2500 per 24 hour period & 5 requests per second. Only the first 2500 records will be read from the uploaded.', 'wpsimplelocator'); ?></p>
+	<p><?php _e('The Google Maps Geocoding API limits request to 2500 per 24 hour period & 5 requests per second. If your file contains over 2500 records, it may take multiple days to import. If the limit is reached, progress will be saved, and you may continue your import at any time.', 'wpsimplelocator'); ?></p>
 </div>
 
 <form action="<?php echo admin_url('admin-post.php'); ?>" method="post" enctype="multipart/form-data" class="wpsl-upload-form">

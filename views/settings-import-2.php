@@ -1,4 +1,9 @@
-<?php $file = get_transient('wpsl_import_file'); ?>
+<?php 
+$file = get_transient('wpsl_import_file'); 
+
+// Check that the columns have been mapped
+if ( !isset($file) ) :
+?>
 <h3 class="wpsl-step-title"><?php _e('Step 2: Map Columns', 'wpsimplelocator'); ?> (<?php echo $file['filename']; ?>)</h3>
 
 <div class="wpsl-loading-settings">
@@ -83,3 +88,10 @@
 		<input type="submit" class="button wpsl_save_columns" value="<?php _e('Save Columns', 'wpsimplelocator'); ?>">
 	</div>
 </form>
+
+<?php else : // Transient not yet set, no file uploaded ?>
+
+<div class="error"><p><?php _e('CSV File not set.', 'wpsimplelocator'); ?></p></div>
+<a href="<?php echo admin_url('options-general.php?page=wp_simple_locator&tab=import'); ?>" class="button"><?php _e('Upload CSV File', 'wpsimplelocator'); ?></a>
+
+<?php endif; ?>

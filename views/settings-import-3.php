@@ -1,6 +1,15 @@
 <?php
 $transient = get_transient('wpsl_import_file');
+
+// Check that the columns have been mapped
+if ( !isset($transient['columns']) ) :
 ?>
+
+<div class="error"><p><?php _e('Column data is not yet mapped.', 'wpsimplelocator'); ?></p></div>
+<a href="<?php echo admin_url('options-general.php?page=wp_simple_locator&tab=import&step=2'); ?>" class="button"><?php _e('Map Column Data', 'wpsimplelocator'); ?></a>
+
+
+<?php else : ?>
 <h3 class="wpsl-step-title"><?php _e('Step 3: Import and Geocode', 'wpsimplelocator'); ?></h3>
 
 <div class="error wpsl-import-error" style="display:none;"><p></p></div>
@@ -27,3 +36,4 @@ $transient = get_transient('wpsl_import_file');
 <div class="wpsl-import-complete updated" style="display:none;">
 	<p><?php _e('The import is complete.', 'wpsimplelocator'); ?> <span class="progress-count">0</span> <?php _e('of', 'wpsimplelocator'); echo ' ' . $transient['row_count']; ?> <?php _e('Rows Imported', 'wpsimplelocator'); ?> (<span class="error-count">0</span> <?php _e('Errors', 'wpsimplelocator'); ?>)</p>
 </div>
+<?php endif; // column mapping check 

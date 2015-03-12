@@ -42,7 +42,7 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 
 <form action="<?php echo admin_url('admin-post.php'); ?>" method="post" enctype="multipart/form-data" class="wpsl-upload-form">
 	<input type="hidden" name="action" value="wpslimportupload">
-	<input type="hidden" name="nonce" value="<?php echo wp_create_nonce('wpsl-import-nonce'); ?>">
+	<?php wp_nonce_field( 'wpsl-import-nonce', 'nonce' ) ?>
 	<h4><?php _e('Choose File', 'wpsimplelocator'); ?></h4>
 	<p>
 		<input type="file" name="file">

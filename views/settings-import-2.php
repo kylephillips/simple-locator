@@ -2,9 +2,14 @@
 $file = get_transient('wpsl_import_file'); 
 
 // Check that the columns have been mapped
-if ( !isset($file) ) :
+if ( isset($file['file']) ) :
 ?>
 <h3 class="wpsl-step-title"><?php _e('Step 2: Map Columns', 'wpsimplelocator'); ?> (<?php echo $file['filename']; ?>)</h3>
+
+<?php 
+// Form Errors
+if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '</p></div>';
+?>
 
 <div class="wpsl-loading-settings">
 	<img src="<?php echo plugins_url(); ?>/simple-locator/assets/images/loading-settings.gif" />
@@ -85,6 +90,7 @@ if ( !isset($file) ) :
 			<option value="publish"><?php _e('Published', 'wpsimplelocator'); ?></option>
 		</select>
 		</div>
+		<?php wp_nonce_field( 'wpsl-import-nonce', 'nonce' ) ?>
 		<input type="submit" class="button wpsl_save_columns" value="<?php _e('Save Columns', 'wpsimplelocator'); ?>">
 	</div>
 </form>

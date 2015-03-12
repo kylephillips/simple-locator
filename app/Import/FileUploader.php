@@ -18,7 +18,9 @@ class FileUploader {
 	*/
 	private function verifyNonce()
 	{
-		if ( !wp_verify_nonce($_POST['nonce'], 'wpsl-import-nonce') ) $this->error(__('Incorrect Form Field', 'wpsimplelocator'));
+		if ( ! wp_verify_nonce($_POST['nonce'], 'wpsl-import-nonce') ) {
+			$this->error(__('Incorrect Form Field', 'wpsimplelocator'));
+		}
 	}
 
 	/**
@@ -88,7 +90,7 @@ class FileUploader {
 	{
 		$url = admin_url('options-general.php?page=wp_simple_locator&tab=import&error=' . $error);
 		header('Location:' . $url);
-		return;
+		die();
 	}
 
 }

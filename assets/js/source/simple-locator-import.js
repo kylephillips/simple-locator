@@ -8,6 +8,8 @@ jQuery(function($){
 	var errorcount = 0; 
 	var pause = false; // pause import
 	var rowcount = 0; // for selecting a specific row from csv
+	var totalrows = 0;
+	var passed_validation = true;
 
 	/**
 	* ------------------------------------------------------
@@ -37,6 +39,7 @@ jQuery(function($){
 				nonce: wpsl_locator.locatorNonce
 			},
 			success: function(data){
+				totalrows = data.row_count;
 				populate_select_boxes(data);
 			}
 		});
@@ -53,7 +56,7 @@ jQuery(function($){
 			$('button[data-direction="next"').attr('disabled', false);
 		}
 
-		var html = '<option value="">--</option>';
+		var html = '<option value="">' + wpsl_locator.choose_column + '</option>';
 		for ( var i = 0; i < row.columns.length; i++ ){
 			html += '<option value="' + i + '">' + row.columns[i] + '</option>';
 		}
@@ -89,8 +92,48 @@ jQuery(function($){
 		}
 
 		var currentrow = rowcount + 1;
-		$('.wpsl-current-row').text(wpsl_locator.Row + ' ' + currentrow);
+		var text = wpsl_locator.Row + ' ' + currentrow + ' of ' + totalrows;
+		$('.wpsl-current-row').text(text);
 		get_csv_columns();
+	}
+
+	/**
+	* Get the fields for the chosen post type
+	*/
+	$(document).ready(function(){
+		if ( wpsl_locator.importstep == "2" ) get_fields_for_posttype(true);
+	});
+	function get_fields_for_posttype(populate_all)
+	{
+		$.ajax({
+			type: 'GET',
+			url: ajaxurl,
+			data: {
+				action: 'wpslposttype',
+				nonce: wpsl_locator.locatorNonce,
+				post_type: $('#wpsl-import-post-type').val(),
+				show_hidden: 'true'
+			},
+			success: function(data){
+				console.log(data);
+				if ( populate_all ){
+					var fields = $('.wpsl-import-field-selection');
+					$.each(fields, function(i, v){
+						populate_field_select($(this), data.fields);
+					});
+				}
+			}
+		});
+	}
+
+	/**
+	* Populate field select menu
+	*/
+	function populate_field_select(item, fields)
+	{
+		$(item).append('<option value="title">' + wpsl_locator.title + '</option>');
+		$(item).append('<option value="content">' + wpsl_locator.content + '</option>');
+		$(item).append(fields);
 	}
 
 
@@ -99,32 +142,82 @@ jQuery(function($){
 	*/
 	$('.wpsl_save_columns').on('click', function(e){
 		e.preventDefault();
-		$('.wpsl-column-error').hide();
-		if ( required_columns_validate() ){
+		$('.wpsl-column-error, .wpsl-form-error').hide();
+		
+		passed_validation = true;
+		validate_required_columns();
+		
+		if ( passed_validation ){
 			$(this).unbind('click').click();	
 		} 
 	});
 
-	function required_columns_validate()
+	function validate_required_columns()
 	{
-		var required = [
-			'wpsl_import_column_title',
-			'wpsl_import_column_address',
-			'wpsl_import_column_city',
-			'wpsl_import_column_state'
-		];
-		
-		for ( var i = 0; i < required.length; i++ ){
-			var field = $('select[name=' + required[i] + ']');
-			var value = $(field).val();
-			if ( value === "" || !$.isNumeric(value) ){
-				$(field).siblings('.wpsl-column-error').show();
-				return false;
+		var rows = $('.wpsl-field');
+		var added_title = false;
+		var added_address = false;
+
+		$.each(rows, function(i, v){
+			
+			// Validate Column & Field Selection
+			var column = $(this).find('.wpsl-import-column-selection');
+			var field = $(this).find('.wpsl-import-field-selection');
+			if ( $(column).val() === "" || $(field).val() === "" ){
+				$(this).find('.wpsl-column-error').text(wpsl_locator.required).show();
+				passed_validation = false;
 			}
+
+			// Make sure at least title and address are selected/added
+			var type = $(this).find('.wpsl-import-type-selection');
+			if ( $(type).val() === "address" || $(type).val() === "full_address" ) added_address = true;
+			if ( $(field).val() === "title" ) added_title = true;
+		});
+
+		// A title & address are required
+		if ( !added_address ){
+			$('.wpsl-form-error').html('<p>' + wpsl_locator.required_address + '</p>').show();
+			passed_validation = false;
 		}
 
-		return true;
+		if ( !added_title ){
+			$('.wpsl-form-error').html('<p>' + wpsl_locator.required_title + '</p>').show();
+			passed_validation = false;
+		}
+	}
+
+	/**
+	* Remove a field
+	*/
+	$(document).on('click', '.wpsl-import-remove-field', function(e){
+		e.preventDefault();
+		remove_field($(this))
+	});
+	function remove_field(button)
+	{
+		var row = $(button).parent('li');
+		$(row).remove();
+	}
+
+	/**
+	* Add a New Row/Field
+	*/
+	$(document).on('click', '.wpsl-import-add-field a', function(e){
+		e.preventDefault();
+		add_field();
+	});
+	function add_field()
+	{
+		var fieldcount = $('.wpsl-field').length;
 		
+		var newrow = $('.row-template').clone().removeClass('row-template');
+		$(newrow).appendTo('.wpsl-column-fields').find('.wpsl-import-remove-field').show();
+		$(newrow).find('.wpsl-column-error').text('').hide();
+		
+		// Set the name indexes
+		$(newrow).find('.wpsl-import-field-selection').attr('name', 'wpsl_import_field[' + fieldcount + '][field]');
+		$(newrow).find('.wpsl-import-column-selection').attr('name', 'wpsl_import_field[' + fieldcount + '][csv_column]');
+		$(newrow).find('.wpsl-import-type-selection').attr('name', 'wpsl_import_field[' + fieldcount + '][type]');
 	}
 
 

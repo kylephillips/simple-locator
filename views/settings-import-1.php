@@ -33,21 +33,31 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 		</ul>
 	</div>
 
-	<h4 style="clear:both;"><?php _e('Post Type', 'wpsimplelocator'); ?></h4>
-	<p><?php _e('Data will be imported to the included "locations" post type. If you have set another custom post type in the plugin settings, the imported posts will not be visible or available. To reset the post type, select the "Post Type & Geocode Fields" tab and click the "Reset to Default" button.', 'wpsimplelocator'); ?></p>
+	<h4><?php _e('Import Limits', 'wpsimplelocator'); ?></h4>
+	<p><?php _e('The Google Maps Geocoding API limits request to 2500 per 24 hour period & 5 requests per second. If your file contains over 2500 records, it may take multiple days to import. If the limit is reached, progress will be saved, and you may continue your import later.', 'wpsimplelocator'); ?></p>
 
-	<h4><?php _e('Additional Information', 'wpsimplelocator'); ?></h4>
-	<p><?php _e('The Google Maps Geocoding API limits request to 2500 per 24 hour period & 5 requests per second. If your file contains over 2500 records, it may take multiple days to import. If the limit is reached, progress will be saved, and you may continue your import at any time.', 'wpsimplelocator'); ?></p>
+	<h4><?php _e('Latitude & Longitude Data', 'wpsimplelocator'); ?></h4>
+	<p><?php _e('Geocoded latitude and longitude values will be saved in the fields selected under the "Post Type & Geocode Fields" tab.', 'wpsimplelocator'); ?></p>
 </div>
 
 <form action="<?php echo admin_url('admin-post.php'); ?>" method="post" enctype="multipart/form-data" class="wpsl-upload-form">
+	<p>
+		<h4><?php _e('Import as Post Type', 'wpsimplelocator'); ?></h4>
+		<select name="import_post_type" style="margin-top: 10px;width:250px;">
+		<?php
+		foreach ( $this->field_repo->getPostTypes() as $type ){
+			echo '<option value="' . $type['name'] . '">' . $type['label'] . '</option>';
+		}
+		?>
+		</select>
+	</p>
 	<input type="hidden" name="action" value="wpslimportupload">
 	<?php wp_nonce_field( 'wpsl-import-nonce', 'nonce' ) ?>
+	
 	<h4><?php _e('Choose File', 'wpsimplelocator'); ?></h4>
-	<p>
-		<input type="file" name="file">
-	</p>
-	<p>
+	<input type="file" name="file">
+	
+	<p style="background-color:#f2f2f2;padding:8px;">
 		<label>
 			<input type="checkbox" name="mac_formatted" value="true">
 			<?php _e('CSV file created on Mac', 'wpsimplelocator'); ?>

@@ -261,6 +261,13 @@ class Dependencies {
 		$data['Row'] = 'Showing Row';
 		$data['pause'] = __('Pause', 'wpsimplelocator');
 		$data['pause_continue'] = __('Continue', 'wpsimplelocator');
+		$data['post_type'] = get_option('wpsl_post_type');
+		$data['choose_column'] = 'Choose Column';
+		$data['required'] = __('Column and field selections required for import.', 'wpsimplelocator');
+		$data['required_address'] = __('An address field is required for import.', 'wpsimplelocator');
+		$data['required_title'] = __('A post title field is required for import.', 'wpsimplelocator');
+		$data['title'] = __('Post Title', 'wpsimplelocator');
+		$data['content'] = __('Post Content', 'wpsimplelocator');
 		return $data;
 	}
 

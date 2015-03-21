@@ -1,8 +1,9 @@
 <?php 
 $file = get_transient('wpsl_import_file'); 
+$post_type = $file['post_type'];
 
 // Check that the columns have been mapped
-if ( isset($file['file']) ) :
+if ( isset($file['file']) && isset($file['post_type']) ) :
 ?>
 <h3 class="wpsl-step-title"><?php _e('Step 2: Map Columns', 'wpsimplelocator'); ?> (<?php echo $file['filename']; ?>)</h3>
 
@@ -15,6 +16,8 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 	<img src="<?php echo plugins_url(); ?>/simple-locator/assets/images/loading-settings.gif" />
 </div>
 
+<div class="error wpsl-form-error" style="display:none;"></div>
+
 <form action="<?php echo admin_url('admin-post.php'); ?>" method="post" enctype="multipart/form-data" class="wpsl-upload-form">
 	<input type="hidden" name="action" value="wpslmapcolumns">
 	<div class="wpsl-column-selection" style="display:none;">
@@ -23,66 +26,43 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 			<button data-direction="next" class="button"><span class="dashicons dashicons-arrow-right"></span></button>
 			<span class="wpsl-current-row"><?php _e('Showing Row', 'wpsimplelocator'); ?> 1</span>
 		</div>
-		<ul>
-			<li>
-				<div class="wpsl-column-error">This column is required.</div>
-				<span><?php _e('Title', 'wpsimplelocator'); ?>:*</span>
-				<select name="wpsl_import_column_title" class="wpsl-import-column-selection">
-					<option value="">--</option>
-				</select>
+		<ul class="wpsl-column-fields">
+
+			<li class="wpsl-import-header">
+				<span><?php _e('Column', 'wpsimplelocator'); ?></span>
+				<span><?php _e('WordPress Field', 'wpsimplelocator'); ?></span>
+				<span><?php _e('Field Type', 'wpsimplelocator'); ?></span>
 			</li>
-			<li>
-				<div class="wpsl-column-error">This column is required.</div>
-				<span><?php _e('Street Address', 'wpsimplelocator'); ?>*</span>
-				<select name="wpsl_import_column_address" class="wpsl-import-column-selection">
-					<option value="">--</option>
+			
+			<li class="row-template wpsl-field">
+				<div class="wpsl-column-error"></div>
+				<select name="wpsl_import_field[0][csv_column]" class="wpsl-import-column-selection">
+					<option value=""><?php _e('Choose Column', 'wpsimplelocator'); ?></option>
 				</select>
-			</li>
-			<li>
-				<div class="wpsl-column-error">This column is required.</div>
-				<span><?php _e('City', 'wpsimplelocator'); ?>*</span>
-				<select name="wpsl_import_column_city" class="wpsl-import-column-selection">
-					<option value="">--</option>
+				<select name="wpsl_import_field[0][field]" class="wpsl-import-field-selection">
+					<option value=""><?php _e('Choose Field', 'wpsimplelocator'); ?></option>
 				</select>
-			</li>
-			<li>
-				<div class="wpsl-column-error">This column is required.</div>
-				<span><?php _e('State/Province', 'wpsimplelocator'); ?>*</span>
-				<select name="wpsl_import_column_state" class="wpsl-import-column-selection">
-					<option value="">--</option>
+				<select name="wpsl_import_field[0][type]" class="wpsl-import-type-selection">
+					<option value="other"><?php _e('Other', 'wpsimplelocator'); ?></option>
+					<optgroup label="<?php _e('Address Fields', 'wpsimplelocator'); ?>">
+						<option value="address"><?php _e('Street Address', 'wpsimplelocator'); ?></option>
+						<option value="city"><?php _e('City', 'wpsimplelocator'); ?></option>
+						<option value="state"><?php _e('State/Province', 'wpsimplelocator'); ?></option>
+						<option value="zip"><?php _e('Zip/Postal Code', 'wpsimplelocator'); ?></option>
+						<option value="full_address"><?php _e('Full Address', 'wpsimplelocator'); ?></option>
+					</optgroup>
+					<optgroup label="<?php _e('Formatted Fields', 'wpsimplelocator'); ?>">
+						<option value="website"><?php _e('Website', 'wpsimplelocator'); ?></option>
+					</optgroup>
 				</select>
-			</li>
-			<li>
-				<span><?php _e('Zip/Postal Code', 'wpsimplelocator'); ?></span>
-				<select name="wpsl_import_column_zip" class="wpsl-import-column-selection">
-					<option value="">--</option>
-				</select>
-			</li>
-			<li>
-				<span><?php _e('Telephone', 'wpsimplelocator'); ?>:</span>
-				<select name="wpsl_import_column_phone" class="wpsl-import-column-selection">
-					<option value="">--</option>
-				</select>
-			</li>
-			<li>
-				<span><?php _e('Website', 'wpsimplelocator'); ?>:</span>
-				<select name="wpsl_import_column_website" class="wpsl-import-column-selection">
-					<option value="">--</option>
-				</select>
-			</li>
-			<li>
-				<span><?php _e('Additional Information', 'wpsimplelocator'); ?>:</span>
-				<select name="wpsl_import_column_additional" class="wpsl-import-column-selection">
-					<option value="">--</option>
-				</select>
-			</li>
-			<li>
-				<span><?php _e('Post Content', 'wpsimplelocator'); ?>:</span>
-				<select name="wpsl_import_column_content" class="wpsl-import-column-selection">
-					<option value="">--</option>
-				</select>
+				<button class="wpsl-import-remove-field button" style="display:none;">-</button>
 			</li>
 		</ul>
+		
+		<div class="wpsl-import-add-field">
+			<a href="#" class="button"><?php _e('Add Field', 'wpsimplelocator'); ?></a>
+		</div>
+
 		<div style="background-color:#e4e4e4;padding:8px;margin-bottom:20px;">
 		<label style="clear:both;display:block;"><strong><?php _e('Import Status', 'wpsimplelocator'); ?></strong></label>
 		<select name="wpsl_import_status" style="clear:both;float:none;">
@@ -90,8 +70,14 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 			<option value="publish"><?php _e('Published', 'wpsimplelocator'); ?></option>
 		</select>
 		</div>
+
+		<div class="wpsl-required-key">
+			<p><?php _e('Two fields are required: a title field and at least one address field. If your address data is saved in one column, choose the "Full Address" field type.', 'wpsimplelocator'); ?></p>
+		</div>
+
 		<?php wp_nonce_field( 'wpsl-import-nonce', 'nonce' ) ?>
-		<input type="submit" class="button wpsl_save_columns" value="<?php _e('Save Columns', 'wpsimplelocator'); ?>">
+		<input type="hidden" id="wpsl-import-post-type" value="<?php echo $post_type; ?>">
+		<input type="submit" class="button button-primary wpsl_save_columns" value="<?php _e('Save Columns', 'wpsimplelocator'); ?>">
 	</div>
 </form>
 

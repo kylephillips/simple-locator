@@ -18,9 +18,15 @@ class ImportRow {
 	private $transient;
 
 	/**
-	* Post Data
+	* Geo Meta Fields
+	* @var array
 	*/
-	private $post_data;
+	private $geo_fields;
+
+	/**
+	* Geocode Coordinates
+	*/
+	private $coordinates;
 
 	/**
 	* Import Status
@@ -32,33 +38,31 @@ class ImportRow {
 	*/
 	private $geocoder;
 	
-	public function __construct($column_data, $transient)
+	public function __construct($column_data, $transient, $geo_fields)
 	{
 		$this->geocoder = new GoogleMapGeocode;
 		$this->column_data = $column_data;
 		$this->transient = $transient;
-		$this->setPostData();
+		$this->geo_fields = $geo_fields;
+		$this->setAddress();
 		$this->geocode();
 		return $this->import_status;
 	}
 
 	/**
-	* Set the Post Data based on column map
+	* Set the Address to be Geocoded
 	*/
-	private function setPostData()
+	private function setAddress()
 	{
-		$fields = array();
-		foreach($this->transient['columns'] as $key => $value){
-			if ( $value == "" ) continue;
-			array_push($fields, $key);
+		$address = '';
+		foreach( $this->transient['columns'] as $field ){
+			if ( $field->type == 'address' ) $address .= $this->column_data[$field->csv_column] . ' ';
+			if ( $field->type == 'city' ) $address .= $this->column_data[$field->csv_column] . ' ';
+			if ( $field->type == 'state' ) $address .= $this->column_data[$field->csv_column] . ' ';
+			if ( $field->type == 'zip' ) $address .= $this->column_data[$field->csv_column];
+			if ( $field->type == 'full_address' ) $address = $this->column_data[$field->csv_column];
 		}
-		foreach($fields as $field){
-			if ( $field == 'website' ){
-				$this->post_data[$field] = esc_url($this->column_data[intval($this->transient['columns'][$field])]);
-			} else {
-				$this->post_data[$field] = sanitize_text_field($this->column_data[intval($this->transient['columns'][$field])]);
-			}
-		}
+		$this->address = $address;
 	}
 
 	/**
@@ -66,15 +70,10 @@ class ImportRow {
 	*/
 	private function geocode()
 	{
-		$address = "";
-		if ( isset($this->post_data['address']) ) $address .= $this->post_data['address'] . ' ';
-		if ( isset($this->post_data['city']) ) $address .= $this->post_data['city'] . ' ';
-		if ( isset($this->post_data['state']) ) $address .= $this->post_data['state'] . ' ';
-		if ( isset($this->post_data['zip']) ) $address .= $this->post_data['zip'];
-		if ( $this->geocoder->geocode($address) ){
+		if ( $this->geocoder->geocode($this->address) ){
 			$coordinates = $this->geocoder->getCoordinates();
-			$this->post_data['latitude'] = $coordinates['lat'];
-			$this->post_data['longitude'] = $coordinates['lng'];
+			$this->coordinates['latitude'] = $coordinates['lat'];
+			$this->coordinates['longitude'] = $coordinates['lng'];
 			return $this->importPost();
 		} else {
 			return wp_send_json(array('status'=>'apierror', 'message'=>$this->geocoder->getError()));
@@ -88,16 +87,21 @@ class ImportRow {
 	private function importPost()
 	{
 		$post = array();
-		$post['post_type'] = 'location';
+		$post['post_type'] = $this->transient['post_type'];
 		$post['post_status'] = $this->transient['import_status'];
-		if ( isset($this->post_data['title']) ) $post['post_title'] = $this->post_data['title'];
-		if ( isset($this->post_data['content']) ) $post['post_content'] = $this->post_data['content'];
+		foreach ( $this->transient['columns'] as $field ){
+			$column_value = ( isset($this->column_data[$field->csv_column]) ) ? $this->column_data[$field->csv_column] : "";
+			if ( $field->field == 'title' && $column_value !== "" ) $post['post_title'] = $column_value;
+			if ( $field->field == 'content' && $column_value !== "" ) $post['post_content'] = $column_value;
+		}
 		$post_id = wp_insert_post($post);
 		if ( $post = 0 ) {
 			$this->import_status = false;
 			return;
 		}
 		$this->addMeta($post_id);
+		$this->addGeocodeField($post_id);
+		$this->import_status = true;
 	}
 
 	/**
@@ -105,16 +109,21 @@ class ImportRow {
 	*/
 	private function addMeta($post_id)
 	{
-		if ( isset($this->post_data['address']) ) add_post_meta($post_id, 'wpsl_address', $this->post_data['address']);
-		if ( isset($this->post_data['city']) ) add_post_meta($post_id, 'wpsl_city', $this->post_data['city']);
-		if ( isset($this->post_data['state']) ) add_post_meta($post_id, 'wpsl_state', $this->post_data['state']);
-		if ( isset($this->post_data['zip']) ) add_post_meta($post_id, 'wpsl_zip', $this->post_data['zip']);
-		if ( isset($this->post_data['phone']) ) add_post_meta($post_id, 'wpsl_phone', $this->post_data['phone']);
-		if ( isset($this->post_data['website']) ) add_post_meta($post_id, 'wpsl_website', $this->post_data['website']);
-		if ( isset($this->post_data['additional']) ) add_post_meta($post_id, 'wpsl_additionalinfo', $this->post_data['additional']);
-		if ( isset($this->post_data['latitude']) ) add_post_meta($post_id, 'wpsl_latitude', $this->post_data['latitude']);
-		if ( isset($this->post_data['longitude']) ) add_post_meta($post_id, 'wpsl_longitude', $this->post_data['longitude']);
-		$this->import_status = true;
+		$exclude_fields = array('title', 'content');
+		foreach ( $this->transient['columns'] as $field ){
+			if ( in_array($field->field, $exclude_fields) ) continue;
+			$column_value = ( isset($this->column_data[$field->csv_column]) ) ? $this->column_data[$field->csv_column] : "";
+			if ( $column_value !== "" ) add_post_meta($post_id, $field->field, $column_value);
+		}
+	}
+
+	/**
+	* Add Geocode Fields
+	*/
+	private function addGeocodeField($post_id)
+	{
+		if ( isset($this->coordinates['latitude']) ) add_post_meta($post_id, $this->geo_fields['lat'], $this->coordinates['latitude']);
+		if ( isset($this->coordinates['longitude']) ) add_post_meta($post_id, $this->geo_fields['lng'], $this->coordinates['longitude']);
 	}
 
 }

@@ -70,6 +70,10 @@
 	}
 }
 
+.wpsl-required-key {
+	font-style: oblique;
+}
+
 // Select fields for column mapping
 .wpsl-column-selection {
 	ul {
@@ -77,21 +81,23 @@
 	}
 	li {
 		border-top: 1px solid darken($white, 8%);
-		padding: 5px;
+		padding: 10px 0px;
 		margin: 0;
 		@include clearfix;
 		span {
 			float: left;
-			width: 25%;
-			max-width: 200px;
-			margin-top: 5px;
+			width: 200px;
+			margin: 5px 15px 0 0;
+		}
+		&.wpsl-import-header {
+			padding-bottom: 15px;
+			font-weight: bold;
 		}
 	}
 	select {
-		margin: 0;
+		margin: 0 15px 0 0;
 		float: left;
-		width: 50%;
-		max-width: 200px;
+		width: 200px;
 	}
 }
 
@@ -100,6 +106,7 @@
 	display: none;
 	color: $red;
 	font-style: oblique;
+	margin-bottom: 5px;
 }
 
 // Indicator Wrapper 
@@ -135,7 +142,9 @@
 	}
 }
 
-
+.wpsl-import-add-field {
+	margin-bottom: 20px;
+}
 
 
 

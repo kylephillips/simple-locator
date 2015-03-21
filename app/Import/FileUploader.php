@@ -51,11 +51,20 @@ class FileUploader {
 			'file' => $file,
 			'mac' => $mac,
 			'row_count' => $rowcount,
+			'post_type' => $this->setPostType(),
 			'filename' => $_FILES['file']['name'],
 			'complete_rows' => 'false',
 			'error_rows' => array()
 		);
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
+	}
+
+	/**
+	* Set the Post Type
+	*/
+	private function setPostType()
+	{
+		return ( isset($_POST['import_post_type']) ) ? sanitize_text_field($_POST['import_post_type']) : 'location';
 	}
 
 

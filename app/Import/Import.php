@@ -46,6 +46,18 @@ class Import {
 	}
 
 	/**
+	* Get the Geocode Meta Field Preferences
+	* @return array
+	*/
+	private function geocodeMeta()
+	{
+		$geo_fields = array();
+		$geo_fields['lat'] = get_option('wpsl_lat_field');
+		$geo_fields['lng'] = get_option('wpsl_lng_field');
+		return $geo_fields;
+	}
+
+	/**
 	* Import Rows
 	*/
 	private function importRows()
@@ -53,9 +65,12 @@ class Import {
 		$this->setMacFormatting();
 		$csv = Reader::createFromPath($this->transient['file']);
 		$res = $csv->setOffset($this->offset)->setLimit(5)->fetchAll();
+		$geo_fields = $this->geocodeMeta();
+		
 		if ( !$res ) $this->complete();
+
 		foreach($res as $key => $row){
-			$import = new ImportRow($row, $this->transient);
+			$import = new ImportRow($row, $this->transient, $geo_fields);
 			if ( !$import )	$this->failed_imports++;
 			if ( $import ) $this->import_count++;
 		}

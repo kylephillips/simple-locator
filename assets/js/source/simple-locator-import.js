@@ -115,7 +115,6 @@ jQuery(function($){
 				show_hidden: 'true'
 			},
 			success: function(data){
-				console.log(data);
 				if ( populate_all ){
 					var fields = $('.wpsl-import-field-selection');
 					$.each(fields, function(i, v){

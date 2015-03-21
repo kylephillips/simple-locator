@@ -1,6 +1,6 @@
 <?php
 $transient = get_transient('wpsl_import_file');
-//var_dump($transient);
+var_dump($transient);
 
 // Check that the columns have been mapped
 if ( !isset($transient['columns']) ) :

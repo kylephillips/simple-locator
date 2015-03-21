@@ -22,15 +22,17 @@ class Import {
 	/**
 	* Failed Imports
 	*/
-	private $failed_imports = 0;
+	private $failed_imports;
 
 	/**
 	* Import Count
 	*/
-	private $import_count = 0;
+	private $import_count;
 
 	public function __construct($offset)
 	{
+		$this->failed_imports = 0;
+		$this->import_count = 0;
 		$this->offset = $offset;
 		$this->getTransient();
 		$this->importRows();
@@ -66,13 +68,16 @@ class Import {
 		$csv = Reader::createFromPath($this->transient['file']);
 		$res = $csv->setOffset($this->offset)->setLimit(5)->fetchAll();
 		$geo_fields = $this->geocodeMeta();
-		
+
 		if ( !$res ) $this->complete();
 
 		foreach($res as $key => $row){
+			$row[count($row) + 1] = $key;
 			$import = new ImportRow($row, $this->transient, $geo_fields);
-			if ( !$import )	$this->failed_imports++;
-			if ( $import ) $this->import_count++;
+
+			if ( !$import->importSuccess() ) $this->failed_imports = $this->failed_imports + 1;
+			if ( $import->importSuccess() ) $this->import_count = $this->import_count + 1;
+
 		}
 		sleep(1); // for Google Map API rate limit - 5 requests per second
 	}

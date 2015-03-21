@@ -48,13 +48,13 @@ class FileUploader {
 		$mac = ( isset($_POST['mac_formatted']) ) ? true : false;
 		$rowcount = $this->rowCount($file, $mac);
 		$transient = array(
-			'file' => $file,
-			'mac' => $mac,
-			'row_count' => $rowcount,
-			'post_type' => $this->setPostType(),
-			'filename' => $_FILES['file']['name'],
-			'complete_rows' => 'false',
-			'error_rows' => array()
+			'file' => $file, // full path to file
+			'mac' => $mac, // is mac formatted?
+			'row_count' => $rowcount, // total rows in CSV file
+			'post_type' => $this->setPostType(), // post type to import to
+			'filename' => $_FILES['file']['name'], // filename for display purposes
+			'complete_rows' => '0',
+			'error_rows' => array() // Rows with import or geocoding errors
 		);
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 	}

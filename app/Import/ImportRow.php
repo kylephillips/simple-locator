@@ -31,7 +31,7 @@ class ImportRow {
 	/**
 	* Import Status
 	*/
-	private $import_status;
+	private $import_status = true;
 
 	/**
 	* Geocoder Class
@@ -70,15 +70,22 @@ class ImportRow {
 	*/
 	private function geocode()
 	{
-		if ( $this->geocoder->geocode($this->address) ){
+		$this->geocoder->geocode($this->address);
+
+		if ( $this->geocoder->getStatus() == 'OK' ){
 			$coordinates = $this->geocoder->getCoordinates();
 			$this->coordinates['latitude'] = $coordinates['lat'];
 			$this->coordinates['longitude'] = $coordinates['lng'];
 			return $this->importPost();
-		} else {
-			return wp_send_json(array('status'=>'apierror', 'message'=>$this->geocoder->getError()));
+		}
+
+		if ( $this->geocoder->getError() == 'OVER_QUERY_LIMIT' ) {
+			return wp_send_json(array('status'=>'apierror', 'message'=>__('Your API limit has been reached. Try again in 24 hours.', 'wpsimplelocator')));
 			die();
 		}
+		
+		$this->failedRow($this->geocoder->getError());
+		$this->importPost();
 	}
 
 	/**
@@ -94,14 +101,17 @@ class ImportRow {
 			if ( $field->field == 'title' && $column_value !== "" ) $post['post_title'] = $column_value;
 			if ( $field->field == 'content' && $column_value !== "" ) $post['post_content'] = $column_value;
 		}
+		if ( !isset($post['post_title']) ){
+			$this->failedRow(__('Missing Title', 'wpsimplelocator'));
+			return false;
+		}
 		$post_id = wp_insert_post($post);
 		if ( $post = 0 ) {
-			$this->import_status = false;
-			return;
+			$this->failedRow(__('WordPress Import Error', 'wpsimplelocator'));
+			return false;
 		}
 		$this->addMeta($post_id);
 		$this->addGeocodeField($post_id);
-		$this->import_status = true;
 	}
 
 	/**
@@ -113,6 +123,7 @@ class ImportRow {
 		foreach ( $this->transient['columns'] as $field ){
 			if ( in_array($field->field, $exclude_fields) ) continue;
 			$column_value = ( isset($this->column_data[$field->csv_column]) ) ? $this->column_data[$field->csv_column] : "";
+			if ( $field->type == 'website' ) $column_value = esc_url($column_value);
 			if ( $column_value !== "" ) add_post_meta($post_id, $field->field, $column_value);
 		}
 	}
@@ -124,6 +135,30 @@ class ImportRow {
 	{
 		if ( isset($this->coordinates['latitude']) ) add_post_meta($post_id, $this->geo_fields['lat'], $this->coordinates['latitude']);
 		if ( isset($this->coordinates['longitude']) ) add_post_meta($post_id, $this->geo_fields['lng'], $this->coordinates['longitude']);
+	}
+
+	/**
+	* Update failed row
+	* @param string $error
+	*/
+	private function failedRow($error)
+	{
+		$this->import_status = false;
+		$transient = $this->transient;
+		$row_error = array(
+			'row' => $this->column_data[count($this->column_data)] + 1,
+			'error' => $error
+		);
+		$transient['error_rows'][][] = $row_error;
+		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
+	}
+
+	/**
+	* Get the Import Status
+	*/
+	public function importSuccess()
+	{
+		return $this->import_status;
 	}
 
 }

@@ -19,24 +19,31 @@ class GoogleMapGeocode {
 	private $error;
 
 	/**
+	* Google Response Status
+	*/
+	private $response_status;
+
+	/**
 	*  Geocode the address
 	*/
 	public function geocode($address)
 	{
 		$client = new Client();
-		$query = '?address=5395+Sugarloaf+Pkwy+Lawrenceville+GA';
+		$query = '?address=' . $address;
 		$apikey = get_option('wpsl_google_api_key');
-		//if ( $apikey !== "" ) $query .= '&key=' . $apikey;
+		
 		$response = $client->get('https://maps.googleapis.com/maps/api/geocode/json' . $query);
 		$json = $response->json();
-		if ( $json['status'] == 'OK' ){
+		$this->response_status = $json['status'];
+
+		if ( $this->response_status == 'OK' ){
 			$this->coordinates = array(
 				'lat' => $json['results'][0]['geometry']['location']['lat'],
 				'lng' => $json['results'][0]['geometry']['location']['lng']
 			);
 			return true;
 		}
-		$this->error = __('Google Maps Error:', 'wpsimplelocator') . $json['status'];
+		$this->error = __('Google Maps Error', 'wpsimplelocator') . ': ' . $this->response_status;
 		return false;
 	}
 
@@ -54,6 +61,14 @@ class GoogleMapGeocode {
 	public function getError()
 	{
 		return $this->error;
+	}
+
+	/**
+	* Response Status Getter
+	*/
+	public function getStatus()
+	{
+		return $this->response_status;
 	}
 
 }

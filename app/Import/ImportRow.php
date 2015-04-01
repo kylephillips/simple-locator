@@ -98,6 +98,7 @@ class ImportRow {
 		$post['post_status'] = $this->transient['import_status'];
 		foreach ( $this->transient['columns'] as $field ){
 			$column_value = ( isset($this->column_data[$field->csv_column]) ) ? $this->column_data[$field->csv_column] : "";
+			$column_value = sanitize_text_field($column_value);
 			if ( $field->field == 'title' && $column_value !== "" ) $post['post_title'] = $column_value;
 			if ( $field->field == 'content' && $column_value !== "" ) $post['post_content'] = $column_value;
 		}
@@ -123,6 +124,7 @@ class ImportRow {
 		foreach ( $this->transient['columns'] as $field ){
 			if ( in_array($field->field, $exclude_fields) ) continue;
 			$column_value = ( isset($this->column_data[$field->csv_column]) ) ? $this->column_data[$field->csv_column] : "";
+			$column_value = sanitize_text_field($column_value);
 			if ( $field->type == 'website' ) $column_value = esc_url($column_value);
 			if ( $column_value !== "" ) add_post_meta($post_id, $field->field, $column_value);
 		}
@@ -144,12 +146,12 @@ class ImportRow {
 	private function failedRow($error)
 	{
 		$this->import_status = false;
-		$transient = $this->transient;
+		$transient = get_transient('wpsl_import_file'); // Calling manually for multiple errors
 		$row_error = array(
 			'row' => $this->column_data[count($this->column_data)] + 1,
 			'error' => $error
 		);
-		$transient['error_rows'][][] = $row_error;
+		$transient['error_rows'][] = $row_error;
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 	}
 

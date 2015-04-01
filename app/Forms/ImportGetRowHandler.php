@@ -34,6 +34,7 @@ class ImportGetRowHandler {
 	{
 		$row = ( !isset($_POST['rowcount']) || !is_numeric($_POST['rowcount']) ) ? 0 : intval($_POST['rowcount']);
 		$columns = $this->columns->getRow($row);
+		
 		$count = $this->columns->rowCount();
 		$this->sendResponse(array('status'=>'success', 'columns'=>$columns, 'row_count'=>$count));
 	}

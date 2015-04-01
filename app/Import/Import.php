@@ -36,6 +36,7 @@ class Import {
 		$this->offset = $offset;
 		$this->getTransient();
 		$this->importRows();
+		$this->updateCompleteCount();
 		$this->sendResponse();
 	}
 
@@ -66,7 +67,7 @@ class Import {
 	{
 		$this->setMacFormatting();
 		$csv = Reader::createFromPath($this->transient['file']);
-		$res = $csv->setOffset($this->offset)->setLimit(5)->fetchAll();
+		$res = $csv->setOffset($this->offset)->setLimit(1)->fetchAll();
 		$geo_fields = $this->geocodeMeta();
 
 		if ( !$res ) $this->complete();
@@ -80,6 +81,17 @@ class Import {
 
 		}
 		sleep(1); // for Google Map API rate limit - 5 requests per second
+	}
+
+	/**
+	* Update the completed rows transient
+	*/
+	private function updateCompleteCount()
+	{
+		$this->getTransient();
+		$transient = $this->transient;
+		$transient['complete_rows'] = $transient['complete_rows'] + $this->import_count;
+		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 	}
 
 	/**

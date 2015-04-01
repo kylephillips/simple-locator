@@ -146,7 +146,30 @@
 	margin-bottom: 20px;
 }
 
-
+.wpsl-import-details {
+	table {
+		background-color: $white;
+		border-collapse: collapse;
+		width: 100%;
+		border: 1px solid darken($white, 12%);
+		th, td {
+			text-align: left;
+			padding: 8px;
+			border: 1px solid darken($white, 10%);
+		}
+		th {
+			background-color: $black;
+			color: $white;
+			border-color: darken($white, 70%);
+		}
+	}
+	h4 {
+		color: $white;
+		margin: 0;
+		background-color: $red;
+		padding: 8px;
+	}
+}
 
 
 

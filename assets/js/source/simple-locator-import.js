@@ -10,6 +10,7 @@ jQuery(function($){
 	var rowcount = 0; // for selecting a specific row from csv
 	var totalrows = 0;
 	var passed_validation = true;
+	var import_counter = 1;
 
 	/**
 	* ------------------------------------------------------
@@ -265,7 +266,7 @@ jQuery(function($){
 	*/
 	function update_counts(data)
 	{
-		offset = offset + 5;
+		offset = offset + import_counter;
 		var imported = data.import_count;
 		completecount = completecount + imported;
 		errorcount = errorcount + data.failed;
@@ -293,6 +294,7 @@ jQuery(function($){
 	{
 		$('.wpsl-import-indicator').hide();
 		$('.wpsl-import-complete').show();
+		get_import_complete_status();
 	}
 
 	/**
@@ -310,6 +312,47 @@ jQuery(function($){
 			pause = false;
 		}
 	});
+
+
+
+	/**
+	* ------------------------------------------------------
+	* Import is Complete
+	* ------------------------------------------------------
+	*/
+	function get_import_complete_status()
+	{
+		$.ajax({
+			url: ajaxurl,
+			type: 'post',
+			datatype: 'json',
+			data: {
+				action: 'wpslfinishimport'
+			},
+			success: function(data){
+				console.log(data);
+				$('.wpsl-total-import-count').text(data.import_count);
+				$('.wpsl-total-error-count').text(data.error_count);
+				if ( data.errors.length > 0 ){
+					append_import_errors(data.errors);
+				}
+			}
+		});
+	}
+
+	/**
+	* Append rows to the error log table
+	*/
+	function append_import_errors(errors)
+	{
+		for ( var i = 0; i < errors.length; i++ ){
+			var html = '<tr><td>' + errors[i].row + '</td><td>' + errors[i].error + '</td></tr>';
+			$('.wpsl-import-details table').append(html);
+		}
+		$('.wpsl-import-details').show();
+	}
+
+
 
 
 }); // jQuery

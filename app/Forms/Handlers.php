@@ -8,6 +8,7 @@ use SimpleLocator\Forms\ImportFileHandler;
 use SimpleLocator\Forms\ImportGetRowHandler;
 use SimpleLocator\Forms\ImportMapColumnsHandler;
 use SimpleLocator\Forms\ImportHandler;
+use SimpleLocator\Forms\ImportFinishHandler;
 
 /**
 * Wordpress Form Handlers
@@ -33,6 +34,7 @@ class Handlers {
 		add_action( 'wp_ajax_wpslimportcolumns', array($this, 'wpsl_import_columns' ));
 		add_action( 'admin_post_wpslmapcolumns', array($this, 'wpsl_map_columns'));
 		add_action( 'wp_ajax_wpsldoimport', array($this, 'wpsl_do_import' ));
+		add_action( 'wp_ajax_wpslfinishimport', array($this, 'wpsl_finish_import'));
 	}
 
 	/**
@@ -97,6 +99,14 @@ class Handlers {
 	public function wpsl_do_import()
 	{
 		new ImportHandler;
+	}
+
+	/**
+	* Finish the import
+	*/
+	public function wpsl_finish_import()
+	{
+		new ImportFinishHandler;
 	}
 
 }

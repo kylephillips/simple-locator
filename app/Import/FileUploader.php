@@ -34,7 +34,8 @@ class FileUploader {
 		$file = $_FILES['file'];
 		$upload_overrides = array( 'test_form' => false );
 		$movefile = wp_handle_upload($file, $upload_overrides);
-
+		if ( isset($movefile['error']) ) return $this->error($movefile['error']);
+		
 		$this->setTransient($movefile['file']);
 		$this->success();
 	}
@@ -54,7 +55,8 @@ class FileUploader {
 			'post_type' => $this->setPostType(), // post type to import to
 			'filename' => $_FILES['file']['name'], // filename for display purposes
 			'complete_rows' => '0',
-			'error_rows' => array() // Rows with import or geocoding errors
+			'error_rows' => array(), // Rows with import or geocoding errors,
+			'last_imported' => 0
 		);
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 	}

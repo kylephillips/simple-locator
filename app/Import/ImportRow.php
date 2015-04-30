@@ -36,7 +36,7 @@ class ImportRow {
 	/**
 	* Geocoder Class
 	*/
-	private $geocoder;
+	public $geocoder;
 	
 	public function __construct($column_data, $transient, $geo_fields)
 	{
@@ -79,7 +79,8 @@ class ImportRow {
 			return $this->importPost();
 		}
 
-		if ( $this->geocoder->getError() == 'OVER_QUERY_LIMIT' ) {
+		if ( $this->geocoder->getError() == 'Google Maps Error: OVER_QUERY_LIMIT' ) {
+			$this->updateLastRowImported();
 			return wp_send_json(array('status'=>'apierror', 'message'=>__('Your API limit has been reached. Try again in 24 hours.', 'wpsimplelocator')));
 			die();
 		}
@@ -152,6 +153,17 @@ class ImportRow {
 			'error' => $error
 		);
 		$transient['error_rows'][] = $row_error;
+		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
+	}
+
+	/**
+	* Update the last row imported in case of API Failure
+	*/
+	private function updateLastRowImported()
+	{
+		$transient = get_transient('wpsl_import_file'); // Calling manually for multiple errors
+		$transient['last_imported'] = $this->column_data[count($this->column_data)];
+		$transient['last_import_date'] = date_i18n( 'j F Y: H:i', time() );
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 	}
 

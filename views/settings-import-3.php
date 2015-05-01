@@ -5,7 +5,7 @@ $transient = get_transient('wpsl_import_file');
 
 /**
 * @todo
-* Check if last_impported !== 0. If not, display last row imported, import time, update # of rows to import
+* Check if last_impported !== 0. If not, display last row imported, import time, update # of rows to import, make button "continue import". If completed rows > 1, show error rows, with option to rerun error rows
 */
 if ( !isset($transient['columns']) ) :
 ?>

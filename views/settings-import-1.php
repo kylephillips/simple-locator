@@ -14,7 +14,7 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 	<p><?php _e('File must be properly formatted CSV', 'wpsimplelocator'); ?>. <a href="<?php echo plugins_url(); ?>/simple-locator/assets/csv_template.csv"><?php _e('View a Template', 'wpsimplelocator'); ?></a></p>
 
 	<h4><?php _e('Required Columns', 'wpsimplelocator'); ?></h4>
-	<p><?php _e('2 columns are rerquired for import: a title and at least one address column. Addresses may be saved across multiple columns (street address, city, etc…), or in one column.'); ?></p>
+	<p><?php _e('2 columns are required: a title and at least one address column. Addresses may be saved across multiple columns (street address, city, etc…), or in one column.'); ?></p>
 
 	<h4><?php _e('Import Limits', 'wpsimplelocator'); ?></h4>
 	<p><?php _e('The Google Maps Geocoding API limits request to 2500 per 24 hour period & 5 requests per second. If your file contains over 2500 records, it may take multiple days to import. If the limit is reached, progress will be saved, and you may continue your import later.', 'wpsimplelocator'); ?></p>
@@ -23,8 +23,32 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 	<p><?php _e('Geocoded latitude and longitude values will be saved in the fields selected under the "Post Type & Geocode Fields" tab.', 'wpsimplelocator'); ?></p>
 </div>
 
-<form action="<?php echo admin_url('admin-post.php'); ?>" method="post" enctype="multipart/form-data" class="wpsl-upload-form">
+<?php
+$incomplete = false;
+$transient = get_transient('wpsl_import_file');
+if ( isset($transient['last_imported']) && $transient['last_imported'] > 0) :
+	$incomplete = true;
+?>
+<div class="wpsl-import-instructions" style="padding-bottom:10px;">
+	<h4 style="color:#d54e21;margin-bottom:15px;">
+		<?php _e('You have an incomplete import. Would you like to continue the import?', 'wpsimplelocator'); ?>
+	</h4>
+	<a href="options-general.php?page=wp_simple_locator&tab=import&step=3" class="button">
+		<?php _e('Continue Import', 'wpsimplelocator'); ?>
+	</a>
+	<a href="#" class="wpsl-new-import button button-primary">
+		<?php _e('New Import', 'wpsimplelocator'); ?>
+	</a>
+</div>
+<?php endif; ?>
+
+<form action="<?php echo admin_url('admin-post.php'); ?>" method="post" enctype="multipart/form-data" class="wpsl-upload-form"<?php if ( $incomplete ) echo ' style="display:none;"';?>>
 	<p>
+		<?php
+		if ( $incomplete ){
+			echo '<h4 style="color:#d54e21;margin-bottom:15px;font-size:15px;">New Import</h4>';
+		}
+		?>
 		<h4><?php _e('Import Post Type', 'wpsimplelocator'); ?></h4>
 		<select name="import_post_type" style="margin-top: 10px;width:250px;">
 		<?php

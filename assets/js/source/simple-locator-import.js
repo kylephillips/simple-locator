@@ -13,6 +13,15 @@ jQuery(function($){
 	var import_counter = 1;
 
 	/**
+	* Start New Import (cancel previous)
+	*/
+	$(document).on('click', '.wpsl-new-import', function(e){
+		e.preventDefault();
+		$('.wpsl-upload-form').show();
+		$(this).parents('.wpsl-import-instructions').hide();
+	});
+
+	/**
 	* ------------------------------------------------------
 	* Map CSV columns
 	* ------------------------------------------------------

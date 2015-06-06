@@ -32,9 +32,11 @@ class MetaFields {
 			'latitude' => 'wpsl_latitude',
 			'longitude' => 'wpsl_longitude',
 			'address' => 'wpsl_address',
+			'address_two' => 'wpsl_address_two',
 			'city' => 'wpsl_city',
 			'state' => 'wpsl_state',
 			'zip' => 'wpsl_zip',
+			'country' => 'wpsl_country',
 			'phone' => 'wpsl_phone',
 			'website' => 'wpsl_website',
 			'additionalinfo' => 'wpsl_additionalinfo'

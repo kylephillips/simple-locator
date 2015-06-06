@@ -4,6 +4,10 @@
 		<label for="wpsl_address"><?php _e('Street Address', 'wpsimplelocator'); ?></label>
 		<input type="text" name="wpsl_address" id="wpsl_address" value="<?php echo $this->meta['address']; ?>" />
 	</p>
+	<p class="full">
+		<label for="wpsl_address_two"><?php _e('Street Address Line 2', 'wpsimplelocator'); ?></label>
+		<input type="text" name="wpsl_address_two" id="wpsl_address_two" value="<?php echo $this->meta['address_two']; ?>" />
+	</p>
 	<p class="city">
 		<label for="wpsl_city"><?php _e('City', 'wpsimplelocator'); ?></label>
 		<input type="text" name="wpsl_city" id="wpsl_city" value="<?php echo $this->meta['city']; ?>" />
@@ -15,6 +19,10 @@
 	<p class="zip">
 		<label for="wpsl_zip"><?php _e('Zip', 'wpsimplelocator'); ?></label>
 		<input type="text" name="wpsl_zip" id="wpsl_zip" value="<?php echo $this->meta['zip']; ?>" />
+	</p>
+	<p class="full">
+		<label for="wpsl_country"><?php _e('Country', 'wpsimplelocator'); ?></label>
+		<input type="text" name="wpsl_country" id="wpsl_country" value="<?php echo $this->meta['country']; ?>" />
 	</p>
 	<div id="wpslmap"></div>
 	<hr />

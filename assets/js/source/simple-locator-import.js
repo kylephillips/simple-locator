@@ -49,6 +49,7 @@ jQuery(function($){
 				nonce: wpsl_locator.locatorNonce
 			},
 			success: function(data){
+				console.log(data);
 				totalrows = data.row_count;
 				populate_select_boxes(data);
 			}
@@ -125,7 +126,6 @@ jQuery(function($){
 				show_hidden: 'false'
 			},
 			success: function(data){
-				console.log(data);
 				if ( populate_all ){
 					var fields = $('.wpsl-import-field-selection');
 					$.each(fields, function(i, v){

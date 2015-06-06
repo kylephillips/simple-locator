@@ -261,9 +261,8 @@ jQuery(function($){
 
 	function reset_posttype()
 	{
-		console.log(wpsl_locator.locatorNonce);
 		$.ajax({
-			type: 'GET',
+			type: 'POST',
 			url: ajaxurl,
 			data: {
 				action: 'wpslresetposttype',

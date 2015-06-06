@@ -1,15 +1,20 @@
-<?php namespace SimpleLocator\Forms;
+<?php namespace SimpleLocator\Services\Import\Listeners;
 
-use SimpleLocator\Import\Import;
+use SimpleLocator\Services\Import\CSVImport;
 
 /**
 * Do the Import
 */
 class ImportHandler {
 
+	/**
+	* Importer Class
+	*/
+	private $importer;
 
 	public function __construct()
 	{
+		$this->importer = new CSVImport;
 		$this->doImport();
 	}
 
@@ -19,7 +24,7 @@ class ImportHandler {
 	private function doImport()
 	{
 		$offset = intval(sanitize_text_field($_POST['offset']));
-		$import = new Import($offset);
+		$this->importer->doImport($offset);
 	}
 
 }

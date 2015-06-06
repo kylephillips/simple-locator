@@ -1,6 +1,6 @@
-<?php namespace SimpleLocator\Forms;
+<?php namespace SimpleLocator\Services\Import\Listeners;
 
-use SimpleLocator\Import\CSVRow;
+use SimpleLocator\Services\Import\CSVRow;
 
 class ImportGetRowHandler {
 

@@ -1,12 +1,11 @@
-<?php namespace SimpleLocator\Forms;
+<?php namespace SimpleLocator\Listeners;
 
 use \SimpleLocator\Repositories\FieldRepository;
 
 /**
-* Ajax Handler for choosing post type fields in settings
-* Returns a response with html option list
+* Returns JSON response with HTML option list with all meta fields for a given post type
 */
-class PostTypeFieldsHandler {
+class GetMetaFieldsForPostType {
 
 	/**
 	* Field Repository

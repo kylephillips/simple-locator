@@ -1,4 +1,4 @@
-<?php namespace SimpleLocator\Import;
+<?php namespace SimpleLocator\Services\Import;
 
 use League\Csv\Reader;
 

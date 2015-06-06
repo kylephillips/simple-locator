@@ -1,10 +1,9 @@
-<?php namespace SimpleLocator\Forms;
+<?php namespace SimpleLocator\Listeners;
 
 /**
 * Create a nonce and return via AJAX
-* (workaround for cacheing conflict)
 */
-class NonceHandler {
+class GenerateAndSendNonce {
 
 	public function __construct()
 	{

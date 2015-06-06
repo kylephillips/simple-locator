@@ -1,6 +1,6 @@
-<?php namespace SimpleLocator\Forms;
+<?php namespace SimpleLocator\Services\Import\Listeners;
 
-use SimpleLocator\Import\FileUploader;
+use SimpleLocator\Services\Import\FileUploader;
 
 /**
 * Handle the uploading of file for the purpose of importing addresses

@@ -1,13 +1,12 @@
-<?php namespace SimpleLocator\Forms;
+<?php namespace SimpleLocator\Services\LocationSearch;
 
 use SimpleLocator\Repositories\SettingsRepository;
 use SimpleLocator\Helpers;
 
 /**
-* Formats a single result from the location query
+* Formats a result to match defined format
 */
-
-class ResultPresenter {
+class LocationResultPresenter {
 
 	/**
 	* Result
@@ -164,6 +163,3 @@ class ResultPresenter {
 	}
 
 }
-
-
-

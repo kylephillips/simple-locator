@@ -7,7 +7,8 @@ class Bootstrap {
 	function __construct()
 	{
 		$this->init();
-		$this->setFormActions();
+		$this->registerPublicEvents();
+		$this->registerAdminEvents();
 		add_filter( 'plugin_action_links_' . 'simple-locator/simplelocator.php', array($this, 'settingsLink' ) );
 		add_action( 'plugins_loaded', array($this, 'addLocalization') );
 	}
@@ -31,13 +32,22 @@ class Bootstrap {
 		add_action( 'widgets_init', array($this, 'formWidget'));
 	}
 
+	/**
+	* Register Public Application Events
+	*/
+	private function registerPublicEvents()
+	{
+		new \SimpleLocator\Events\RegisterPublicEvents;
+	}
 
 	/**
-	* Set Form Actions & Handlers
+	* Register Admin Application Events
 	*/
-	public function setFormActions()
+	private function registerAdminEvents()
 	{
-		if ( is_admin() ) new Forms\Handlers;
+		if ( !is_admin() ) return;
+		new \SimpleLocator\Events\RegisterAdminEvents;
+		new \SimpleLocator\Services\Import\Events\RegisterImportEvents;
 	}
 
 

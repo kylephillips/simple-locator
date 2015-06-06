@@ -1,4 +1,4 @@
-<?php namespace SimpleLocator\Import;
+<?php namespace SimpleLocator\Services\Import;
 /**
 * Save the column mapping (Import Step 2)
 */

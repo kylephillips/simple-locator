@@ -1,7 +1,7 @@
-<?php namespace SimpleLocator\Forms;
+<?php namespace SimpleLocator\Services\Import\Listeners;
 
-use SimpleLocator\Import\SaveColumnMap;
-use SimpleLocator\Import\Import;
+use SimpleLocator\Services\Import\SaveColumnMap;
+use SimpleLocator\Services\Import\Import;
 
 /**
 * Saves the column mapping for imports

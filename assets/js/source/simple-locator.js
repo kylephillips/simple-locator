@@ -246,6 +246,7 @@ function sendFormData(formelements)
 			geolocation : geolocation
 		},
 		success: function(data){
+			console.log(data);
 			if (data.status === 'error'){
 				wpsl_error(data.message, active_form);
 				$(formelements.errordiv).text(data.message).show();

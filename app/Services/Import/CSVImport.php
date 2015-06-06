@@ -1,15 +1,16 @@
-<?php namespace SimpleLocator\Import;
+<?php namespace SimpleLocator\Services\Import;
 
-use SimpleLocator\Import\ImportRow;
+use SimpleLocator\Services\Import\ImportRow;
 use League\Csv\Reader;
 
 /**
 * Primary Import Class (Called in Import step 3 via AJAX)
 */
-class Import {
+class CSVImport {
 
 	/**
 	* Transient
+	* @var array
 	*/
 	private $transient;
 
@@ -21,20 +22,30 @@ class Import {
 
 	/**
 	* Failed Imports
+	* @var int
 	*/
 	private $failed_imports;
 
 	/**
 	* Import Count
+	* @var int
 	*/
 	private $import_count;
 
-	public function __construct($offset)
+	public function __construct()
 	{
 		$this->failed_imports = 0;
 		$this->import_count = 0;
+	}
+
+	/**
+	* Run the Import 
+	*/
+	public function doImport($offset)
+	{
 		$this->offset = $offset;
 		$this->getTransient();
+		$this->setImportCount();
 		$this->importRows();
 		$this->updateCompleteCount();
 		$this->sendResponse();
@@ -49,6 +60,14 @@ class Import {
 	}
 
 	/**
+	* Set the import count
+	*/
+	private function setImportCount()
+	{
+		$this->import_count = $this->transient['complete_rows'];
+	}
+
+	/**
 	* Import Rows
 	*/
 	private function importRows()
@@ -56,11 +75,11 @@ class Import {
 		$this->setMacFormatting();
 		$csv = Reader::createFromPath($this->transient['file']);
 
-		// Remove Title Row if Set
-		// if ( $this->transient['last_imported'] == 0 && $this->transient['skip_first'] ) $this->offset = 1;
+		// Remove Title Row
+		if ( $this->transient['last_imported'] == 0 && $this->transient['skip_first'] ) $this->offset = 1;
 
 		$offset = $this->transient['last_imported'] + $this->offset;
-		$res = $csv->setOffset($offset)->setLimit(1)->fetchAll();
+		$res = $csv->setOffset($offset)->setLimit(1)->fetchAll(); // Update to 5 for production, will submit 5 every 1 second, per Google's API limits
 
 		if ( !$res ) $this->complete();
 
@@ -74,13 +93,14 @@ class Import {
 	}
 
 	/**
-	* Update the completed rows transient
+	* Update the transient with import data
 	*/
 	private function updateCompleteCount()
 	{
 		$this->getTransient();
 		$transient = $this->transient;
 		$transient['complete_rows'] = $transient['complete_rows'] + $this->import_count;
+		$transient['last_imported'] = $this->offset;
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 	}
 

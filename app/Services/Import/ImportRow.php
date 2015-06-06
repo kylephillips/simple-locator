@@ -1,6 +1,6 @@
-<?php namespace SimpleLocator\Import;
+<?php namespace SimpleLocator\Services\Import;
 
-use SimpleLocator\Import\GoogleMapGeocode;
+use SimpleLocator\Services\Import\GoogleMapGeocode;
 
 /**
 * Import a Single Row/Post

@@ -1,4 +1,4 @@
-<?php namespace SimpleLocator\Import;
+<?php namespace SimpleLocator\Services\Import;
 
 use GuzzleHttp\Client;
 

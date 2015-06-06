@@ -1,15 +1,15 @@
-<?php namespace SimpleLocator\Forms;
+<?php namespace SimpleLocator\Services\LocationSearch;
 
+use SimpleLocator\Services\LocationSearch\LocationSearchValidator;
 use SimpleLocator\Repositories\SettingsRepository;
 use SimpleLocator\Helpers;
-use SimpleLocator\Forms\ResultPresenter;
-use SimpleLocator\Forms\LocationQuery;
+use SimpleLocator\Services\LocationSearch\LocationResultPresenter;
+use SimpleLocator\Forms\Validation;
 
 /**
-* Front-end form handler for simple locator lookup
-* @return JSON Response
+* Search Locations
 */
-class MapHandler {
+class LocationSearch {
 
 	/**
 	* Form Data
@@ -72,11 +72,18 @@ class MapHandler {
 	public function __construct()
 	{
 		$this->settings_repo = new SettingsRepository;
-		$this->validator = new Validation;
-		$this->result_presenter = new ResultPresenter;
+		$this->validator = new LocationSearchValidator;
+		$this->result_presenter = new LocationResultPresenter;
+	}
+
+	/**
+	* Perform the Search
+	*/
+	public function search()
+	{
 		$this->setResultsFields();
 		$this->setData();
-		$this->validateData();
+		$this->validator->validate();
 		$this->setQueryData();
 		$this->setQuery();
 		$this->runQuery();
@@ -99,7 +106,6 @@ class MapHandler {
 	private function setData()
 	{
 		$this->data = array(
-			'nonce' => sanitize_text_field($_POST['locatorNonce']),
 			'address' => sanitize_text_field($_POST['address']),
 			'formatted_address' => sanitize_text_field($_POST['formatted_address']),
 			'distance' => sanitize_text_field($_POST['distance']),
@@ -109,16 +115,6 @@ class MapHandler {
 			'geolocation' => sanitize_text_field($_POST['geolocation'])
 		);
 	}
-
-
-	/**
-	* Validate Data
-	*/
-	private function validateData()
-	{
-		return ( $this->validator->validates($this->data) ) ? true : false;
-	}
-
 
 	/**
 	* Set Query Data

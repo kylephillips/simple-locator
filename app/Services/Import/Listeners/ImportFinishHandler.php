@@ -1,4 +1,4 @@
-<?php namespace SimpleLocator\Forms;
+<?php namespace SimpleLocator\Services\Import\Listeners;
 
 class ImportFinishHandler {
 

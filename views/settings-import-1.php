@@ -26,13 +26,28 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 <?php
 $incomplete = false;
 $transient = get_transient('wpsl_import_file');
-if ( isset($transient['last_imported']) && $transient['last_imported'] > 0) :
+if ( $transient ){
+	$remaining = $transient['row_count'] - $transient['complete_rows'] - count($transient['error_rows']);
+}
+if ( isset($remaining) && $remaining > 0 && !isset($_GET['error'])) :
 	$incomplete = true;
 ?>
 <div class="wpsl-import-instructions" style="padding-bottom:10px;">
 	<h4 style="color:#d54e21;margin-bottom:15px;">
 		<?php _e('You have an incomplete import. Would you like to continue the import?', 'wpsimplelocator'); ?>
 	</h4>
+	<p>
+		<?php 
+			$out = __('File Name', 'wpsimplelocator') . ': ' . $transient['filename']; 
+			if ( $transient['mac'] ) $out .= ' <em>(' . __('Mac Formatted', 'wpsimplelocator') . ')</em>';
+			$out .= '<br>';
+			$out .= __('Total Records', 'wpsimplelocator') . ': ' . $transient['row_count'] . '<br>';
+			$out .= __('Completed Records', 'wpsimplelocator') . ': ' . $transient['complete_rows'] . '<br>';
+			$out .= __('Import Errors', 'wpsimplelocator') . ': ' . count($transient['error_rows']) . '<br>';
+			$out .= ( isset($transient['last_import_date']) ) ? __('Last Run', 'wpsimplelocator') . ': ' . $transient['last_import_date'] : __('No Imports Yet', 'wpsimplelocator');
+			echo $out;
+		?>
+	</p>
 	<a href="options-general.php?page=wp_simple_locator&tab=import&step=3" class="button">
 		<?php _e('Continue Import', 'wpsimplelocator'); ?>
 	</a>

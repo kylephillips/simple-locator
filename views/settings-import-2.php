@@ -63,12 +63,16 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 			<a href="#" class="button"><?php _e('Add Field', 'wpsimplelocator'); ?></a>
 		</div>
 
-		<div style="background-color:#e4e4e4;padding:8px;margin-bottom:20px;">
+		<div style="background-color:#f2f2f2;padding:8px;margin-bottom:20px;">
 		<label style="clear:both;display:block;"><strong><?php _e('Import Status', 'wpsimplelocator'); ?></strong></label>
 		<select name="wpsl_import_status" style="clear:both;float:none;">
 			<option value="draft"><?php _e('Draft', 'wpsimplelocator'); ?></option>
 			<option value="publish"><?php _e('Published', 'wpsimplelocator'); ?></option>
 		</select>
+		</div>
+
+		<div style="background-color:#f2f2f2;padding:8px;margin-bottom:20px;">
+		<label style="clear:both;display:block;"><input type="checkbox" name="wpsl_first_row_header" value="1" /><?php _e('Skip first row (header row)', 'wpsimplelocator'); ?></label>
 		</div>
 
 		<div class="wpsl-required-key">

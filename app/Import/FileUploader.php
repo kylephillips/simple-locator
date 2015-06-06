@@ -79,8 +79,10 @@ class FileUploader {
 			ini_set("auto_detect_line_endings", '1');
 		}
 		$csv = Reader::createFromPath($file);
-		$res = $csv->fetchAll();
-		return count($res);
+		$count = $csv->each(function(){
+    		return true;
+		}); 
+		return count($count);
 	}
 
 

@@ -56,7 +56,10 @@ class FileUploader {
 			'filename' => $_FILES['file']['name'], // filename for display purposes
 			'complete_rows' => '0',
 			'error_rows' => array(), // Rows with import or geocoding errors,
-			'last_imported' => 0
+			'last_imported' => 0,
+			'lat' => get_option('wpsl_lat_field'), // Field to save latitude to
+			'lng' => get_option('wpsl_lng_field'), // Field to save longitude to
+			'import_type' => 'csv'
 		);
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 	}

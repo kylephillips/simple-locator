@@ -37,9 +37,9 @@ class GoogleMapGeocode {
 		$this->response_status = $json['status'];
 
 		// Testing Query Limit Error
-		if ( $address == '4156 W.E. Heck Court Baton Rouge LA 70816' ){
-			$this->response_status = 'OVER_QUERY_LIMIT';
-		}
+		// if ( $address == '4156 W.E. Heck Court Baton Rouge LA 70816' ){
+		// 	$this->response_status = 'OVER_QUERY_LIMIT';
+		// }
 
 		if ( $this->response_status == 'OK' ){
 			$this->coordinates = array(

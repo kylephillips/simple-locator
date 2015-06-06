@@ -13,15 +13,9 @@ class ImportRow {
 	private $column_data;
 
 	/**
-	* Column Map
+	* Transient
 	*/
 	private $transient;
-
-	/**
-	* Geo Meta Fields
-	* @var array
-	*/
-	private $geo_fields;
 
 	/**
 	* Geocode Coordinates
@@ -38,12 +32,11 @@ class ImportRow {
 	*/
 	public $geocoder;
 	
-	public function __construct($column_data, $transient, $geo_fields)
+	public function __construct($column_data, $transient)
 	{
 		$this->geocoder = new GoogleMapGeocode;
 		$this->column_data = $column_data;
 		$this->transient = $transient;
-		$this->geo_fields = $geo_fields;
 		$this->setAddress();
 		$this->geocode();
 		return $this->import_status;
@@ -136,8 +129,8 @@ class ImportRow {
 	*/
 	private function addGeocodeField($post_id)
 	{
-		if ( isset($this->coordinates['latitude']) ) add_post_meta($post_id, $this->geo_fields['lat'], $this->coordinates['latitude']);
-		if ( isset($this->coordinates['longitude']) ) add_post_meta($post_id, $this->geo_fields['lng'], $this->coordinates['longitude']);
+		if ( isset($this->coordinates['latitude']) ) add_post_meta($post_id, $this->transient['lat'], $this->coordinates['latitude']);
+		if ( isset($this->coordinates['longitude']) ) add_post_meta($post_id, $this->transient['lng'], $this->coordinates['longitude']);
 	}
 
 	/**

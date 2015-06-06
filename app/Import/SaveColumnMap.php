@@ -34,7 +34,11 @@ class SaveColumnMap {
 		$transient = get_transient('wpsl_import_file');
 		$transient['columns'] = $this->fields;
 		$transient['import_status'] = ( isset($_POST['wpsl_import_status']) && $_POST['wpsl_import_status'] == 'draft' ) ? 'draft' : 'publish';
-		$transient['skip_first'] = ( isset($_POST['wpsl_first_row_header']) ) ? true : false;
+		$transient['skip_first'] = false;
+		if ( isset($_POST['wpsl_first_row_header']) ){
+			$transient['skip_first'] = true;
+			$transient['row_count'] = $transient['row_count'] - 1;
+		}
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 	}
 

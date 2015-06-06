@@ -82,7 +82,7 @@ class FileUploader {
 		$count = $csv->each(function(){
     		return true;
 		}); 
-		return count($count);
+		return $count;
 	}
 
 

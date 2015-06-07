@@ -25,7 +25,7 @@ Learn more at [locatewp.com](http://locatewp.com) and download from the [WordPre
 #### Installation - from the GitHub Project
 1. cd into the wp-content/plugins directory
 2. Clone the project: ```git clone https://github.com/kylephillips/wp-simple-locator.git simple-locator```
-3. cd into the ```simple-locator``` directory and run a ```composer install``` to download the plugin dependencies. ([https://getcomposer.org](More on composer))
+3. cd into the ```simple-locator``` directory and run a ```composer install``` to download the plugin dependencies. [More on composer](https://getcomposer.org)
 4. Activate the plugin through the Plugins menu in WordPress
 
 

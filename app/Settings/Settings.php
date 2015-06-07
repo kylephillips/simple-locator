@@ -150,7 +150,7 @@ class Settings {
 	public function settingsPage()
 	{
 		$tab = ( isset($_GET['tab']) ) ? $_GET['tab'] : 'general';
-		include( \SimpleLocator\Helpers::view('settings') );
+		include( \SimpleLocator\Helpers::view('settings/settings') );
 	}
 
 

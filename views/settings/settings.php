@@ -14,13 +14,13 @@
 	<form method="post" enctype="multipart/form-data" action="options.php">
 		<table class="form-table">
 			<?php
-			$view = 'settings-' . $tab . '.php';
+			$view = $tab . '.php';
 			include($view);
 			?>
 		</table>
 		<?php submit_button(); ?>
 	</form>
-	<?php else : include('settings-import.php'); endif; ?>
+	<?php else : include('import-0.php'); endif; ?>
 
 	<p class="wpsl-plugin-version"><?php _e('Simple Locator Version', 'wpsimplelocator'); echo ' ' . get_option('wpsl_version'); ?></p>
 </div>

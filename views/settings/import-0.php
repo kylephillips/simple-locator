@@ -7,9 +7,9 @@
 	else :
 		// Steps
 		if ( isset($_GET['step']) && in_array($_GET['step'], array('1', '2', '3')) ) {
-			include 'settings-import-' . $_GET['step'] . '.php';
+			include 'import-' . $_GET['step'] . '.php';
 		} else {
-			include 'settings-import-1.php';
+			include 'import-1.php';
 		}
 	endif;
 	?>

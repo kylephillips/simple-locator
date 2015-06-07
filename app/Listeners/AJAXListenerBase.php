@@ -51,7 +51,7 @@ class AJAXListenerBase {
 	/**
 	* Send an Error Response
 	*/
-	protected function error($error)
+	protected function error($message)
 	{
 		$this->respond(array('status' => 'error', 'message' => $message));
 	}

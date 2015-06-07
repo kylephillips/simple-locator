@@ -1,10 +1,8 @@
 <?php namespace SimpleLocator\Services\LocationSearch;
 
-use SimpleLocator\Services\LocationSearch\LocationSearchValidator;
 use SimpleLocator\Repositories\SettingsRepository;
-use SimpleLocator\Helpers;
 use SimpleLocator\Services\LocationSearch\LocationResultPresenter;
-use SimpleLocator\Forms\Validation;
+use SimpleLocator\Helpers;
 
 /**
 * Search Locations
@@ -18,15 +16,16 @@ class LocationSearch {
 	private $data;
 
 	/**
-	* Validator
-	*/
-	private $validator;
-
-	/**
 	* Settings Repository
-	* @var object
+	* @var SimpleLocator\Repositories\SettingsRepository
 	*/
 	private $settings_repo;
+
+	/**
+	* Result Presenter
+	* @var SimpleLocator\Services\LocationSearch\LocationResultPresenter
+	*/
+	private $result_presenter;
 
 	/**
 	* Results Fields from Settings
@@ -63,16 +62,9 @@ class LocationSearch {
 	*/
 	private $response;
 
-	/**
-	* Result Presenter
-	*/
-	private $result_presenter;
-
-
 	public function __construct()
 	{
 		$this->settings_repo = new SettingsRepository;
-		$this->validator = new LocationSearchValidator;
 		$this->result_presenter = new LocationResultPresenter;
 	}
 
@@ -83,12 +75,10 @@ class LocationSearch {
 	{
 		$this->setResultsFields();
 		$this->setData();
-		$this->validator->validate();
 		$this->setQueryData();
 		$this->setQuery();
 		$this->runQuery();
 	}
-
 
 	/**
 	* Set the results fields
@@ -97,7 +87,6 @@ class LocationSearch {
 	{
 		$this->results_fields = $this->settings_repo->getResultsFieldArray();
 	}
-
 
 	/**
 	* Sanitize and set the user-submitted data
@@ -134,7 +123,6 @@ class LocationSearch {
 		$this->query_data['distance_unit'] = ( $this->data['unit'] == "miles" ) ? 69 : 111.045;		
 	}
 
-
 	/**
 	* Set the Field Variables for the SQL using fields chosen in settings
 	*/
@@ -147,7 +135,6 @@ class LocationSearch {
 		}
 		return $statement;
 	}
-
 
 	/**
 	* Set the Join statement for field vars in sql using fields chosen in settings
@@ -163,7 +150,6 @@ class LocationSearch {
 		return $statement;
 	}
 
-
 	/**
 	* Set the SQL Limit
 	*/
@@ -173,7 +159,6 @@ class LocationSearch {
 		if ( $limit == -1 ) return;
 		if ( is_numeric(intval($limit)) ) return "LIMIT " . intval($limit);
 	}
-
 
 	/**
 	* Set the Query
@@ -210,7 +195,6 @@ class LocationSearch {
 		$this->sql = $sql;
 	}
 
-
 	/**
 	* Lookup location data
 	*/
@@ -229,7 +213,6 @@ class LocationSearch {
 		$this->total_results = count($results);
 		$this->setResults($results);
 	}
-
 
 	/**
 	* Prepare Results
@@ -261,7 +244,4 @@ class LocationSearch {
 			'using_geolocation' => $this->data['geolocation']
 		);
 	}
-
 }
-
-

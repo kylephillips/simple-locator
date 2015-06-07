@@ -21,7 +21,5 @@ class LocationSearchValidator {
 			throw new \Exception(__('Invalid unit.', 'wpsimplelocator'));
 			break;
 		}
-		
 	}
-
 }

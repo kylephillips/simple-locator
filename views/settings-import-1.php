@@ -22,7 +22,6 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 	<h4><?php _e('Latitude & Longitude Data', 'wpsimplelocator'); ?></h4>
 	<p><?php _e('Geocoded latitude and longitude values will be saved in the fields selected under the "Post Type & Geocode Fields" tab.', 'wpsimplelocator'); ?></p>
 </div>
-
 <?php
 $incomplete = false;
 $transient = get_transient('wpsl_import_file');

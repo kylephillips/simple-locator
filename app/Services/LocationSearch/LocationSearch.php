@@ -94,13 +94,10 @@ class LocationSearch {
 	private function setData()
 	{
 		$this->data = array(
-			'address' => sanitize_text_field($_POST['address']),
-			'formatted_address' => sanitize_text_field($_POST['formatted_address']),
 			'distance' => sanitize_text_field($_POST['distance']),
 			'latitude' => sanitize_text_field($_POST['latitude']),
 			'longitude' => sanitize_text_field($_POST['longitude']),
 			'unit' => sanitize_text_field($_POST['unit']),
-			'geolocation' => sanitize_text_field($_POST['geolocation'])
 		);
 	}
 
@@ -228,20 +225,18 @@ class LocationSearch {
 	}
 
 	/**
+	* Get Result Count
+	*/
+	public function getResultCount()
+	{
+		return $this->total_results;
+	}
+
+	/**
 	* Get Results
 	*/
 	public function getResults()
 	{
-		return array(
-			'status' => 'success', 
-			'distance'=> $this->data['distance'],
-			'latitude' => $this->data['latitude'],
-			'longitude' => $this->data['longitude'],
-			'unit' => $this->data['unit'],
-			'formatted_address' => $this->data['formatted_address'],
-			'results' => $this->results,
-			'result_count' => $this->total_results,
-			'using_geolocation' => $this->data['geolocation']
-		);
+		return $this->results;
 	}
 }

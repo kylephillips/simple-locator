@@ -5,7 +5,7 @@ use SimpleLocator\Services\Validation\NonceValidator;
 /**
 * Abstract Listener Base
 */
-class AJAXListenerBase {
+abstract class AJAXListenerBase {
 
 	/**
 	* Nonce Validator

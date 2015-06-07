@@ -2,7 +2,7 @@
 
 use SimpleLocator\Services\Validation\NonceValidator;
 
-class AJAXAdminListenerBase {
+abstract class AJAXAdminListenerBase {
 
 	/**
 	* Nonce Validator

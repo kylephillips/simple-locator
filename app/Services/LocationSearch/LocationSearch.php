@@ -54,7 +54,7 @@ class LocationSearch {
 	* Total Results
 	* @var int
 	*/
-	private $total_results;
+	private $result_count;
 
 	/**
 	* JSON Response
@@ -207,7 +207,7 @@ class LocationSearch {
 		
 		// Run the Query
 		$results = $wpdb->get_results($this->sql);
-		$this->total_results = count($results);
+		$this->result_count = count($results);
 		$this->setResults($results);
 	}
 
@@ -229,7 +229,7 @@ class LocationSearch {
 	*/
 	public function getResultCount()
 	{
-		return $this->total_results;
+		return $this->result_count;
 	}
 
 	/**

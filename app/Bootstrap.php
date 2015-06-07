@@ -20,7 +20,7 @@ class Bootstrap {
 	public function init()
 	{
 		new \SimpleLocator\Migrations\Activation;
-		new \SimpleLocator\Dependencies\Dependencies;
+		new \SimpleLocator\Dependencies\DependencyFactory;
 		new \SimpleLocator\WPData\PostTypes;
 		new \SimpleLocator\WPData\MetaFields;
 		new \SimpleLocator\WPData\UploadFilter;

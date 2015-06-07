@@ -31,12 +31,21 @@ class AJAXListenerBase {
 	}
 
 	/**
+	* Send a JSON Response
+	* @param array $json
+	*/
+	protected function respond($json)
+	{
+		return wp_send_json($json);
+		die();
+	}
+
+	/**
 	* Send a Success Response
 	*/
 	protected function success($message)
 	{
-		return wp_send_json(array('status'=>'success', 'message'=>$message));
-		die();
+		$this->respond(array('status' => 'success', 'message' => $message));
 	}
 
 	/**
@@ -44,8 +53,7 @@ class AJAXListenerBase {
 	*/
 	protected function error($error)
 	{
-		return wp_send_json(array('status'=>'error', 'message'=>$error));
-		die();
+		$this->respond(array('status' => 'error', 'message' => $message));
 	}
 
 }

@@ -28,6 +28,7 @@ class AJAXLocationSearch extends AJAXListenerBase {
 	{
 		try {
 			$this->location_search->search();
+			return $this->respond($this->location_search->getResults());
 		} catch ( \Exception $e ){
 			return $this->error($e->getMessage());
 		}

@@ -87,7 +87,6 @@ class LocationSearch {
 		$this->setQueryData();
 		$this->setQuery();
 		$this->runQuery();
-		$this->sendResponse();
 	}
 
 
@@ -245,13 +244,12 @@ class LocationSearch {
 		}
 	}
 
-
 	/**
-	* Send the Response
+	* Get Results
 	*/
-	private function sendResponse()
+	public function getResults()
 	{
-		return wp_send_json(array(
+		return array(
 			'status' => 'success', 
 			'distance'=> $this->data['distance'],
 			'latitude' => $this->data['latitude'],
@@ -261,7 +259,7 @@ class LocationSearch {
 			'results' => $this->results,
 			'result_count' => $this->total_results,
 			'using_geolocation' => $this->data['geolocation']
-		));
+		);
 	}
 
 }

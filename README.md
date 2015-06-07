@@ -16,11 +16,17 @@ Learn more at [locatewp.com](http://locatewp.com) and download from the [WordPre
 ![Screenshot](https://raw.githubusercontent.com/kylephillips/wp-simple-locator/master/assets/images/screenshot-2.png)
 
 
-#### Installation 
+#### Installation - from the WordPress Repository
 1. Upload simple-locator to the wp-content/plugins/ directory
 2. Activate the plugin through the Plugins menu in WordPress
 3. Click on the Locations Menu item to begin adding locations.
 4. To change the post type, geocoded fields, or map styles, visit Settings > Simple Locator
+
+#### Installation - from the GitHub Project
+1. cd into the wp-content/plugins directory
+2. Clone the project: ```git clone https://github.com/kylephillips/wp-simple-locator.git simple-locator```
+3. cd into the ```simple-locator``` directory and run a ```composer install``` to download the plugin dependencies. ([https://getcomposer.org](More on composer))
+4. Activate the plugin through the Plugins menu in WordPress
 
 
 #### Usage

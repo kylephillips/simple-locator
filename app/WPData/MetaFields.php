@@ -66,7 +66,7 @@ class MetaFields {
 	public function displayMeta($post)
 	{
 		$this->setData($post);
-		include( \SimpleLocator\Helpers::view('location-meta') );
+		include( \SimpleLocator\Helpers::view('post-meta/location-meta') );
 	}
 
 

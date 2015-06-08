@@ -25,7 +25,6 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 <?php
 $incomplete = false;
 $transient = get_transient('wpsl_import_file');
-var_dump($transient);
 if ( $transient ){
 	$remaining = $transient['row_count'] - $transient['complete_rows'] - count($transient['error_rows']);
 }

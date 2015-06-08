@@ -1,6 +1,6 @@
 <?php
 $transient = get_transient('wpsl_import_file');
-//var_dump($transient);
+// var_dump($transient);
 // Check that the columns have been mapped
 
 /**
@@ -18,6 +18,9 @@ if ( !isset($transient['columns']) ) :
 <h3 class="wpsl-step-title"><?php _e('Step 3: Import and Geocode', 'wpsimplelocator'); ?></h3>
 
 <div class="error wpsl-import-error" style="display:none;"><p></p></div>
+
+<!-- Testing -->
+<button class="wpsl-reset-import">Reset Import</button>
 
 <!-- Intro Message -->
 <div class="wpsl-import-indicator-intro">

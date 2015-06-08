@@ -1,9 +1,9 @@
 <?php namespace SimpleLocator\Services\Import\Events;
 
-use SimpleLocator\Services\Import\Listeners\ImportFileHandler;
-use SimpleLocator\Services\Import\Listeners\ImportGetRowHandler;
-use SimpleLocator\Services\Import\Listeners\ImportMapColumnsHandler;
-use SimpleLocator\Services\Import\Listeners\ImportHandler;
+use SimpleLocator\Services\Import\Listeners\FileUploader;
+use SimpleLocator\Services\Import\Listeners\GetCSVRow;
+use SimpleLocator\Services\Import\Listeners\ColumnMapper;
+use SimpleLocator\Services\Import\Listeners\Import;
 use SimpleLocator\Services\Import\Listeners\ImportFinishHandler;
 
 
@@ -15,43 +15,47 @@ class RegisterImportEvents {
 	public function __construct()
 	{
 		// Import Handlers
-		add_action( 'admin_post_wpslimportupload', array($this, 'wpsl_import_file'));
-		add_action( 'wp_ajax_wpslimportcolumns', array($this, 'wpsl_import_columns' ));
-		add_action( 'admin_post_wpslmapcolumns', array($this, 'wpsl_map_columns'));
-		add_action( 'wp_ajax_wpsldoimport', array($this, 'wpsl_do_import' ));
+		add_action( 'admin_post_wpslimportupload', array($this, 'FileWasUploaded'));
+		add_action( 'admin_post_wpslmapcolumns', array($this, 'ColumnMapWasSaved'));
+		add_action( 'wp_ajax_wpsldoimport', array($this, 'ImportRequestMade' ));
+
+		add_action( 'wp_ajax_wpslimportcolumns', array($this, 'CSVRowRequested' ));
 		add_action( 'wp_ajax_wpslfinishimport', array($this, 'wpsl_finish_import'));
+
+		// Reset Test Data
+		add_action( 'wp_ajax_reset_test_import', array($this, 'resetTestData' ));
 	}
 
 	/**
-	* Import File Handler
+	* A File Was Uploaded
 	*/
-	public function wpsl_import_file()
+	public function FileWasUploaded()
 	{
-		new ImportFileHandler;
+		new FileUploader;
 	}
 
 	/**
-	* Get the CSV columns for mapping
+	* A CSV row was requested via AJAX
 	*/
-	public function wpsl_import_columns()
+	public function CSVRowRequested()
 	{
-		new ImportGetRowHandler;
+		new GetCSVRow;
 	}
 
 	/**
 	* Map the columns for import
 	*/
-	public function wpsl_map_columns()
+	public function ColumnMapWasSaved()
 	{
-		new ImportMapColumnsHandler;
+		new ColumnMapper;
 	}
 
 	/**
-	* Do the import
+	* Import Request Was Makde
 	*/
-	public function wpsl_do_import()
+	public function ImportRequestMade()
 	{
-		new ImportHandler;
+		new Import;
 	}
 
 	/**
@@ -60,6 +64,19 @@ class RegisterImportEvents {
 	public function wpsl_finish_import()
 	{
 		new ImportFinishHandler;
+	}
+
+	/**
+	* Test
+	*/
+	public function resetTestData()
+	{
+		$transient = get_transient('wpsl_import_file');
+		$transient['last_imported'] = 0;
+		$transient['error_rows'] = array();
+		$transient['complete_rows'] = 0;
+		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
+		return wp_send_json(array('status' => 'success'));
 	}
 
 

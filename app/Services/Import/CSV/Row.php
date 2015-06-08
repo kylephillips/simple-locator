@@ -1,22 +1,16 @@
-<?php namespace SimpleLocator\Services\Import;
+<?php namespace SimpleLocator\Services\Import\CSV;
 
 use League\Csv\Reader;
 
 /**
 * Return an array of CSV columns for a given row
 */
-class CSVRow {
+class Row {
 
 	/**
-	* The File Page
+	* The File Path
 	*/
 	private $file;
-
-
-	public function __construct()
-	{
-		$this->setFile();
-	}
 
 	/**
 	* Set the file path based on the transient
@@ -24,7 +18,7 @@ class CSVRow {
 	private function setFile()
 	{
 		if ( !get_transient('wpsl_import_file') ){
-			return $this->jsonError(__('An uploaded file could not be found', 'wpsimplelocator'));
+			throw new \Exception(__('An uploaded file could not be found', 'wpsimplelocator'));
 		}
 		$this->file = get_transient('wpsl_import_file');
 	}
@@ -34,20 +28,15 @@ class CSVRow {
 	*/
 	public function getRow($row)
 	{
+		$this->setFile();
 		$this->setMacFormatting();
 		$csv = Reader::createFromPath($this->file['file']);
 		$res = $csv->fetchOne($row);
 
-		if ( !$res ) $this->jsonError(__('Row not found', 'wpsimplelocator'));
+		if ( !$res ){
+			throw new \Exception(__('Row not found', 'wpsimplelocator'));
+		}
 		return $res;
-	}
-
-	/**
-	* Get total row count
-	*/
-	public function rowCount()
-	{
-		return $this->file['row_count'];
 	}
 
 	/**
@@ -61,13 +50,4 @@ class CSVRow {
 			}
 		}
 	}
-
-	/**
-	* Send a JSON error
-	*/
-	private function jsonError($error)
-	{
-		return wp_send_json(array('status'=>'error', 'message'=>$error));
-	}
-
 }

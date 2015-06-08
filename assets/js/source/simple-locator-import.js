@@ -3,14 +3,14 @@
 */
 jQuery(function($){
 
-	var offset = 0;
-	var completecount = 0;
-	var errorcount = 0; 
+	var offset = parseInt(wpsl_locator.importoffset);
+	var completecount = parseInt(wpsl_locator.complete_count);
+	var errorcount = parseInt(wpsl_locator.error_count); 
 	var pause = false; // pause import
 	var rowcount = 0; // for selecting a specific row from csv
 	var totalrows = 0;
 	var passed_validation = true;
-	var import_counter = 1;
+	var imports_per_request = 1; // How many imports per request
 
 	/**
 	* Start New Import (cancel previous)
@@ -41,7 +41,7 @@ jQuery(function($){
 		$('.wpsl-column-selection').hide();
 		$.ajax({
 			url: ajaxurl,
-			type: 'post',
+			type: 'POST',
 			datatype: 'json',
 			data: {
 				action: 'wpslimportcolumns',
@@ -49,7 +49,6 @@ jQuery(function($){
 				nonce: wpsl_locator.locatorNonce
 			},
 			success: function(data){
-				console.log(data);
 				totalrows = data.row_count;
 				populate_select_boxes(data);
 			}
@@ -249,22 +248,25 @@ jQuery(function($){
 	*/
 	function do_import()
 	{
+		console.log(offset);
 		$.ajax({
 			url: ajaxurl,
 			type: 'post',
 			datatype: 'json',
 			data: {
 				action: 'wpsldoimport',
-				offset: offset
+				nonce: wpsl_locator.locatorNonce,
+				offset: offset,
+				imports_per_request: imports_per_request
 			},
 			success: function(data){
 				console.log(data);
 				if ( data.status === 'complete' ){
 					complete();
-				} else if (data.status === 'apierror') {
+				} else if (data.status === 'error') {
 					$('.wpsl-import-error p').text(data.message);
 					$('.wpsl-import-error').show();
-				} else {
+				} else if ( data.status === 'success' ){
 					update_counts(data);
 				}
 			}
@@ -276,14 +278,13 @@ jQuery(function($){
 	*/
 	function update_counts(data)
 	{
-		offset = offset + import_counter;
-		var imported = data.import_count;
-		completecount = completecount + imported;
-		errorcount = errorcount + data.failed;
+		completecount = completecount + data.import_count;
+		offset = offset + data.import_count + data.failed_count; // increment the offset
+		errorcount = errorcount + data.failed_count;
 		$('.progress-count').text(completecount);
 		$('.error-count').text(errorcount);
 		update_progress_bar();
-		if ( !pause ) do_import();
+		do_import();
 	}
 
 	/**
@@ -306,22 +307,6 @@ jQuery(function($){
 		$('.wpsl-import-complete').show();
 		get_import_complete_status();
 	}
-
-	/**
-	* Pause the Import
-	*/
-	$('.wpsl-pause-import').on('click', function(e){
-		
-		if ( $(this).hasClass('paused') ){
-			$(this).removeClass('paused');
-			$(this).text(wpsl_locator.pause);
-			pause = true;
-		} else {
-			$(this).addClass('paused');
-			$(this).text(wpsl_locator.pause_continue);
-			pause = false;
-		}
-	});
 
 
 
@@ -361,6 +346,23 @@ jQuery(function($){
 		}
 		$('.wpsl-import-details').show();
 	}
+
+
+	// Testing
+	$(document).on('click', '.wpsl-reset-import', function(e){
+		e.preventDefault();
+		$.ajax({
+			url: ajaxurl,
+			type: 'post',
+			datatype: 'json',
+			data: {
+				action: 'reset_test_import'
+			},
+			success: function(data){
+				console.log(data);
+			}
+		});
+	});
 
 
 

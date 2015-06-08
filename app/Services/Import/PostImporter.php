@@ -5,12 +5,12 @@ use SimpleLocator\Services\Import\GoogleMapGeocode;
 /**
 * Import a Single Row/Post
 */
-class ImportRow {
+class PostImporter {
 
 	/**
 	* Array of column mappings from transient
 	*/
-	private $column_data;
+	private $post_data;
 
 	/**
 	* Transient
@@ -32,10 +32,18 @@ class ImportRow {
 	*/
 	public $geocoder;
 	
-	public function __construct($column_data, $transient)
+
+	public function __construct()
 	{
 		$this->geocoder = new GoogleMapGeocode;
-		$this->column_data = $column_data;
+	}
+
+	/**
+	* Import a Post
+	*/
+	public function import($post_data, $transient)
+	{
+		$this->post_data = $post_data;
 		$this->transient = $transient;
 		$this->setAddress();
 		$this->geocode();
@@ -49,11 +57,11 @@ class ImportRow {
 	{
 		$address = '';
 		foreach( $this->transient['columns'] as $field ){
-			if ( $field->type == 'address' ) $address .= $this->column_data[$field->csv_column] . ' ';
-			if ( $field->type == 'city' ) $address .= $this->column_data[$field->csv_column] . ' ';
-			if ( $field->type == 'state' ) $address .= $this->column_data[$field->csv_column] . ' ';
-			if ( $field->type == 'zip' ) $address .= $this->column_data[$field->csv_column];
-			if ( $field->type == 'full_address' ) $address = $this->column_data[$field->csv_column];
+			if ( $field->type == 'address' ) $address .= $this->post_data[$field->csv_column] . ' ';
+			if ( $field->type == 'city' ) $address .= $this->post_data[$field->csv_column] . ' ';
+			if ( $field->type == 'state' ) $address .= $this->post_data[$field->csv_column] . ' ';
+			if ( $field->type == 'zip' ) $address .= $this->post_data[$field->csv_column];
+			if ( $field->type == 'full_address' ) $address = $this->post_data[$field->csv_column];
 		}
 		$this->address = $address;
 	}
@@ -63,23 +71,22 @@ class ImportRow {
 	*/
 	private function geocode()
 	{
-		$this->geocoder->geocode($this->address);
-
-		if ( $this->geocoder->getStatus() == 'OK' ){
+		try {
+			$this->geocoder->geocode($this->address);
 			$coordinates = $this->geocoder->getCoordinates();
 			$this->coordinates['latitude'] = $coordinates['lat'];
 			$this->coordinates['longitude'] = $coordinates['lng'];
-			return $this->importPost();
-		}
-
-		if ( $this->geocoder->getError() == 'Google Maps Error: OVER_QUERY_LIMIT' ) {
+			$this->importPost();
+		} catch ( \SimpleLocator\Services\Import\Exceptions\GoogleAPIErrorException $e ) {
 			$this->updateLastRowImported();
-			return wp_send_json(array('status'=>'apierror', 'message'=>__('Your API limit has been reached. Try again in 24 hours.', 'wpsimplelocator')));
 			die();
-		}
-		
-		$this->failedRow($this->geocoder->getError());
-		$this->importPost();
+		} catch ( \SimpleLocator\Services\Import\Exceptions\GoogleRequestDeniedException $e ) {
+			$this->updateLastRowImported();
+			throw new \Exception($e->getMessage());
+		} catch ( \SimpleLocator\Services\Import\Exceptions\GoogleAPIException $e ) {
+			$this->failedRow($e->getMessage());
+			$this->importPost();
+		}		
 	}
 
 	/**
@@ -87,14 +94,14 @@ class ImportRow {
 	*/
 	private function importPost()
 	{
+		$this->import_status = true;
 		$post = array();
 		$post['post_type'] = $this->transient['post_type'];
 		$post['post_status'] = $this->transient['import_status'];
 		foreach ( $this->transient['columns'] as $field ){
-			$column_value = ( isset($this->column_data[$field->csv_column]) ) ? $this->column_data[$field->csv_column] : "";
-			$column_value = sanitize_text_field($column_value);
-			if ( $field->field == 'title' && $column_value !== "" ) $post['post_title'] = $column_value;
-			if ( $field->field == 'content' && $column_value !== "" ) $post['post_content'] = $column_value;
+			$column_value = ( isset($this->post_data[$field->csv_column]) ) ? $this->post_data[$field->csv_column] : "";
+			if ( $field->field == 'title' && $column_value !== "" ) $post['post_title'] = sanitize_text_field($column_value);
+			if ( $field->field == 'content' && $column_value !== "" ) $post['post_content'] = sanitize_text_field($column_value);
 		}
 		if ( !isset($post['post_title']) ){
 			$this->failedRow(__('Missing Title', 'wpsimplelocator'));
@@ -117,8 +124,7 @@ class ImportRow {
 		$exclude_fields = array('title', 'content');
 		foreach ( $this->transient['columns'] as $field ){
 			if ( in_array($field->field, $exclude_fields) ) continue;
-			$column_value = ( isset($this->column_data[$field->csv_column]) ) ? $this->column_data[$field->csv_column] : "";
-			$column_value = sanitize_text_field($column_value);
+			$column_value = ( isset($this->post_data[$field->csv_column]) ) ? sanitize_text_field($this->post_data[$field->csv_column]) : "";
 			if ( $field->type == 'website' ) $column_value = esc_url($column_value);
 			if ( $column_value !== "" ) add_post_meta($post_id, $field->field, $column_value);
 		}
@@ -142,7 +148,7 @@ class ImportRow {
 		$this->import_status = false;
 		$transient = get_transient('wpsl_import_file'); // Calling manually for multiple errors
 		$row_error = array(
-			'row' => $this->column_data[count($this->column_data)] + 1,
+			'row' => $this->post_data['record_number'],
 			'error' => $error
 		);
 		$transient['error_rows'][] = $row_error;
@@ -155,7 +161,7 @@ class ImportRow {
 	private function updateLastRowImported()
 	{
 		$transient = get_transient('wpsl_import_file'); // Calling manually for multiple errors
-		$transient['last_imported'] = $this->column_data[count($this->column_data)];
+		$transient['last_imported'] = $this->post_data['record_number'] - 1;
 		$transient['last_import_date'] = date_i18n( 'j F Y: H:i', time() );
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 	}

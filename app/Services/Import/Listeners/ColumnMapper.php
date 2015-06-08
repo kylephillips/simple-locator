@@ -1,8 +1,9 @@
-<?php namespace SimpleLocator\Services\Import;
+<?php namespace SimpleLocator\Services\Import\Listeners;
+
 /**
-* Save the column mapping (Import Step 2)
+* Saves the column mapping for imports
 */
-class SaveColumnMap {
+class ColumnMapper extends ImportListenerBase {
 
 	/**
 	* Fields
@@ -12,7 +13,9 @@ class SaveColumnMap {
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->setFields();
+		$this->saveTransient();
 	}
 
 	/**
@@ -29,7 +32,10 @@ class SaveColumnMap {
 		}
 	}
 
-	public function save()
+	/**
+	* Save the Map to the Transient
+	*/
+	private function saveTransient()
 	{
 		$transient = get_transient('wpsl_import_file');
 		$transient['columns'] = $this->fields;
@@ -40,6 +46,6 @@ class SaveColumnMap {
 			$transient['row_count'] = $transient['row_count'] - 1;
 		}
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
+		$this->success('3');
 	}
-
 }

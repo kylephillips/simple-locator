@@ -1,26 +1,16 @@
-<?php namespace SimpleLocator\Services\Import;
+<?php namespace SimpleLocator\Services\Import\Listeners;
 
 use League\Csv\Reader;
 
 /**
-* Uploads a File for Importing Purposes (Step 1 in import process)
+* Upload a File
 */
-class FileUploader {
+class FileUploader extends ImportListenerBase {
 
 	public function __construct()
 	{
-		$this->verifyNonce();
+		parent::__construct();
 		$this->copyFile();
-	}
-
-	/**
-	* Verify the nonce
-	*/
-	private function verifyNonce()
-	{
-		if ( ! wp_verify_nonce($_POST['nonce'], 'wpsl-import-nonce') ) {
-			$this->error(__('Incorrect Form Field', 'wpsimplelocator'));
-		}
 	}
 
 	/**
@@ -37,7 +27,7 @@ class FileUploader {
 		if ( isset($movefile['error']) ) return $this->error($movefile['error']);
 		
 		$this->setTransient($movefile['file']);
-		$this->success();
+		$this->success('2');
 	}
 
 	/**
@@ -59,7 +49,7 @@ class FileUploader {
 			'last_imported' => 0,
 			'lat' => get_option('wpsl_lat_field'), // Field to save latitude to
 			'lng' => get_option('wpsl_lng_field'), // Field to save longitude to
-			'import_type' => 'csv'
+			'import_type' => $_FILES['file']['type']
 		);
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 	}
@@ -71,7 +61,6 @@ class FileUploader {
 	{
 		return ( isset($_POST['import_post_type']) ) ? sanitize_text_field($_POST['import_post_type']) : 'location';
 	}
-
 
 	/**
 	* Get total row count
@@ -86,27 +75,6 @@ class FileUploader {
     		return true;
 		}); 
 		return $count;
-	}
-
-
-	/**
-	* Redirect to step 2 on success
-	*/
-	private function success()
-	{
-		$url = admin_url('options-general.php?page=wp_simple_locator&tab=import&step=2');
-		return header('Location:' . $url);
-	}
-
-
-	/**
-	* Error Notice
-	*/
-	private function error($error)
-	{
-		$url = admin_url('options-general.php?page=wp_simple_locator&tab=import&error=' . $error);
-		header('Location:' . $url);
-		die();
 	}
 
 }

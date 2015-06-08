@@ -115,6 +115,7 @@ class AdminDependencies extends DependencyBase {
 	*/
 	private function importVars($data)
 	{
+		$transient = get_transient('wpsl_import_file');
 		if ( !isset($_GET['tab']) || $_GET['tab'] !== "import" || !isset($_GET['step']) ){
 			$data['isimport'] = "false";
 			return $data;
@@ -131,6 +132,10 @@ class AdminDependencies extends DependencyBase {
 		$data['required_title'] = __('A post title field is required for import.', 'wpsimplelocator');
 		$data['title'] = __('Post Title', 'wpsimplelocator');
 		$data['content'] = __('Post Content', 'wpsimplelocator');
+		$data['importoffset'] = ( isset($transient['last_imported']) ) ? $transient['last_imported'] : 0;
+		if ( isset($transient['skip_first']) && $transient['skip_first'] && $data['importoffset'] == 0 ) $data['importoffset'] = 1;
+		$data['complete_count'] = ( isset($transient['complete_rows']) ) ? $transient['complete_rows'] : 0;
+		$data['error_count'] = ( isset($transient['error_rows']) ) ? count($transient['error_rows']) : 0;
 		return $data;
 	}
 

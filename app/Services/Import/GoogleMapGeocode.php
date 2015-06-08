@@ -1,6 +1,9 @@
 <?php namespace SimpleLocator\Services\Import;
 
 use GuzzleHttp\Client;
+use SimpleLocator\Services\Import\Exceptions\GoogleQueryLimitException;
+use SimpleLocator\Services\Import\Exceptions\GoogleAPIException;
+use SimpleLocator\Services\Import\Exceptions\GoogleRequestDeniedException;
 
 /**
 * Geocode an address
@@ -15,41 +18,46 @@ class GoogleMapGeocode {
 
 	/**
 	* Error
+	* @var string
 	*/
 	private $error;
-
-	/**
-	* Google Response Status
-	*/
-	private $response_status;
 
 	/**
 	*  Geocode the address
 	*/
 	public function geocode($address)
 	{
-		$client = new Client();
-		$query = '?address=' . $address;
 		$apikey = get_option('wpsl_google_api_key');
-		
-		$response = $client->get('https://maps.googleapis.com/maps/api/geocode/json' . $query);
+		$client = new Client();		
+		$response = $client->get('https://maps.googleapis.com/maps/api/geocode/json', [
+			'query' => [
+				'address' => $address,
+				'key' => $apikey
+			]
+		]);
 		$json = $response->json();
-		$this->response_status = $json['status'];
+		$response_status = $json['status'];
 
-		// Testing Query Limit Error
-		// if ( $address == '4156 W.E. Heck Court Baton Rouge LA 70816' ){
-		// 	$this->response_status = 'OVER_QUERY_LIMIT';
-		// }
-
-		if ( $this->response_status == 'OK' ){
-			$this->coordinates = array(
-				'lat' => $json['results'][0]['geometry']['location']['lat'],
-				'lng' => $json['results'][0]['geometry']['location']['lng']
-			);
-			return true;
+		if ( $response_status == 'OVER_QUERY_LIMIT' ){
+			throw new GoogleQueryLimitException(__('Your API limit has been reached. Try again in 24 hours.', 'wpsimplelocator'));
+			break;
 		}
-		$this->error = __('Google Maps Error', 'wpsimplelocator') . ': ' . $this->response_status;
-		return false;
+
+		if ( $response_status == 'REQUEST_DENIED' ){
+			throw new GoogleRequestDeniedException(__('Google Maps Error', 'wpsimplelocator') . ': ' . $json['error_message']);
+			break;
+		}
+
+		if ( $response_status !== 'OK' ) {
+			throw new GoogleAPIException(__('Google Maps Error', 'wpsimplelocator') . ': ' . $response_status);
+			return false;
+		}
+
+		$this->coordinates = array(
+			'lat' => $json['results'][0]['geometry']['location']['lat'],
+			'lng' => $json['results'][0]['geometry']['location']['lng']
+		);
+		return true;
 	}
 
 	/**
@@ -68,12 +76,5 @@ class GoogleMapGeocode {
 		return $this->error;
 	}
 
-	/**
-	* Response Status Getter
-	*/
-	public function getStatus()
-	{
-		return $this->response_status;
-	}
 
 }

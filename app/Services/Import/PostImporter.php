@@ -77,9 +77,9 @@ class PostImporter {
 			$this->coordinates['latitude'] = $coordinates['lat'];
 			$this->coordinates['longitude'] = $coordinates['lng'];
 			$this->importPost();
-		} catch ( \SimpleLocator\Services\Import\Exceptions\GoogleAPIErrorException $e ) {
+		} catch ( \SimpleLocator\Services\Import\Exceptions\GoogleQueryLimitException $e ) {
 			$this->updateLastRowImported();
-			die();
+			throw new \Exception($e->getMessage());
 		} catch ( \SimpleLocator\Services\Import\Exceptions\GoogleRequestDeniedException $e ) {
 			$this->updateLastRowImported();
 			throw new \Exception($e->getMessage());

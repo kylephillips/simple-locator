@@ -49,6 +49,13 @@ class CSVImport {
 	*/
 	private $post_importer;
 
+	/**
+	* Newly Imported Post IDs
+	* @var array
+	*/
+	private $post_ids = array();
+
+
 	public function __construct()
 	{
 		$this->post_importer = new PostImporter;
@@ -68,6 +75,7 @@ class CSVImport {
 		$this->setRows();
 		$this->importRows();
 		$this->updateCompleteCount();
+		return $this->post_ids;
 	}
 
 	/**
@@ -113,8 +121,9 @@ class CSVImport {
 	private function importRows()
 	{
 		foreach($this->rows as $key => $row){
-			if ( $this->post_importer->import($row, $this->transient) ){
+			if ( $new_id = $this->post_importer->import($row, $this->transient) ){
 				$this->success_count = $this->success_count + 1;
+				$this->post_ids[] = $new_id;
 			} else {
 				$this->failed_count = $this->failed_count + 1;
 			}

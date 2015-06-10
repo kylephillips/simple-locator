@@ -1,6 +1,6 @@
 <?php
 $transient = get_transient('wpsl_import_file');
-// var_dump($transient);
+var_dump($transient);
 // Check that the columns have been mapped
 
 /**
@@ -42,7 +42,7 @@ if ( !isset($transient['columns']) ) :
 
 <!-- Progress Indicator -->
 <div class="wpsl-import-indicator">
-	<p><strong><?php _e('Important', 'wpsimplelocator'); ?>:</strong> <?php _e('Import is in progress. Do not close or refresh this page.', 'wpsimplelocator'); ?></p>
+	<p><?php _e('Import is in progress. Closing this page will stop the import.', 'wpsimplelocator'); ?></p>
 
 	<div class="wpsl-import-progress">
 		<span class="progress-bar"></span>

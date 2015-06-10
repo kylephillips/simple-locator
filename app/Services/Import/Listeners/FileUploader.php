@@ -49,7 +49,8 @@ class FileUploader extends ImportListenerBase {
 			'last_imported' => 0,
 			'lat' => get_option('wpsl_lat_field'), // Field to save latitude to
 			'lng' => get_option('wpsl_lng_field'), // Field to save longitude to
-			'import_type' => $_FILES['file']['type']
+			'import_type' => $_FILES['file']['type'],
+			'post_ids' => array()
 		);
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 	}

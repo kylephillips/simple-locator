@@ -341,7 +341,7 @@ jQuery(function($){
 			success: function(data){
 				console.log(data);
 				$('.wpsl-total-import-count').text(data.import_count);
-				$('.wpsl-total-error-count').text(data.error_count);
+				$('.wpsl-total-error-count, .error-count').text(data.error_count);
 				if ( data.errors.length > 0 ){
 					append_import_errors(data.errors);
 				}

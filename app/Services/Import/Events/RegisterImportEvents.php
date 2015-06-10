@@ -75,6 +75,7 @@ class RegisterImportEvents {
 		$transient['last_imported'] = 0;
 		$transient['error_rows'] = array();
 		$transient['complete_rows'] = 0;
+		$transient['post_ids'] = array();
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 		return wp_send_json(array('status' => 'success'));
 	}

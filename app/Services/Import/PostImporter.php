@@ -31,6 +31,11 @@ class PostImporter {
 	* Geocoder Class
 	*/
 	public $geocoder;
+
+	/**
+	* Newly Created Post ID
+	*/
+	private $post_id;
 	
 
 	public function __construct()
@@ -47,7 +52,8 @@ class PostImporter {
 		$this->transient = $transient;
 		$this->setAddress();
 		$this->geocode();
-		return $this->import_status;
+		if ( $this->post_id ) return $this->post_id;
+		return false;
 	}
 
 	/**
@@ -107,36 +113,36 @@ class PostImporter {
 			$this->failedRow(__('Missing Title', 'wpsimplelocator'));
 			return false;
 		}
-		$post_id = wp_insert_post($post);
-		if ( $post = 0 ) {
+		$this->post_id = wp_insert_post($post);
+		if ( !$this->post_id ) {
 			$this->failedRow(__('WordPress Import Error', 'wpsimplelocator'));
 			return false;
 		}
-		$this->addMeta($post_id);
-		$this->addGeocodeField($post_id);
+		$this->addMeta();
+		$this->addGeocodeField();
 	}
 
 	/**
 	* Add Custom Meta Fields
 	*/
-	private function addMeta($post_id)
+	private function addMeta()
 	{
 		$exclude_fields = array('title', 'content');
 		foreach ( $this->transient['columns'] as $field ){
 			if ( in_array($field->field, $exclude_fields) ) continue;
 			$column_value = ( isset($this->post_data[$field->csv_column]) ) ? sanitize_text_field($this->post_data[$field->csv_column]) : "";
 			if ( $field->type == 'website' ) $column_value = esc_url($column_value);
-			if ( $column_value !== "" ) add_post_meta($post_id, $field->field, $column_value);
+			if ( $column_value !== "" ) add_post_meta($this->post_id, $field->field, $column_value);
 		}
 	}
 
 	/**
 	* Add Geocode Fields
 	*/
-	private function addGeocodeField($post_id)
+	private function addGeocodeField()
 	{
-		if ( isset($this->coordinates['latitude']) ) add_post_meta($post_id, $this->transient['lat'], $this->coordinates['latitude']);
-		if ( isset($this->coordinates['longitude']) ) add_post_meta($post_id, $this->transient['lng'], $this->coordinates['longitude']);
+		if ( isset($this->coordinates['latitude']) ) add_post_meta($this->post_id, $this->transient['lat'], $this->coordinates['latitude']);
+		if ( isset($this->coordinates['longitude']) ) add_post_meta($this->post_id, $this->transient['lng'], $this->coordinates['longitude']);
 	}
 
 	/**
@@ -164,14 +170,6 @@ class PostImporter {
 		$transient['last_imported'] = $this->post_data['record_number'] - 1;
 		$transient['last_import_date'] = date_i18n( 'j F Y: H:i', time() );
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
-	}
-
-	/**
-	* Get the Import Status
-	*/
-	public function importSuccess()
-	{
-		return $this->import_status;
 	}
 
 }

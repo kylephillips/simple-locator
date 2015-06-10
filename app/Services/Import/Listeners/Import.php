@@ -52,13 +52,24 @@ class Import extends ImportAJAXListenerBase {
 		$request_number = intval(sanitize_text_field($_POST['imports_per_request']));
 
 		try {
-			$this->import_class->doImport($offset, $request_number, $this->transient);
+			$ids = $this->import_class->doImport($offset, $request_number, $this->transient);
 		} catch (\SimpleLocator\Services\Import\Exceptions\ImportCompleteException $e ) {
 			$this->respond(array('status' => 'complete'));
 		} catch ( \Exception $e ){
 			$this->error($e->getMessage());
 		}
+		$this->updatePostIDs($ids);
 		$this->sendResponse();
+	}
+
+	/**
+	* Update New Post IDs in Transient
+	*/ 
+	private function updatePostIDs($ids)
+	{
+		$transient = get_transient('wpsl_import_file');
+		$transient['post_ids'] = array_unique(array_merge($transient['post_ids'], $ids));
+		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 	}
 
 	/**

@@ -22,6 +22,7 @@ if ( !isset($transient['columns']) ) :
 <!-- Testing -->
 <button class="wpsl-reset-import">Reset Import</button>
 
+<?php if ( $transient['last_imported'] == 0  ) : ?>
 <!-- Intro Message -->
 <div class="wpsl-import-indicator-intro">
 	<p><strong><?php _e('Total Rows to Import'); ?>:</strong> <?php echo $transient['row_count']; ?> <?php _e('rows from', 'wpsimplelocator'); ?> <?php echo $transient['filename']; ?></p>
@@ -29,6 +30,15 @@ if ( !isset($transient['columns']) ) :
 	<input type="hidden" name="last_imported" value="<?php echo $transient['last_imported']; ?>">
 	<p><button class="wpsl-start-import button"><?php _e('Start Import', 'wpsimplelocator'); ?></button></p>
 </div>
+<?php else : // Continuing Previous Import ?>
+<div class="wpsl-import-indicator-intro">
+	<p><strong><?php _e('Remaining Rows to Import'); ?>:</strong> <?php echo $transient['row_count'] - $transient['last_imported']; ?> <?php _e('rows from', 'wpsimplelocator'); ?> <?php echo $transient['filename']; ?></p>
+	<p><?php _e('Once the import has begun, do not close or refresh the page until complete.', 'wpsimplelocator'); ?></p>
+	<input type="hidden" name="last_imported" value="<?php echo $transient['last_imported']; ?>">
+	<p><button class="wpsl-start-import button"><?php _e('Start Import', 'wpsimplelocator'); ?></button></p>
+</div>
+<?php endif; ?>
+
 
 <!-- Progress Indicator -->
 <div class="wpsl-import-indicator">
@@ -39,7 +49,7 @@ if ( !isset($transient['columns']) ) :
 		<span class="progress-bar-bg" data-total="<?php echo $transient['row_count']; ?>"></span>
 		<p><span class="progress-count">0</span> <?php _e('of', 'wpsimplelocator'); echo ' ' . $transient['row_count']; ?> <?php _e('Rows Imported', 'wpsimplelocator'); ?> (<span class="error-count">0</span> <?php _e('Errors', 'wpsimplelocator'); ?>)</p>
 		<p>
-			<button class="button wpsl-pause-import"><?php _e('Pause', 'wpsimplelocator'); ?></button>
+			<button class="button wpsl-pause-import"><?php _e('Pause Import', 'wpsimplelocator'); ?></button>
 		</p>
 	</div>
 </div>

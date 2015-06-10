@@ -10,7 +10,7 @@ jQuery(function($){
 	var rowcount = 0; // for selecting a specific row from csv
 	var totalrows = 0;
 	var passed_validation = true;
-	var imports_per_request = 5; // How many imports per request
+	var imports_per_request = 1; // How many imports per request
 
 	/**
 	* Start New Import (cancel previous)
@@ -248,7 +248,7 @@ jQuery(function($){
 	*/
 	function do_import()
 	{
-		console.log(offset);
+		if ( pause ) return;
 		$.ajax({
 			url: ajaxurl,
 			type: 'post',
@@ -307,6 +307,20 @@ jQuery(function($){
 		$('.wpsl-import-complete').show();
 		get_import_complete_status();
 	}
+
+
+	/**
+	* ------------------------------------------------------
+	* Pause the Import
+	* ------------------------------------------------------
+	*/
+	$(document).on('click', '.wpsl-pause-import', function(e){
+		e.preventDefault();
+		pause = ( pause ) ? false : true;
+		var buttontext = ( pause ) ? wpsl_locator.pause_continue : wpsl_locator.pause;
+		$(this).text(buttontext);
+		do_import();
+	});
 
 
 

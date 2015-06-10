@@ -123,8 +123,8 @@ class AdminDependencies extends DependencyBase {
 		$data['isimport'] = "true";
 		$data['importstep'] = $_GET['step'];
 		$data['Row'] = 'Showing Row';
-		$data['pause'] = __('Pause', 'wpsimplelocator');
-		$data['pause_continue'] = __('Continue', 'wpsimplelocator');
+		$data['pause'] = __('Pause Import', 'wpsimplelocator');
+		$data['pause_continue'] = __('Continue Import', 'wpsimplelocator');
 		$data['post_type'] = get_option('wpsl_post_type');
 		$data['choose_column'] = 'Choose Column';
 		$data['required'] = __('Column and field selections required for import.', 'wpsimplelocator');

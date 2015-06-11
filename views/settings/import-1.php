@@ -5,6 +5,8 @@
 </div>
 
 <?php 
+//var_dump(get_post_meta(12046, 'wpsl_import_data', true));
+
 // Form Errors
 if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '</p></div>';
 ?>

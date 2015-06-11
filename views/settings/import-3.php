@@ -9,7 +9,7 @@ $transient = get_transient('wpsl_import_file');
 */
 ?>
 
-<?php if ( !isset($transient['columns']) ) : ?>
+<?php if ( !isset($transient['columns']) || $transient['complete'] ) : ?>
 
 <div class="error"><p><?php _e('Column data is not yet mapped.', 'wpsimplelocator'); ?></p></div>
 <a href="<?php echo admin_url('options-general.php?page=wp_simple_locator&tab=import&step=2'); ?>" class="button"><?php _e('Map Column Data', 'wpsimplelocator'); ?></a>

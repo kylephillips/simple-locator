@@ -10,6 +10,7 @@ class FinishImport {
 	public function __construct()
 	{
 		$this->getTransient();
+		$this->saveImport();
 		$this->response();
 	}
 
@@ -21,6 +22,17 @@ class FinishImport {
 		$this->transient = get_transient('wpsl_import_file');
 		$this->transient['complete'] = true;
 		set_transient('wpsl_import_file', $this->transient, 1 * YEAR_IN_SECONDS);
+	}
+
+	/**
+	* Save the Import
+	*/
+	private function saveImport()
+	{
+		$title = __('Import on ', 'wpsimplelocator') . date_i18n( 'Y-m-d H:m:s', time() );
+		$importpost = array('post_title' => $title);
+		$post_id = wp_insert_post($importpost);
+		add_post_meta($post_id, 'wpsl_import_data', $this->transient);
 	}
 
 	/**

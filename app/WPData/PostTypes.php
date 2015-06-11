@@ -15,6 +15,7 @@ class PostTypes {
 		$this->setLabels();
 		add_action( 'init', array( $this, 'registerLocation') );
 		add_action( 'init', array( $this, 'registerMaps') );
+		add_action( 'init', array( $this, 'registerImports') );
 		add_filter( 'manage_location_posts_columns', array($this,'locations_table_head'));
 		add_action( 'manage_location_posts_custom_column', array($this, 'locations_table_columns'), 10, 2);
 	}
@@ -89,6 +90,28 @@ class PostTypes {
 			'supports' => array('title','editor','thumbnail'),
 		);
 		register_post_type( 'wpslmaps' , $args );
+	}
+
+	/**
+	* Register the Imports Post Type
+	* (for saving import data)
+	*/
+	public function registerImports()
+	{
+		$labels = array(
+			'name' => __('Simple Locator Imports'),  
+			'singular_name' => __('Simple Locator Import')
+		);
+		$args = array(
+			'labels' => $labels,
+			'public' => false,  
+			'show_ui' => false,
+			'capability_type' => 'post',  
+			'hierarchical' => false,  
+			'has_archive' => false,
+			'supports' => array('title','editor'),
+		);
+		register_post_type( 'wpslimports' , $args );
 	}
 
 

@@ -1,6 +1,6 @@
 <?php namespace SimpleLocator\Services\Import\Listeners;
 
-class ImportFinishHandler {
+class FinishImport {
 
 	/**
 	* Transient
@@ -19,6 +19,8 @@ class ImportFinishHandler {
 	private function getTransient()
 	{
 		$this->transient = get_transient('wpsl_import_file');
+		$this->transient['complete'] = true;
+		set_transient('wpsl_import_file', $this->transient, 1 * YEAR_IN_SECONDS);
 	}
 
 	/**

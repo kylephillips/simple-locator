@@ -1,14 +1,15 @@
 <?php
 $transient = get_transient('wpsl_import_file');
-var_dump($transient);
+// var_dump($transient);
 // Check that the columns have been mapped
 
 /**
 * @todo
 * Check if last_impported !== 0. If not, display last row imported, import time, update # of rows to import, make button "continue import". If completed rows > 1, show error rows, with option to rerun error rows
 */
-if ( !isset($transient['columns']) ) :
 ?>
+
+<?php if ( !isset($transient['columns']) ) : ?>
 
 <div class="error"><p><?php _e('Column data is not yet mapped.', 'wpsimplelocator'); ?></p></div>
 <a href="<?php echo admin_url('options-general.php?page=wp_simple_locator&tab=import&step=2'); ?>" class="button"><?php _e('Map Column Data', 'wpsimplelocator'); ?></a>
@@ -22,22 +23,56 @@ if ( !isset($transient['columns']) ) :
 <!-- Testing -->
 <button class="wpsl-reset-import">Reset Import</button>
 
-<?php if ( $transient['last_imported'] == 0  ) : ?>
-<!-- Intro Message -->
+
+<?php if ( !$transient['last_imported'] ) : // New Import ?>
 <div class="wpsl-import-indicator-intro">
 	<p><strong><?php _e('Total Rows to Import'); ?>:</strong> <?php echo $transient['row_count']; ?> <?php _e('rows from', 'wpsimplelocator'); ?> <?php echo $transient['filename']; ?></p>
 	<p><?php _e('Once the import has begun, do not close or refresh the page until complete.', 'wpsimplelocator'); ?></p>
-	<input type="hidden" name="last_imported" value="<?php echo $transient['last_imported']; ?>">
 	<p><button class="wpsl-start-import button"><?php _e('Start Import', 'wpsimplelocator'); ?></button></p>
 </div>
+
+
 <?php else : // Continuing Previous Import ?>
 <div class="wpsl-import-indicator-intro">
-	<p><strong><?php _e('Remaining Rows to Import'); ?>:</strong> <?php echo $transient['row_count'] - $transient['last_imported']; ?> <?php _e('rows from', 'wpsimplelocator'); ?> <?php echo $transient['filename']; ?></p>
-	<p><?php _e('Once the import has begun, do not close or refresh the page until complete.', 'wpsimplelocator'); ?></p>
-	<input type="hidden" name="last_imported" value="<?php echo $transient['last_imported']; ?>">
-	<p><button class="wpsl-start-import button"><?php _e('Start Import', 'wpsimplelocator'); ?></button></p>
+	<p><strong><?php _e('Remaining Rows to Import'); ?>:</strong><br>
+		<?php echo $transient['row_count'] - $transient['last_imported'] . ' ' . __('rows from', 'wpsimplelocator') . ' ' . $transient['filename']; ?></p>
+
+	<?php
+		/*
+		* Display the last row imported if it is available
+		*/
+		if ( $transient['skip_first'] ) $header_row = $this->getCsvRow(0);
+		$last_imported = ( isset($header_row) ) ? $transient['last_imported'] - 1 : $transient['last_imported'];
+		$row = $this->getCsvRow($last_imported);
+		if ( $row ) : $out = "";
+	?>
+	<div class="wpsl-last-row-imported">
+		<h4><?php echo __('Last Row Imported', 'wpsimplelocator') . ' (' .  date_i18n( 'Y-m-d H:m:s', $transient['last_imported_time'] ) . ')'; ?></h4>
+		<table class="">
+		<?php 
+			if ( isset($header_row) ){
+				$out .= '<thead><tr>';
+				foreach( $header_row as $th ){
+					$out .= '<th>' . $th . '</th>';
+				}
+				$out .= '</tr></thead>';
+			}
+			$out .= '<tbody><tr>';
+			foreach( $row as $column ){
+				if ( $column == "" ) $column = '&nbsp;';
+				$out .= '<td>' . $column . '</td>';
+			}
+			$out .= '</tr></tbody></table>';
+			echo $out;
+		?>
+	</div>
+	<?php endif; ?>
+	<p><button class="wpsl-start-import button"><?php _e('Continue Import', 'wpsimplelocator'); ?></button></p>
 </div>
 <?php endif; ?>
+
+
+<input type="hidden" name="last_imported" value="<?php echo $transient['last_imported']; ?>">
 
 
 <!-- Progress Indicator -->
@@ -54,10 +89,12 @@ if ( !isset($transient['columns']) ) :
 	</div>
 </div>
 
+
 <!-- Import Complete Alert -->
 <div class="wpsl-import-complete updated" style="display:none;">
 	<p><?php _e('The import is complete.', 'wpsimplelocator'); ?> <span class="progress-count">0</span> <?php _e('of', 'wpsimplelocator'); echo ' ' . $transient['row_count']; ?> <?php _e('Rows Imported', 'wpsimplelocator'); ?> (<span class="error-count">0</span> <?php _e('Errors', 'wpsimplelocator'); ?>)</p>
 </div>
+
 
 <!-- Import Details Display after import is complete -->
 <div class="wpsl-import-details" style="display:none;">

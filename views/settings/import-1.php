@@ -25,7 +25,7 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 <?php
 $incomplete = false;
 $transient = get_transient('wpsl_import_file');
-if ( $transient ){
+if ( isset($transient['row_count']) ){
 	$remaining = $transient['row_count'] - $transient['complete_rows'] - count($transient['error_rows']);
 }
 if ( isset($remaining) && $remaining > 0 && !isset($_GET['error'])) :
@@ -47,7 +47,7 @@ if ( isset($remaining) && $remaining > 0 && !isset($_GET['error'])) :
 			echo $out;
 		?>
 	</p>
-	<a href="options-general.php?page=wp_simple_locator&tab=import&step=3" class="button">
+	<a href="options-general.php?page=wp_simple_locator&amp;tab=import&amp;step=3" class="button">
 		<?php _e('Continue Import', 'wpsimplelocator'); ?>
 	</a>
 	<a href="#" class="wpsl-new-import button button-primary">
@@ -60,7 +60,7 @@ if ( isset($remaining) && $remaining > 0 && !isset($_GET['error'])) :
 	<p>
 		<?php
 		if ( $incomplete ){
-			echo '<h4 style="color:#d54e21;margin-bottom:15px;font-size:15px;">New Import</h4>';
+			echo '<h4 style="color:#d54e21;margin-bottom:15px;font-size:15px;">' . __('New Import', 'wpsimplelocator') . '</h4>';
 		}
 		?>
 		<h4><?php _e('Import Post Type', 'wpsimplelocator'); ?></h4>

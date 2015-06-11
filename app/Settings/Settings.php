@@ -2,6 +2,7 @@
 
 use SimpleLocator\Repositories\FieldRepository;
 use SimpleLocator\Repositories\SettingsRepository;
+use SimpleLocator\Services\Import\CSV\Row;
 
 /**
 * Settings page
@@ -38,12 +39,18 @@ class Settings {
 	* Settings Repository
 	*/
 	private $settings_repo;
+
+	/**
+	* CSV Row Fetcher
+	*/
+	private $row;
 	
 
 	public function __construct()
 	{
 		$this->field_repo = new FieldRepository;
 		$this->settings_repo = new SettingsRepository;
+		$this->row = new Row;
 		$this->setUnit();
 		$this->setFieldType();
 		$this->setPostType();
@@ -162,6 +169,20 @@ class Settings {
 		if ( $option == 'wpsl_post_type' || $option == 'wpsl_posttype_labels'){
 			flush_rewrite_rules(false);
 		}
+	}
+
+
+	/**
+	* CSV Row Getter
+	*/
+	private function getCsvRow($row)
+	{
+		try {
+			$result = $this->row->getRow($row);
+		} catch ( \Exception $e ){
+			return false;
+		}
+		return $result;
 	}
 
 

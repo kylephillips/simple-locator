@@ -139,6 +139,7 @@ class CSVImport {
 		$transient = get_transient('wpsl_import_file');
 		$transient['complete_rows'] = $transient['complete_rows'] + $this->success_count;
 		$transient['last_imported'] = $this->rows[count($this->rows) - 1]['record_number']; // Last row in this batch
+		$transient['last_imported_time'] = time();
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 		$this->transient = $transient;
 	}

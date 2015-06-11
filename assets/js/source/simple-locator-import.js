@@ -238,7 +238,7 @@ jQuery(function($){
 
 	$('.wpsl-start-import').on('click', function(e){
 		e.preventDefault();
-		$('.wpsl-import-indicator-intro').hide();
+		$('.wpsl-import-indicator-intro, .wpsl-last-row-imported').hide();
 		$('.wpsl-import-indicator').show();
 		do_import();
 	});

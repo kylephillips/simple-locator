@@ -4,7 +4,7 @@ use SimpleLocator\Services\Import\Listeners\FileUploader;
 use SimpleLocator\Services\Import\Listeners\GetCSVRow;
 use SimpleLocator\Services\Import\Listeners\ColumnMapper;
 use SimpleLocator\Services\Import\Listeners\Import;
-use SimpleLocator\Services\Import\Listeners\ImportFinishHandler;
+use SimpleLocator\Services\Import\Listeners\FinishImport;
 
 
 /**
@@ -20,7 +20,7 @@ class RegisterImportEvents {
 		add_action( 'wp_ajax_wpsldoimport', array($this, 'ImportRequestMade' ));
 
 		add_action( 'wp_ajax_wpslimportcolumns', array($this, 'CSVRowRequested' ));
-		add_action( 'wp_ajax_wpslfinishimport', array($this, 'wpsl_finish_import'));
+		add_action( 'wp_ajax_wpslfinishimport', array($this, 'ImportComplete'));
 
 		// Reset Test Data
 		add_action( 'wp_ajax_reset_test_import', array($this, 'resetTestData' ));
@@ -61,9 +61,9 @@ class RegisterImportEvents {
 	/**
 	* Finish the import
 	*/
-	public function wpsl_finish_import()
+	public function ImportComplete()
 	{
-		new ImportFinishHandler;
+		new FinishImport;
 	}
 
 	/**
@@ -76,6 +76,7 @@ class RegisterImportEvents {
 		$transient['error_rows'] = array();
 		$transient['complete_rows'] = 0;
 		$transient['post_ids'] = array();
+		$transient['complete'] = false;
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 		return wp_send_json(array('status' => 'success'));
 	}

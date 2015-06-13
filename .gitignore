@@ -3,3 +3,4 @@ assets/js/wpsl-locator-ck.js
 /languages/wpsimplelocator-es_ES.mo
 /languages/wpsimplelocator-es_ES.po
 /vendor/*
+composer.lock

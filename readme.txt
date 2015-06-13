@@ -47,10 +47,13 @@ As of version 1.2.0, Simple Locator includes a bulk CSV data importer. If you ha
 The Google Maps Geocoding API limits requests to 5 per second, and 2500 per day. The import process is throttled to comply with the API limits. See the [Google Geocode API documentation](https://developers.google.com/maps/documentation/geocoding/#Limits) for more information.
 
 = I got an error during a large import. What do I do now? =
-Import progress is saved, and you may always come back and continue at a later time. If you received an API limit error, you'll need to wait 24 hours before continuing the import. If you attempt to continue after receiving this notice, your API key may be disabled by Google for violating their API terms. If you receive a 500 error from Google during the import, try refreshing the page and continuing the import. If the issue persists, check the last import row for formatting errors (the  last import row will be displayed on page refresh).
+Import progress is saved, and you may always come back and continue at a later time. If you received an API limit error, you'll need to wait 24 hours before continuing the import. If you attempt to continue after receiving this notice, your API key may be disabled by Google for violating their API terms. You may check your request usage in the Google Developer Console. If you receive a 500 error from Google during the import, try refreshing the page and continuing the import. If the issue persists, check the last import row for formatting errors (the  last import row will be displayed on page refresh).
 
 = Why does "ZERO RESULTS" mean in the import error log? =
 The Google Maps Geocoder could not locate the address. Check the corresponding CSV row number for formatting errors.
+
+= Why isn't my Google Maps API Key Working for the Importer? =
+Your API key must be public, and have the Geocoding API enabled. To enable the API, visit your Google Developer console, and enable both the "Javascript API v3" and the "Geocoding API". You may also check your API usage through the developer console.
 
 = What 3rd party services does this plugin use? =
 All geocoding and mapping functionality takes advantage of the Google Maps Javascript API V3. Unexpected changes in the API service may effect plugin functionality, but any changes will be monitored and addressed as needed.

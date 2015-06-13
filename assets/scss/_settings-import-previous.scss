@@ -1,0 +1,46 @@
+//
+// Previous Imports on Step One
+// --------------------------------------------------
+.wpsl-previous-imports {
+	margin-top: 30px;
+
+	.import {
+		background-color: $white;
+		border-top: 1px solid darken($white, 12%);
+		&.first {
+			border-top: 0;
+		}
+	} // .import
+
+	.import-title {
+		@include clearfix;
+		padding: 8px;
+		h4 {
+			margin: 0;
+			position: relative;
+			top: 3px;
+		}
+		a {
+			float: right;
+			position: relative;
+			z-index: 1;
+		}
+	}
+
+	.import-body {
+		display: none;
+		padding: 8px;
+		background-color: darken($white, 12%);
+	}
+
+	.import-footer {
+		padding: 8px 0;
+		.button-danger {
+			margin-right: 10px;
+		}
+		p {
+			margin: 0;
+		}
+	}
+
+} // .wpsl-previous-imports

@@ -362,6 +362,32 @@ jQuery(function($){
 	}
 
 
+
+	/**
+	* ------------------------------------------------------
+	* Undo an Import
+	* ------------------------------------------------------
+	*/
+
+	$(document).on('click', '[data-import-toggle-details]', function(e){
+		e.preventDefault();
+		$(this).parents('.import').find('.import-body').toggle();
+	});
+
+	$(document).on('click', '[data-undo-import]', function(e){
+		e.preventDefault();
+		var id = $(this).attr('data-undo-import');
+		if ( confirm(wpsl_locator.confirm_undo) ) undo_import(id);
+	});
+
+	function undo_import(id)
+	{
+		$('#undo_import_id').val(id);
+		$('[data-undo-import-form]').submit();
+	}
+
+
+
 	// Testing
 	$(document).on('click', '.wpsl-reset-import', function(e){
 		e.preventDefault();

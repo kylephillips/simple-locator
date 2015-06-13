@@ -33,9 +33,12 @@ abstract class ImportListenerBase
 	/**
 	* Redirect to next step on success
 	*/
-	protected function success($step)
+	protected function success($step = null, $message = null)
 	{
-		$url = admin_url('options-general.php?page=wp_simple_locator&tab=import&step=' . $step);
+		$url = 'options-general.php?page=wp_simple_locator&tab=import';
+		if ( $step ) $url .= '&step=' . $step;
+		if ( $message ) $url .= '&message=' . $message;
+		$url = admin_url($url);
 		return header('Location:' . $url);
 	}
 

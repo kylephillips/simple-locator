@@ -65,17 +65,7 @@
 }
 
 .wpsl-reset-posttype.button {
-	background: transparent;
-	background-color: $red;
-	border-color: $red;
-	color: $white;
-	box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, .3);
-	&:hover, &:active, &:focus {
-		background: transparent;
-		background-color: darken($red, 8%);
-		border-color: darken($red, 8%);;
-		color: $white;
-	}
+	
 }
 
 .wpsl-red {

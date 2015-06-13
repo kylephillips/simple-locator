@@ -5,7 +5,7 @@
 </div>
 
 <?php 
-//var_dump(get_post_meta(12051, 'wpsl_import_data', true));
+// var_dump(get_post_meta(12051, 'wpsl_import_data', true));
 
 // Form Errors
 if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '</p></div>';
@@ -82,17 +82,71 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 	<input type="submit" class="button" value="<?php _e('Upload File', 'wpsimplelocator'); ?>">
 </form>
 
+
 <?php
 // Display Previous Imports
 $iq = new WP_Query(array(
-	'post_type' => 'wpslimports',
+	'post_type' => 'wpslimport',
 	'posts_per_page' => -1
 ));
-if ( $iq->have_posts() ) :
+if ( $iq->have_posts() ) : $c = 1;
 ?>
 <div class="wpsl-previous-imports">
-</div>
+	<h3><?php _e('Complete Imports', 'wpsimplelocator'); ?></h3>
+	<?php while ( $iq->have_posts() ) : $iq->the_post(); $data = get_post_meta(get_the_id(), 'wpsl_import_data', true); ?>
+		<div class="import<?php if ( $c == 1) echo ' first';?>">
+			<div class="import-title">
+				<a href="#" class="button" data-import-toggle-details><?php _e('Details', 'wpsimplelocator'); ?></a>
+				<h4><?php the_title(); ?></h4>
+			</div><!-- .import-title -->
+			<div class="import-body">
+				<p>
+					<strong><?php _e('File', 'wpsimplelocator'); ?>:</strong> <?php echo $data['filename']; ?><br>
+					<strong><?php _e('Total Posts Imported', 'wpsimplelocator'); ?>:</strong> <?php echo $data['complete_rows']; ?><br>
+					<strong><?php _e('Post Type', 'wpsimplelocator'); ?>:</strong> <?php echo $data['post_type']; ?><br>
+					<strong><?php _e('Errors', 'wpsimplelocator'); ?>:</strong> <?php echo count($data['error_rows']); ?>
+				</p>
+				<?php if ( count($data['error_rows']) > 0 ) : ?>
+				<div class="wpsl-import-details">
+				<h4><?php _e('Error Log', 'wpsimplelocator'); ?></h4>
+				<table>
+					<thead>
+						<tr>
+							<th><?php _e('Row Number', 'wpsimplelocator'); ?></th>
+							<th><?php _e('Error', 'wpsimplelocator'); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php 
+						foreach($data['error_rows'] as $row){
+							$out = '<tr>';
+							$out .= '<td>' . $row['row'] . '</td>';
+							$out .= '<td>' . $row['error'] . '</td>';
+							$out .= '</tr>';
+							echo $out;
+						}
+						?>
+					</tbody>
+				</table>
+				</div>
+				<?php endif; ?>
+				<div class="import-footer">
+					<p>
+						<a href="#" data-undo-import="<?php echo get_the_id(); ?>" class="button-danger">
+							<?php _e('Undo Import', 'wpsimplelocator'); ?>
+						</a>
+						<strong><?php _e('Warning', 'wpsimplelocator'); ?></strong>: <?php _e('Undoing an import will erase all post data created during the import.', 'wpsimplelocator'); ?>
+					</p>
+				</div>
+			</div><!-- .import-body -->
+		</div><!-- .import -->
+	<?php $c++; endwhile; ?>
+
+	<form action="<?php echo admin_url('admin-post.php'); ?>" method="post" data-undo-import-form style="display:none;">
+		<input type="hidden" name="action" value="wpslundoimport">
+		<input type="hidden" name="undo_import_id" id="undo_import_id">
+		<?php wp_nonce_field( 'wpsl-import-nonce', 'nonce' ) ?>
+	</form>
+
+</div><!-- .wpsl-previous-imports -->
 <?php endif; wp_reset_postdata(); // Previous Import
-
-
-

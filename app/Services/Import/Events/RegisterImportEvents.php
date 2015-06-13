@@ -7,6 +7,7 @@ use SimpleLocator\Services\Import\Listeners\GetCSVRow;
 use SimpleLocator\Services\Import\Listeners\ColumnMapper;
 use SimpleLocator\Services\Import\Listeners\Import;
 use SimpleLocator\Services\Import\Listeners\FinishImport;
+use SimpleLocator\Services\Import\Listeners\UndoImport;
 
 
 /**
@@ -24,6 +25,9 @@ class RegisterImportEvents
 
 		add_action( 'wp_ajax_wpslimportcolumns', array($this, 'CSVRowRequested' ));
 		add_action( 'wp_ajax_wpslfinishimport', array($this, 'ImportComplete'));
+
+		// Undo an Import
+		add_action( 'admin_post_wpslundoimport', array($this, 'undoImportRequested' ));
 
 		// Reset Test Data
 		add_action( 'wp_ajax_reset_test_import', array($this, 'resetTestData' ));
@@ -67,6 +71,14 @@ class RegisterImportEvents
 	public function ImportComplete()
 	{
 		new FinishImport;
+	}
+
+	/**
+	* Undo an import
+	*/
+	public function undoImportRequested()
+	{
+		new UndoImport;
 	}
 
 	/**

@@ -3,7 +3,7 @@
 	<td colspan="2" style="padding:0 0 20px 0;">
 		<h3><?php _e('Location Post Type', 'wpsimplelocator'); ?></h3>
 		<p><?php _e('Simple Locator comes with a post type of "Locations" with all the fields you need. If you\'d like to use a custom post type, select it below. If you have existing fields for latitude and longitude, select those.', 'wpsimplelocator'); ?></p>
-		<p><button class="button wpsl-reset-posttype"><?php _e('Reset to Default', 'wpsimplelocator'); ?></button>
+		<p><button class="button-danger wpsl-reset-posttype"><?php _e('Reset to Default', 'wpsimplelocator'); ?></button>
 		</p>
 	</td>
 </tr>

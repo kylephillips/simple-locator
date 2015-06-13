@@ -1,0 +1,25 @@
+//
+// Buttons
+// --------------------------------------------------
+.button-danger {
+	text-decoration: none;
+	display: inline-block;
+	background: transparent;
+	background-color: $red;
+	border: 1px solid $red;
+	border-radius: 2px;
+	line-height: 30px;
+	padding: 0px 10px;
+	cursor: pointer;
+	color: $white;
+	box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, .3);
+	&:hover, &:active, &:focus {
+		background: transparent;
+		background-color: darken($red, 8%);
+		border-color: darken($red, 8%);;
+		color: $white;
+	}
+	&:disabled {
+		opacity: .5;
+	}
+}

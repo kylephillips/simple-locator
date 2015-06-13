@@ -55,6 +55,7 @@ class AdminDependencies extends DependencyBase
 				'posttype' => $this->post_type
 			);
 			$data = $this->importVars($data);
+			$data['confirm_undo'] = __('Are you sure you want to undo this import? This action cannot be undone.', 'wpsimplelocator');
 			wp_localize_script( 
 				'simple-locator-admin', 
 				'wpsl_locator', 

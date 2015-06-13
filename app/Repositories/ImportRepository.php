@@ -35,4 +35,14 @@ class ImportRepository
 		return $this->transient;
 	}
 
+	/**
+	* Get imported post IDs from an import
+	* @param int $id - The Import ID
+	*/
+	public function getImportedPostIDs($id)
+	{
+		$meta = get_post_meta($id, 'wpsl_import_data', true);
+		return $meta['post_ids'];
+	}
+
 }

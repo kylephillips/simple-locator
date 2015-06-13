@@ -10,7 +10,7 @@ jQuery(function($){
 	var rowcount = 0; // for selecting a specific row from csv
 	var totalrows = 0;
 	var passed_validation = true;
-	var imports_per_request = 1; // How many imports per request
+	var imports_per_request = 5; // How many imports per request
 
 	/**
 	* Start New Import (cancel previous)

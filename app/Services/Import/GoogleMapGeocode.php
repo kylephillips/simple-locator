@@ -30,7 +30,7 @@ class GoogleMapGeocode
 	*/
 	public function geocode($address)
 	{
-		$apikey = get_option('wpsl_google_api_key');
+		$apikey = get_option('wpsl_google_geocode_api_key');
 		$client = new Client();		
 		$response = $client->get('https://maps.googleapis.com/maps/api/geocode/json', [
 			'query' => [

@@ -122,6 +122,7 @@ class Settings
 	public function registerSettings()
 	{
 		register_setting( 'wpsimplelocator-general', 'wpsl_google_api_key' );
+		register_setting( 'wpsimplelocator-general', 'wpsl_google_geocode_api_key');
 		register_setting( 'wpsimplelocator-general', 'wpsl_measurement_unit' );
 		register_setting( 'wpsimplelocator-general', 'wpsl_output_css' );
 		register_setting( 'wpsimplelocator-general', 'wpsl_map_pin' );

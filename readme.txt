@@ -3,7 +3,7 @@ Contributors: kylephillips
 Donate link: http://locatewp.com/
 Tags: location, store locator, google maps, store map
 Requires at least: 3.8
-Tested up to: 4.1
+Tested up to: 4.2
 Stable tag: 1.2.0
 
 License: GPLv2 or later
@@ -94,6 +94,10 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 10. Import locations in bulk from a CSV file. Locations will be automatically geocoded using the Google Maps Geocode API (Import functionality requires PHP version 5.4+ and a valid Google Maps API key with the Geocoding API enabled).
 
 == Changelog ==
+
+= 1.2.1 =
+* Importer bug fix – API key for Geocoding saved separately as server key. 
+* Google Maps Import over HTTPS – Fixes issue on sites running HTTPS
 
 = 1.2.0 =
 * CSV bulk importing is now included for importing and geocoding locations. PHP version 5.4+ is required for import functionality, as well as a valid Google Maps API key with the Geocode API enabled. See the Simple Locator website for more details.

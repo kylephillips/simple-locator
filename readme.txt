@@ -43,6 +43,15 @@ For more information visit [locatewp.com](http://locatewp.com).
 = I have a LOT of locations. How can I get them imported in bulk? =
 As of version 1.2.0, Simple Locator includes a bulk CSV data importer. If you have your location data available in CSV format with separate address, city and state/province columns, you may use this tool to import your locations as posts and geocode the locations automatically. The Google Maps Geocoding API limits requests to 2500 per day, so if your file contains over 2500 rows, it may take multiple days to complete the import. See the [Simple Locator Website](http://locatewp.com) for details on importing locations.
 
+= Why does importing take so long? =
+The Google Maps Geocoding API limits requests to 5 per second, and 2500 per day. The import process is throttled to comply with the API limits. See the [Google Geocode API documentation](https://developers.google.com/maps/documentation/geocoding/#Limits) for more information.
+
+= I got an error during a large import. What do I do now? =
+Import progress is saved, and you may always come back and continue at a later time. If you received an API limit error, you'll need to wait 24 hours before continuing the import. If you attempt to continue after receiving this notice, your API key may be disabled by Google for violating their API terms. If you receive a 500 error from Google during the import, try refreshing the page and continuing the import. If the issue persists, check the last import row for formatting errors (the  last import row will be displayed on page refresh).
+
+= Why does "ZERO RESULTS" mean in the import error log? =
+The Google Maps Geocoder could not locate the address. Check the corresponding CSV row number for formatting errors.
+
 = What 3rd party services does this plugin use? =
 All geocoding and mapping functionality takes advantage of the Google Maps Javascript API V3. Unexpected changes in the API service may effect plugin functionality, but any changes will be monitored and addressed as needed.
 
@@ -79,10 +88,12 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 9. Configure results display by adding custom fields from the chosen post type plus post data including the title, permalink, excerpt and thumbnails.
 
+10. Import locations in bulk from a CSV file. Locations will be automatically geocoded using the Google Maps Geocode API (Import functionality requires PHP version 5.4+ and a valid Google Maps API key with the Geocoding API enabled).
+
 == Changelog ==
 
 = 1.2.0 =
-* CSV Import is now included for importing and geocoding locations. PHP version 5.4+ is required for import functionality. See the Simple Locator website for more details.
+* CSV bulk importing is now included for importing and geocoding locations. PHP version 5.4+ is required for import functionality, as well as a valid Google Maps API key with the Geocode API enabled. See the Simple Locator website for more details.
 
 = 1.1.5 =
 * Bug fix in singular location view that was preventing display of additional custom meta data when using the included location post type

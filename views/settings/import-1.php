@@ -97,7 +97,7 @@ if ( $iq->have_posts() ) : $c = 1;
 		<div class="import<?php if ( $c == 1) echo ' first';?>">
 			<div class="import-title">
 				<a href="#" class="button" data-import-toggle-details><?php _e('Details', 'wpsimplelocator'); ?></a>
-				<h4><?php the_title(); ?></h4>
+				<h4><?php echo get_the_title(get_the_id()) . ' ' . __('from', 'wpsimplelocator') . ' ' . $data['filename']; ?></h4>
 			</div><!-- .import-title -->
 			<div class="import-body">
 				<p>

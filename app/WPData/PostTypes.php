@@ -25,6 +25,17 @@ class PostTypes
 	}
 
 	/**
+	* Public method to manually register type, used in activation for Rewrite flush
+	* @since 1.2.2
+	*/
+	public function register()
+	{
+		$this->registerLocation();
+		$this->registerMaps();
+		$this->registerImports();
+	}
+
+	/**
 	* Set the Post Type Labels from the option
 	* @since 1.0.6
 	*/

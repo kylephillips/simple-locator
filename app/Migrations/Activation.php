@@ -3,6 +3,7 @@
 namespace SimpleLocator\Migrations;
 
 use SimpleLocator\Migrations\DefaultOptions;
+use SimpleLocator\WPData\PostTypes;
 
 /**
 * Plugin Activation
@@ -37,6 +38,9 @@ class Activation
 	*/
 	public function install()
 	{
+		$types = new PostTypes;
+		$types->register();
+		flush_rewrite_rules();
 		$this->migrateMaps();
 	}
 

@@ -22,6 +22,14 @@ jQuery(function($){
 	});
 
 	/**
+	* Toggle Import Instructions
+	*/
+	$(document).on('click', '[data-toggle-import-instructions]', function(e){
+		e.preventDefault();
+		$('.wpsl-import-instructions').toggle();
+	});
+
+	/**
 	* ------------------------------------------------------
 	* Map CSV columns
 	* ------------------------------------------------------
@@ -365,7 +373,7 @@ jQuery(function($){
 
 	/**
 	* ------------------------------------------------------
-	* Undo an Import
+	* Undo / Redo / Remove an Import
 	* ------------------------------------------------------
 	*/
 
@@ -374,6 +382,7 @@ jQuery(function($){
 		$(this).parents('.import').find('.import-body').toggle();
 	});
 
+	// Undo
 	$(document).on('click', '[data-undo-import]', function(e){
 		e.preventDefault();
 		var id = $(this).attr('data-undo-import');
@@ -387,24 +396,32 @@ jQuery(function($){
 	}
 
 
-
-	// Testing
-	$(document).on('click', '.wpsl-reset-import', function(e){
+	// Redo
+	$(document).on('click', '[data-redo-import]', function(e){
 		e.preventDefault();
-		$.ajax({
-			url: ajaxurl,
-			type: 'post',
-			datatype: 'json',
-			data: {
-				action: 'reset_test_import'
-			},
-			success: function(data){
-				console.log(data);
-			}
-		});
+		var id = $(this).attr('data-redo-import');
+		if ( confirm(wpsl_locator.confirm_redo) ) redo_import(id);
 	});
 
+	function redo_import(id)
+	{
+		$('#redo_import_id').val(id);
+		$('[data-redo-import-form]').submit();
+	}
 
+
+	// Remove
+	$(document).on('click', '[data-remove-import]', function(e){
+		e.preventDefault();
+		var id = $(this).attr('data-remove-import');
+		if ( confirm(wpsl_locator.confirm_remove) ) remove_import(id);
+	});
+
+	function remove_import(id)
+	{
+		$('#remove_import_id').val(id);
+		$('[data-remove-import-form]').submit();
+	}
 
 
 }); // jQuery

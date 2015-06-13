@@ -56,6 +56,8 @@ class AdminDependencies extends DependencyBase
 			);
 			$data = $this->importVars($data);
 			$data['confirm_undo'] = __('Are you sure you want to undo this import? This action cannot be undone.', 'wpsimplelocator');
+			$data['confirm_redo'] = __('Are you sure you want to redo this import? This will erase any currently pending imports.', 'wpsimplelocator');
+			$data['confirm_remove'] = __('Are you sure you want to remove this import record? You will no longer be able to redo or undo this import. All imported post data will remain.', 'wpsimplelocator');
 			wp_localize_script( 
 				'simple-locator-admin', 
 				'wpsl_locator', 

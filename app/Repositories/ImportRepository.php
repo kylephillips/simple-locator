@@ -45,4 +45,13 @@ class ImportRepository
 		return $meta['post_ids'];
 	}
 
+	/**
+	* Get Import Data for a specific import
+	* @param int $id - The Import ID
+	*/
+	public function getImportData($id)
+	{
+		return get_post_meta($id, 'wpsl_import_data', true);
+	}
+
 }

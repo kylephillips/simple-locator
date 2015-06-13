@@ -35,15 +35,7 @@ class UndoImport extends ImportListenerBase
 		$this->import_repo = new ImportRepository;
 		$this->setIDs();
 		$this->deletePosts();
-		$this->success();
-	}
-
-	/**
-	* Check Capabilities
-	*/
-	private function validateUser()
-	{
-		if ( !current_user_can('delete_others_posts') ) return $this->error(__('You do not have the necessary capabilities to undo an import. Contact your site administrator to perform this action.', 'wpsimplelocator'));
+		$this->success(null);
 	}
 
 	/**
@@ -67,12 +59,11 @@ class UndoImport extends ImportListenerBase
 	}
 
 	/**
-	* Redirect to next step on success
+	* Redirect back on success
 	*/
-	protected function success($step = null, $message = null)
+	protected function success($step)
 	{
-		$url = 'options-general.php?page=wp_simple_locator&tab=import&success=' . __('Import successfully undone. All post data has been removed.', 'wpsimplelocator');
-		$url = admin_url($url);
+		$url = admin_url('options-general.php?page=wp_simple_locator&tab=import&success=' . __('Import successfully undone. All post data has been removed.', 'wpsimplelocator'));
 		return header('Location:' . $url);
 	}
 

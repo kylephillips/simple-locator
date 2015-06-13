@@ -1,15 +1,8 @@
 <?php
 $transient = $this->import_repo->transient();
-// var_dump($transient);
+
 // Check that the columns have been mapped
-
-/**
-* @todo
-* Check if last_impported !== 0. If not, display last row imported, import time, update # of rows to import, make button "continue import". If completed rows > 1, show error rows, with option to rerun error rows
-*/
-?>
-
-<?php if ( !isset($transient['columns']) || $transient['complete'] ) : ?>
+if ( !isset($transient['columns']) || $transient['complete'] ) : ?>
 
 <div class="error"><p><?php _e('Column data is not yet mapped.', 'wpsimplelocator'); ?></p></div>
 <a href="<?php echo admin_url('options-general.php?page=wp_simple_locator&tab=import&step=2'); ?>" class="button"><?php _e('Map Column Data', 'wpsimplelocator'); ?></a>
@@ -19,10 +12,6 @@ $transient = $this->import_repo->transient();
 <h3 class="wpsl-step-title"><?php _e('Step 3: Import and Geocode', 'wpsimplelocator'); ?></h3>
 
 <div class="error wpsl-import-error" style="display:none;"><p></p></div>
-
-<!-- Testing -->
-<button class="wpsl-reset-import">Reset Import</button>
-
 
 <?php if ( !$transient['last_imported'] ) : // New Import ?>
 <div class="wpsl-import-indicator-intro">
@@ -71,9 +60,7 @@ $transient = $this->import_repo->transient();
 </div>
 <?php endif; ?>
 
-
 <input type="hidden" name="last_imported" value="<?php echo $transient['last_imported']; ?>">
-
 
 <!-- Progress Indicator -->
 <div class="wpsl-import-indicator">

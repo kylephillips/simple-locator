@@ -1,17 +1,16 @@
 <h3 class="wpsl-step-title"><?php _e('Step 1: Upload CSV File', 'wpsimplelocator'); ?></h3>
 
-<div class="error">
-	<p><strong><?php _e('Important', 'wpsimplelocator'); ?>:</strong> <?php _e('Before running an import, make a complete backup of your database.', 'wpsimplelocator'); ?></p>
-</div>
-
 <?php 
-// var_dump(get_post_meta(12051, 'wpsl_import_data', true));
-
-// Form Errors
+// Form Notifications
+if ( isset($_GET['success']) ) echo '<div class="updated"><p>' . $_GET['success'] . '</p></div>';
 if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '</p></div>';
 ?>
 
-<div class="wpsl-import-instructions">
+<p>
+	<a href="#" class="button button-primary" data-toggle-import-instructions><?php _e('Files & Limits', 'wpsimplelocator'); ?></a>
+</p>
+
+<div class="wpsl-import-instructions" style="display:none;">
 	<h4><?php _e('File Format', 'wpsimplelocator'); ?></h4>
 	<p><?php _e('File must be properly formatted CSV', 'wpsimplelocator'); ?>. <a href="<?php echo plugins_url(); ?>/simple-locator/assets/csv_template.csv"><?php _e('View an Example Template', 'wpsimplelocator'); ?></a></p>
 
@@ -52,13 +51,14 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 <?php endif; ?>
 
 <form action="<?php echo admin_url('admin-post.php'); ?>" method="post" enctype="multipart/form-data" class="wpsl-upload-form"<?php if ( $incomplete ) echo ' style="display:none;"';?>>
+	<div class="import-notice"><strong><?php _e('Important', 'wpsimplelocator'); ?>:</strong> <?php _e('Before running an import, make a complete backup of your database.', 'wpsimplelocator'); ?></div>
 	<p>
 		<?php
 		if ( $incomplete ){
 			echo '<h4 style="color:#d54e21;margin-bottom:15px;font-size:15px;">' . __('New Import', 'wpsimplelocator') . '</h4>';
 		}
 		?>
-		<h4><?php _e('Import Post Type', 'wpsimplelocator'); ?></h4>
+		<h4><?php _e('Import to Post Type', 'wpsimplelocator'); ?></h4>
 		<select name="import_post_type" style="margin-top: 10px;width:250px;">
 		<?php
 		foreach ( $this->field_repo->getPostTypes() as $type ){
@@ -70,7 +70,7 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 	<input type="hidden" name="action" value="wpslimportupload">
 	<?php wp_nonce_field( 'wpsl-import-nonce', 'nonce' ) ?>
 	
-	<h4><?php _e('Choose File', 'wpsimplelocator'); ?></h4>
+	<h4><?php _e('Choose CSV File', 'wpsimplelocator'); ?></h4>
 	<input type="file" name="file">
 	
 	<p style="background-color:#f2f2f2;padding:8px;">
@@ -84,7 +84,7 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 
 
 <?php
-// Display Previous Imports
+// Display Previous Imports with options to redo, undo, and remove
 $iq = new WP_Query(array(
 	'post_type' => 'wpslimport',
 	'posts_per_page' => -1
@@ -105,6 +105,18 @@ if ( $iq->have_posts() ) : $c = 1;
 					<strong><?php _e('Total Posts Imported', 'wpsimplelocator'); ?>:</strong> <?php echo $data['complete_rows']; ?><br>
 					<strong><?php _e('Post Type', 'wpsimplelocator'); ?>:</strong> <?php echo $data['post_type']; ?><br>
 					<strong><?php _e('Errors', 'wpsimplelocator'); ?>:</strong> <?php echo count($data['error_rows']); ?>
+				</p>
+				<p>
+					<?php if ( file_exists($data['file']) ) : ?>
+					<a href="#" class="button" data-redo-import="<?php echo get_the_id(); ?>">
+						<?php _e('Re-Run Import', 'wpsimplelocator'); ?>
+					</a>
+					<?php else : ?>
+						<?php _e('The original file has been removed. This import cannot be run again automatically.', 'wpsimplelocator');?>
+					<?php endif; ?>
+					<a href="#" class="button" data-remove-import="<?php echo get_the_id(); ?>">
+						<?php _e('Remove Import Record', 'wpsimplelocator'); ?>
+					</a>
 				</p>
 				<?php if ( count($data['error_rows']) > 0 ) : ?>
 				<div class="wpsl-import-details">
@@ -141,6 +153,18 @@ if ( $iq->have_posts() ) : $c = 1;
 			</div><!-- .import-body -->
 		</div><!-- .import -->
 	<?php $c++; endwhile; ?>
+
+	<form action="<?php echo admin_url('admin-post.php'); ?>" method="post" data-remove-import-form style="display:none;">
+		<input type="hidden" name="action" value="wpslremoveimport">
+		<input type="hidden" name="remove_import_id" id="remove_import_id">
+		<?php wp_nonce_field( 'wpsl-import-nonce', 'nonce' ) ?>
+	</form>
+
+	<form action="<?php echo admin_url('admin-post.php'); ?>" method="post" data-redo-import-form style="display:none;">
+		<input type="hidden" name="action" value="wpslredoimport">
+		<input type="hidden" name="redo_import_id" id="redo_import_id">
+		<?php wp_nonce_field( 'wpsl-import-nonce', 'nonce' ) ?>
+	</form>
 
 	<form action="<?php echo admin_url('admin-post.php'); ?>" method="post" data-undo-import-form style="display:none;">
 		<input type="hidden" name="action" value="wpslundoimport">

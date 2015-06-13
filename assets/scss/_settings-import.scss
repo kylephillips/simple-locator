@@ -25,6 +25,13 @@
 	}
 }
 
+// Step 1 Notice
+.import-notice {
+	border-left: 3px solid $red;
+	background-color: darken($white, 8%);
+	padding: 8px;
+}
+
 // File Upload - Step 1
 .wpsl-upload-form {
 	background-color: $white;

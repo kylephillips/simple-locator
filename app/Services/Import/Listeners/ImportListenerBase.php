@@ -31,14 +31,19 @@ abstract class ImportListenerBase
 	}
 
 	/**
+	* Check Capabilities
+	*/
+	protected function validateUser()
+	{
+		if ( !current_user_can('delete_others_posts') ) return $this->error(__('You do not have the necessary capabilities to undo an import. Contact your site administrator to perform this action.', 'wpsimplelocator'));
+	}
+
+	/**
 	* Redirect to next step on success
 	*/
-	protected function success($step = null, $message = null)
+	protected function success($step)
 	{
-		$url = 'options-general.php?page=wp_simple_locator&tab=import';
-		if ( $step ) $url .= '&step=' . $step;
-		if ( $message ) $url .= '&message=' . $message;
-		$url = admin_url($url);
+		$url = admin_url('options-general.php?page=wp_simple_locator&tab=import&step=' . $step);
 		return header('Location:' . $url);
 	}
 

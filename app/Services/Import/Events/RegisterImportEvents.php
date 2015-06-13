@@ -8,7 +8,8 @@ use SimpleLocator\Services\Import\Listeners\ColumnMapper;
 use SimpleLocator\Services\Import\Listeners\Import;
 use SimpleLocator\Services\Import\Listeners\FinishImport;
 use SimpleLocator\Services\Import\Listeners\UndoImport;
-
+use SimpleLocator\Services\Import\Listeners\RedoImport;
+use SimpleLocator\Services\Import\Listeners\RemoveImport;
 
 /**
 * Register Events Related to Imports
@@ -29,8 +30,11 @@ class RegisterImportEvents
 		// Undo an Import
 		add_action( 'admin_post_wpslundoimport', array($this, 'undoImportRequested' ));
 
-		// Reset Test Data
-		add_action( 'wp_ajax_reset_test_import', array($this, 'resetTestData' ));
+		// Redo an Import
+		add_action( 'admin_post_wpslredoimport', array($this, 'redoImportRequested' ));
+
+		// Remove an Import
+		add_action( 'admin_post_wpslremoveimport', array($this, 'removeImportRequested' ));
 	}
 
 	/**
@@ -66,7 +70,7 @@ class RegisterImportEvents
 	}
 
 	/**
-	* Finish the import
+	* Finish the Import
 	*/
 	public function ImportComplete()
 	{
@@ -74,7 +78,7 @@ class RegisterImportEvents
 	}
 
 	/**
-	* Undo an import
+	* Undo an Import
 	*/
 	public function undoImportRequested()
 	{
@@ -82,18 +86,19 @@ class RegisterImportEvents
 	}
 
 	/**
-	* Test
+	* Redo an Import
 	*/
-	public function resetTestData()
+	public function redoImportRequested()
 	{
-		$transient = get_transient('wpsl_import_file');
-		$transient['last_imported'] = 0;
-		$transient['error_rows'] = array();
-		$transient['complete_rows'] = 0;
-		$transient['post_ids'] = array();
-		$transient['complete'] = false;
-		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
-		return wp_send_json(array('status' => 'success'));
+		new RedoImport;
+	}
+
+	/**
+	* Remove an Import Record
+	*/
+	public function removeImportRequested()
+	{
+		new RemoveImport;
 	}
 
 }

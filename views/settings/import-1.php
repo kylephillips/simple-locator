@@ -20,9 +20,6 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 
 	<h4><?php _e('Import Limits', 'wpsimplelocator'); ?></h4>
 	<p><?php _e('The Google Maps Geocoding API limits request to 2500 per 24 hour period & 5 requests per second. If your file contains over 2500 records, it may take multiple days to import. If the limit is reached, progress will be saved, and you may continue your import later.', 'wpsimplelocator'); ?></p>
-
-	<h4><?php _e('Latitude & Longitude Data', 'wpsimplelocator'); ?></h4>
-	<p><?php _e('Geocoded latitude and longitude values will be saved in the fields selected under the "Post Type & Geocode Fields" tab.', 'wpsimplelocator'); ?></p>
 </div>
 <?php
 	$incomplete = $this->import_repo->incomplete();
@@ -42,7 +39,6 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 			$out .= __('Total Records', 'wpsimplelocator') . ': ' . $transient['row_count'] . '<br>';
 			$out .= __('Completed Records', 'wpsimplelocator') . ': ' . $transient['complete_rows'] . '<br>';
 			$out .= __('Import Errors', 'wpsimplelocator') . ': ' . count($transient['error_rows']) . '<br>';
-			$out .= ( isset($transient['last_import_date']) ) ? __('Last Run', 'wpsimplelocator') . ': ' . $transient['last_import_date'] : __('No Imports Yet', 'wpsimplelocator');
 			echo $out;
 		?>
 	</p>
@@ -85,3 +81,18 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 	</p>
 	<input type="submit" class="button" value="<?php _e('Upload File', 'wpsimplelocator'); ?>">
 </form>
+
+<?php
+// Display Previous Imports
+$iq = new WP_Query(array(
+	'post_type' => 'wpslimports',
+	'posts_per_page' => -1
+));
+if ( $iq->have_posts() ) :
+?>
+<div class="wpsl-previous-imports">
+</div>
+<?php endif; wp_reset_postdata(); // Previous Import
+
+
+

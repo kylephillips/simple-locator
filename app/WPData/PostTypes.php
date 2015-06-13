@@ -113,7 +113,7 @@ class PostTypes
 			'has_archive' => false,
 			'supports' => array('title','editor'),
 		);
-		register_post_type( 'wpslimports' , $args );
+		register_post_type( 'wpslimport' , $args );
 	}
 
 	/**

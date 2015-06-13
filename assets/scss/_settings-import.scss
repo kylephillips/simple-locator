@@ -6,6 +6,7 @@
 	padding: 8px 8px 8px 0;
 }
 
+// Step 1 Instructions
 .wpsl-import-instructions {
 	background-color: $white;
 	padding: 10px 10px 2px 10px;
@@ -24,29 +25,7 @@
 	}
 }
 
-.wpsl-import-column-description {
-	float: left;
-	width: 48%;
-	h5 {
-		background-color: darken($white, 50%);
-		margin: 0;
-		padding: 4px;
-		color: $white;
-	}
-	&.right {
-		float: right;
-	}
-	ul {
-		margin-top: 0;
-		background-color: darken($white, 6%);
-		padding: 8px;
-		li {
-			margin: 0;
-		}
-	}
-}
-
-// File Upload
+// File Upload - Step 1
 .wpsl-upload-form {
 	background-color: $white;
 	padding: 8px;
@@ -55,7 +34,7 @@
 	}
 }
 
-// Row Selection
+// Row Selection - Step 2
 .wpsl-row-selection {
 	button {
 		.dashicons {
@@ -114,11 +93,8 @@
 	display: none;
 }
 
-.wpsl-import-indicator-intro {
 
-}
-
-// Progress Indicator
+// Progress Indicator - Step 3
 .wpsl-import-progress {
 	position: relative;
 	.progress-bar-bg,
@@ -146,6 +122,7 @@
 	margin-bottom: 20px;
 }
 
+// Error Log
 .wpsl-import-details {
 	table {
 		background-color: $white;
@@ -171,7 +148,7 @@
 	}
 }
 
-// Last Row Imported Table
+// Last Row Imported Table - Step 1
 .wpsl-last-row-imported {
 	h4 {
 		background-color: darken($white, 70%);

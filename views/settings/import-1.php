@@ -25,13 +25,8 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 	<p><?php _e('Geocoded latitude and longitude values will be saved in the fields selected under the "Post Type & Geocode Fields" tab.', 'wpsimplelocator'); ?></p>
 </div>
 <?php
-// $incomplete = false;
-// $transient = get_transient('wpsl_import_file');
-// if ( isset($transient['row_count']) ){
-// 	$remaining = $transient['row_count'] - $transient['complete_rows'] - count($transient['error_rows']);
-// }
-// if ( isset($remaining) && $remaining > 0 && !isset($_GET['error'])) :
 	$incomplete = $this->import_repo->incomplete();
+	
 	if ( $incomplete && !isset($_GET['error']) ) :
 		$transient = $this->import_repo->transient();
 ?>

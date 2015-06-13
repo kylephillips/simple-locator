@@ -5,7 +5,7 @@
 </div>
 
 <?php 
-//var_dump(get_post_meta(12046, 'wpsl_import_data', true));
+//var_dump(get_post_meta(12051, 'wpsl_import_data', true));
 
 // Form Errors
 if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '</p></div>';
@@ -13,7 +13,7 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 
 <div class="wpsl-import-instructions">
 	<h4><?php _e('File Format', 'wpsimplelocator'); ?></h4>
-	<p><?php _e('File must be properly formatted CSV', 'wpsimplelocator'); ?>. <a href="<?php echo plugins_url(); ?>/simple-locator/assets/csv_template.csv"><?php _e('View a Template', 'wpsimplelocator'); ?></a></p>
+	<p><?php _e('File must be properly formatted CSV', 'wpsimplelocator'); ?>. <a href="<?php echo plugins_url(); ?>/simple-locator/assets/csv_template.csv"><?php _e('View an Example Template', 'wpsimplelocator'); ?></a></p>
 
 	<h4><?php _e('Required Columns', 'wpsimplelocator'); ?></h4>
 	<p><?php _e('2 columns are required: a title and at least one address column. Addresses may be saved across multiple columns (street address, city, etc…), or in one column.'); ?></p>
@@ -25,13 +25,15 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 	<p><?php _e('Geocoded latitude and longitude values will be saved in the fields selected under the "Post Type & Geocode Fields" tab.', 'wpsimplelocator'); ?></p>
 </div>
 <?php
-$incomplete = false;
-$transient = get_transient('wpsl_import_file');
-if ( isset($transient['row_count']) ){
-	$remaining = $transient['row_count'] - $transient['complete_rows'] - count($transient['error_rows']);
-}
-if ( isset($remaining) && $remaining > 0 && !isset($_GET['error'])) :
-	$incomplete = true;
+// $incomplete = false;
+// $transient = get_transient('wpsl_import_file');
+// if ( isset($transient['row_count']) ){
+// 	$remaining = $transient['row_count'] - $transient['complete_rows'] - count($transient['error_rows']);
+// }
+// if ( isset($remaining) && $remaining > 0 && !isset($_GET['error'])) :
+	$incomplete = $this->import_repo->incomplete();
+	if ( $incomplete && !isset($_GET['error']) ) :
+		$transient = $this->import_repo->transient();
 ?>
 <div class="wpsl-import-instructions" style="padding-bottom:10px;">
 	<h4 style="color:#d54e21;margin-bottom:15px;">

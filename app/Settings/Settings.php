@@ -1,13 +1,17 @@
-<?php namespace SimpleLocator\Settings;
+<?php 
+
+namespace SimpleLocator\Settings;
 
 use SimpleLocator\Repositories\FieldRepository;
 use SimpleLocator\Repositories\SettingsRepository;
+use SimpleLocator\Repositories\ImportRepository;
 use SimpleLocator\Services\Import\CSV\Row;
 
 /**
 * Settings page
 */
-class Settings {
+class Settings 
+{
 
 	/**
 	* Selected Unit of Measurement
@@ -44,12 +48,18 @@ class Settings {
 	* CSV Row Fetcher
 	*/
 	private $row;
+
+	/**
+	* Import Repository
+	*/
+	private $import_repo;
 	
 
 	public function __construct()
 	{
 		$this->field_repo = new FieldRepository;
 		$this->settings_repo = new SettingsRepository;
+		$this->import_repo = new ImportRepository;
 		$this->row = new Row;
 		$this->setUnit();
 		$this->setFieldType();

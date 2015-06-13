@@ -1,5 +1,5 @@
 <?php
-$transient = get_transient('wpsl_import_file');
+$transient = $this->import_repo->transient();
 // var_dump($transient);
 // Check that the columns have been mapped
 

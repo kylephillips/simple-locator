@@ -1,11 +1,11 @@
 <?php 
-$file = get_transient('wpsl_import_file'); 
-$post_type = $file['post_type'];
+$transient = $this->import_repo->transient();
+$post_type = $transient['post_type'];
 
 // Check that the columns have been mapped
-if ( isset($file['file']) && isset($file['post_type']) ) :
+if ( isset($transient['file']) && isset($transient['post_type']) ) :
 ?>
-<h3 class="wpsl-step-title"><?php _e('Step 2: Map Columns', 'wpsimplelocator'); ?> (<?php echo $file['filename']; ?>)</h3>
+<h3 class="wpsl-step-title"><?php _e('Step 2: Map Columns', 'wpsimplelocator'); ?> (<?php echo $transient['filename']; ?>)</h3>
 
 <?php 
 // Form Errors
@@ -87,7 +87,7 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 
 <?php else : // Transient not yet set, no file uploaded ?>
 
-<div class="error"><p><?php _e('CSV File not set.', 'wpsimplelocator'); ?></p></div>
+<div class="error"><p><?php _e('File not set.', 'wpsimplelocator'); ?></p></div>
 <a href="<?php echo admin_url('options-general.php?page=wp_simple_locator&tab=import'); ?>" class="button"><?php _e('Upload CSV File', 'wpsimplelocator'); ?></a>
 
 <?php endif; ?>

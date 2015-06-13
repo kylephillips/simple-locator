@@ -29,8 +29,8 @@ class FinishImport {
 	*/
 	private function saveImport()
 	{
-		$title = __('Import on ', 'wpsimplelocator') . date_i18n( 'Y-m-d H:m:s', time() );
-		$importpost = array('post_title' => $title);
+		$title = $this->transient['post_type'] . ' ' . __('import on ', 'wpsimplelocator') . date_i18n( 'Y-m-d H:m:s', time() );
+		$importpost = array('post_title' => $title, 'post_status' => 'publish');
 		$post_id = wp_insert_post($importpost);
 		add_post_meta($post_id, 'wpsl_import_data', $this->transient);
 	}

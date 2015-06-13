@@ -1,4 +1,6 @@
-<?php namespace SimpleLocator\Events;
+<?php 
+
+namespace SimpleLocator\Events;
 
 use SimpleLocator\Listeners\GetMetaFieldsForPostType;
 use SimpleLocator\Listeners\ResetPostTypeSettings;
@@ -6,7 +8,8 @@ use SimpleLocator\Listeners\ResetPostTypeSettings;
 /**
 * Register Admin Events
 */
-class RegisterAdminEvents {
+class RegisterAdminEvents 
+{
 
 	public function __construct()
 	{

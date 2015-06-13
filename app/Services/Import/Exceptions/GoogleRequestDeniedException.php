@@ -1,5 +1,8 @@
-<?php namespace SimpleLocator\Services\Import\Exceptions;
+<?php 
 
-class GoogleRequestDeniedException extends \Exception {
+namespace SimpleLocator\Services\Import\Exceptions;
+
+class GoogleRequestDeniedException extends \Exception 
+{
 	
 }

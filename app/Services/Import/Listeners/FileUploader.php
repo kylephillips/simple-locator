@@ -1,11 +1,14 @@
-<?php namespace SimpleLocator\Services\Import\Listeners;
+<?php 
+
+namespace SimpleLocator\Services\Import\Listeners;
 
 use League\Csv\Reader;
 
 /**
 * Upload a File
 */
-class FileUploader extends ImportListenerBase {
+class FileUploader extends ImportListenerBase 
+{
 
 	public function __construct()
 	{

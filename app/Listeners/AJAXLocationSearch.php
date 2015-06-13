@@ -1,4 +1,6 @@
-<?php namespace SimpleLocator\Listeners;
+<?php 
+
+namespace SimpleLocator\Listeners;
 
 use SimpleLocator\Listeners\AJAXListenerBase;
 use SimpleLocator\Services\LocationSearch\LocationSearchValidator;
@@ -9,7 +11,8 @@ use SimpleLocator\Services\LocationSearch\JsonResponseFactory;
 * Front-end form handler for simple locator lookup
 * @return JSON Response
 */
-class AJAXLocationSearch extends AJAXListenerBase {
+class AJAXLocationSearch extends AJAXListenerBase 
+{
 
 	/**
 	* Location Search Service
@@ -59,5 +62,3 @@ class AJAXLocationSearch extends AJAXListenerBase {
 	}
 
 }
-
-

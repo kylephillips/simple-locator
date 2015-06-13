@@ -1,11 +1,14 @@
-<?php namespace SimpleLocator\Services\Import\CSV;
+<?php 
+
+namespace SimpleLocator\Services\Import\CSV;
 
 use League\Csv\Reader;
 
 /**
 * Return an array of CSV columns for a given row
 */
-class Row {
+class Row 
+{
 
 	/**
 	* The File Path

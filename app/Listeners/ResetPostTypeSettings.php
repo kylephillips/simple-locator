@@ -1,9 +1,12 @@
-<?php namespace SimpleLocator\Listeners;
+<?php 
+
+namespace SimpleLocator\Listeners;
 
 /**
 * Resets the post type back to defaults 
 */
-class ResetPostTypeSettings extends AJAXAdminListenerBase {
+class ResetPostTypeSettings extends AJAXAdminListenerBase 
+{
 
 	public function __construct()
 	{

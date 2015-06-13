@@ -1,4 +1,6 @@
-<?php namespace SimpleLocator\Services\LocationSearch;
+<?php 
+
+namespace SimpleLocator\Services\LocationSearch;
 
 use SimpleLocator\Repositories\SettingsRepository;
 use SimpleLocator\Services\LocationSearch\LocationResultPresenter;
@@ -7,7 +9,8 @@ use SimpleLocator\Helpers;
 /**
 * Search Locations
 */
-class LocationSearch {
+class LocationSearch 
+{
 
 	/**
 	* Form Data

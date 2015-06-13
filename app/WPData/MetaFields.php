@@ -1,8 +1,12 @@
-<?php namespace SimpleLocator\WPData;
+<?php 
+
+namespace SimpleLocator\WPData;
+
 /**
 * Custom Meta Fields for Location Post Type
 */
-class MetaFields {
+class MetaFields 
+{
 
 	/**
 	* Meta Data
@@ -14,14 +18,12 @@ class MetaFields {
 	*/
 	public $fields;
 
-
 	function __construct()
 	{
 		$this->setFields();
 		add_action( 'add_meta_boxes', array( $this, 'metaBox' ));
 		add_action( 'save_post', array($this, 'savePost' ));
 	}
-
 
 	/**
 	* Set the Fields for use in custom meta
@@ -43,7 +45,6 @@ class MetaFields {
 		);
 	}
 
-
 	/**
 	* Register the Meta Box
 	*/
@@ -59,7 +60,6 @@ class MetaFields {
     	);
 	}
 
-
 	/**
 	* Meta Boxes for Output
 	*/
@@ -68,7 +68,6 @@ class MetaFields {
 		$this->setData($post);
 		include( \SimpleLocator\Helpers::view('post-meta/location-meta') );
 	}
-
 
 	/**
 	* Set the Field Data
@@ -80,7 +79,6 @@ class MetaFields {
 			$this->meta[$key] = get_post_meta( $post->ID, $field, true );
 		}
 	}
-
 
 	/**
 	* Save the custom post meta
@@ -98,7 +96,6 @@ class MetaFields {
 			}
 		endif;
 	} 
-
 
 	/**
 	* Get the Location Post Type

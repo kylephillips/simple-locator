@@ -1,8 +1,12 @@
-<?php namespace SimpleLocator;
+<?php 
+
+namespace SimpleLocator;
+
 /**
 * Plugin Bootstrap
 */
-class Bootstrap {
+class Bootstrap 
+{
 
 	function __construct()
 	{
@@ -12,7 +16,6 @@ class Bootstrap {
 		add_filter( 'plugin_action_links_' . 'simple-locator/simplelocator.php', array($this, 'settingsLink' ) );
 		add_action( 'plugins_loaded', array($this, 'addLocalization') );
 	}
-
 
 	/**
 	* Initialize
@@ -50,7 +53,6 @@ class Bootstrap {
 		new \SimpleLocator\Services\Import\Events\RegisterImportEvents;
 	}
 
-
 	/**
 	* Add a link to the settings on the plugin page
 	*/
@@ -63,7 +65,6 @@ class Bootstrap {
   		return $links; 
 	}
 
-
 	/**
 	* Register the Widget
 	*/
@@ -71,7 +72,6 @@ class Bootstrap {
 	{
 		register_widget( 'SimpleLocator\API\FormWidget' );
 	}
-
 
 	/**
 	* Localization Domain

@@ -1,6 +1,9 @@
-<?php namespace SimpleLocator\Services\Import\Listeners;
+<?php 
 
-class FinishImport {
+namespace SimpleLocator\Services\Import\Listeners;
+
+class FinishImport 
+{
 
 	/**
 	* Transient

@@ -1,4 +1,6 @@
-<?php namespace SimpleLocator\Dependencies;
+<?php 
+
+namespace SimpleLocator\Dependencies;
 
 use SimpleLocator\Dependencies\AdminDependencies;
 use SimpleLocator\Dependencies\PublicDependencies;
@@ -6,7 +8,8 @@ use SimpleLocator\Dependencies\PublicDependencies;
 /**
 * Build up the necessary Dependencies
 */
-class DependencyFactory {
+class DependencyFactory 
+{
 
 	public function __construct()
 	{

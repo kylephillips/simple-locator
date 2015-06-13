@@ -1,8 +1,12 @@
-<?php namespace SimpleLocator\Repositories;
+<?php 
+
+namespace SimpleLocator\Repositories;
+
 /**
 * Get the default map style included with plugin
 */
-class MapStyles {
+class MapStyles 
+{
 
 	/**
 	* Output the necessary JS object
@@ -24,7 +28,6 @@ class MapStyles {
 		return $styles;
 	}
 
-
 	/**
 	* Get Styles for JS Localization
 	*/
@@ -35,7 +38,6 @@ class MapStyles {
 		if ( $style_type == 'choice' ) return $this->getSelectedStyles();
 		return ( get_option('wpsl_map_styles') ) ? json_decode(get_option('wpsl_map_styles')) : '';
 	}
-
 
 	/**
 	* Get the selected style

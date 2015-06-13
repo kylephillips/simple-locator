@@ -1,10 +1,13 @@
-<?php namespace SimpleLocator\API;
+<?php 
+
+namespace SimpleLocator\API;
 
 use \SimpleLocator\Repositories\MapStyles;
 use \SimpleLocator\Repositories\SettingsRepository;
 use \SimpleLocator\Repositories\PostRepository;
 
-class AllLocationsShortcode {
+class AllLocationsShortcode 
+{
 	
 	/**
 	* Shortcode Options
@@ -52,7 +55,6 @@ class AllLocationsShortcode {
 	{
 		$this->locations = $this->post_repo->allLocations($this->options['limit']);
 	}
-
 
 	/**
 	* Enqueue the single view script & add localized data

@@ -1,8 +1,11 @@
-<?php namespace SimpleLocator\API;
+<?php 
+
+namespace SimpleLocator\API;
 
 use \SimpleLocator\Repositories\SettingsRepository;
 
-class FormWidget extends \WP_Widget {
+class FormWidget extends \WP_Widget 
+{
 
 	/**
 	* Unit of Measurement
@@ -36,7 +39,6 @@ class FormWidget extends \WP_Widget {
 		);
 	}
 
-
 	/**
 	* Set the unit of measurement
 	*/
@@ -58,7 +60,6 @@ class FormWidget extends \WP_Widget {
 		$this->options['geobuttontext'] = $this->settings_repo->showGeoButton('text');
 	}
 
-
 	/**
 	* Format Distances option as array & return a list of select options
 	*/
@@ -73,7 +74,6 @@ class FormWidget extends \WP_Widget {
 		return $out;
 	}
 
-
 	/**
 	* Enqueue the Required Scripts
 	*/
@@ -82,7 +82,6 @@ class FormWidget extends \WP_Widget {
 		wp_enqueue_script('google-maps');
 		wp_enqueue_script('simple-locator');
 	}
-
 
 	/**
 	* Widget Form in Admin
@@ -94,7 +93,6 @@ class FormWidget extends \WP_Widget {
 		include( \SimpleLocator\Helpers::view('widget-options') );
 	}
 
-
 	/**
 	* Save Widget Form Data
 	*/
@@ -105,7 +103,6 @@ class FormWidget extends \WP_Widget {
 		$instance['map_height'] = ( ! empty( $new_instance['map_height'] ) ) ? strip_tags( intval($new_instance['map_height']) ) : '';
 		return $instance;
 	}
-
 
 	/**
 	* Front End of Widget

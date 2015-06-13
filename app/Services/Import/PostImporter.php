@@ -1,11 +1,14 @@
-<?php namespace SimpleLocator\Services\Import;
+<?php 
+
+namespace SimpleLocator\Services\Import;
 
 use SimpleLocator\Services\Import\GoogleMapGeocode;
 
 /**
 * Import a Single Row/Post
 */
-class PostImporter {
+class PostImporter 
+{
 
 	/**
 	* Array of column mappings from transient

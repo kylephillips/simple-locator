@@ -1,4 +1,6 @@
-<?php namespace SimpleLocator\Events;
+<?php 
+
+namespace SimpleLocator\Events;
 
 use SimpleLocator\Listeners\AJAXLocationSearch;
 use SimpleLocator\Listeners\GenerateAndSendNonce;
@@ -6,7 +8,8 @@ use SimpleLocator\Listeners\GenerateAndSendNonce;
 /**
 * Register Events
 */
-class RegisterPublicEvents {
+class RegisterPublicEvents 
+{
 
 	public function __construct()
 	{

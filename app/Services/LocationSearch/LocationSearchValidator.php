@@ -1,6 +1,9 @@
-<?php namespace SimpleLocator\Services\LocationSearch;
+<?php 
 
-class LocationSearchValidator {
+namespace SimpleLocator\Services\LocationSearch;
+
+class LocationSearchValidator 
+{
 
 	public function validate()
 	{

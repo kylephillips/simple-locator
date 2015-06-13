@@ -1,9 +1,12 @@
-<?php namespace SimpleLocator\Dependencies;
+<?php 
+
+namespace SimpleLocator\Dependencies;
 
 /**
 * Register & Enqueue Styles & Scripts
 */
-class PublicDependencies extends DependencyBase {
+class PublicDependencies extends DependencyBase 
+{
 
 	public function __construct()
 	{

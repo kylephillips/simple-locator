@@ -1,9 +1,12 @@
-<?php namespace SimpleLocator\Repositories;
+<?php 
+
+namespace SimpleLocator\Repositories;
 
 /**
 * Settings Repo
 */
-class SettingsRepository {
+class SettingsRepository 
+{
 
 	/**
 	* Get Geo Button Options

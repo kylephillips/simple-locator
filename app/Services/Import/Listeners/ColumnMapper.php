@@ -1,9 +1,12 @@
-<?php namespace SimpleLocator\Services\Import\Listeners;
+<?php 
+
+namespace SimpleLocator\Services\Import\Listeners;
 
 /**
 * Saves the column mapping for imports
 */
-class ColumnMapper extends ImportListenerBase {
+class ColumnMapper extends ImportListenerBase 
+{
 
 	/**
 	* Fields

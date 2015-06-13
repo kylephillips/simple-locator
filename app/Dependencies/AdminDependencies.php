@@ -1,9 +1,12 @@
-<?php namespace SimpleLocator\Dependencies;
+<?php 
+
+namespace SimpleLocator\Dependencies;
 
 /**
 * Register & Enqueue Admin Styles & Scripts
 */
-class AdminDependencies extends DependencyBase {
+class AdminDependencies extends DependencyBase 
+{
 
 	public function __construct()
 	{

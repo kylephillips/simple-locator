@@ -1,9 +1,12 @@
-<?php namespace SimpleLocator\Services\LocationSearch;
+<?php 
+
+namespace SimpleLocator\Services\LocationSearch;
 
 /**
 * Build the JSON Response Array for a Location Search
 */
-class JsonResponseFactory {
+class JsonResponseFactory 
+{
 
 	/**
 	* Resonse Data

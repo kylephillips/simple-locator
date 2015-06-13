@@ -1,8 +1,12 @@
-<?php namespace SimpleLocator\WPData;
+<?php 
+
+namespace SimpleLocator\WPData;
+
 /**
 * Locations Post Type
 */
-class PostTypes {
+class PostTypes 
+{
 
 	/**
 	* Post Type Option
@@ -40,7 +44,6 @@ class PostTypes {
 		$this->pt_labels->menu_position = ( $labels['menu_position'] !== "" ) ? intval($labels['menu_position']) : 6;
 	}
 
-
 	/**
 	* Register the Location Post Type
 	*/
@@ -68,7 +71,6 @@ class PostTypes {
 		);
 		register_post_type(  $this->pt_labels->name , $args );
 	}
-
 
 	/**
 	* Register the Maps Post Type
@@ -114,7 +116,6 @@ class PostTypes {
 		register_post_type( 'wpslimports' , $args );
 	}
 
-
 	/**
 	* Check the post type option
 	*/
@@ -122,7 +123,6 @@ class PostTypes {
 	{
 		return ( get_option('wpsl_hide_default') == 'true' ) ? true : false;
 	}
-
 
 	/**
 	* Locations Admin Table Head
@@ -134,7 +134,6 @@ class PostTypes {
 	    $defaults['website']  = __('Website', 'wpsimplelocator');
 	    return $defaults;
 	}
-
 	
 	/**
 	* Locations Admin Table Columns

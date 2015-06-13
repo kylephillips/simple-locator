@@ -70,7 +70,6 @@ class Settings
 		add_action( 'updated_option', array($this, 'flushRewrites'), 10, 3);
 	}
 
-
 	/**
 	* Set the Unit
 	*/
@@ -78,7 +77,6 @@ class Settings
 	{
 		$this->unit = get_option('wpsl_measurement_unit');
 	}
-
 
 	/**
 	* Set the Field Type
@@ -88,7 +86,6 @@ class Settings
 		$this->field_type = $field_type = get_option('wpsl_field_type');
 	}
 
-
 	/**
 	* Set the Selected Post Type
 	*/
@@ -97,7 +94,6 @@ class Settings
 		$this->post_type = get_option('wpsl_post_type');
 	}
 
-
 	/**
 	* Set the Map Options
 	*/
@@ -105,7 +101,6 @@ class Settings
 	{
 		$this->map_options['type'] = get_option('wpsl_map_styles_type');
 	}
-
 
 	/**
 	* Add the admin menu item
@@ -120,7 +115,6 @@ class Settings
 			array( $this, 'settingsPage' ) 
 		);
 	}
-
 
 	/**
 	* Register the settings
@@ -149,7 +143,6 @@ class Settings
 		register_setting( 'wpsimplelocator-results', 'wpsl_results_fields_formatted' );
 	}
 
-
 	/**
 	* Get the Location PT Labels
 	* @since 1.0.6
@@ -160,7 +153,6 @@ class Settings
 		return ( isset($labels[$field]) && $labels[$field] !== "" ) ? $labels[$field] : $default;
 	}
 
-
 	/**
 	* Display the Settings Page
 	*/
@@ -169,7 +161,6 @@ class Settings
 		$tab = ( isset($_GET['tab']) ) ? $_GET['tab'] : 'general';
 		include( \SimpleLocator\Helpers::view('settings/settings') );
 	}
-
 
 	/**
 	* Flush the rewrite rules when saving post type
@@ -180,7 +171,6 @@ class Settings
 			flush_rewrite_rules(false);
 		}
 	}
-
 
 	/**
 	* CSV Row Getter
@@ -194,6 +184,5 @@ class Settings
 		}
 		return $result;
 	}
-
 
 }

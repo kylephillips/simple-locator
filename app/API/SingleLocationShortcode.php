@@ -1,4 +1,6 @@
-<?php namespace SimpleLocator\API;
+<?php 
+
+namespace SimpleLocator\API;
 
 use SimpleLocator\Repositories\PostRepository;
 use SimpleLocator\Repositories\SettingsRepository;
@@ -6,7 +8,8 @@ use SimpleLocator\Repositories\SettingsRepository;
 /**
 * Shortcode for displaying a single location map
 */
-class SingleLocationShortcode {
+class SingleLocationShortcode 
+{
 
 	/**
 	* Shortcode Options

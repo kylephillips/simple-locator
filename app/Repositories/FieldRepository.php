@@ -1,9 +1,12 @@
-<?php namespace SimpleLocator\Repositories;
+<?php 
+
+namespace SimpleLocator\Repositories;
+
 /**
 * Field Repository Class
 */
-class FieldRepository {
-
+class FieldRepository 
+{
 
 	/**
 	* Get all the post types
@@ -21,7 +24,6 @@ class FieldRepository {
 		}
 		return $post_types;
 	}
-
 
 	/**
 	* Get all custom fields associated with a post type
@@ -59,7 +61,6 @@ class FieldRepository {
 		return array_unique(array_merge($fields, $sl_meta));
 	}
 
-
 	/**
 	* Format DB results into an array
 	*/
@@ -73,7 +74,6 @@ class FieldRepository {
 		}
 		return $fields;
 	}
-
 
 	/**
 	* Display field options

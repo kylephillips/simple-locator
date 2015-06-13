@@ -1,9 +1,12 @@
-<?php namespace SimpleLocator\Services\Import\Listeners;
+<?php 
+
+namespace SimpleLocator\Services\Import\Listeners;
 
 /**
 * Do the Import
 */
-class Import extends ImportAJAXListenerBase {
+class Import extends ImportAJAXListenerBase 
+{
 
 	/**
 	* Transient

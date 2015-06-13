@@ -1,4 +1,6 @@
-<?php namespace SimpleLocator\Services\Import\Events;
+<?php 
+
+namespace SimpleLocator\Services\Import\Events;
 
 use SimpleLocator\Services\Import\Listeners\FileUploader;
 use SimpleLocator\Services\Import\Listeners\GetCSVRow;
@@ -10,7 +12,8 @@ use SimpleLocator\Services\Import\Listeners\FinishImport;
 /**
 * Register Events Related to Imports
 */
-class RegisterImportEvents {
+class RegisterImportEvents 
+{
 
 	public function __construct()
 	{
@@ -80,6 +83,5 @@ class RegisterImportEvents {
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 		return wp_send_json(array('status' => 'success'));
 	}
-
 
 }

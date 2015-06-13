@@ -1,8 +1,11 @@
-<?php namespace SimpleLocator\Repositories;
+<?php 
+
+namespace SimpleLocator\Repositories;
 
 use SimpleLocator\Repositories\SettingsRepository;
 
-class PostRepository {
+class PostRepository 
+{
 
 	/**
 	* Settings Repo
@@ -34,7 +37,6 @@ class PostRepository {
 		$location_data['additionalinfo'] = get_post_meta( $post_id, 'wpsl_additionalinfo', true);
 		return $location_data;
 	}
-
 
 	/**
 	* Get all locations

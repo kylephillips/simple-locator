@@ -1,10 +1,14 @@
-<?php namespace SimpleLocator\Post;
+<?php 
+
+namespace SimpleLocator\Post;
 
 use SimpleLocator\Repositories\SettingsRepository;
+
 /**
 * Add Map and Location data to single view
 */
-class Singular {
+class Singular 
+{
 
 	/**
 	* Location Post Type
@@ -29,7 +33,6 @@ class Singular {
 	*/
 	private $settings_repo;
 
-
 	public function __construct()
 	{
 		$this->settings_repo = new SettingsRepository;
@@ -37,7 +40,6 @@ class Singular {
 		$this->setOptions();
 		$this->filterContent();
 	}
-
 
 	/**
 	* Set the Post Type
@@ -55,7 +57,6 @@ class Singular {
 		$this->options['additionalfields'] = false;
 	}
 
-
 	/**
 	* Filter the Content
 	*/
@@ -63,7 +64,6 @@ class Singular {
 	{
 		add_filter('the_content', array($this, 'addFilteredContent'));
 	}
-
 
 	/**
 	* Set the location data for use in map
@@ -85,7 +85,6 @@ class Singular {
 		}
 	}
 
-
 	/**
 	* Apply filter to the content if single view of location post
 	*/
@@ -102,7 +101,6 @@ class Singular {
 		return $content;
 	}
 
-
 	/**
 	* Add the map to the output
 	*/
@@ -111,7 +109,6 @@ class Singular {
 		include( \SimpleLocator\Helpers::view('singular-post') );
 		return $out;
 	}
-
 
 	/**
 	* Enqueue the single view script & add localized data

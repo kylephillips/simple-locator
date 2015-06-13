@@ -1,9 +1,12 @@
-<?php namespace SimpleLocator\Listeners;
+<?php 
+
+namespace SimpleLocator\Listeners;
 
 /**
 * Create a nonce and return via AJAX
 */
-class GenerateAndSendNonce {
+class GenerateAndSendNonce 
+{
 
 	public function __construct()
 	{

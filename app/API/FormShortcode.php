@@ -1,9 +1,12 @@
-<?php namespace SimpleLocator\API;
+<?php 
+
+namespace SimpleLocator\API;
 
 use \SimpleLocator\Repositories\MapStyles;
 use \SimpleLocator\Repositories\SettingsRepository;
 
-class FormShortcode {
+class FormShortcode 
+{
 
 	/**
 	* Unit of Measurement
@@ -34,7 +37,6 @@ class FormShortcode {
 		add_shortcode('wp_simple_locator', array($this, 'renderView'));
 	}
 
-
 	/**
 	* Init
 	*/
@@ -42,7 +44,6 @@ class FormShortcode {
 	{
 		$this->setUnit();
 	}
-
 
 	/**
 	* Set the unit of measurement
@@ -53,7 +54,6 @@ class FormShortcode {
 		$this->unit = $this->settings_repo->getDistanceUnitLocalized();
 	}
 
-
 	/**
 	* Enqueue the Required Scripts
 	*/
@@ -62,7 +62,6 @@ class FormShortcode {
 		wp_enqueue_script('google-maps');
 		wp_enqueue_script('simple-locator');
 	}
-
 
 	/**
 	* Shortcode Options
@@ -83,7 +82,6 @@ class FormShortcode {
 		), $options);
 	}
 
-
 	/**
 	* Format Distances option as array & return a list of select options
 	*/
@@ -97,7 +95,6 @@ class FormShortcode {
 		}
 		return $out;
 	}
-
 
 	/**
 	* Localize Shortcode Options
@@ -117,7 +114,6 @@ class FormShortcode {
 		);
 	}
 
-
 	/**
 	* The View
 	*/
@@ -131,4 +127,3 @@ class FormShortcode {
 	}
 
 }
-

@@ -1,4 +1,6 @@
-<?php namespace SimpleLocator\Services\Import;
+<?php 
+
+namespace SimpleLocator\Services\Import;
 
 use GuzzleHttp\Client;
 use SimpleLocator\Services\Import\Exceptions\GoogleQueryLimitException;
@@ -8,7 +10,8 @@ use SimpleLocator\Services\Import\Exceptions\GoogleRequestDeniedException;
 /**
 * Geocode an address
 */
-class GoogleMapGeocode {
+class GoogleMapGeocode 
+{
 
 	/**
 	* Coordinates
@@ -77,6 +80,5 @@ class GoogleMapGeocode {
 	{
 		return $this->error;
 	}
-
 
 }

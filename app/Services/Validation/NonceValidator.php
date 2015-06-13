@@ -1,6 +1,9 @@
-<?php namespace SimpleLocator\Services\Validation;
+<?php 
 
-class NonceValidator {
+namespace SimpleLocator\Services\Validation;
+
+class NonceValidator 
+{
 
 	/**
 	* Validate a Nonce

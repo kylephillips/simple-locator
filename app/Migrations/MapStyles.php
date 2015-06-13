@@ -1,8 +1,12 @@
-<?php namespace SimpleLocator\Migrations;
+<?php 
+
+namespace SimpleLocator\Migrations;
+
 /**
 * Add the Google Maps Style Choices
 */
-class MapStyles {
+class MapStyles 
+{
 
 	/**
 	* The directory where the styles are
@@ -23,7 +27,6 @@ class MapStyles {
 		$this->loopFiles();
 	}
 
-
 	/**
 	* Set the directory
 	*/
@@ -31,7 +34,6 @@ class MapStyles {
 	{
 		$this->directory = dirname(__FILE__) . '/map_styles';
 	}
-
 
 	/**
 	* Set the File ID
@@ -43,7 +45,6 @@ class MapStyles {
 		$file_id = explode('-', $filename);
 		$this->file_id = $file_id[0];
 	}
-
 
 	/**
 	* Loop through the maps and create them
@@ -60,7 +61,6 @@ class MapStyles {
 		}
 	}
 
-
 	/**
 	* Import the Map
 	* @param object - file to import
@@ -69,7 +69,6 @@ class MapStyles {
 	{
 		if ( !$this->mapExists() ) include($this->directory . '/' . $file);
 	}
-
 
 	/**
 	* Check if Map Post Exists before import

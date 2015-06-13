@@ -1,4 +1,6 @@
-<?php namespace SimpleLocator\Services\Import\CSV;
+<?php 
+
+namespace SimpleLocator\Services\Import\CSV;
 
 use SimpleLocator\Services\Import\PostImporter;
 use League\Csv\Reader;
@@ -6,7 +8,8 @@ use League\Csv\Reader;
 /**
 * Import from a CSV File
 */
-class CSVImport {
+class CSVImport 
+{
 
 	/**
 	* Transient

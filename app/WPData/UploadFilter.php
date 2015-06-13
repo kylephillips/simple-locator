@@ -1,8 +1,11 @@
-<?php namespace SimpleLocator\WPData;
+<?php 
+namespace SimpleLocator\WPData;
+
 /**
 * Change the uploads directory for the file import
 */
-class UploadFilter {
+class UploadFilter 
+{
 
 	public function __construct()
 	{

@@ -1,11 +1,14 @@
-<?php namespace SimpleLocator\Listeners;
+<?php 
+
+namespace SimpleLocator\Listeners;
 
 use \SimpleLocator\Repositories\FieldRepository;
 
 /**
 * Returns JSON response with HTML option list with all meta fields for a given post type
 */
-class GetMetaFieldsForPostType {
+class GetMetaFieldsForPostType 
+{
 
 	/**
 	* Field Repository
@@ -34,7 +37,6 @@ class GetMetaFieldsForPostType {
 		$this->getFields();
 	}
 
-
 	/**
 	* Sanitize and set the user-submitted data
 	*/
@@ -48,7 +50,6 @@ class GetMetaFieldsForPostType {
 		);
 	}
 
-
 	/**
 	* Validate Nonce
 	*/
@@ -59,7 +60,6 @@ class GetMetaFieldsForPostType {
 		}
 	}
 
-
 	/**
 	* Get the fields for the post type
 	*/
@@ -69,7 +69,6 @@ class GetMetaFieldsForPostType {
 		$response = array('status'=>'success', 'fields'=>$fields);
 		$this->sendResponse($response);
 	}
-
 
 	/**
 	* Send the Response

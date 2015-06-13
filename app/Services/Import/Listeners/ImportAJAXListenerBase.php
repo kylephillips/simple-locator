@@ -1,8 +1,11 @@
-<?php namespace SimpleLocator\Services\Import\Listeners;
+<?php 
+
+namespace SimpleLocator\Services\Import\Listeners;
 
 use SimpleLocator\Services\Validation\NonceValidator;
 
-abstract class ImportAJAXListenerBase {
+abstract class ImportAJAXListenerBase 
+{
 
 	/**
 	* Nonce Validator

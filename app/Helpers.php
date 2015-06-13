@@ -1,6 +1,9 @@
-<?php namespace SimpleLocator;
+<?php 
 
-class Helpers {
+namespace SimpleLocator;
+
+class Helpers 
+{
 
 	/**
 	* Plugin Root Directory

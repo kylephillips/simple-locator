@@ -1,5 +1,8 @@
-<?php namespace SimpleLocator\Services\Import\Exceptions;
+<?php 
 
-class GoogleAPIException extends \Exception {
+namespace SimpleLocator\Services\Import\Exceptions;
+
+class GoogleAPIException extends \Exception 
+{
 	
 }

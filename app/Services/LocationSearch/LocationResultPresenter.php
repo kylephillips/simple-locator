@@ -1,4 +1,6 @@
-<?php namespace SimpleLocator\Services\LocationSearch;
+<?php 
+
+namespace SimpleLocator\Services\LocationSearch;
 
 use SimpleLocator\Repositories\SettingsRepository;
 use SimpleLocator\Helpers;
@@ -6,7 +8,8 @@ use SimpleLocator\Helpers;
 /**
 * Formats a result to match defined format
 */
-class LocationResultPresenter {
+class LocationResultPresenter 
+{
 
 	/**
 	* Result
@@ -50,7 +53,6 @@ class LocationResultPresenter {
 		$this->distance_unit = $this->settings_repo->measurementUnit();
 	}
 
-
 	/**
 	* Primary Presenter Method
 	* @return array
@@ -61,7 +63,6 @@ class LocationResultPresenter {
 		$this->count = $count;
 		return $this->setData();
 	}
-
 
 	/**
 	* Set the primary result data
@@ -80,7 +81,6 @@ class LocationResultPresenter {
 		return $location;
 	}
 
-
 	/**
 	* Set the formatted output
 	*/
@@ -98,7 +98,6 @@ class LocationResultPresenter {
 		$output = wpautop($output);
 		return $output;
 	}
-
 
 	/**
 	* Replace post fields from settings
@@ -124,7 +123,6 @@ class LocationResultPresenter {
 
 		return $output;
 	}
-
 
 	/**
 	* Remove empty tags

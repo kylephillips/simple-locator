@@ -1,5 +1,8 @@
-<?php namespace SimpleLocator\Services\Import\Exceptions;
+<?php 
 
-class GoogleQueryLimitException extends \Exception {
+namespace SimpleLocator\Services\Import\Exceptions;
+
+class GoogleQueryLimitException extends \Exception 
+{
 
 }

@@ -1,4 +1,6 @@
-<?php namespace SimpleLocator\Dependencies;
+<?php 
+
+namespace SimpleLocator\Dependencies;
 
 use SimpleLocator\Repositories\MapStyles;
 use SimpleLocator\Repositories\SettingsRepository;
@@ -6,7 +8,8 @@ use SimpleLocator\Repositories\SettingsRepository;
 /**
 * Abstract Class for Dependencies
 */
-abstract class DependencyBase {
+abstract class DependencyBase 
+{
 
 	/**
 	* Plugin Directory

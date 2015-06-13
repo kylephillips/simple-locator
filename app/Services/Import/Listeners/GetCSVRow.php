@@ -1,8 +1,11 @@
-<?php namespace SimpleLocator\Services\Import\Listeners;
+<?php 
+
+namespace SimpleLocator\Services\Import\Listeners;
 
 use SimpleLocator\Services\Import\CSV\Row;
 
-class GetCSVRow extends ImportAJAXListenerBase {
+class GetCSVRow extends ImportAJAXListenerBase 
+{
 
 	/**
 	* CSV Row Object

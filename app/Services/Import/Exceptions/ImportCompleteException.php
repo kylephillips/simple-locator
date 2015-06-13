@@ -1,7 +1,8 @@
-<?php namespace SimpleLocator\Services\Import\Exceptions;
+<?php 
 
-class ImportCompleteException extends \Exception {
+namespace SimpleLocator\Services\Import\Exceptions;
 
-	
+class ImportCompleteException extends \Exception 
+{	
 	
 }

@@ -1,9 +1,12 @@
-<?php namespace SimpleLocator\Migrations;
+<?php 
+
+namespace SimpleLocator\Migrations;
 
 /**
 * Default Plugin Options
 */
-class DefaultOptions {
+class DefaultOptions 
+{
 
 	public function __construct()
 	{

@@ -1,17 +1,19 @@
-<?php namespace SimpleLocator\Migrations;
+<?php 
+
+namespace SimpleLocator\Migrations;
 
 use SimpleLocator\Migrations\DefaultOptions;
 
 /**
 * Plugin Activation
 */
-class Activation {
+class Activation 
+{
 
 	/**
 	* Plugin Version
 	*/
 	private $version;
-
 
 	public function __construct()
 	{
@@ -30,7 +32,6 @@ class Activation {
 		new DefaultOptions;
 	}
 
-
 	/**
 	* Activation Hook
 	*/
@@ -39,7 +40,6 @@ class Activation {
 		$this->migrateMaps();
 	}
 
-
 	/**
 	* Set the Plugin Version
 	*/
@@ -47,7 +47,6 @@ class Activation {
 	{
 		update_option('wpsl_version', $this->version);
 	}
-
 
 	/**
 	* Migrate Map Styles

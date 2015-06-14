@@ -26,10 +26,18 @@
 </tr>
 <tr valign="top">
 	<td colspan="2" style="padding:0 0 20px 0;">
-		<label for="wpsl_hide_default">
-			<input type="checkbox" name="wpsl_hide_default" value="true" id="wpsl_hide_default" <?php if ( get_option('wpsl_hide_default') == 'true') echo 'checked'; ?> />
-			<?php _e('Hide Default Post Type', 'wpsimplelocator'); ?>
-		</label>
+		<p>
+			<label for="wpsl_hide_default">
+				<input type="checkbox" name="wpsl_hide_default" value="true" id="wpsl_hide_default" <?php if ( get_option('wpsl_hide_default') == 'true') echo 'checked'; ?> />
+				<?php _e('Hide Default Post Type', 'wpsimplelocator'); ?>
+			</label>
+		</p>
+		<p>
+			<label for="wpsl_hide_default_fields">
+				<input type="checkbox" name="wpsl_hide_default_fields" value="true" id="wpsl_hide_default_fields" <?php if ( get_option('wpsl_hide_default_fields') == 'true') echo 'checked'; ?> />
+				<?php _e('Hide Included Location Fields', 'wpsimplelocator'); ?>
+			</label>
+		</p>
 	</td>
 </tr>
 <tr valign="top">
@@ -50,6 +58,30 @@
 	</td>
 </tr>
 </table>
+
+<?php 
+// ACF Map Fields
+if ( class_exists('acf_field_google_map') ) : 
+	$map_fields = $this->field_repo->getAcfMapFields();
+	if ( !empty($map_fields) ) :
+?>
+<div class="wpsl-acf-map-setting">
+	<h3><?php _e('Advanced Custom Fields Map Field', 'wpsimplelocator'); ?></h3>
+	<p><?php _e('To save latitude and longitude values from an Advanced Custom Field Google Map field, choose the field below. The values will be saved to the selected latitude and longitude custom fields.', 'wpsimplelocator'); ?></p>
+	<select name="wpsl_acf_map_field">
+		<option value=""><?php _e('None', 'wpsimplelocator'); ?></option>
+		<?php 
+			foreach ( $map_fields as $key => $label ){
+				$out = '<option value="' . $key . '"';
+				if ( $key == get_option('wpsl_acf_map_field') ) $out .= ' selected';
+				$out .= '>' . $label . '</option>';
+				echo $out;
+			}
+		?>
+	</select>
+</div>
+<?php endif; endif; ?>
+
 
 <div class="latlng">
 	<label class="wpsl-show-hidden">
@@ -164,7 +196,6 @@
 	</table>
 	<p style="font-style:oblique">*<?php _e('Post type & slug must be all lower case, with no special characters or spaces.', 'wpsimplelocator');?></p>
 </div>
-<table class="form-table">
 
 
 

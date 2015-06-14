@@ -90,4 +90,26 @@ class FieldRepository
 		return $out;
 	}
 
+	/**
+	* Get all the ACF Map fields for the selected post type
+	* @return array
+	* @since 1.2.2
+	*/
+	public function getAcfMapFields()
+	{
+		$map_fields = array();
+		$post_type = get_option('wpsl_post_type');
+
+		// Get the field groups for the post type
+		$field_groups = acf_get_field_groups(array('post_type' => $post_type));
+		foreach ( $field_groups as $group ){
+			$fields = acf_get_fields($group);
+			foreach($fields as $field){
+				if ( $field['type'] !== 'google_map' ) continue;
+				$map_fields[$field['key']] = $field['label'];
+			}
+		}
+		return $map_fields;
+	}
+
 }

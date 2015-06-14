@@ -103,6 +103,8 @@ class MetaFields
 	private function getPostType()
 	{
 		$posttype = get_option('wpsl_post_type');
+		$hide_meta = get_option('wpsl_hide_default_fields');
+		if ( $hide_meta == 'true' ) return ' ';
 		return ( $posttype !== "" ) ? $posttype : 'location';
 	}
 

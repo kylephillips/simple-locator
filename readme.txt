@@ -95,6 +95,10 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 == Changelog ==
 
+= 1.2.2=
+* Advanced Custom Fields Google Map Field integration. If you are using a post type with an associated Google Map field, you can now set the latitude and longitude fields to be populated from that field when saving posts. Visit the plugin post type settings to enable the feature. A map field must be associated with the selected post type for the setting to be visible.
+* Option added to hide the included custom meta fields from the post entry screen.
+
 = 1.2.1 =
 * Importer bug fix – API key for Geocoding saved separately as server key. 
 * Google Maps Import over HTTPS – Fixes issue on sites running HTTPS

@@ -60,6 +60,10 @@ function enable_autocomplete()
 	var inputs = $('.wpsl-search-form');
 	$.each(inputs, function(i, v){
 		var autocomplete = new google.maps.places.Autocomplete(this);
+		var submitBtn = $(this).parents('form').find('.wpslsubmit');
+		google.maps.event.addListener(autocomplete, 'place_changed', function(){
+			$(submitBtn).click();
+		});
 	});
 }
 

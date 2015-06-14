@@ -1,6 +1,7 @@
 jQuery(function($){
 
 	var lookupaddress = true;
+	var mappinrelocated = false;
 
 	/**
 	* ------------------------------------------------------
@@ -44,7 +45,7 @@ jQuery(function($){
 			'address' : address
 		}, 
 		function(results, status){
-			if ( lookupaddress == true ){
+			if ( lookupaddress == true && !mappinrelocated ){
 				if ( status == google.maps.GeocoderStatus.OK ){
 					var lat = results[0].geometry.location.lat();
 					var lng = results[0].geometry.location.lng();
@@ -93,6 +94,7 @@ jQuery(function($){
 	*/
 	$(document).ready(function(){
 		checkMapStatus();
+		if ( $('#wpsl_custom_geo').val() === 'true' ) mappinrelocated = true;
 	});
 	function checkMapStatus()
 	{
@@ -123,7 +125,16 @@ jQuery(function($){
 
 		marker = new google.maps.Marker({
 			position: new google.maps.LatLng(lat, lng),
-			map: map
+			map: map,
+			draggable: true
+		});
+
+		// Make Marker Draggable and update on change
+		google.maps.event.addListener(marker, 'drag', function(){
+			$('#wpsl_latitude').val(marker.position.lat());
+			$('#wpsl_longitude').val(marker.position.lng());
+			$('#wpsl_custom_geo').val('true');
+			mappinrelocated = true;
 		});
 	}
 

@@ -41,7 +41,8 @@ class MetaFields
 			'country' => 'wpsl_country',
 			'phone' => 'wpsl_phone',
 			'website' => 'wpsl_website',
-			'additionalinfo' => 'wpsl_additionalinfo'
+			'additionalinfo' => 'wpsl_additionalinfo',
+			'mappinrelocated' => 'wpsl_custom_geo'
 		);
 	}
 

@@ -36,7 +36,7 @@ class AdminDependencies extends DependencyBase
 	public function scripts()
 	{
 		$screen = get_current_screen();
-		if ( ($screen->post_type == $this->post_type) || ($screen->id == 'settings_page_wp_simple_locator') ) {
+		if ( ($screen->post_type == get_option('wpsl_post_type')) || ($screen->id == 'settings_page_wp_simple_locator') ) {
 			$this->addGoogleMaps();
 			wp_enqueue_script('google-maps');
 			wp_enqueue_script('media-upload');

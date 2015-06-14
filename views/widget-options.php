@@ -10,3 +10,7 @@
 	<label for="<?php echo $this->get_field_id( 'map_height' ); ?>"><?php _e( 'Map Height (in Pixels)' ); ?></label> 
 	<input class="widefat" id="<?php echo $this->get_field_id( 'map_height' ); ?>" name="<?php echo $this->get_field_name('map_height'); ?>" type="text" value="<?php echo esc_attr( $map_height ); ?>" />
 </p>
+<p>
+	<label for="<?php echo $this->get_field_id( 'placeholder' ); ?>"><?php _e( 'Form Placeholder Text' ); ?></label> 
+	<input class="widefat" id="<?php echo $this->get_field_id( 'placeholder' ); ?>" name="<?php echo $this->get_field_name('placeholder'); ?>" type="text" value="<?php echo esc_attr( $placeholder ); ?>" />
+</p>

@@ -95,12 +95,12 @@ class PostTypes
 		);
 		$args = array(
 			'labels' => $labels,
-			'public' => false,  
+			'public' => false, 
 			'show_ui' => false,
 			'capability_type' => 'post',  
 			'hierarchical' => false,  
 			'has_archive' => false,
-			'supports' => array('title','editor','thumbnail'),
+			'supports' => array('title','editor'),
 		);
 		register_post_type( 'wpslmaps' , $args );
 	}

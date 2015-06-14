@@ -78,7 +78,8 @@ class FormShortcode
 			'mapcontrols' => 'show',
 			'mapcontrolsposition' => 'TOP_LEFT',
 			'showgeobutton' => $this->settings_repo->showGeoButton('enabled'),
-			'geobuttontext' => $this->settings_repo->showGeoButton('text')
+			'geobuttontext' => $this->settings_repo->showGeoButton('text'),
+			'placeholder'=> __('Enter a Location', 'wpsimplelocator')
 		), $options);
 	}
 

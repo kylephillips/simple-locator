@@ -58,6 +58,7 @@ class FormWidget extends \WP_Widget
 		$this->options['mapcontrols'] = 'show';
 		$this->options['showgeobutton'] = $this->settings_repo->showGeoButton('enabled');
 		$this->options['geobuttontext'] = $this->settings_repo->showGeoButton('text');
+		// $this->options['placeholder'] = __('Enter a Location', 'wpsimplelocator');
 	}
 
 	/**
@@ -90,6 +91,7 @@ class FormWidget extends \WP_Widget
 		$title = ( isset($instance['title']) ) ? $instance[ 'title' ] : '';
 		$distance_options = ( isset($instance['distance_options']) ) ? $instance[ 'distance_options' ] : '';
 		$map_height = ( isset($instance['map_height']) ) ? $instance[ 'map_height' ] : '';
+		$placeholder = ( isset($instance['placeholder']) ) ? $instance['placeholder'] : __('Enter a Location', 'wpsimplelocator');
 		include( \SimpleLocator\Helpers::view('widget-options') );
 	}
 
@@ -101,6 +103,7 @@ class FormWidget extends \WP_Widget
 		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
 		$instance['distance_options'] = ( ! empty( $new_instance['distance_options'] ) ) ? strip_tags( $new_instance['distance_options'] ) : '5,10,20,50,100';
 		$instance['map_height'] = ( ! empty( $new_instance['map_height'] ) ) ? strip_tags( intval($new_instance['map_height']) ) : '';
+		$instance['placeholder'] = ( ! empty( $new_instance['placeholder'] ) ) ? strip_tags( $new_instance['placeholder'] ) : '';
 		return $instance;
 	}
 

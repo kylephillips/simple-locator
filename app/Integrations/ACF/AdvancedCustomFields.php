@@ -29,6 +29,7 @@ class AdvancedCustomFields
 		if ( empty( $_POST['acf']) ) return;
 		$option = get_option('wpsl_acf_map_field');
 		if ( !$option ) return;
+		if ( !isset($_POST['acf'][$option]) ) return;
 		$map_field = $_POST['acf'][$option];
 		if ( isset($map_field['lat']) && isset($map_field['lng']) ){
 			update_post_meta($post_id, $this->settings_repo->getGeoField('lat'), $map_field['lat']);

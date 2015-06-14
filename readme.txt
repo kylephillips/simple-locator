@@ -97,6 +97,7 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 = 1.2.2=
 * Option to enable Google Places autocomplete on search form added. Visit the plugin general settings to enable autocomplete.
+* Ability to drag map marker to save custom location added on post entry screens.
 * Advanced Custom Fields Google Map Field integration. If you are using a post type with an associated Google Map field, you can now set the latitude and longitude fields to be populated from that field when saving posts. Visit the plugin post type settings to enable the feature. A map field must be associated with the selected post type for the setting to be visible.
 * Option added to hide the included custom meta fields from the post entry screen.
 

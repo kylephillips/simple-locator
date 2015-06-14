@@ -78,6 +78,15 @@ if ( !isset($location_btn['text']) || $location_btn['text'] == "" ) $location_bt
 	</td>
 </tr>
 <tr valign="top">
+	<th scope="row"><?php _e('Enable Autocomplete in Search', 'wpsimplelocator'); ?></th>
+	<td>
+		<label>
+			<input type="checkbox" value="true" name="wpsl_enable_autocomplete" <?php if ( get_option('wpsl_enable_autocomplete') == 'true') echo 'checked'; ?> />
+			<?php _e('Enable', 'wpsimplelocator'); ?>
+		</label>
+	</td>
+</tr>
+<tr valign="top">
 	<th scope="row"><?php _e('Display Map in Singular View', 'wpsimplelocator'); ?></th>
 	<td>
 		<label>

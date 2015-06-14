@@ -139,4 +139,14 @@ class SettingsRepository
 		return ( $field == 'lat' ) ? get_option('wpsl_lat_field') : get_option('wpsl_lng_field');
 	}
 
+	/**
+	* Is Autocomplete enabled?
+	* @return boolean
+	*/
+	public function autocomplete()
+	{
+		$option = get_option('wpsl_enable_autocomplete');
+		return ( $option == 'true' ) ? true : false;
+	}
+
 }

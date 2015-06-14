@@ -76,7 +76,8 @@ abstract class DependencyBase
 		if ( !$this->settings_repo->outputGMaps() ) return;
 		$maps_url = 'https://maps.google.com/maps/api/js?';
 		$maps_url .= ( get_option('wpsl_google_api_key') ) ? 'key=' . get_option('wpsl_google_api_key') . '&' : '';
-		$maps_url .= 'sensor=false';
+		$maps_url .= '&libraries=places';
+		$maps_url .= '&sensor=false';
 		wp_register_script(
 			'google-maps', 
 			$maps_url

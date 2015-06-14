@@ -46,8 +46,22 @@ var geolocation = false;
 jQuery(function($){
 
 $(document).ready(function(){
+	enable_autocomplete();
 	queue_default_map();
 });
+
+
+/**
+* Enable Places Autocomplete on the search form
+*/
+function enable_autocomplete()
+{
+	if ( wpsl_locator.autocomplete !== '1' ) return;
+	var inputs = $('.wpsl-search-form');
+	$.each(inputs, function(i, v){
+		var autocomplete = new google.maps.places.Autocomplete(this);
+	});
+}
 
 /**
 * Queue the default map

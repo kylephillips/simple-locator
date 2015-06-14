@@ -49,15 +49,15 @@ class AdminDependencies extends DependencyBase
 				$this->version
 			);
 			$data = array( 
-				'locatorNonce' => wp_create_nonce( 'wpsl_locator-locator-nonce' ),
-				'upload' => __('Upload', 'wpsimplelocator'),
-				'remove' => __('Remove', 'wpsimplelocator'),
-				'posttype' => $this->post_type
+				'locatorNonce' 		=> wp_create_nonce( 'wpsl_locator-locator-nonce' ),
+				'upload' 			=> __('Upload', 'wpsimplelocator'),
+				'remove' 			=> __('Remove', 'wpsimplelocator'),
+				'posttype' 			=> $this->post_type
 			);
 			$data = $this->importVars($data);
-			$data['confirm_undo'] = __('Are you sure you want to undo this import? This action cannot be undone.', 'wpsimplelocator');
-			$data['confirm_redo'] = __('Are you sure you want to redo this import? This will erase any currently pending imports.', 'wpsimplelocator');
-			$data['confirm_remove'] = __('Are you sure you want to remove this import record? You will no longer be able to redo or undo this import. All imported post data will remain.', 'wpsimplelocator');
+			$data['confirm_undo'] 	= __('Are you sure you want to undo this import? This action cannot be undone.', 'wpsimplelocator');
+			$data['confirm_redo'] 	= __('Are you sure you want to redo this import? This will erase any currently pending imports.', 'wpsimplelocator');
+			$data['confirm_remove']	= __('Are you sure you want to remove this import record? You will no longer be able to redo or undo this import. All imported post data will remain.', 'wpsimplelocator');
 			wp_localize_script( 
 				'simple-locator-admin', 
 				'wpsl_locator', 
@@ -104,13 +104,13 @@ class AdminDependencies extends DependencyBase
 				'simple-locator-admin-defaultmap', 
 				'wpsl_locator_defaultmap', 
 				array(
-					'enabled' => $this->settings_repo->showDefaultMap(),
-					'latitude' => $this->settings_repo->defaultMap('latitude'),
-					'longitude' => $this->settings_repo->defaultMap('longitude'),
-					'zoom' => intval($this->settings_repo->defaultMap('zoom')),
-					'searchtext' => __('Search for a location', 'wpsimplelocator'),
-					'styles' => $this->styles_repo->getLocalizedStyles(),
-					'mappin' => get_option('wpsl_map_pin')
+					'enabled' 		=> $this->settings_repo->showDefaultMap(),
+					'latitude' 		=> $this->settings_repo->defaultMap('latitude'),
+					'longitude' 	=> $this->settings_repo->defaultMap('longitude'),
+					'zoom' 			=> intval($this->settings_repo->defaultMap('zoom')),
+					'searchtext' 	=> __('Search for a location', 'wpsimplelocator'),
+					'styles' 		=> $this->styles_repo->getLocalizedStyles(),
+					'mappin' 		=> get_option('wpsl_map_pin')
 				)
 			);
 		}
@@ -126,22 +126,24 @@ class AdminDependencies extends DependencyBase
 			$data['isimport'] = "false";
 			return $data;
 		} 
-		$data['isimport'] = "true";
-		$data['importstep'] = $_GET['step'];
-		$data['Row'] = 'Showing Row';
-		$data['pause'] = __('Pause Import', 'wpsimplelocator');
-		$data['pause_continue'] = __('Continue Import', 'wpsimplelocator');
-		$data['post_type'] = get_option('wpsl_post_type');
-		$data['choose_column'] = 'Choose Column';
-		$data['required'] = __('Column and field selections required for import.', 'wpsimplelocator');
-		$data['required_address'] = __('An address field is required for import.', 'wpsimplelocator');
-		$data['required_title'] = __('A post title field is required for import.', 'wpsimplelocator');
-		$data['title'] = __('Post Title', 'wpsimplelocator');
-		$data['content'] = __('Post Content', 'wpsimplelocator');
-		$data['importoffset'] = ( isset($transient['last_imported']) ) ? $transient['last_imported'] : 0;
-		if ( isset($transient['skip_first']) && $transient['skip_first'] && $data['importoffset'] == 0 ) $data['importoffset'] = 1;
-		$data['complete_count'] = ( isset($transient['complete_rows']) ) ? $transient['complete_rows'] : 0;
-		$data['error_count'] = ( isset($transient['error_rows']) ) ? count($transient['error_rows']) : 0;
+		$data['isimport'] 			= "true";
+		$data['importstep'] 		= $_GET['step'];
+		$data['Row'] 				= 'Showing Row';
+		$data['pause'] 				= __('Pause Import', 'wpsimplelocator');
+		$data['pause_continue'] 	= __('Continue Import', 'wpsimplelocator');
+		$data['post_type'] 			= get_option('wpsl_post_type');
+		$data['choose_column'] 		= 'Choose Column';
+		$data['required'] 			= __('Column and field selections required for import.', 'wpsimplelocator');
+		$data['required_address'] 	= __('An address field is required for import.', 'wpsimplelocator');
+		$data['required_title'] 	= __('A post title field is required for import.', 'wpsimplelocator');
+		$data['title'] 				= __('Post Title', 'wpsimplelocator');
+		$data['content'] 			= __('Post Content', 'wpsimplelocator');
+		$data['importoffset'] 		= ( isset($transient['last_imported']) ) ? $transient['last_imported'] : 0;
+		if ( isset($transient['skip_first']) 
+			&& $transient['skip_first'] 
+			&& $data['importoffset'] == 0 ) $data['importoffset'] = 1;
+		$data['complete_count'] 	= ( isset($transient['complete_rows']) ) ? $transient['complete_rows'] : 0;
+		$data['error_count'] 		= ( isset($transient['error_rows']) ) ? count($transient['error_rows']) : 0;
 		return $data;
 	}
 

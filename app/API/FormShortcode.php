@@ -79,7 +79,10 @@ class FormShortcode
 			'mapcontrolsposition' => 'TOP_LEFT',
 			'showgeobutton' => $this->settings_repo->showGeoButton('enabled'),
 			'geobuttontext' => $this->settings_repo->showGeoButton('text'),
-			'placeholder'=> __('Enter a Location', 'wpsimplelocator')
+			'placeholder'=> __('Enter a Location', 'wpsimplelocator'),
+			'ajax' => true,
+			'perpage' => get_option('posts_per_page'),
+			'noresultstext' => __('No results found.', 'wpsimplelocator')
 		), $options);
 	}
 
@@ -106,7 +109,9 @@ class FormShortcode
 			'mapcont' => $this->options['mapcontainer'],
 			'resultscontainer' => $this->options['resultscontainer'],
 			'mapcontrols' => $this->options['mapcontrols'],
-			'mapcontrolsposition' => $this->options['mapcontrolsposition']
+			'mapcontrolsposition' => $this->options['mapcontrolsposition'],
+			'ajax' => $this->options['ajax'],
+			'noresultstext' => $this->options['noresultstext']
 		);
 		wp_localize_script( 
 			'simple-locator', 

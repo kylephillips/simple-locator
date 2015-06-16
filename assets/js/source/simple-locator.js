@@ -202,7 +202,8 @@ function setFormElements(form)
 		'address' : $(form).find('.address'),
 		'latitude' : $(form).find('.latitude'),
 		'longitude' : $(form).find('.longitude'),
-		'unit' : $(form).find('.unit')
+		'unit' : $(form).find('.unit'),
+		'form' : $(form).find('form')
 	}
 	return formelements;
 }
@@ -229,7 +230,11 @@ function geocodeAddress(formelements)
 			$(formelements.latitude).val(latitude);
 			$(formelements.longitude).val(longitude);
 			
-			sendFormData(formelements);
+			if ( $('#wpsl_action').length === 0 ){
+				return sendFormData(formelements);
+			}
+
+			return $(formelements.form).submit();
 
 		} else {
 			wpsl_error(wpsl_locator.notfounderror, active_form);
@@ -309,7 +314,7 @@ function loadLocationResults(data, formelements)
 	} else {
 		// No results were returned
 		wpsl_no_results(data.formatted_address, active_form);
-		$(formelements.errordiv).text('No results found.').show();
+		$(formelements.errordiv).text(wpsl_locator_options.noresultstext).show();
 		$(formelements.results).hide();
 	}
 }

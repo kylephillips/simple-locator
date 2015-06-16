@@ -58,7 +58,8 @@ class FormWidget extends \WP_Widget
 		$this->options['mapcontrols'] = 'show';
 		$this->options['showgeobutton'] = $this->settings_repo->showGeoButton('enabled');
 		$this->options['geobuttontext'] = $this->settings_repo->showGeoButton('text');
-		// $this->options['placeholder'] = __('Enter a Location', 'wpsimplelocator');
+		$this->options['placeholder'] = __('Enter a Location', 'wpsimplelocator');
+		$this->options['noresultstext'] = __('No results found', 'wpsimplelocator');
 	}
 
 	/**
@@ -82,6 +83,13 @@ class FormWidget extends \WP_Widget
 	{
 		wp_enqueue_script('google-maps');
 		wp_enqueue_script('simple-locator');
+		wp_localize_script( 
+			'simple-locator', 
+			'wpsl_locator_options', 
+			array(
+				'noresultstext' => $this->options['noresultstext']
+			)
+		);
 	}
 
 	/**

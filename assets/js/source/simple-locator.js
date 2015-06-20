@@ -234,7 +234,7 @@ function geocodeAddress(formelements)
 				return sendFormData(formelements);
 			}
 
-			return $(formelements.form).submit();
+			return appendNonAjaxFields(formelements);
 
 		} else {
 			wpsl_error(wpsl_locator.notfounderror, active_form);
@@ -244,6 +244,16 @@ function geocodeAddress(formelements)
 	});
 }
 
+
+/**
+* Append fields to non-ajax forms
+*/
+function appendNonAjaxFields(formelements)
+{
+	$(formelements.form).append('<input type="hidden" name="formatted_address" value="' + formatted_address + '">');
+	$(formelements.form).append('<input type="hidden" name="geolocation" value="' + geolocation + '">');
+	$(formelements.form).submit();
+}
 
 
 

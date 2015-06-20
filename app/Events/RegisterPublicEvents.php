@@ -4,6 +4,7 @@ namespace SimpleLocator\Events;
 
 use SimpleLocator\Listeners\AJAXLocationSearch;
 use SimpleLocator\Listeners\GenerateAndSendNonce;
+use SimpleLocator\Listeners\LocationSearch;
 
 /**
 * Register Events
@@ -20,6 +21,10 @@ class RegisterPublicEvents
 		// AJAX Nonce Generation
 		add_action( 'wp_ajax_nopriv_locatornonce', array($this, 'JSNonceWasRequested' ));
 		add_action( 'wp_ajax_locatornonce', array($this, 'JSNonceWasRequested' ));
+
+		// Non-AJAX Search Form
+		add_action( 'admin_post_locatorsearch', array($this, 'searchWasPerformed' ));
+		add_action( 'admin_post_nopriv_locatorsearch', 'searchWasPerformed' );
 	}
 
 	/**
@@ -36,6 +41,14 @@ class RegisterPublicEvents
 	public function JSNonceWasRequested()
 	{
 		new GenerateAndSendNonce;
+	}
+
+	/**
+	* A non-AJAX search was performed
+	*/
+	public function searchWasPerformed()
+	{
+		new LocationSearch;
 	}
 
 }

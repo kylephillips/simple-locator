@@ -80,7 +80,7 @@ class FormShortcode
 			'showgeobutton' => $this->settings_repo->showGeoButton('enabled'),
 			'geobuttontext' => $this->settings_repo->showGeoButton('text'),
 			'placeholder'=> __('Enter a Location', 'wpsimplelocator'),
-			'ajax' => true,
+			'ajax' => 'true',
 			'perpage' => get_option('posts_per_page'),
 			'noresultstext' => __('No results found.', 'wpsimplelocator')
 		), $options);
@@ -128,6 +128,10 @@ class FormShortcode
 		$this->setOptions($options);
 		$this->enqueueScripts();
 		$this->localizeOptions();
+		if ( $this->options['ajax'] !== 'false' ){
+			include ( \SimpleLocator\Helpers::view('simple-locator-form-ajax') );
+			return $output;
+		}
 		include ( \SimpleLocator\Helpers::view('simple-locator-form') );
 		return $output;
 	}

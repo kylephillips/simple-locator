@@ -28,7 +28,7 @@ Simple Locator also offers developer-friendly options for adding custom Google M
 
 For more information visit [locatewp.com](http://locatewp.com).
 
-**Important: Simple Locator requires WordPress version 3.8 or higher, and PHP version 5.3.2 or higher. Import functionality requires PHP version 5.4.0 or higher.**
+**Important: Simple Locator requires WordPress version 3.8 or higher, and PHP version 5.4 or higher.**
 
 
 == Installation ==
@@ -100,6 +100,7 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 * Ability to drag map marker to save custom location added on post entry screens.
 * Advanced Custom Fields Google Map Field integration. If you are using a post type with an associated Google Map field, you can now set the latitude and longitude fields to be populated from that field when saving posts. Visit the plugin post type settings to enable the feature. A map field must be associated with the selected post type for the setting to be visible.
 * Option added to hide the included custom meta fields from the post entry screen.
+* Option added to customize no results text in shortcode. Use the option noresultstext="Your Custom Message" to display a custom message.
 
 = 1.2.1 =
 * Importer bug fix – API key for Geocoding saved separately as server key. 

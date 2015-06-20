@@ -69,4 +69,13 @@ class Helpers
 		return apply_filters('the_content', $the_excerpt);
 	}
 
+	/**
+	* Get the current URL
+	*/
+	public static function currentUrl()
+	{
+		global $wp;
+		return home_url(add_query_arg(array(), $wp->request));
+	}
+
 }

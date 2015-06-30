@@ -80,7 +80,7 @@ var NonAjaxResults = function()
 			google.maps.event.removeListener(boundsListener);
 		});
 
-		console.log(markers);
+		googlemap = map;
 	}
 
 	return plugin.init();

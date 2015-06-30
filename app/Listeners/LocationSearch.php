@@ -120,11 +120,11 @@ class LocationSearch
 	*/
 	public function nextButton()
 	{	
-		$out = '<form action="" method="post">';
+		$out = '<form action="" method="post" class="wpsl-pagination-button next">';
 		$out .= $this->paginationFields();
 		$out .= '
 			<input type="hidden" name="page" value="' . $this->data['page'] . '" />
-			<input type="submit" value="Next" class="button" />
+			<input type="submit" value="' . __('Next', 'wpsimplelocator') . '" class="button" />
 			</form>
 		';
 		return $out;
@@ -135,12 +135,12 @@ class LocationSearch
 	*/
 	public function previousButton()
 	{	
-		$out = '<form action="" method="post">';
+		$out = '<form action="" method="post" class="wpsl-pagination-button previous">';
 		$out .= $this->paginationFields();
 		$page = $this->data['page'] - 2;
 		$out .= '
 			<input type="hidden" name="page" value="' . $page . '" />
-			<input type="submit" value="Previous" class="button" />
+			<input type="submit" value="' . __('Previous', 'wpsimplelocator') . '" class="button" />
 			</form>
 		';
 		return $out;

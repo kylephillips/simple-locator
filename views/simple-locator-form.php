@@ -40,7 +40,6 @@ $output .= '
 
 
 if ( $search ) :
-	// @todo - display map with current results
 	$results = $search->results();
 	
 	if ( $results ) :
@@ -48,12 +47,19 @@ if ( $search ) :
 		$output .= '<h3>' . $search->resultCount() . ' Results within ' . $search->data('distance') . ' ' . $search->data('unit') . ' of ' . $search->data('formatted_address') . '</h3>';
 		$output .= '<h5>' . __('Page', 'wpsimplelocator') . ' ' . $page . ' of ' . $search->data('max_num_pages') . '</h5>';
 
+		if ( $this->options['mapcontainer'] === '.wpsl-map' ){
+			$output .= ( isset($mapheight) && $mapheight !== "" ) 
+				? '<div class="wpsl-map" style="height:' . $mapheight . 'px;"></div>' 
+				: '<div class="wpsl-map"></div>';
+		}
+
 		$output .= '<ul class="wpsl-nonajax-results">';
 		foreach($results as $result){
 			$output .= '<li data-wpsl-result data-lat="' . $result['latitude'] . '" data-lng="' . $result['longitude'] . '" data-permalink="' . $result['permalink'] . '" data-title="' . $result['title'] . '">' . $result['output'] . '</li>';
 		}
 		$output .= '</ul>';
 		$output .= $search->pagination();
+		$output .= '<script>jQuery(document).ready(function(){new NonAjaxResults; });</script>';
 	else : 
 		$output .= '<h3>' . $this->options['noresultstext'] . '</h3>';
 	endif;

@@ -95,12 +95,14 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 == Changelog ==
 
-= 1.2.2=
-* Option to enable Google Places autocomplete on search form added. Visit the plugin general settings to enable autocomplete.
+= 1.3.0 =
+* Important: PHP version 5.4+ is required to run version 1.2.0 or higher. To use Simple Locator with PHP version 5.3, version 1.1.5 should be installed. Updating to a newer version on servers running older versions of PHP will result in an error.
+* Option to enable Google Places autocomplete on search form added. Visit the plugin general settings to enable autocomplete. Customize the placeholder text using the new shortcode option: addresslabel="Enter Your Location".
 * Ability to drag map marker to save custom location added on post entry screens.
 * Advanced Custom Fields Google Map Field integration. If you are using a post type with an associated Google Map field, you can now set the latitude and longitude fields to be populated from that field when saving posts. Visit the plugin post type settings to enable the feature. A map field must be associated with the selected post type for the setting to be visible.
 * Option added to hide the included custom meta fields from the post entry screen.
 * Option added to customize no results text in shortcode. Use the option noresultstext="Your Custom Message" to display a custom message.
+* Non-AJAX option added to the form shortcode. To disable AJAX form submission, add the shortcode parameter ajax="false". When using the non-ajax form option, and additional pagination parameter is enabled. Use the parameter perpage="15" to designate how many results should show per page.
 
 = 1.2.1 =
 * Importer bug fix – API key for Geocoding saved separately as server key. 
@@ -173,7 +175,7 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 == Upgrade Notice ==
 
 = 1.2.0 =
-Bulk CSV import is now included. Import capabilities require PHP version 5.4+.
+Bulk CSV import is now included. Simple Locator now requires PHP version 5.4+.
 
 = 1.1.0 =
 Important: the form widget namespace has changed. Any manual calls to the widget should be updated to the new namespace: SimpleLocator\API\FormWidget. The single map shortcode name and namespace have also changed. Any manual calls to this shortocde should be updated. The new name is 'SingleLocationShortcode'.

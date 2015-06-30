@@ -61,6 +61,7 @@ class FormShortcode
 	{
 		wp_enqueue_script('google-maps');
 		wp_enqueue_script('simple-locator');
+		if ( $this->options['ajax'] !== 'true' ) wp_enqueue_script('simple-locator-non-ajax-results');
 	}
 
 	/**

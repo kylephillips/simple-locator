@@ -15,7 +15,8 @@ var css = 'assets/css/';
 var js_source = [
 	'assets/js/source/simple-locator.js',
 	'assets/js/source/simple-locator-single.js',
-	'assets/js/source/simple-locator-all-locations.js'
+	'assets/js/source/simple-locator-all-locations.js',
+	'assets/js/source/simple-locator-non-ajax-results.js'
 ]
 
 var js_admin_source = [

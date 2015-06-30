@@ -43,6 +43,13 @@ class PublicDependencies extends DependencyBase
 			$this->version, 
 			true
 		);
+		wp_register_script(
+			'simple-locator-non-ajax-results', 
+			$this->plugin_dir . '/assets/js/simple-locator-non-ajax-results.js', 
+			array('jquery', 'simple-locator'), 
+			$this->version, 
+			true
+		);
 
 		$localized_data = array(
 			'ajaxurl' 				=> admin_url( 'admin-ajax.php' ),

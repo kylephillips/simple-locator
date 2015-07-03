@@ -16,7 +16,11 @@ $output .= '
 	<input type="hidden" name="page" value="0" />
 	<input type="hidden" name="latitude" class="latitude" value="' . $latitude . '" />
 	<input type="hidden" name="longitude" class="longitude" value="' . $longitude . '" />
-	<input type="hidden" name="unit" value="' . $this->unit_raw . '" class="unit" />
+	<input type="hidden" name="unit" value="' . $this->unit_raw . '" class="unit" />';
+	if ( $search && $search->data('errors') ){
+		$output .= '<div class="wpsl-error alert alert-error">' . $search->data('errors') . '</div>';
+	}
+	$output .= '
 	<div class="wpsl-error alert alert-error" style="display:none;"></div>
 	<div class="address-input form-field">
 		<label for="zip">' . $this->options['addresslabel'] . '</label>
@@ -39,7 +43,7 @@ $output .= '
 </div><!-- .simple-locator-form -->';
 
 
-if ( $search ) :
+if ( $search && !$search->data('errors') ) :
 	$results = $search->results();
 	
 	if ( $results ) :

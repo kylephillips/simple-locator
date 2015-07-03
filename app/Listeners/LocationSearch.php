@@ -3,6 +3,7 @@
 namespace SimpleLocator\Listeners;
 
 use SimpleLocator\Services\LocationSearch\LocationSearch as Search;
+use SimpleLocator\Services\LocationSearch\LocationSearchValidator;
 
 /**
 * Non Ajax Location Search
@@ -16,17 +17,41 @@ class LocationSearch
 	private $location_search;
 
 	/**
+	* Validator
+	* @var SimpleLocator\Services\LocationSearch\LocationSearchValidator
+	*/
+	private $validator;
+
+	/**
 	* View Data
 	* @var array
 	*/
 	private $data;
+	
+	/**
+	* Form Errors
+	*/
+	private $errors;
 
 	public function __construct()
 	{
 		$this->location_search = new Search;
-		// TODO: Validation
-		$this->search();
+		$this->validator = new LocationSearchValidator;
+		$this->validate();
 		$this->setViewData();
+	}
+
+	/**
+	* Validate
+	*/
+	private function validate()
+	{
+		try {
+			$this->validator->validate();
+			$this->search();
+		} catch ( \Exception $e ){
+			$this->errors = $e->getMessage();
+		}
 	}
 
 	/**
@@ -44,8 +69,10 @@ class LocationSearch
 			'geolocation' => sanitize_text_field($_POST['geolocation']),
 			'limit' => sanitize_text_field(intval($_POST['limit'])),
 			'max_num_pages' => ceil($this->resultCount() / sanitize_text_field(intval($_POST['limit'])) ),
-			'page' => sanitize_text_field(intval($_POST['page'])) + 1
+			'page' => sanitize_text_field(intval($_POST['page'])) + 1,
+			'errors' => null
 		);
+		if ( $this->errors ) $this->data['errors'] = $this->errors;
 	}
 
 	/**

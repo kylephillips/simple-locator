@@ -29,7 +29,7 @@ License: GPLv2 or later.
 
 // Check versions before Instantiating Plugin Class
 register_activation_hook( __FILE__, 'wpsimplelocator_check_versions' );
-function wpsimplelocator_check_versions( $wp = '3.8', $php = '5.3.2' ) {
+function wpsimplelocator_check_versions( $wp = '3.8', $php = '5.4.0' ) {
 	global $wp_version;
 	if ( version_compare( PHP_VERSION, $php, '<' ) ) $flag = 'PHP';
 	elseif ( version_compare( $wp_version, $wp, '<' ) ) $flag = 'WordPress';

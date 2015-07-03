@@ -230,10 +230,9 @@ function geocodeAddress(formelements)
 			$(formelements.latitude).val(latitude);
 			$(formelements.longitude).val(longitude);
 			
-			if ( $('#wpsl_action').length === 0 ){
+			if ( $(formelements.form).find('#wpsl_action').length === 0 ){
 				return sendFormData(formelements);
 			}
-
 			return appendNonAjaxFields(formelements);
 
 		} else {

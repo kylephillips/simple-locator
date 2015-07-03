@@ -12,7 +12,7 @@ class SimpleLocator
 		$ls_env = 'live';
 
 		global $simple_locator_version;
-		$simple_locator_version = '1.2.1';
+		$simple_locator_version = '1.3.0';
 
 		$app = new SimpleLocator\Bootstrap;
 	}

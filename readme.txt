@@ -174,6 +174,9 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 
 == Upgrade Notice ==
 
+= 1.3.0 =
+Various features added including Google Places autocomplete option, Advanced Custom Field Map field integration, "no results" text customization, non-ajax option with simple pagination, and option to hide the included meta fields from post entry screens. 
+
 = 1.2.0 =
 Bulk CSV import is now included. Simple Locator now requires PHP version 5.4+.
 

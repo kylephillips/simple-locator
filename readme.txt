@@ -70,6 +70,9 @@ Several Javascript callback functions are provided for key events in search, and
 = Does it work outside the United States? =
 The search form uses the Google Maps API geocoding service, which offers reliable data throughout the world. Use of the API may change depending on your specific location. Localization is possible using the provided POT files in the /languages folder. To toggle between miles and kilometers, visit Settings > Simple Locator.
 
+= How do I paginate results? =
+Pagination is available in non-AJAX forms. To disable AJAX form submission, use the ajax="false" shortcode option. To limit results per page, use the perpage="15" option. NOTE: custom map/results containers are not available in non-AJAX forms.
+
 
 == Screenshots ==
 
@@ -227,6 +230,10 @@ The shortcode to display the form and results is [wp_simple_locator]. There are 
 * **addresslabel** – Customize the address form label
 * **mapcontrols** – Hide or show the map controls
 * **mapcontrolsposition** – Google Maps formatted position for map controls (ex: TOP_LEFT)
+* **placeholder** - Customize the search input placeholder text (added in v1.3.0)
+* **noresultstext** - Customize the text displayed if no results are returned (added in v1.3.0)
+* **ajax** – To disable AJAX form submission, use ajax="false". NOTE: custom map/results containers are not available for non-AJAX forms (added in v1.3.0)
+* **perpage** - Used in conjunction with AJAX option. If a perpage option is included in a non-AJAX form, the results will be displayed with simple pagination, limited to the number per page specified. (Ex: ajax="false" perpage="15"). Pagination is not available with AJAX forms. (added in v1.3.0)
 
 Visit [locate.wp](http://locatewp.com#documentation) for more detailed information.
 
@@ -234,6 +241,10 @@ Visit [locate.wp](http://locatewp.com#documentation) for more detailed informati
 = Widget Use =
 
 Options include the title, distance options, and the map height. To use the widget outside of a predefined sidebar area, use the following function in your template, as outlined in the [WordPress documentation](http://codex.wordpress.org/Function_Reference/the_widget). The widget name is SimpleLocator\Widgets\Form (must include namespaces).
+
+= Form Options =
+
+To enable Google Places autocomplete in the search form, visit Settings > Simple Locator > General, and select the "Enable Autocomplete in Search" option. Your form will now include an autocomplete dropdown populated by the Google Places API.
 
 
 = Singular View =

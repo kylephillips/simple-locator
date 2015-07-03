@@ -282,6 +282,7 @@ function sendFormData(formelements)
 				wpsl_error(data.message, active_form);
 				$(formelements.errordiv).text(data.message).show();
 				$(formelements.results).hide();
+				$(formelements.map).hide();
 			} else {
 				wpsl_success(data.result_count, data.results, active_form);
 				loadLocationResults(data, formelements);
@@ -324,6 +325,7 @@ function loadLocationResults(data, formelements)
 		wpsl_no_results(data.formatted_address, active_form);
 		$(formelements.errordiv).text(wpsl_locator_options.noresultstext).show();
 		$(formelements.results).hide();
+		$(formelements.map).hide();
 	}
 }
 

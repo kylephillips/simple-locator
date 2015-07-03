@@ -9,6 +9,10 @@ Best suited for WordPress developers looking for a customizable way of adding lo
 
 Learn more at [locatewp.com](http://locatewp.com) and download from the [WordPress Plugin Repository](https://wordpress.org/plugins/simple-locator/).
 
+#### Requirements
+
+Simple Locator requires WordPress version 3.8+ and PHP version 5.4+. Simple Locator version 1.1.5 (no longer maintained) is compatible with PHP version 5.3.2+.
+
 
 #### Demo 
 [View the Demo](http://locatewp.com)

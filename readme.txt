@@ -98,6 +98,9 @@ Pagination is available in non-AJAX forms. To disable AJAX form submission, use 
 
 == Changelog ==
 
+= 1.3.1 =
+* Bug fix - fatal error thrown on some sites when attempting to activate without Advanced Custom Fields installed.
+
 = 1.3.0 =
 * Important: PHP version 5.4+ is required to run version 1.2.0 or higher. To use Simple Locator with PHP version 5.3, version 1.1.5 should be installed. Updating to a newer version on servers running older versions of PHP will result in an error.
 * Option to enable Google Places autocomplete on search form added. Visit the plugin general settings to enable autocomplete. Customize the placeholder text using the new shortcode option: addresslabel="Enter Your Location".

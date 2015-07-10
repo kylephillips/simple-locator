@@ -98,6 +98,7 @@ class FieldRepository
 	public function getAcfMapFields()
 	{
 		$map_fields = array();
+		if ( !function_exists('acf_get_field_groups') ) return $map_fields;
 		$post_type = get_option('wpsl_post_type');
 
 		// Get the field groups for the post type

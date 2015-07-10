@@ -181,6 +181,9 @@ Pagination is available in non-AJAX forms. To disable AJAX form submission, use 
 
 == Upgrade Notice ==
 
+= 1.3.1 =
+Minor bug fixes.
+
 = 1.3.0 =
 Various features added including Google Places autocomplete option, Advanced Custom Field Map field integration, "no results" text customization, non-ajax option with simple pagination, and option to hide the included meta fields from post entry screens. 
 

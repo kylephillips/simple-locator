@@ -14,6 +14,7 @@ jQuery(function($){
 	*/
 	var form = $("form[name='post']");
 	$(form).find("#publish").on('click', function(e){
+		if ( wpsl_locator.lat_field !== 'wpsl_latitude' && wpsl_locator.map_field !== "" ) return;
 		e.preventDefault();
 		var address = formatAddress();
 		googleGeocodeAddress(address);

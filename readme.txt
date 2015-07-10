@@ -100,6 +100,7 @@ Pagination is available in non-AJAX forms. To disable AJAX form submission, use 
 
 = 1.3.1 =
 * Bug fix - fatal error thrown on some sites when attempting to activate without Advanced Custom Fields installed.
+* Bug fix – error when saving a location using an Advanced Custom Field Google Map field with the included fields visible.
 
 = 1.3.0 =
 * Important: PHP version 5.4+ is required to run version 1.2.0 or higher. To use Simple Locator with PHP version 5.3, version 1.1.5 should be installed. Updating to a newer version on servers running older versions of PHP will result in an error.

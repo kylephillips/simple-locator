@@ -52,7 +52,10 @@ class AdminDependencies extends DependencyBase
 				'locatorNonce' 		=> wp_create_nonce( 'wpsl_locator-locator-nonce' ),
 				'upload' 			=> __('Upload', 'wpsimplelocator'),
 				'remove' 			=> __('Remove', 'wpsimplelocator'),
-				'posttype' 			=> $this->post_type
+				'posttype' 			=> $this->post_type,
+				'lat_field'			=> $this->settings_repo->getGeoField('lat'),
+				'lng_field'			=> $this->settings_repo->getGeoField('lng'),
+				'map_field'			=> get_option('wpsl_acf_map_field')
 			);
 			$data = $this->importVars($data);
 			$data['confirm_undo'] 	= __('Are you sure you want to undo this import? This action cannot be undone.', 'wpsimplelocator');

@@ -162,6 +162,8 @@ function loadDefault(userlocation, position)
 			streetViewControl: false,
 			styles: wpsl_locator.mapstyles
 		}
+		// Override options if custom options are set
+		if ( wpsl_locator.custom_map_options === '1' )	mapOptions = wpsl_locator.map_options;
 		var map = new google.maps.Map(formelements.map[0],mapOptions);
 	});
 }
@@ -339,7 +341,6 @@ function showLocationMap(data, formelements)
 	markers = [];
 
 	// Set the optional user parameters
-	var mapstyles = wpsl_locator.mapstyles;	
 	var mapcont = $(formelements.map)[0];
 	
 	if ( typeof wpsl_locator_options != 'undefined' ){
@@ -362,7 +363,7 @@ function showLocationMap(data, formelements)
 			mapTypeId: 'roadmap',
 			mapTypeControl: false,
 			zoom: 8,
-			styles: mapstyles,
+			styles: wpsl_locator.mapstyles,
 			panControl : false,
 			disableDefaultUI: disablecontrols,
 			zoomControlOptions : {
@@ -370,6 +371,9 @@ function showLocationMap(data, formelements)
 				position : controlposition
 			}
 		}
+
+	// Override options if custom options are set
+	if ( wpsl_locator.custom_map_options === '1' ) mapOptions = wpsl_locator.map_options;
 	var locations = [];
 	var infoWindow = new google.maps.InfoWindow(), marker, i;
 	

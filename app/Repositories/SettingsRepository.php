@@ -149,4 +149,24 @@ class SettingsRepository
 		return ( $option == 'true' ) ? true : false;
 	}
 
+	/**
+	* Are custom map options being used?
+	*/
+	public function customMapOptions()
+	{
+		$option = get_option('wpsl_custom_map_options');
+		return ( $option && $option == '1' ) ? true : false;
+	}
+
+	/**
+	* Get JS Map options
+	*/ 
+	public function mapOptions()
+	{
+		$option = get_option('wpsl_map_options');
+		if ( $option ) return $option;
+		include( dirname(dirname(__FILE__)) . '/Migrations/map_options/map-options.php' );
+		return $default;
+	}
+
 }

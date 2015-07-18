@@ -16,6 +16,14 @@ jQuery(function($){
 		if ( $(this).val() === 'choice' ) loopMaps();
 	});
 
+	$(document).on('change', '#wpsl_custom_map_options', function(){
+		if ( $(this).is(':checked') ){
+			$('#wpsl_map_options').show();
+			return;
+		}
+		$('#wpsl_map_options').hide();
+	});
+
 	/**
 	* Select a Map Style
 	*/

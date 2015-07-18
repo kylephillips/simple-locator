@@ -10,7 +10,7 @@ class PublicDependencies extends DependencyBase
 
 	public function __construct()
 	{
-		parent::__construct();	
+		parent::__construct();
 		add_action( 'wp_enqueue_scripts', array( $this, 'styles' ));
 		add_action( 'wp_enqueue_scripts', array( $this, 'scripts' ));
 	}
@@ -39,7 +39,7 @@ class PublicDependencies extends DependencyBase
 		wp_register_script(
 			'simple-locator', 
 			$this->plugin_dir . '/assets/js/simple-locator.js', 
-			'jquery', 
+			array('jquery', 'google-maps'), 
 			$this->version, 
 			true
 		);
@@ -72,9 +72,12 @@ class PublicDependencies extends DependencyBase
 			'default_longitude'		=> $this->settings_repo->defaultMap('longitude'),
 			'default_zoom' 			=> intval($this->settings_repo->defaultMap('zoom')),
 			'default_user_center'	=> $this->settings_repo->defaultMap('user_location'),
-			'autocomplete'			=> $this->settings_repo->autocomplete()
+			'autocomplete'			=> $this->settings_repo->autocomplete(),
+			'custom_map_options'	=> $this->settings_repo->customMapOptions(),
+			'l10n_print_after' 		=> 'wpsl_locator.map_options = ' . $this->settings_repo->mapOptions()
 		);
-		$localized_data['mapstyles'] = $this->styles_repo->getLocalizedStyles();
+		$localized_data['mapstyles'] = $this->styles_repo->getLocalizedStyles();    		
+
 		wp_localize_script( 
 			'simple-locator', 
 			'wpsl_locator', 

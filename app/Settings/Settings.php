@@ -100,6 +100,7 @@ class Settings
 	private function setMapOptions()
 	{
 		$this->map_options['type'] = get_option('wpsl_map_styles_type');
+		$this->map_options['choice'] = get_option('wpsl_map_styles_choice');
 	}
 
 	/**
@@ -142,6 +143,8 @@ class Settings
 		register_setting( 'wpsimplelocator-map', 'wpsl_map_styles_type' );
 		register_setting( 'wpsimplelocator-map', 'wpsl_map_styles' );
 		register_setting( 'wpsimplelocator-map', 'wpsl_map_styles_choice' );
+		register_setting( 'wpsimplelocator-map', 'wpsl_custom_map_options' );
+		register_setting( 'wpsimplelocator-map', 'wpsl_map_options' );
 		register_setting( 'wpsimplelocator-default', 'wpsl_default_map' );
 		register_setting( 'wpsimplelocator-results', 'wpsl_results_options' );
 		register_setting( 'wpsimplelocator-results', 'wpsl_results_fields_formatted' );

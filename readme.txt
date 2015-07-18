@@ -73,6 +73,12 @@ The search form uses the Google Maps API geocoding service, which offers reliabl
 = How do I paginate results? =
 Pagination is available in non-AJAX forms. To disable AJAX form submission, use the ajax="false" shortcode option. To limit results per page, use the perpage="15" option. NOTE: custom map/results containers are not available in non-AJAX forms.
 
+= I'm a developer. How do I customize the map options? =
+As of version 1.4.0, the Google Maps options object is customizable. To customize the options, visit settings > Simple Locator > Map Display. Check the box to enable custom map options and enter them. This MUST be a properly formatted Javascript object. Think of this as if you were writing your own Google Maps implementation and needed to pass options. Also note, enabling custom options will override any options set in shortcodes.
+
+= Can I use this on a commercial site? =
+This plugin relies on the Google Maps Javascript API. Please refer to the API documentation regarding commercial use and licensing.
+
 
 == Screenshots ==
 

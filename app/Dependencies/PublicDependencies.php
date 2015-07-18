@@ -36,13 +36,17 @@ class PublicDependencies extends DependencyBase
 	{
 		$this->addGoogleMaps();
 
+		$dependencies = array('jquery');
+		if ( $this->settings_repo->customMapOptions() || $this->settings_repo->outputGMaps() ) $dependencies[] = 'google-maps';
+
 		wp_register_script(
 			'simple-locator', 
 			$this->plugin_dir . '/assets/js/simple-locator.js', 
-			array('jquery', 'google-maps'), 
+			$dependencies, 
 			$this->version, 
 			true
 		);
+
 		wp_register_script(
 			'simple-locator-non-ajax-results', 
 			$this->plugin_dir . '/assets/js/simple-locator-non-ajax-results.js', 

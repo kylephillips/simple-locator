@@ -36,6 +36,7 @@
 		</textarea>
 	</td>
 </tr>
+<?php if ( $this->settings_repo->outputGMaps() ) : ?>
 <tr valign="top">
 	<td colspan="2">
 		<h3><?php _e('Google Map Options', 'simplelocator'); ?></h3>
@@ -44,3 +45,4 @@
 		<textarea id="wpsl_map_options" name="wpsl_map_options" style="width:100%;height:200px;margin-top:20px;<?php if ( !$this->settings_repo->customMapOptions() ) echo 'display:none;' ?>"><?php echo $this->settings_repo->mapOptions(); ?></textarea>
 	</td>
 </tr>
+<?php endif; ?>

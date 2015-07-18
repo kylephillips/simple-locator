@@ -98,6 +98,9 @@ Pagination is available in non-AJAX forms. To disable AJAX form submission, use 
 
 == Changelog ==
 
+= 1.4.0 =
+* Customizable Map Options - Ability to customize the Google options array added. Visit settings > map display. To enable custom map options, check the appropriate box and enter a properly formatted Google maps options object. Important: If custom map options are enabled, options specified in shortcodes will be overwritten.
+
 = 1.3.1 =
 * Bug fix - fatal error thrown on some sites when attempting to activate without Advanced Custom Fields installed.
 * Bug fix – error when saving a location using an Advanced Custom Field Google Map field with the included fields visible.
@@ -180,6 +183,9 @@ Pagination is available in non-AJAX forms. To disable AJAX form submission, use 
 
 
 == Upgrade Notice ==
+
+= 1.4.0 =
+Ability to customize Google Maps options object added. Important: If the Google Maps API has been disabled via the plugin settings, this option will not be available.
 
 = 1.3.1 =
 Minor bug fixes.

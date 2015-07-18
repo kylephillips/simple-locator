@@ -4,7 +4,7 @@ Donate link: http://locatewp.com/
 Tags: location, store locator, google maps, store map
 Requires at least: 3.8
 Tested up to: 4.2
-Stable tag: 1.3.1
+Stable tag: 1.4.0
 
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -92,7 +92,7 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 
 5. Use the included post type and latitude/longitude fields, or specify your own existing combination of type and fields. Works with Advanced Custom Fields. Ideal for developers looking for a customizable location search.
 
-6. Choose from a list of pre-defined map styles
+6. Choose from a list of pre-defined map styles, and optionally customize the Google Maps options object.
 
 7. Or, paste your own JSON formatted styles.
 

@@ -81,7 +81,9 @@ class MapStyles
 			'meta_key' => 'wpsl_map_id',
 			'meta_value' => $this->file_id
 		));
-		return ( $map_query->have_posts() ) ? true : false;
+		$exists = ( $map_query->have_posts() ) ? true : false;
+		wp_reset_postdata();
+		return $exists;
 	}
 
 }

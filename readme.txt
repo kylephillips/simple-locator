@@ -104,6 +104,9 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 
 == Changelog ==
 
+= 1.4.1 =
+* Bug fix in single location shortcode
+
 = 1.4.0 =
 * Customizable Map Options - Ability to customize the Google options array added. Visit settings > map display. To enable custom map options, check the appropriate box and enter a properly formatted Google maps options object. Important: If custom map options are enabled, options specified in shortcodes will be overwritten.
 

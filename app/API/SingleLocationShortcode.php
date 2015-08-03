@@ -69,7 +69,7 @@ class SingleLocationShortcode
 			wp_enqueue_script(
 				'simple-locator-single', 
 				\SimpleLocator\Helpers::plugin_url(). '/assets/js/simple-locator-single.js', 
-				array('jquery'), 
+				array('jquery', 'simple-locator'), 
 				'1.0'
 			);
 			wp_localize_script( 

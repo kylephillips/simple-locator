@@ -50,8 +50,10 @@ class MapStyles
 			'posts_per_page' => 1
 		));
 		if ( $style_query->have_posts() ) : while ( $style_query->have_posts() ) : $style_query->the_post();
-			return json_decode(get_the_content());
-		endwhile; endif; wp_reset_postdata();
+			$style_content = json_decode(get_the_content());
+		endwhile; endif;
+		wp_reset_postdata();
+		return $style_content;
 	}
 
 }

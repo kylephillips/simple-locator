@@ -180,7 +180,7 @@ class LocationSearch
 	private function setQuery()
 	{
 		$sql = "
-			SELECT 
+			SELECT DISTINCT
 			p.post_title AS title,
 			p.ID AS id," .
 			$this->sqlFieldVars() . "
@@ -247,7 +247,7 @@ class LocationSearch
 	{
 		global $wpdb;
 		$sql = "
-			SELECT p.ID,
+			SELECT DISTINCT p.ID,
 			( " . $this->query_data['diameter'] . " * acos( cos( radians(@origlat) ) * cos( radians( lat.meta_value ) ) 
 			* cos( radians( lng.meta_value ) - radians(@origlng) ) + sin( radians(@origlat) ) * sin(radians(lat.meta_value)) ) )
 			AS distance

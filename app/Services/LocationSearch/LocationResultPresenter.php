@@ -96,6 +96,9 @@ class LocationResultPresenter
 		$output = $this->removeEmptyTags($output);
 		$output = Helpers::replaceURLs($output);
 		$output = wpautop($output);
+
+		$output = apply_filters('simple_locator_result', $output, $this->result);
+
 		return $output;
 	}
 

@@ -111,6 +111,8 @@ class LocationResultPresenter
 		$infowindow = '<h4>[post_title]</h4><p><a href="[post_permalink]" data-location-id="'.$this->result->id.'">'.__('View Location', 'wpsimplelocator').'</a></p>';
 		$infowindow = $this->replacePostFields($infowindow);
 
+		$infowindow = apply_filters('simple_locator_infowindow', $infowindow, $this->result);
+
 		return $infowindow;
 	}
 

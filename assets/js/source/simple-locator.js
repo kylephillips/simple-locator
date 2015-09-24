@@ -383,35 +383,36 @@ function showLocationMap(data, formelements)
 	
 	// Array of locations
 	for (var i = 0, length = data.results.length; i < length; i++) {
-		var title = data.results[i].title;
-		var lat = data.results[i].latitude;
-		var lng = data.results[i].longitude;
-		var link = data.results[i].permalink;
-		var id = data.results[i].id;
-		var location = [title,lat,lng,link,id];
+		var location = {
+			title: data.results[i].title,
+			lat: data.results[i].latitude,
+			lng: data.results[i].longitude,
+			id: data.results[i].id,
+			infowindow: data.results[i].infowindow
+		};
 		locations.push(location);
 	}
 	
 	// Loop through array of markers & place each one on the map  
 	for( i = 0; i < locations.length; i++ ) {
-		var position = new google.maps.LatLng(locations[i][1], locations[i][2]);
+		var position = new google.maps.LatLng(locations[i].lat, locations[i].lng);
 		bounds.extend(position);
 		
 		marker = new google.maps.Marker({
 			position: position,
 			map: map,
-			title: locations[i][0],
+			title: locations[i].title,
 			icon: mappin
 		});	
 
 		// Info window for each marker 
 		google.maps.event.addListener(marker, 'click', (function(marker, i) {
 			return function() {
-				infoWindow.setContent('<h4>' + locations[i][0] + '</h4><p><a href="' + locations[i][3] + '" data-location-id="' + locations[i][4] + '">' + wpsl_locator.viewlocation + '</a></p>');
+				infoWindow.setContent(locations[i].infowindow);
 				infoWindow.open(map, marker);
 
 				// Simple Locator Callback function for click event
-				wpsl_click_marker(marker, i, active_form, locations[i][4]);
+				wpsl_click_marker(marker, i, active_form, locations[i].id);
 			}
 		})(marker, i));
 

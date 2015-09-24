@@ -76,7 +76,8 @@ class LocationResultPresenter
 			'permalink' => get_permalink($this->result->id),
 			'latitude' => $this->result->latitude,
 			'longitude' => $this->result->longitude,
-			'output'=> $this->formatOutput()
+			'output' => $this->formatOutput(),
+			'infowindow' => $this->formatInfoWindow()
 		);
 		return $location;
 	}
@@ -100,6 +101,17 @@ class LocationResultPresenter
 		$output = apply_filters('simple_locator_result', $output, $this->result);
 
 		return $output;
+	}
+
+	/**
+	* Render the info window output
+	*/
+	private function formatInfoWindow()
+	{
+		$infowindow = '<h4>[post_title]</h4><p><a href="[post_permalink]" data-location-id="'.$this->result->id.'">'.__('View Location', 'wpsimplelocator').'</a></p>';
+		$infowindow = $this->replacePostFields($infowindow);
+
+		return $infowindow;
 	}
 
 	/**

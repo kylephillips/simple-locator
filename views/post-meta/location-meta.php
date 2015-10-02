@@ -37,20 +37,22 @@
 			<input type="text" name="wpsl_longitude" id="wpsl_longitude" value="<?php echo $this->meta['longitude']; ?>" readonly />
 		</p>
 	</div>
-	<hr />
-	<p class="half">
-		<label for="wpsl_phone"><?php _e('Phone Number', 'wpsimplelocator'); ?></label>
-		<input type="text" name="wpsl_phone" id="wpsl_phone" value="<?php echo $this->meta['phone']; ?>" />
-	</p>
-	<p class="half right">
-		<label for="wpsl_website"><?php _e('Website', 'wpsimplelocator'); ?></label>
-		<input type="text" name="wpsl_website" id="wpsl_website" value="<?php echo $this->meta['website']; ?>" />
-	</p>
-	<hr />
-	<p class="full">
-		<label for="wpsl_additionalinfo"><?php _e('Additional Info', 'wpsimplelocator'); ?></label>
-		<textarea name="wpsl_additionalinfo" id="wpsl_additionalinfo"><?php echo $this->meta['additionalinfo']; ?></textarea>
-	</p>
+	<div class="wpsl-extra-meta-fields">
+		<hr />
+		<p class="half">
+			<label for="wpsl_phone"><?php _e('Phone Number', 'wpsimplelocator'); ?></label>
+			<input type="text" name="wpsl_phone" id="wpsl_phone" value="<?php echo $this->meta['phone']; ?>" />
+		</p>
+		<p class="half right">
+			<label for="wpsl_website"><?php _e('Website', 'wpsimplelocator'); ?></label>
+			<input type="text" name="wpsl_website" id="wpsl_website" value="<?php echo $this->meta['website']; ?>" />
+		</p>
+		<hr />
+		<p class="full">
+			<label for="wpsl_additionalinfo"><?php _e('Additional Info', 'wpsimplelocator'); ?></label>
+			<textarea name="wpsl_additionalinfo" id="wpsl_additionalinfo"><?php echo $this->meta['additionalinfo']; ?></textarea>
+		</p>
+	</div>
 	<input type="hidden" name="wpsl_custom_geo" id="wpsl_custom_geo" value="<?php echo $this->meta['mappinrelocated']; ?>">
 </div>
 <?php include('error-modal.php');?>

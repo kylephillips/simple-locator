@@ -50,6 +50,7 @@ class PostTypes
 		$this->pt_labels->add_new = ( $labels['add_new_item'] !== "" ) ? $labels['add_new_item'] : 'Add Location';
 		$this->pt_labels->edit_item = ( $labels['edit_item'] !== "" ) ? $labels['edit_item'] : 'Edit Location';
 		$this->pt_labels->view_item = ( $labels['view_item'] !== "" ) ? $labels['view_item'] : 'View Location';
+		$this->pt_labels->search_item = ( $labels['search_item'] !== "" ) ? $labels['search_item'] : 'Search Location';
 		$this->pt_labels->slug = ( $labels['slug'] !== "" ) ? $labels['slug'] : 'location';
 		$this->pt_labels->menu_icon = ( $labels['menu_icon'] !== "" ) ? $labels['menu_icon'] : 'dashicons-post-status';
 		$this->pt_labels->menu_position = ( $labels['menu_position'] !== "" ) ? intval($labels['menu_position']) : 6;
@@ -66,7 +67,8 @@ class PostTypes
 			'singular_name' => $this->pt_labels->singular,
 			'add_new_item'=> $this->pt_labels->add_new,
 			'edit_item' => $this->pt_labels->edit_item,
-			'view_item' => $this->pt_labels->view_item
+			'view_item' => $this->pt_labels->view_item,
+			'search_items' => $this->pt_labels->search_item
 		);
 		$args = array(
 			'labels' => $labels,

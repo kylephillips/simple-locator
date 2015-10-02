@@ -171,6 +171,12 @@ if ( class_exists('acf_field_google_map') ) :
 		</td>
 	</tr>
 	<tr valign="top" class="wpsl-label-row">
+		<th><?php _e('Search Label', 'wpsimplelocator');?></th>
+		<td>
+			<input type="text" name="wpsl_posttype_labels[search_item]" value="<?php echo $this->getLabel('search_item', 'Search Locations'); ?>">
+		</td>
+	</tr>
+	<tr valign="top" class="wpsl-label-row">
 		<th><?php _e('Slug', 'wpsimplelocator');?>*</th>
 		<td>
 			<input type="text" name="wpsl_posttype_labels[slug]" value="<?php echo $this->getLabel('slug', 'location'); ?>">

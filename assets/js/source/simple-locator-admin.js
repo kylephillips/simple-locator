@@ -134,6 +134,7 @@ jQuery(function($){
 		google.maps.event.addListener(marker, 'drag', function(){
 			$('#wpsl_latitude').val(marker.position.lat());
 			$('#wpsl_longitude').val(marker.position.lng());
+			$('#wpsl_latitude, #wpsl_longitude').attr('readonly', false);
 			$('#wpsl_custom_geo').val('true');
 			mappinrelocated = true;
 		});

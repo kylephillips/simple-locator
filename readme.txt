@@ -107,6 +107,8 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 = 1.4.1 =
 * Bug fix in single location shortcode
 * Bug fix where multiple instances of the same location being returned on certain hosts (thanks to Christine McDermott for bug tracking help)
+* Minor admin bug fixes
+* Filter added for customizing infowindow content in map results (Contributed by Scott Polhemus)
 * French Translation (Thanks to Khelil Benosman)
 
 = 1.4.0 =

@@ -97,6 +97,10 @@ jQuery(function($){
 		checkMapStatus();
 		if ( $('#wpsl_custom_geo').val() === 'true' ) mappinrelocated = true;
 	});
+	// For custom ACF Tab Placement
+	$(document).on('click', '.acf-tab-button', function(){
+		checkMapStatus();
+	});
 	function checkMapStatus()
 	{
 		if ( $("#wpslmap").length > 0 ){

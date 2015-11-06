@@ -19,6 +19,12 @@ class FormShortcode
 	private $unit_raw;
 
 	/**
+	* Taxonomies to filter
+	* @var array
+	*/
+	private $taxonomies;
+
+	/**
 	* Shortcode Options
 	*/
 	public $options;
@@ -55,6 +61,23 @@ class FormShortcode
 	}
 
 	/**
+	* Set the taxonomy filters
+	*/
+	private function setTaxonomies()
+	{
+		if ( $this->options['taxonomies'] == "" ) return;
+		$tax_array = explode(',', $this->options['taxonomies']);
+		foreach ( $tax_array as $key => $tax ){
+			$taxonomy = get_taxonomy($tax);
+			$tax_label = $taxonomy->labels->name; // Get the label
+			$terms = get_terms($tax); // Get the terms
+			if ( !$terms ) continue;
+			$this->taxonomies[$tax]['label'] = $tax_label;
+			$this->taxonomies[$tax]['terms'] = $terms;
+		}
+	}
+
+	/**
 	* Enqueue the Required Scripts
 	*/
 	private function enqueueScripts()
@@ -83,7 +106,8 @@ class FormShortcode
 			'placeholder'=> __('Enter a Location', 'wpsimplelocator'),
 			'ajax' => 'true',
 			'perpage' => get_option('posts_per_page'),
-			'noresultstext' => __('No results found.', 'wpsimplelocator')
+			'noresultstext' => __('No results found.', 'wpsimplelocator'),
+			'taxonomies' => ''
 		), $options);
 	}
 
@@ -127,14 +151,16 @@ class FormShortcode
 	public function renderView($options)
 	{	
 		$this->setOptions($options);
+		$this->setTaxonomies();
 		$this->enqueueScripts();
 		$this->localizeOptions();
+		$widget = ( isset($widget_instance) ) ? true : false;
 		if ( $this->options['ajax'] !== 'false' ){
 			include ( \SimpleLocator\Helpers::view('simple-locator-form-ajax') );
-			return $output;
+			return apply_filters('simple_locator_form', $output, $this->options['distances'], $this->taxonomies, $widget);
 		}
 		include ( \SimpleLocator\Helpers::view('simple-locator-form') );
-		return $output;
+		return apply_filters('simple_locator_form', $output, $this->options['distances'], $this->taxonomies, $widget);
 	}
 
 }

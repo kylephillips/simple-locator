@@ -26,8 +26,21 @@ $output .= '
 		<select name="distance" class="distanceselect">' .
 			$this->distanceOptions() . 
 		'</select>
-	</div>
-	<div class="submit">
+	</div>';
+	if ( $this->taxonomies ) :
+		foreach ( $this->taxonomies as $key => $taxonomy ) :
+			$output .= '<div class="wpsl-taxonomy-filter">
+			<label class="taxonomy-label">' . $taxonomy['label'] . '</label>
+			<select name="taxonomy[' . $key . ']">
+				<option value="">--</option>';
+				foreach ( $taxonomy['terms'] as $term ){
+					$output .= '<option value="' . $term->term_id . '" />' . $term->name . '</option>';
+				}
+			$output .= '</select>
+			</div><!-- .taxonomy -->';
+		endforeach;
+	endif;
+	$output .= '<div class="submit">
 		<input type="hidden" name="latitude" class="latitude" />
 		<input type="hidden" name="longitude" class="longitude" />
 		<input type="hidden" name="unit" value="' . $this->unit_raw . '" class="unit" />

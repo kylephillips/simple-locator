@@ -207,6 +207,7 @@ function setFormElements(form)
 		'latitude' : $(form).find('.latitude'),
 		'longitude' : $(form).find('.longitude'),
 		'unit' : $(form).find('.unit'),
+		'taxonomy' : $(form).find('input[name^="taxonomy"]:checked'),
 		'form' : $(form).find('form')
 	}
 	return formelements;
@@ -266,22 +267,39 @@ function appendNonAjaxFields(formelements)
 */
 function sendFormData(formelements)
 {
+	var taxonomies = $(formelements.taxonomy).serializeArray();
+	var taxonomy_array = {};
+
+	$.each(taxonomies, function(i, v){
+		var tax_name = this.name.replace( /(^.*\[|\].*$)/g, '' );
+		if ( (typeof taxonomy_array[tax_name] == undefined) 
+			|| !(taxonomy_array[tax_name] instanceof Array) ) 
+			taxonomy_array[tax_name] = [];
+		if ( tax_name) taxonomy_array[tax_name].push(this.value);
+	});
+
+	console.log(taxonomy_array);
+
+	formdata = {
+		action : 'locate',
+		address : $(formelements.address).val(),
+		formatted_address : formatted_address,
+		locatorNonce : $('.locator-nonce').val(),
+		distance : $(formelements.distance).val(),
+		latitude : $(formelements.latitude).val(),
+		longitude : $(formelements.longitude).val(),
+		unit : $(formelements.unit).val(),
+		geolocation : geolocation,
+		taxonomies : taxonomy_array
+	}
+
 	$.ajax({
 		url: wpsl_locator.ajaxurl,
 		type: 'post',
 		datatype: 'json',
-		data: {
-			action : 'locate',
-			address : $(formelements.address).val(),
-			formatted_address : formatted_address,
-			locatorNonce : $('.locator-nonce').val(),
-			distance : $(formelements.distance).val(),
-			latitude : $(formelements.latitude).val(),
-			longitude : $(formelements.longitude).val(),
-			unit : $(formelements.unit).val(),
-			geolocation : geolocation
-		},
+		data: formdata,
 		success: function(data){
+			console.log(data);
 			if (data.status === 'error'){
 				wpsl_error(data.message, active_form);
 				$(formelements.errordiv).text(data.message).show();
@@ -291,6 +309,9 @@ function sendFormData(formelements)
 				wpsl_success(data.result_count, data.results, active_form);
 				loadLocationResults(data, formelements);
 			}
+		},
+		error: function(data){
+			console.log(data);
 		}
 	});
 }

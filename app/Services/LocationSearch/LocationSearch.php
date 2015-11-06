@@ -110,6 +110,16 @@ class LocationSearch
 			'offset' => ( isset($_POST['page']) ) ? sanitize_text_field(intval($_POST['page'])) : null,
 			'limit' => ( isset($_POST['limit']) ) ? sanitize_text_field(intval($_POST['limit'])) : null
 		);
+		if ( isset($_POST['taxonomies']) ) $this->setTaxonomies();
+	}
+
+	/**
+	* Set Taxonomy Filters
+	*/
+	private function setTaxonomies()
+	{
+		$terms = $_POST['taxonomies'];
+		$this->data['taxonomies'] = $terms;
 	}
 
 	/**
@@ -121,6 +131,7 @@ class LocationSearch
 		$table_prefix = $wpdb->prefix;
 		$this->query_data['post_table'] = $table_prefix . 'posts';
 		$this->query_data['meta_table'] = $table_prefix . 'postmeta';
+		$this->query_data['term_relationship_table'] = $table_prefix . 'term_relationships';
 		$this->query_data['distance'] = $this->data['distance'];
 		$this->query_data['userlat'] = $this->data['latitude'];
 		$this->query_data['userlong'] = $this->data['longitude'];
@@ -159,6 +170,21 @@ class LocationSearch
 	}
 
 	/**
+	* Add Taxonomy Joins to limit by taxonomy if available
+	*/
+	private function taxonomyJoins()
+	{
+		if ( !$this->data['taxonomies'] ) return;
+		$sql = "";
+		foreach ( $this->data['taxonomies'] as $taxonomy_name => $ids ){
+			if ( is_array($ids) ){
+				$sql .= "\nJOIN " . $this->query_data['term_relationship_table'] . " AS $taxonomy_name ON $taxonomy_name.object_id = p.ID AND $taxonomy_name.term_taxonomy_id IN (" . implode(',', $ids) . ")\n";
+			}
+		}
+		return $sql;
+	}
+
+	/**
 	* Set the SQL Limit
 	*/
 	private function sqlLimit()
@@ -194,7 +220,8 @@ class LocationSearch
 			ON p.ID = lat.post_id AND lat.meta_key = '" . $this->query_data['lat_field'] . "'
 			LEFT JOIN " . $this->query_data['meta_table'] . " AS lng
 			ON p.ID = lng.post_id AND lng.meta_key = '" . $this->query_data['lng_field'] . "'" . 
-			$this->sqlFieldJoins() . "		
+			$this->sqlFieldJoins() . " " .
+			$this->taxonomyJoins() . "
 			WHERE lat.meta_value
 				BETWEEN @origlat - (@distance / @dist_unit)
 				AND @origlat + (@distance / @dist_unit)

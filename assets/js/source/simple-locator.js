@@ -221,6 +221,10 @@ function geocodeAddress(formelements)
 {
 	var address = $(formelements.address).val();
 	
+	if ( $(formelements.address).hasClass('allow-empty') && address === ""){
+		return sendFormData(formelements);
+	}
+
 	geocoder = new google.maps.Geocoder();
 	geocoder.geocode({
 		'address' : address
@@ -278,7 +282,7 @@ function sendFormData(formelements)
 		if ( tax_name) taxonomy_array[tax_name].push(this.value);
 	});
 
-	console.log(taxonomy_array);
+	var allow_empty_address = ( $(formelements.address).hasClass('allow-empty') ) ? true : false;
 
 	formdata = {
 		action : 'locate',
@@ -290,7 +294,8 @@ function sendFormData(formelements)
 		longitude : $(formelements.longitude).val(),
 		unit : $(formelements.unit).val(),
 		geolocation : geolocation,
-		taxonomies : taxonomy_array
+		taxonomies : taxonomy_array,
+		allow_empty_address : allow_empty_address
 	}
 
 	$.ajax({
@@ -311,7 +316,7 @@ function sendFormData(formelements)
 			}
 		},
 		error: function(data){
-			console.log(data);
+			console.log(data.responseText);
 		}
 	});
 }
@@ -326,7 +331,8 @@ function loadLocationResults(data, formelements)
 
 		var location = ( data.result_count === 1 ) ? wpsl_locator.location : wpsl_locator.locations;
 
-		var output = '<h3>' + data.result_count + ' ' + location + ' ' + wpsl_locator.found_within + ' ' + data.distance + ' ' + data.unit + ' of ';
+		var output = '<h3>' + data.result_count + ' ' + location;
+		if ( data.latitude !== "" ) output += ' ' + wpsl_locator.found_within + ' ' + data.distance + ' ' + data.unit + ' of ';
 		output += ( data.using_geolocation === "true" ) ? wpsl_locator.yourlocation : data.formatted_address;
 		output += '</h3><ul>';
 		

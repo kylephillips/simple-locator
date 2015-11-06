@@ -109,6 +109,8 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 * Bug fix where multiple instances of the same location being returned on certain hosts (thanks to Christine McDermott for bug tracking help)
 * Minor admin bug fixes
 * Filter added for customizing infowindow content in map results (Contributed by Scott Polhemus)
+* Filter added for customizing form HTML (AJAX only)
+* Shortcode added to include taxonomy filters in search form (AJAX only)
 * French Translation (Thanks to Khelil Benosman)
 
 = 1.4.0 =

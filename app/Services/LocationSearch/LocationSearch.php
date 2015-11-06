@@ -66,10 +66,10 @@ class LocationSearch
 	private $total_results;
 
 	/**
-	* JSON Response
-	* @var array
+	* Address Provided
+	* @var boolean
 	*/
-	private $response;
+	private $address;
 
 	public function __construct()
 	{
@@ -83,6 +83,7 @@ class LocationSearch
 	public function search()
 	{
 		$this->setResultsFields();
+		$this->setAddress();
 		$this->setData();
 		$this->setQueryData();
 		$this->setQuery();
@@ -95,6 +96,14 @@ class LocationSearch
 	private function setResultsFields()
 	{
 		$this->results_fields = $this->settings_repo->getResultsFieldArray();
+	}
+
+	/**
+	* Was an address provided
+	*/
+	private function setAddress()
+	{
+		$this->address = ( $_POST['latitude'] != "") ? true : false;
 	}
 
 	/**
@@ -150,7 +159,7 @@ class LocationSearch
 		$statement = "";
 		foreach($this->results_fields as $key=>$field){
 			$fieldname = $field;
-			$statement .= "$fieldname.meta_value AS $fieldname,\n";
+			$statement .= ",$fieldname.meta_value AS $fieldname\n";
 		}
 		return $statement;
 	}
@@ -185,6 +194,20 @@ class LocationSearch
 	}
 
 	/**
+	* Add the distance variables
+	*/
+	private function distanceVars()
+	{
+		$sql = ",lat.meta_value AS latitude,
+			lng.meta_value AS longitude";
+		if ( !$this->address ) return $sql;
+		$sql .= "\n,( " . $this->query_data['diameter'] . " * acos( cos( radians(@origlat) ) * cos( radians( lat.meta_value ) ) 
+			* cos( radians( lng.meta_value ) - radians(@origlng) ) + sin( radians(@origlat) ) * sin(radians(lat.meta_value)) ) )
+			AS distance\n";
+		return $sql;
+	}
+
+	/**
 	* Set the SQL Limit
 	*/
 	private function sqlLimit()
@@ -208,30 +231,33 @@ class LocationSearch
 		$sql = "
 			SELECT DISTINCT
 			p.post_title AS title,
-			p.ID AS id," .
-			$this->sqlFieldVars() . "
-			lat.meta_value AS latitude,
-			lng.meta_value AS longitude,
-			( " . $this->query_data['diameter'] . " * acos( cos( radians(@origlat) ) * cos( radians( lat.meta_value ) ) 
-			* cos( radians( lng.meta_value ) - radians(@origlng) ) + sin( radians(@origlat) ) * sin(radians(lat.meta_value)) ) )
-			AS distance
-			FROM " . $this->query_data['post_table'] . " AS p
+			p.ID AS id" .
+			$this->sqlFieldVars() . 
+			$this->distanceVars() . "
+			FROM " . $this->query_data['post_table'] . " AS p 
 			LEFT JOIN " . $this->query_data['meta_table'] . " AS lat
 			ON p.ID = lat.post_id AND lat.meta_key = '" . $this->query_data['lat_field'] . "'
 			LEFT JOIN " . $this->query_data['meta_table'] . " AS lng
-			ON p.ID = lng.post_id AND lng.meta_key = '" . $this->query_data['lng_field'] . "'" . 
-			$this->sqlFieldJoins() . " " .
-			$this->taxonomyJoins() . "
+			ON p.ID = lng.post_id AND lng.meta_key = '" . $this->query_data['lng_field'] . "'";
+			$sql .= $this->sqlFieldJoins() . " " .
+			$this->taxonomyJoins();
+			if ( $this->address ){
+			$sql .= "
 			WHERE lat.meta_value
 				BETWEEN @origlat - (@distance / @dist_unit)
 				AND @origlat + (@distance / @dist_unit)
 			AND lng.meta_value
 				BETWEEN @origlng - (@distance / (@dist_unit * cos(radians(@origlat))))
-				AND @origlng + (@distance / (@dist_unit * cos(radians(@origlat))))
+				AND @origlng + (@distance / (@dist_unit * cos(radians(@origlat))))";
+			}
+			$sql .= "
 			AND `post_type` = '" . $this->query_data['post_type'] . "'
-			AND `post_status` = 'publish'
-			HAVING distance < @distance
-			ORDER BY distance\n" . 
+			AND `post_status` = 'publish'";
+			if ( $this->address ){
+			$sql .= 
+				"HAVING distance < @distance
+				ORDER BY distance\n";
+			}
 			$this->sqlLimit() . ";";
 		$this->sql = $sql;
 	}
@@ -244,10 +270,12 @@ class LocationSearch
 		global $wpdb;
 
 		// Set the SQL Vars
-		$wpdb->query("SET @origlat = " . $this->query_data['userlat'] . ";");
-		$wpdb->query("SET @origlng = " . $this->query_data['userlong'] . ";");
-		$wpdb->query("SET @distance = " . $this->query_data['distance'] . ";");
-		$wpdb->query("SET @dist_unit = " . $this->query_data['distance_unit'] . ";");
+		if ( $this->address ){
+			$wpdb->query("SET @origlat = " . $this->query_data['userlat'] . ";");
+			$wpdb->query("SET @origlng = " . $this->query_data['userlong'] . ";");
+			$wpdb->query("SET @distance = " . $this->query_data['distance'] . ";");
+			$wpdb->query("SET @dist_unit = " . $this->query_data['distance_unit'] . ";");
+		}
 		
 		// Run the Query
 		$results = $wpdb->get_results($this->sql);
@@ -274,30 +302,37 @@ class LocationSearch
 	{
 		global $wpdb;
 		$sql = "
-			SELECT DISTINCT p.ID,
-			( " . $this->query_data['diameter'] . " * acos( cos( radians(@origlat) ) * cos( radians( lat.meta_value ) ) 
-			* cos( radians( lng.meta_value ) - radians(@origlng) ) + sin( radians(@origlat) ) * sin(radians(lat.meta_value)) ) )
-			AS distance
-			FROM " . $this->query_data['post_table'] . " AS p
-			LEFT JOIN " . $this->query_data['meta_table'] . " AS lat
-			ON p.ID = lat.post_id AND lat.meta_key = '" . $this->query_data['lat_field'] . "'
-			LEFT JOIN " . $this->query_data['meta_table'] . " AS lng
-			ON p.ID = lng.post_id AND lng.meta_key = '" . $this->query_data['lng_field'] . "'" . 
-			"WHERE lat.meta_value
-				BETWEEN @origlat - (@distance / @dist_unit)
-				AND @origlat + (@distance / @dist_unit)
-			AND lng.meta_value
-				BETWEEN @origlng - (@distance / (@dist_unit * cos(radians(@origlat))))
-				AND @origlng + (@distance / (@dist_unit * cos(radians(@origlat))))
+			SELECT DISTINCT p.ID";
+			$this->distanceVars();
+			$sql .= "
+			\nFROM " . $this->query_data['post_table'] . " AS p";
+			if ( $this->address ){
+				$sql .= "
+				LEFT JOIN " . $this->query_data['meta_table'] . " AS lat
+				ON p.ID = lat.post_id AND lat.meta_key = '" . $this->query_data['lat_field'] . "'
+				LEFT JOIN " . $this->query_data['meta_table'] . " AS lng
+				ON p.ID = lng.post_id AND lng.meta_key = '" . $this->query_data['lng_field'] . "'" . 
+				"WHERE lat.meta_value
+					BETWEEN @origlat - (@distance / @dist_unit)
+					AND @origlat + (@distance / @dist_unit)
+				AND lng.meta_value
+					BETWEEN @origlng - (@distance / (@dist_unit * cos(radians(@origlat))))
+					AND @origlng + (@distance / (@dist_unit * cos(radians(@origlat))))";
+			}
+			$sql .= "
 			AND `post_type` = '" . $this->query_data['post_type'] . "'
-			AND `post_status` = 'publish'
-			HAVING distance < @distance;";
+			AND `post_status` = 'publish'";
+			if ( $this->address ){
+				$sql .= "HAVING distance < @distance;";
+			}
 
 		// Set the SQL Vars
-		$wpdb->query("SET @origlat = " . $this->query_data['userlat'] . ";");
-		$wpdb->query("SET @origlng = " . $this->query_data['userlong'] . ";");
-		$wpdb->query("SET @distance = " . $this->query_data['distance'] . ";");
-		$wpdb->query("SET @dist_unit = " . $this->query_data['distance_unit'] . ";");
+		if ( $this->address ){
+			$wpdb->query("SET @origlat = " . $this->query_data['userlat'] . ";");
+			$wpdb->query("SET @origlng = " . $this->query_data['userlong'] . ";");
+			$wpdb->query("SET @distance = " . $this->query_data['distance'] . ";");
+			$wpdb->query("SET @dist_unit = " . $this->query_data['distance_unit'] . ";");
+		}
 		
 		$results = $wpdb->get_results($sql);
 		$this->total_results = count($results);

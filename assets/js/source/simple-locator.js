@@ -208,6 +208,7 @@ function setFormElements(form)
 		'longitude' : $(form).find('.longitude'),
 		'unit' : $(form).find('.unit'),
 		'taxonomy' : $(form).find('input[name^="taxonomy"]:checked'),
+		'taxonomy_select' : $(form).find('select[name^="taxonomy"]'),
 		'form' : $(form).find('form')
 	}
 	return formelements;
@@ -271,9 +272,22 @@ function appendNonAjaxFields(formelements)
 */
 function sendFormData(formelements)
 {
-	var taxonomies = $(formelements.taxonomy).serializeArray();
+	var taxonomies = $(formelements.taxonomy).serializeArray(); // checkboxes
+	
+	// Select Menus
+	if ( formelements.taxonomy.length == 0 ) {
+		var inputs = $(formelements.taxonomy_select);
+		$.each(inputs, function(i, v){
+			if ( $(this).val() === "" ) return;
+			var selected = {};
+			selected.name = $(this).attr('name');
+			selected.value = $(this).val();
+			taxonomies.push(selected);
+		});
+	}
+	
+	// Create an array from the selected taxonomies
 	var taxonomy_array = {};
-
 	$.each(taxonomies, function(i, v){
 		var tax_name = this.name.replace( /(^.*\[|\].*$)/g, '' );
 		if ( (typeof taxonomy_array[tax_name] == undefined) 

@@ -183,7 +183,7 @@ class LocationSearch
 	*/
 	private function taxonomyJoins()
 	{
-		if ( !$this->data['taxonomies'] ) return;
+		if ( !isset($this->data['taxonomies']) ) return;
 		$sql = "";
 		foreach ( $this->data['taxonomies'] as $taxonomy_name => $ids ){
 			if ( is_array($ids) ){

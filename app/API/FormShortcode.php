@@ -107,7 +107,8 @@ class FormShortcode
 			'ajax' => 'true',
 			'perpage' => get_option('posts_per_page'),
 			'noresultstext' => __('No results found.', 'wpsimplelocator'),
-			'taxonomies' => ''
+			'taxonomies' => '',
+			'allowemptyaddress' => 'false'
 		), $options);
 	}
 

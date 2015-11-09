@@ -351,7 +351,7 @@ function loadLocationResults(data, formelements)
 		output += '</h3><ul>';
 		
 		for( i = 0; i < data.results.length; i++ ) {
-			output = output + '<li data-result=' + i + '>' + data.results[i].output + '</li>';
+			output = output + data.results[i].output;
 		}
 
 		output = output + '</ul>';

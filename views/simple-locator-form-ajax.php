@@ -30,10 +30,10 @@ $output .= '
 		'</select>
 	</div>';
 	if ( $this->taxonomies ) :
-		foreach ( $this->taxonomies as $key => $taxonomy ) :
+		foreach ( $this->taxonomies as $tax_name => $taxonomy ) :
 			$output .= '<div class="wpsl-taxonomy-filter">
 			<label class="taxonomy-label">' . $taxonomy['label'] . '</label>
-			<select name="taxonomy[' . $key . ']">
+			<select name="taxonomy[' . $tax_name . ']">
 				<option value="">--</option>';
 				foreach ( $taxonomy['terms'] as $term ){
 					$output .= '<option value="' . $term->term_id . '" />' . $term->name . '</option>';

@@ -9,7 +9,7 @@ class JsonResponseFactory
 {
 
 	/**
-	* Resonse Data
+	* Response Data
 	*/
 	private $data;
 

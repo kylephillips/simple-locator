@@ -57,7 +57,10 @@ class AJAXLocationSearch extends AJAXListenerBase
 	private function performSearch()
 	{
 		$this->location_search->search();
-		$response = $this->response_factory->build($this->location_search->getResults(), $this->location_search->getResultCount());
+		$response = $this->response_factory->build(
+			$this->location_search->getResults(), 
+			$this->location_search->getResultCount()
+		);
 		return $this->respond($response);
 	}
 

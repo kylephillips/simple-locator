@@ -156,12 +156,12 @@ class LocationSearch
 	*/
 	private function sqlFieldVars()
 	{
-		$statement = "";
+		$sql = "";
 		foreach($this->results_fields as $key=>$field){
 			$fieldname = $field;
-			$statement .= ",$fieldname.meta_value AS $fieldname\n";
+			$sql .= ",$fieldname.meta_value AS $fieldname\n";
 		}
-		return $statement;
+		return apply_filters('simple_locator_sql_select', $sql);
 	}
 
 	/**
@@ -169,13 +169,13 @@ class LocationSearch
 	*/
 	private function sqlFieldJoins()
 	{
-		$statement = "";
+		$sql = "";
 		foreach($this->results_fields as $key=>$field){
 			$fieldname = $field;
-			$statement .= "\nLEFT JOIN " . $this->query_data['meta_table'] . " AS $fieldname
+			$sql .= "\nLEFT JOIN " . $this->query_data['meta_table'] . " AS $fieldname
 			ON p.ID = $fieldname.post_id AND $fieldname.meta_key = " . "'" . $fieldname . "'" . "\n";
 		}
-		return $statement;
+		return apply_filters('simple_locator_sql_join', $sql);
 	}
 
 	/**
@@ -224,24 +224,12 @@ class LocationSearch
 	}
 
 	/**
-	* Set the Query
+	* SQL Where Constraints
 	*/
-	private function setQuery()
+	private function sqlWhere()
 	{
-		$sql = "
-			SELECT DISTINCT
-			p.post_title AS title,
-			p.ID AS id" .
-			$this->sqlFieldVars() . 
-			$this->distanceVars() . "
-			FROM " . $this->query_data['post_table'] . " AS p 
-			LEFT JOIN " . $this->query_data['meta_table'] . " AS lat
-			ON p.ID = lat.post_id AND lat.meta_key = '" . $this->query_data['lat_field'] . "'
-			LEFT JOIN " . $this->query_data['meta_table'] . " AS lng
-			ON p.ID = lng.post_id AND lng.meta_key = '" . $this->query_data['lng_field'] . "'";
-			$sql .= $this->sqlFieldJoins() . " " .
-			$this->taxonomyJoins();
-			if ( $this->address ){
+		$sql = "";
+		if ( $this->address ){
 			$sql .= "
 			WHERE lat.meta_value
 				BETWEEN @origlat - (@distance / @dist_unit)
@@ -249,16 +237,32 @@ class LocationSearch
 			AND lng.meta_value
 				BETWEEN @origlng - (@distance / (@dist_unit * cos(radians(@origlat))))
 				AND @origlng + (@distance / (@dist_unit * cos(radians(@origlat))))";
-			}
-			$sql .= "
+		}
+		$sql .= "
 			AND `post_type` = '" . $this->query_data['post_type'] . "'
 			AND `post_status` = 'publish'";
-			if ( $this->address ){
-			$sql .= 
-				"HAVING distance < @distance
-				ORDER BY distance\n";
-			}
-			$this->sqlLimit() . ";";
+		return apply_filters('simple_locator_sql_where', $sql);
+	}
+
+	/**
+	* Set the Query
+	*/
+	private function setQuery()
+	{
+		$sql = "
+			SELECT DISTINCT p.post_title AS title, p.ID AS id" .
+			$this->sqlFieldVars() . 
+			$this->distanceVars() . "
+			FROM " . $this->query_data['post_table'] . " AS p 
+			LEFT JOIN " . $this->query_data['meta_table'] . " AS lat
+				ON p.ID = lat.post_id AND lat.meta_key = '" . $this->query_data['lat_field'] . "'
+			LEFT JOIN " . $this->query_data['meta_table'] . " AS lng
+				ON p.ID = lng.post_id AND lng.meta_key = '" . $this->query_data['lng_field'] . "'";
+			$sql .= $this->sqlFieldJoins();
+			$sql .= $this->taxonomyJoins();
+			$sql .= $this->sqlWhere();
+			if ( $this->address ) $sql .= "\nHAVING distance < @distance\nORDER BY distance\n";
+			$sql .= $this->sqlLimit() . ";";
 		$this->sql = $sql;
 	}
 
@@ -304,26 +308,10 @@ class LocationSearch
 		$sql = "
 			SELECT DISTINCT p.ID";
 			$this->distanceVars();
-			$sql .= "
-			\nFROM " . $this->query_data['post_table'] . " AS p";
-			if ( $this->address ){
-				$sql .= "
-				LEFT JOIN " . $this->query_data['meta_table'] . " AS lat
-				ON p.ID = lat.post_id AND lat.meta_key = '" . $this->query_data['lat_field'] . "'
-				LEFT JOIN " . $this->query_data['meta_table'] . " AS lng
-				ON p.ID = lng.post_id AND lng.meta_key = '" . $this->query_data['lng_field'] . "'" . 
-				"WHERE lat.meta_value
-					BETWEEN @origlat - (@distance / @dist_unit)
-					AND @origlat + (@distance / @dist_unit)
-				AND lng.meta_value
-					BETWEEN @origlng - (@distance / (@dist_unit * cos(radians(@origlat))))
-					AND @origlng + (@distance / (@dist_unit * cos(radians(@origlat))))";
-			}
-			$sql .= "
-			AND `post_type` = '" . $this->query_data['post_type'] . "'
-			AND `post_status` = 'publish'";
-			if ( $this->address ){
-				$sql .= "HAVING distance < @distance;";
+			$sql .= "\nFROM " . $this->query_data['post_table'] . " AS p";
+			$sql .= $this->sqlWhere();
+			if ( $this->address ) {
+				$sql .= "\nHAVING distance < @distance\n";
 			}
 
 		// Set the SQL Vars

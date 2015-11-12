@@ -15,7 +15,11 @@ var googlemap = '';
 /**
 * Callback functions available to users
 * Place in Theme scripts to perform actions after map has rendered
+* Theme scripts should be enqueued with a script dependency for 'simple-locator'
 */
+
+// Runs before form has been submitted/after click
+function wpsl_before_submit(active_form, formelements){}
 
 // Runs after map & results render
 function wpsl_after_render(active_form){}
@@ -104,6 +108,8 @@ $('.wpslsubmit').on('click', function(e){
 	var form = $(this).parents('.simple-locator-form');
 	active_form = form;
 	var formelements = setFormElements(form);
+
+	wpsl_before_submit(active_form, formelements);
 
 	$(formelements.errordiv).hide();
 
@@ -312,6 +318,14 @@ function sendFormData(formelements)
 		allow_empty_address : allow_empty_address
 	}
 
+	// Custom Input Data (for SQL filter availability)
+	if ( wpsl_locator.postfields.length > 0 ){
+		for ( var i = 0; i < wpsl_locator.postfields.length; i++ ){
+			var field = wpsl_locator.postfields[i];
+			formdata[field] = $('input[name=' + field + ']').val();
+		}
+	}
+
 	$.ajax({
 		url: wpsl_locator.ajaxurl,
 		type: 'post',
@@ -345,16 +359,14 @@ function loadLocationResults(data, formelements)
 
 		var location = ( data.result_count === 1 ) ? wpsl_locator.location : wpsl_locator.locations;
 
-		var output = '<h3>' + data.result_count + ' ' + location;
+		var output = '<h3 class="wpsl-results-header">' + data.result_count + ' ' + location;
 		if ( data.latitude !== "" ) output += ' ' + wpsl_locator.found_within + ' ' + data.distance + ' ' + data.unit + ' of ';
 		output += ( data.using_geolocation === "true" ) ? wpsl_locator.yourlocation : data.formatted_address;
-		output += '</h3><ul>';
+		output += '</h3>';
 		
 		for( i = 0; i < data.results.length; i++ ) {
 			output = output + data.results[i].output;
 		}
-
-		output = output + '</ul>';
 
 		$(formelements.results).removeClass('loading').html(output);
 

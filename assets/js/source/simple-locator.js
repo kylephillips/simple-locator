@@ -107,6 +107,10 @@ $('.wpslsubmit').on('click', function(e){
 	geolocation = false;
 	var form = $(this).parents('.simple-locator-form');
 	active_form = form;
+
+	// Clear out lat/lng from any previous submissions
+	$('input[name=latitude],input[name=longitude]').val('');
+
 	var formelements = setFormElements(form);
 
 	wpsl_before_submit(active_form, formelements);

@@ -108,10 +108,10 @@ class LocationResultPresenter
 	*/
 	private function formatInfoWindow()
 	{
-		$infowindow = '<li data-result="' . $this->count . '"><h4>[post_title]</h4><p><a href="[post_permalink]" data-location-id="'.$this->result->id.'">'.__('View Location', 'wpsimplelocator').'</a></p></li>';
+		$infowindow = '<div data-result="' . $this->count . '"><h4>[post_title]</h4><p><a href="[post_permalink]" data-location-id="'.$this->result->id.'">'.__('View Location', 'wpsimplelocator').'</a></p></div>';
 		$infowindow = $this->replacePostFields($infowindow);
 
-		$infowindow = apply_filters('simple_locator_infowindow', $infowindow, $this->result);
+		$infowindow = apply_filters('simple_locator_infowindow', $infowindow, $this->result, $this->count);
 
 		return $infowindow;
 	}

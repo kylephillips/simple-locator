@@ -32,6 +32,16 @@ class SettingsRepository
 	}
 
 	/**
+	* Output the Google Maps API in the Admin
+	* @return boolean
+	*/
+	public function outputGMapsAdmin()
+	{
+		$option = get_option('wpsl_gmaps_api_admin');
+		return ( $option == 'true' ) ? true : false;
+	}
+
+	/**
 	* Show a default map?
 	* @return boolean
 	*/

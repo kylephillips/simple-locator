@@ -112,6 +112,7 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 * Filter added for customizing form HTML (AJAX only)
 * Shortcode added to include taxonomy filters in search form (AJAX only)
 * French Translation (Thanks to Khelil Benosman)
+* Option added to enable/disable the Google Maps API from being enqueued in the admin area (separate from front end)
 
 = 1.4.0 =
 * Customizable Map Options - Ability to customize the Google options array added. Visit settings > map display. To enable custom map options, check the appropriate box and enter a properly formatted Google maps options object. Important: If custom map options are enabled, options specified in shortcodes will be overwritten.

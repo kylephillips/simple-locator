@@ -130,6 +130,7 @@ class Settings
 		register_setting( 'wpsimplelocator-general', 'wpsl_singular_data' );
 		register_setting( 'wpsimplelocator-general', 'wpsl_geo_button' );
 		register_setting( 'wpsimplelocator-general', 'wpsl_gmaps_api' );
+		register_setting( 'wpsimplelocator-general', 'wpsl_gmaps_api_admin');
 		register_setting( 'wpsimplelocator-general', 'wpsl_enable_autocomplete' );
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_post_type' );
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_show_hidden' );

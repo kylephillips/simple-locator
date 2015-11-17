@@ -48,6 +48,9 @@ class DefaultOptions
 		if ( !get_option('wpsl_gmaps_api') ){
 			update_option('wpsl_gmaps_api', 'true');
 		}
+		if ( !get_option('wpsl_gmaps_api_admin') ){
+			update_option('wpsl_gmaps_api_admin', 'true');
+		}
 		if ( !get_option('wpsl_measurement_unit') ){
 			update_option('wpsl_measurement_unit', 'miles');
 		}

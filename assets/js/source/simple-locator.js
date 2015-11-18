@@ -388,10 +388,10 @@ function loadLocationResults(data, formelements)
 
 	} else {
 		// No results were returned
-		wpsl_no_results(data.formatted_address, active_form);
 		$(formelements.errordiv).text(wpsl_locator_options.noresultstext).show();
 		$(formelements.results).hide();
 		$(formelements.map).hide();
+		wpsl_no_results(data.formatted_address, active_form);
 	}
 }
 

@@ -7,7 +7,7 @@ if ( isset($widget_instance) ) {
 	$mapheight = ( isset($instance['map_height']) ) ? $instance['map_height'] : 200;
 	$this->options['addresslabel'] = __('Zip/Postal Code', 'wpsimplelocator');
 	$this->options['mapcontainer'] = '.wpsl-map';
-	$this->options['placholder'] = ( isset($instance['placholder']) ) ? $instance['placholder'] : '';
+	$this->options['placeholder'] = ( isset($instance['placeholder']) ) ? $instance['placeholder'] : '';
 	$output .= '<span id="widget"></span>';
 } else {
 	$mapheight = $this->options['mapheight'];
@@ -15,13 +15,13 @@ if ( isset($widget_instance) ) {
 
 $output .= '
 <div class="simple-locator-form">
-<form>
+<form';
+if ( $this->options['allowemptyaddress'] == 'true' ) $output .= 'class="allow-empty"';
+$output .= '>
 	<div class="wpsl-error alert alert-error" style="display:none;"></div>
 	<div class="address-input form-field">
 		<label for="zip">' . $this->options['addresslabel'] . '</label>
-		<input type="text" name="address" class="address wpsl-search-form';
-		if ( $this->options['allowemptyaddress'] == 'true' ) $output .= ' allow-empty';
-		$output .= '" placeholder="' . $this->options['placeholder'] . '" />
+		<input type="text" name="address" class="address wpsl-search-form" placeholder="' . $this->options['placeholder'] . '" />
 	</div>
 	<div class="distance form-field">
 		<label for="distance">' . __('Distance', 'wpsimplelocator'). '</label>

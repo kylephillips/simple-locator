@@ -231,8 +231,14 @@ function setFormElements(form)
 function geocodeAddress(formelements)
 {
 	var address = $(formelements.address).val();
+
+	console.log(address);
 	
-	if ( $(formelements.address).hasClass('allow-empty') && address === ""){
+	if ( $(formelements.form).hasClass('allow-empty') && address === ""){
+		return sendFormData(formelements);
+	}
+
+	if ( $(formelements.form).hasClass('allow-empty') && typeof address == 'undefined'){
 		return sendFormData(formelements);
 	}
 
@@ -306,14 +312,16 @@ function sendFormData(formelements)
 		if ( tax_name) taxonomy_array[tax_name].push(this.value);
 	});
 
-	var allow_empty_address = ( $(formelements.address).hasClass('allow-empty') ) ? true : false;
+	var allow_empty_address = ( $(formelements.form).hasClass('allow-empty') ) ? true : false;
+	var address = ( typeof $(formelements.address).val() == 'undefined' ) ? false : $(formelements.address).val();
+	var distance = ( typeof $(formelements.distance).val() == 'undefined' ) ? false : $(formelements.distance).val();
 
 	formdata = {
 		action : 'locate',
-		address : $(formelements.address).val(),
+		address : address,
 		formatted_address : formatted_address,
 		locatorNonce : $('.locator-nonce').val(),
-		distance : $(formelements.distance).val(),
+		distance : distance,
 		latitude : $(formelements.latitude).val(),
 		longitude : $(formelements.longitude).val(),
 		unit : $(formelements.unit).val(),

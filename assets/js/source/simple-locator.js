@@ -231,8 +231,6 @@ function setFormElements(form)
 function geocodeAddress(formelements)
 {
 	var address = $(formelements.address).val();
-
-	console.log(address);
 	
 	if ( $(formelements.form).hasClass('allow-empty') && address === ""){
 		return sendFormData(formelements);
@@ -344,7 +342,6 @@ function sendFormData(formelements)
 		datatype: 'json',
 		data: formdata,
 		success: function(data){
-			console.log(data);
 			if (data.status === 'error'){
 				wpsl_error(data.message, active_form);
 				$(formelements.errordiv).text(data.message).show();

@@ -3,7 +3,7 @@ Contributors: kylephillips
 Donate link: http://locatewp.com/
 Tags: location, store locator, google maps, store map
 Requires at least: 3.8
-Tested up to: 4.2
+Tested up to: 4.4
 Stable tag: 1.4.0
 
 License: GPLv2 or later
@@ -105,11 +105,13 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 == Changelog ==
 
 = 1.5.0 =
+* Compatibility tested with WordPress 4.4
 * Bug fix in single location shortcode
 * Bug fix where multiple instances of the same location being returned on certain hosts (thanks to Christine McDermott for bug tracking help)
 * Minor admin bug fixes
 * Filter added for customizing infowindow content in map results (Contributed by Scott Polhemus)
 * Filter added for customizing form HTML (AJAX only)
+* Filters added for customizing SQL queries
 * Shortcode added to include taxonomy filters in search form (AJAX only)
 * French Translation (Thanks to Khelil Benosman)
 * Option added to enable/disable the Google Maps API from being enqueued in the admin area (separate from front end)

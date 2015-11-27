@@ -104,7 +104,7 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 
 == Changelog ==
 
-= 1.4.1 =
+= 1.5.0 =
 * Bug fix in single location shortcode
 * Bug fix where multiple instances of the same location being returned on certain hosts (thanks to Christine McDermott for bug tracking help)
 * Minor admin bug fixes

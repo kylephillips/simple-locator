@@ -16,7 +16,7 @@ if ( isset($widget_instance) ) {
 $output .= '
 <div class="simple-locator-form">
 <form';
-if ( $this->options['allowemptyaddress'] == 'true' ) $output .= 'class="allow-empty"';
+if ( isset($this->options['allowemptyaddress']) && $this->options['allowemptyaddress'] == 'true' ) $output .= 'class="allow-empty"';
 $output .= '>
 	<div class="wpsl-error alert alert-error" style="display:none;"></div>
 	<div class="address-input form-field">
@@ -29,7 +29,7 @@ $output .= '>
 			$this->distanceOptions() . 
 		'</select>
 	</div>';
-	if ( $this->taxonomies ) :
+	if ( isset($this->taxonomies) ) :
 		foreach ( $this->taxonomies as $tax_name => $taxonomy ) :
 			$output .= '<div class="wpsl-taxonomy-filter">
 			<label class="taxonomy-label">' . $taxonomy['label'] . '</label>

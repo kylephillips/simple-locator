@@ -57,7 +57,7 @@ if ( $this->options['mapcontainer'] === '.wpsl-map' ){
 }
 
 $output .= '
-<div class="wpsl-results" class="loading"></div>
+<div class="wpsl-results loading"></div>
 </div><!-- .simple-locator-form -->';
 
 if ( isset($widget_instance) ) $output .= '</div><!-- .simple-locator-widget -->';

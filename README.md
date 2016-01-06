@@ -29,7 +29,7 @@ Simple Locator requires WordPress version 3.8+ and PHP version 5.4+. Simple Loca
 #### Installation - from the GitHub Project
 1. cd into the wp-content/plugins directory
 2. Clone the project: ```git clone https://github.com/kylephillips/wp-simple-locator.git simple-locator```
-3. cd into the ```simple-locator``` directory and run a ```composer install``` to download the plugin dependencies. [More on composer](https://getcomposer.org)
+3. ```cd``` into the ```simple-locator``` directory and run ```composer install``` to download & install the plugin dependencies. [More on composer](https://getcomposer.org)
 4. Activate the plugin through the Plugins menu in WordPress
 
 

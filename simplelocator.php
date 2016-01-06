@@ -11,7 +11,7 @@ Domain Path: /languages/
 License: GPLv2 or later.
 */
 
-/*  Copyright 2015 Kyle Phillips  (email : support@locatewp.com)
+/*  Copyright 2016 Kyle Phillips  (email : support@locatewp.com)
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License, version 2, as 

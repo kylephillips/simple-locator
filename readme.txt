@@ -286,3 +286,16 @@ By default, a map of the location is added to the content on singular views. To 
 = Extending & Customizing Map Display =
 
 A number of JavaScript functions are provided to extend and customize the map results. Visit [locatewp.com](http://locatewp.com#documentation) for a list and usage details.
+
+
+= Filters =
+
+For a complete description of available filters and example usage, see the [plugin website](http://locatewp.com#documentation). 
+
+* `simple_locator_form($output, $distances, $taxonomies, $widget)` – Customize the search form HTML
+* `simple_locator_result($output, $result, $count)` - Customize the result output within the result list
+* `simple_locator_infowindow($infowindow, $result, $count)` - Customize the display of results within the Google Maps infowindow
+* `simple_locator_post_fields()` - Add additional fields to the search parameters (field names for $_POST data)
+* `simple_locator_sql_select($sql)` - Add additional fields to the SELECT sql query during search
+* `simple_locator_sql_join($sql)` - Join additional fields in the sql query during search
+* `simple_locator_sql_where($sql)` - Add additional WHERE parameters to the sql query during search

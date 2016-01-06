@@ -112,7 +112,8 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 * Filter added for customizing infowindow content in map results (Contributed by Scott Polhemus)
 * Filter added for customizing form HTML (AJAX only)
 * Filters added for customizing SQL queries
-* Shortcode added to include taxonomy filters in search form (AJAX only)
+* Shortcode option added to include taxonomy filters in search form (AJAX only)
+* Shortcode option added to allow empty address field (returns all results)
 * French Translation (Thanks to Khelil Benosman)
 * Option added to enable/disable the Google Maps API from being enqueued in the admin area (separate from front end)
 
@@ -265,6 +266,8 @@ The shortcode to display the form and results is [wp_simple_locator]. There are 
 * **noresultstext** - Customize the text displayed if no results are returned (added in v1.3.0)
 * **ajax** – To disable AJAX form submission, use ajax="false". NOTE: custom map/results containers are not available for non-AJAX forms (added in v1.3.0)
 * **perpage** - Used in conjunction with AJAX option. If a perpage option is included in a non-AJAX form, the results will be displayed with simple pagination, limited to the number per page specified. (Ex: ajax="false" perpage="15"). Pagination is not available with AJAX forms. (added in v1.3.0)
+* **taxonomies** - To include taxonomy filters in the search form, use a comma-separated list of taxonomy names/slugs. The form will include select menus for each of the taxonomies specified. (AJAX only)
+* **allowemptyaddress** - Set as "true" to allow empty address fields to be submitted (useful for returning all locations regardless of the user-specified location)
 
 Visit [locate.wp](http://locatewp.com#documentation) for more detailed information.
 

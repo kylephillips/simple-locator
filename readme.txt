@@ -115,6 +115,7 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 * Shortcode option added to include taxonomy filters in search form (AJAX only)
 * Shortcode option added to allow empty address field (returns all results)
 * French Translation (Thanks to Khelil Benosman)
+* Partial Dutch Translation (Thanks to Kristof De Loof)
 * Option added to enable/disable the Google Maps API from being enqueued in the admin area (separate from front end)
 
 = 1.4.0 =

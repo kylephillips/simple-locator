@@ -79,7 +79,8 @@ class PublicDependencies extends DependencyBase
 			'autocomplete'			=> $this->settings_repo->autocomplete(),
 			'custom_map_options'	=> $this->settings_repo->customMapOptions(),
 			'postfields'			=> apply_filters('simple_locator_post_fields', false),
-			'l10n_print_after' 		=> 'wpsl_locator.map_options = ' . $this->settings_repo->mapOptions()
+			'l10n_print_after' 		=> 'wpsl_locator.map_options = ' . $this->settings_repo->mapOptions(),
+			'jsdebug'				=> $this->settings_repo->jsDebug()
 		);
 		$localized_data['mapstyles'] = $this->styles_repo->getLocalizedStyles();    		
 

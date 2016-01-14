@@ -142,6 +142,10 @@ function generate_nonce(form, formelements, processform)
 			action : 'locatornonce'
 		},
 		success: function(data){
+			if ( wpsl_locator.jsdebug === '1' ){
+				console.log('Nonce Generation Response');
+				console.log(data);
+			}
 			$('.locator-nonce').remove();
 			$(form).find('form').append('<input type="hidden" class="locator-nonce" name="nonce" value="' + data.nonce + '" />');
 			if ( processform ) geocodeAddress(formelements);
@@ -250,6 +254,11 @@ function geocodeAddress(formelements)
 			var latitude = results[0].geometry.location.lat();
 			var longitude = results[0].geometry.location.lng();
 			formatted_address = results[0].formatted_address;
+
+			if ( wpsl_locator.jsdebug === '1' ){
+				console.log('Google Geocode Response');
+				console.log(results);
+			}
 			
 			$(formelements.latitude).val(latitude);
 			$(formelements.longitude).val(longitude);
@@ -342,6 +351,10 @@ function sendFormData(formelements)
 		datatype: 'json',
 		data: formdata,
 		success: function(data){
+			if ( wpsl_locator.jsdebug === '1' ){
+				console.log('Form Response');
+				console.log(data);
+			}
 			if (data.status === 'error'){
 				wpsl_error(data.message, active_form);
 				$(formelements.errordiv).text(data.message).show();
@@ -353,7 +366,10 @@ function sendFormData(formelements)
 			}
 		},
 		error: function(data){
-			console.log(data.responseText);
+			if ( wpsl_locator.jsdebug === '1' ){
+				console.log('Form Response Error');
+				console.log(data.responseText);
+			}
 		}
 	});
 }
@@ -519,10 +535,6 @@ function get_user_coordinates()
 		});
 	}
 	return false;
-}
-function user_coordinates_found(position)
-{
-
 }
 
 

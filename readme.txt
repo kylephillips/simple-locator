@@ -104,6 +104,9 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 
 == Changelog ==
 
+= 1.5.1 =
+* Option added to enable Javascript console logging for debugging/development purposes
+
 = 1.5.0 =
 * Compatibility tested with WordPress 4.4
 * Bug fix in single location shortcode

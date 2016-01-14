@@ -179,4 +179,14 @@ class SettingsRepository
 		return $default;
 	}
 
+	/**
+	* Is JS debugging enabled?
+	*/
+	public function jsDebug()
+	{
+		$option = get_option('wpsl_js_debug');
+		if ( $option && $option == 'true' ) return true;
+		return false;
+	}
+
 }

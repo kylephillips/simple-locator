@@ -129,3 +129,9 @@ if ( !isset($location_btn['text']) || $location_btn['text'] == "" ) $location_bt
 		<input type="text" name="wpsl_geo_button[text]" value="<?php echo esc_html($location_btn['text']); ?>" />
 	</td>
 </tr>
+<tr valign="top">
+	<th scope="row"><?php _e('Enable Javascript Debugging', 'wpsimplelocator'); ?></th>
+	<td>
+		<label><input type="checkbox" name="wpsl_js_debug" value="true" <?php if ( $this->settings_repo->jsDebug() ) echo 'checked';?> /><?php _e('Enable Javascript Console Logging (for debugging/development purposes)', 'wpsimplelocator'); ?></label>
+	</td>
+</tr>

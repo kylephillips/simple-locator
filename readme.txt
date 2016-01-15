@@ -104,6 +104,9 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 
 == Changelog ==
 
+= 1.5.2 =
+* Bug fix where SQL JOIN limit being exceeded on some servers (Thanks to Jeff Dreher)
+
 = 1.5.1 =
 * Option added to enable Javascript console logging for debugging/development purposes
 

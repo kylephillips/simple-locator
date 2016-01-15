@@ -275,6 +275,7 @@ class LocationSearch
 
 		// Set the SQL Vars
 		if ( $this->address ){
+			$wpdb->query("SET SQL_BIG_SELECTS=1");
 			$wpdb->query("SET @origlat = " . $this->query_data['userlat'] . ";");
 			$wpdb->query("SET @origlng = " . $this->query_data['userlong'] . ";");
 			$wpdb->query("SET @distance = " . $this->query_data['distance'] . ";");
@@ -316,6 +317,7 @@ class LocationSearch
 
 		// Set the SQL Vars
 		if ( $this->address ){
+			$wpdb->query("SET SQL_BIG_SELECTS=1");
 			$wpdb->query("SET @origlat = " . $this->query_data['userlat'] . ";");
 			$wpdb->query("SET @origlng = " . $this->query_data['userlong'] . ";");
 			$wpdb->query("SET @distance = " . $this->query_data['distance'] . ";");

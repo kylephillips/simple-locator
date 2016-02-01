@@ -83,6 +83,15 @@ class FormWidget extends \WP_Widget
 	{
 		wp_enqueue_script('google-maps');
 		wp_enqueue_script('simple-locator');
+
+		$localized_data = array(
+			'noresultstext' => $this->options['noresultstext']
+		);
+		wp_localize_script( 
+			'simple-locator', 
+			'wpsl_locator_options', 
+			$localized_data
+		);
 	}
 
 	/**

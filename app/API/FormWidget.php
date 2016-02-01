@@ -51,9 +51,9 @@ class FormWidget extends \WP_Widget
 	/**
 	* Options
 	*/
-	private function setOptions()
+	private function setOptions($instance)
 	{
-		$this->options['distances'] = '5,10,20,50,100';
+		$this->options['distances'] = (isset($instance['distance_options'])) ? $instance['distance_options'] : '5,10,20,50,100';
 		$this->options['buttontext'] = __('Search', 'wpsimplelocator');
 		$this->options['mapcontrols'] = 'show';
 		$this->options['showgeobutton'] = $this->settings_repo->showGeoButton('enabled');
@@ -122,7 +122,7 @@ class FormWidget extends \WP_Widget
 	*/
 	public function widget( $args, $instance )
 	{
-		$this->setOptions();
+		$this->setOptions($instance);
 		echo $args['before_widget'];
 		
 		if ( !empty( $instance['title'] ) ) {

@@ -107,6 +107,7 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 = 1.5.2 =
 * Bug fix where SQL JOIN limit being exceeded on some servers (Thanks to Jeff Dreher)
 * Bug fixes in Widget display
+* PHP 7 bug fixes (Thanks to Loic Froidmont)
 
 = 1.5.1 =
 * Option added to enable Javascript console logging for debugging/development purposes

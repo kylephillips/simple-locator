@@ -30,7 +30,6 @@ class GetCSVRow extends ImportAJAXListenerBase
 			$columns = $this->row->getRow($row);
 		} catch ( \Exception $e ){
 			$this->error($e->getMessage);
-			break;
 		}
 
 		$this->respond(array('status'=>'success', 'columns' => $columns, 'row_count' => $this->totalRowCount()));

@@ -45,12 +45,10 @@ class GoogleMapGeocode
 
 		if ( $response_status == 'OVER_QUERY_LIMIT' ){
 			throw new GoogleQueryLimitException(__('Your API limit has been reached. Try again in 24 hours.', 'wpsimplelocator'));
-			break;
 		}
 
 		if ( $response_status == 'REQUEST_DENIED' ){
 			throw new GoogleRequestDeniedException(__('Google Maps Error', 'wpsimplelocator') . ': ' . $json['error_message']);
-			break;
 		}
 
 		if ( $response_status !== 'OK' ) {

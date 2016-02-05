@@ -101,7 +101,6 @@ class CSVImport
 		
 		if ( !$this->rows ) {
 			throw new \SimpleLocator\Services\Import\Exceptions\ImportCompleteException;
-			break;
 		}
 
 		$this->setRecordNumbers();

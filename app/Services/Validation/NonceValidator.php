@@ -14,7 +14,6 @@ class NonceValidator
 	{
 		if ( ! wp_verify_nonce( $submitted_nonce, $match_nonce ) ){
 			throw new \Exception(__('Incorrect Form Field', 'wpsimplelocator'));
-			break;
 		}
 	}
 

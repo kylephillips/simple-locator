@@ -64,9 +64,9 @@ class PostRepository
 				$locations[$c]->longitude = get_post_meta(get_the_id(), $this->settings_repo->getGeoField('lng'), true);
 			$c++;
 			endwhile; 
-			return $locations;
 		else : return false;
 		endif; wp_reset_postdata();
+		return $locations;
 	}
 
 }

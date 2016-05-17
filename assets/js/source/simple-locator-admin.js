@@ -307,7 +307,9 @@ jQuery(function($){
 		});
 
 		window.send_to_editor = function(html) {
-			imgurl = $('img',html).attr('src');
+			console.log(html);
+			imgurl = $('img' + html).attr('src');
+			console.log(imgurl);
 			var imagehtml = '<img src="' + imgurl + '" id="map-pin-image" />';
 			imagehtml += '<input id="remove_map_pin" type="button" value="' + wpsl_locator.remove + '" class="button action" style="margin-right:5px;margin-left:10px;" />';
 			$('#map-pin-image-cont').append(imagehtml);

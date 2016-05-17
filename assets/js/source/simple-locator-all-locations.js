@@ -41,7 +41,7 @@ jQuery(function($){
 			// Info window for each marker 
 			google.maps.event.addListener(marker, 'click', (function(marker, i){
 				return function() {
-					infoWindow.setContent('<h4>' + locations[i].title + '</h4><p><a href="' + locations[i].permalink + '">' + wpsl_locator.viewlocation + '</a></p>');
+					infoWindow.setContent(locations[i].infowindow);
 					infoWindow.open(map, marker);
 				}
 			})(marker, i));

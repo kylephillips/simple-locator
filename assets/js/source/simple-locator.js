@@ -41,6 +41,12 @@ function wpsl_googlemaps_response(){
 	return googlemaps_response;
 }
 
+// Runs after locations map has rendered
+function wpsl_all_locations_rendered(map){}
+
+// Runs after clicking on a marker in all locations map
+function wpsl_all_locations_marker_clicked(marker, infoWindow){}
+
 var active_form = '';
 var formatted_address = '';
 var googlemaps_response = '';

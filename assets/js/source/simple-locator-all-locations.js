@@ -43,6 +43,7 @@ jQuery(function($){
 				return function() {
 					infoWindow.setContent(locations[i].infowindow);
 					infoWindow.open(map, marker);
+					wpsl_all_locations_marker_clicked(marker, infoWindow)
 				}
 			})(marker, i));
 			
@@ -60,6 +61,8 @@ jQuery(function($){
 		var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
 			google.maps.event.removeListener(boundsListener);
 		});
+
+		wpsl_all_locations_rendered(map);
 
 	} // loadmap()
 

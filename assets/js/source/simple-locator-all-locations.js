@@ -13,6 +13,7 @@ jQuery(function($){
 		var mapstyles = wpsl_locator.mapstyles;	
 		var mappin = ( wpsl_locator.mappin ) ? wpsl_locator.mappin : '';
 		var bounds = new google.maps.LatLngBounds();
+
 		var mapOptions = {
 				mapTypeId: 'roadmap',
 				mapTypeControl: false,
@@ -20,6 +21,8 @@ jQuery(function($){
 				styles: mapstyles,
 				panControl : false
 			}
+		if ( wpsl_locator.custom_map_options === '1' )	mapOptions = wpsl_locator.map_options;
+			
 		var infoWindow = new google.maps.InfoWindow(), marker, i;
 		var map = new google.maps.Map( document.getElementById('alllocationsmap'), mapOptions );
 		

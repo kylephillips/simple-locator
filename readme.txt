@@ -107,6 +107,7 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 = 1.5.3 =
 * Bug fix where post data not being reset in all locations shortcode
 * Javascript Bug fix in custom map marker insertion
+* Bug fix in all locations map, where custom JS options weren't being applied
 
 = 1.5.2 =
 * Bug fix where SQL JOIN limit being exceeded on some servers (Thanks to Jeff Dreher)

@@ -108,7 +108,8 @@ class FormShortcode
 			'perpage' => get_option('posts_per_page'),
 			'noresultstext' => __('No results found.', 'wpsimplelocator'),
 			'taxonomies' => '',
-			'allowemptyaddress' => 'false'
+			'allowemptyaddress' => 'false',
+			'resultswrapper' => ''
 		), $options);
 	}
 
@@ -137,7 +138,8 @@ class FormShortcode
 			'mapcontrols' => $this->options['mapcontrols'],
 			'mapcontrolsposition' => $this->options['mapcontrolsposition'],
 			'ajax' => $this->options['ajax'],
-			'noresultstext' => $this->options['noresultstext']
+			'noresultstext' => $this->options['noresultstext'],
+			'resultswrapper' => $this->options['resultswrapper']
 		);
 		wp_localize_script( 
 			'simple-locator', 

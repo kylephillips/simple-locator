@@ -388,6 +388,8 @@ function loadLocationResults(data, formelements)
 {
 	if ( data.result_count > 0 ){
 
+		console.log(wpsl_locator_options.resultswrapper);
+
 		var location = ( data.result_count === 1 ) ? wpsl_locator.location : wpsl_locator.locations;
 
 		var output = '<h3 class="wpsl-results-header">' + data.result_count + ' ' + location;
@@ -395,9 +397,13 @@ function loadLocationResults(data, formelements)
 		output += ( data.using_geolocation === "true" ) ? wpsl_locator.yourlocation : data.formatted_address;
 		output += '</h3>';
 		
+		if ( wpsl_locator_options.resultswrapper !== "" ) output += '<' + wpsl_locator_options.resultswrapper + '>';
+
 		for( i = 0; i < data.results.length; i++ ) {
 			output = output + data.results[i].output;
 		}
+
+		if ( wpsl_locator_options.resultswrapper !== "" ) output += '</' + wpsl_locator_options.resultswrapper + '>';
 
 		$(formelements.results).removeClass('loading').html(output);
 

@@ -3,6 +3,7 @@
 namespace SimpleLocator\Services\Import;
 
 use SimpleLocator\Services\Import\GoogleMapGeocode;
+use SimpleLocator\Repositories\PostRepository;
 
 /**
 * Import a Single Row/Post
@@ -39,11 +40,17 @@ class PostImporter
 	* Newly Created Post ID
 	*/
 	private $post_id;
+
+	/**
+	* Post Repository
+	*/
+	private $post_repo;
 	
 
 	public function __construct()
 	{
 		$this->geocoder = new GoogleMapGeocode;
+		$this->post_repo = new PostRepository;
 	}
 
 	/**
@@ -114,6 +121,10 @@ class PostImporter
 		}
 		if ( !isset($post['post_title']) ){
 			$this->failedRow(__('Missing Title', 'wpsimplelocator'));
+			return false;
+		}
+		if ( $this->post_repo->postExists($post['post_title']) ){
+			$this->failedRow(__('Location Exists', 'wpsimplelocator'));
 			return false;
 		}
 		$this->post_id = wp_insert_post($post);

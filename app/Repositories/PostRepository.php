@@ -69,4 +69,19 @@ class PostRepository
 		return $locations;
 	}
 
+	/**
+	* Check if a post exists
+	* @param string $post_title
+	* @since 1.5.3
+	* @return boolean
+	*/
+	public function postExists($post_title)
+	{
+		if ( !$post_title ) return false;
+		$post_type = $this->settings_repo->getLocationPostType();
+		$post = get_page_by_title($post_title, OBJECT, $post_type);
+		if ( !$post ) return false;
+		return true;
+	}
+
 }

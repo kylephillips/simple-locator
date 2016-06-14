@@ -237,6 +237,19 @@ jQuery(function($){
 		$(newrow).find('.wpsl-import-type-selection').attr('name', 'wpsl_import_field[' + fieldcount + '][type]');
 	}
 
+	/**
+	* Choose Field type based on field selection
+	*/
+	$(document).on('change', '.wpsl-import-field-selection', function(){
+		var field = $(this).val();
+		var type_field = $(this).next('.wpsl-import-type-selection');
+		if ( field === 'wpsl_address' ) $(type_field).val('address');
+		if ( field === 'wpsl_city' ) $(type_field).val('city');
+		if ( field === 'wpsl_state' ) $(type_field).val('state');
+		if ( field === 'wpsl_zip' ) $(type_field).val('zip');
+		if ( field === 'wpsl_website' ) $(type_field).val('website');
+	});
+
 
 	/**
 	* ------------------------------------------------------

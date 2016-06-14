@@ -110,6 +110,7 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 * Bug fix in all locations map, where custom JS options weren't being applied
 * Infowindow filter applied to all locations shortcode
 * Callback functions added for all locations map load and click events.
+* Importer improvements: Check added for existing location based on title
 
 = 1.5.2 =
 * Bug fix where SQL JOIN limit being exceeded on some servers (Thanks to Jeff Dreher)

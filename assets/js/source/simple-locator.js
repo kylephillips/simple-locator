@@ -388,8 +388,6 @@ function loadLocationResults(data, formelements)
 {
 	if ( data.result_count > 0 ){
 
-		console.log(wpsl_locator_options.resultswrapper);
-
 		var location = ( data.result_count === 1 ) ? wpsl_locator.location : wpsl_locator.locations;
 
 		var output = '<h3 class="wpsl-results-header">' + data.result_count + ' ' + location;

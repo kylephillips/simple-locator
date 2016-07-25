@@ -49,8 +49,8 @@ $image_sizes = get_intermediate_image_sizes();
 			?>
 
 		<p class="wpsl-limit-setting">
-			<label for="wpsl_results_fields_limit"><?php _e('Number of Results to Show (-1 for unlimited results)', 'wpsimplelocator'); ?></label>
-			<input type="text" name="wpsl_results_options[limit]" id="wpsl_results_fields_limit" value="<?php echo $this->settings_repo->resultsLimit(); ?>" />
+			<label for="wpsl_results_fields_formatted"><?php _e('Number of Results to Show (-1 for unlimited results)', 'wpsimplelocator'); ?></label>
+			<input type="text" name="wpsl_results_fields_formatted[limit]" id="wpsl_results_fields_formatted" value="<?php echo $this->settings_repo->resultsLimit(); ?>" />
 		</p>
 	</div>
 

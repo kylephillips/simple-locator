@@ -219,8 +219,8 @@ class LocationSearch
 			return $limit;
 		}
 		$limit = $this->settings_repo->resultsLimit();
-		if ( $limit == -1 ) return;
-		if ( is_numeric(intval($limit)) ) return "LIMIT " . intval($limit);
+		if ( $limit == "-1" || $limit == -1) return;
+		if ( is_numeric(intval($limit)) ) return "\nLIMIT " . intval($limit);
 	}
 
 	/**

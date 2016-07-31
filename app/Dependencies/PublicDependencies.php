@@ -64,6 +64,7 @@ class PublicDependencies extends DependencyBase
 			'locations' 			=> __('locations', 'wpsimplelocator'),
 			'found_within' 			=> __('found within', 'wpsimplelocator'),
 			'phone' 				=> __('Phone', 'wpsimplelocator'),
+			'of'					=> __('of', 'wpsimplelocator'),
 			'showonmap' 			=> __('Show on Map', 'wpsimplelocator'),
 			'viewlocation' 			=> __('View Location', 'wpsimplelocator'),
 			'notfounderror' 		=> __('Address not found', 'wpsimplelocator'),

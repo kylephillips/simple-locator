@@ -391,7 +391,7 @@ function loadLocationResults(data, formelements)
 		var location = ( data.result_count === 1 ) ? wpsl_locator.location : wpsl_locator.locations;
 
 		var output = '<h3 class="wpsl-results-header">' + data.result_count + ' ' + location;
-		if ( data.latitude !== "" ) output += ' ' + wpsl_locator.found_within + ' ' + data.distance + ' ' + data.unit + ' of ';
+		if ( data.latitude !== "" ) output += ' ' + wpsl_locator.found_within + ' ' + data.distance + ' ' + data.unit + ' ' + wpsl_locator.of + ' ';
 		output += ( data.using_geolocation === "true" ) ? wpsl_locator.yourlocation : data.formatted_address;
 		output += '</h3>';
 		

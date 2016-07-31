@@ -16,7 +16,7 @@ $output .= '
 	<input type="hidden" name="page" value="0" />
 	<input type="hidden" name="latitude" class="latitude" value="' . $latitude . '" />
 	<input type="hidden" name="longitude" class="longitude" value="' . $longitude . '" />
-	<input type="hidden" name="unit" value="' . $this->unit_raw . '" class="unit" />';
+	<input type="hidden" name="unit" value="' . $this->unit . '" class="unit" />';
 	if ( $search && $search->data('errors') ){
 		$output .= '<div class="wpsl-error alert alert-error">' . $search->data('errors') . '</div>';
 	}

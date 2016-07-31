@@ -23,7 +23,7 @@ class FileUploader extends ImportListenerBase
 	private function copyFile()
 	{
 		if ( $_FILES['file']['name'] == "" ) return $this->error('Please include a file.');
-		if ( $_FILES['file']['type'] !== "text/csv" ) return $this->error('File must be CSV format.');
+		if ( !$this->isCsv($_FILES['file']['type']) ) return $this->error('File must be CSV format. This file\'s format is ' . $_FILES['file']['type']);
 		$file = $_FILES['file'];
 		$upload_overrides = array( 'test_form' => false );
 		$movefile = wp_handle_upload($file, $upload_overrides);
@@ -80,6 +80,29 @@ class FileUploader extends ImportListenerBase
     		return true;
 		}); 
 		return $count;
+	}
+
+	/**
+	* Check if the uploaded file is a CSV
+	*/
+	private function isCsv($type)
+	{
+		$csv_mimetypes = array(
+			'text/csv',
+			'text/plain',
+			'application/csv',
+			'text/comma-separated-values',
+			'application/excel',
+			'application/vnd.ms-excel',
+			'application/vnd.msexcel',
+			'text/anytext',
+			'application/octet-stream',
+			'application/txt',
+		);
+		if (in_array($type, $csv_mimetypes)) {
+			return true;
+		}
+		return false;
 	}
 
 }

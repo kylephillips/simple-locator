@@ -104,6 +104,9 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 
 == Changelog ==
 
+= 1.5.4 =
+* Fix in importer CSV upload that was preventing some csv formatted files from being uploaded
+
 = 1.5.3 =
 * Bug fix where post data not being reset in all locations shortcode
 * Javascript Bug fix in custom map marker insertion

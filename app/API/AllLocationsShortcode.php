@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace SimpleLocator\API;
 
@@ -6,9 +6,9 @@ use \SimpleLocator\Repositories\MapStyles;
 use \SimpleLocator\Repositories\SettingsRepository;
 use \SimpleLocator\Repositories\PostRepository;
 
-class AllLocationsShortcode 
+class AllLocationsShortcode
 {
-	
+
 	/**
 	* Shortcode Options
 	* @var arrat
@@ -77,14 +77,14 @@ class AllLocationsShortcode
 		wp_enqueue_script('google-maps');
 		wp_enqueue_script('simple-locator');
 		wp_enqueue_script(
-			'simple-locator-all', 
-			\SimpleLocator\Helpers::plugin_url(). '/assets/js/simple-locator-all-locations.js', 
-			array('jquery'), 
+			'simple-locator-all',
+			\SimpleLocator\Helpers::plugin_url(). '/assets/js/simple-locator-all-locations.js',
+			array('jquery'),
 			'1.0'
 		);
-		wp_localize_script( 
-			'simple-locator-all', 
-			'wpsl_locator_all', 
+		wp_localize_script(
+			'simple-locator-all',
+			'wpsl_locator_all',
 			array(
 				'locations' => $this->locations
 			)
@@ -95,11 +95,11 @@ class AllLocationsShortcode
 	* The View
 	*/
 	public function renderView($options)
-	{	
+	{
 		$this->setOptions($options);
 		$this->getAllLocations();
 		$this->enqueueScripts();
-		echo '<div id="alllocationsmap" class="wpsl-map" style="display:block;"></div>';
+		return '<div id="alllocationsmap" class="wpsl-map" style="display:block;"></div>';
 	}
 
 }

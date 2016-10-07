@@ -1,3 +1,12 @@
+/**
+* Global function catches Google API Errors
+* @link https://developers.google.com/maps/documentation/javascript/events#auth-errors
+*/
+var editScreenGoogleApiError = false;
+function gm_authFailure(e) {
+	editScreenGoogleApiError = true;
+}
+
 jQuery(function($){
 
 	var lookupaddress = true;
@@ -16,6 +25,11 @@ jQuery(function($){
 	$(form).find("#publish").on('click', function(e){
 		if ( wpsl_locator.lat_field !== 'wpsl_latitude' && wpsl_locator.map_field !== "" ) return;
 		e.preventDefault();
+
+		if ( editScreenGoogleApiError ){
+			displayErrorModal(wpsl_locator.api_load_error);
+			return;
+		}
 		var address = formatAddress();
 		googleGeocodeAddress(address);
 	});
@@ -53,7 +67,7 @@ jQuery(function($){
 					setFormCoordinates(lat, lng);
 					$('#publish').unbind('click').click();
 				} else {
-					displayErrorModal();
+					displayErrorModal(wpsl_locator.address_not_found);
 				}
 			} else {
 				$('#publish').unbind('click').click();
@@ -64,8 +78,9 @@ jQuery(function($){
 	/**
 	* Display the error modal
 	*/
-	function displayErrorModal()
+	function displayErrorModal(text)
 	{
+		$('#wpsl-error-modal').find('h3').text(text);
 		$('#wpsl-error-modal').modal('show');
 	}
 

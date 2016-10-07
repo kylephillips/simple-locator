@@ -55,7 +55,9 @@ class AdminDependencies extends DependencyBase
 				'posttype' 			=> $this->post_type,
 				'lat_field'			=> $this->settings_repo->getGeoField('lat'),
 				'lng_field'			=> $this->settings_repo->getGeoField('lng'),
-				'map_field'			=> get_option('wpsl_acf_map_field')
+				'map_field'			=> get_option('wpsl_acf_map_field'),
+				'location_not_found'	=> __('The address could not be found at this time.', 'wpsimplelocator'),
+				'api_load_error'	=> __('There was an error loading the Google Maps API. This may be due to a missing or invalid API key.', 'wpsimplelocator')
 			);
 			$data = $this->importVars($data);
 			$data['confirm_undo'] 	= __('Are you sure you want to undo this import? This action cannot be undone.', 'wpsimplelocator');

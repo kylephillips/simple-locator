@@ -135,3 +135,12 @@ if ( !isset($location_btn['text']) || $location_btn['text'] == "" ) $location_bt
 		<label><input type="checkbox" name="wpsl_js_debug" value="true" <?php if ( $this->settings_repo->jsDebug() ) echo 'checked';?> /><?php _e('Enable Javascript Console Logging (for debugging/development purposes)', 'wpsimplelocator'); ?></label>
 	</td>
 </tr>
+<tr valign="top">
+	<th scope="row"><?php _e('Save Searches', 'wpsimplelocator'); ?></th>
+	<td>
+		<label>
+			<input type="checkbox" value="true" name="wpsl_save_searches" <?php if ( get_option('wpsl_save_searches') == 'true') echo 'checked'; ?> />
+			<?php _e('Save Search History', 'wpsimplelocator'); ?>
+		</label>
+	</td>
+</tr>

@@ -3,7 +3,9 @@
 namespace SimpleLocator\Migrations;
 
 use SimpleLocator\Migrations\DefaultOptions;
+use SimpleLocator\Migrations\CreateTables;
 use SimpleLocator\WPData\PostTypes;
+
 
 /**
 * Plugin Activation
@@ -22,6 +24,7 @@ class Activation
 		$this->version = $simple_locator_version;
 		$this->setVersion();
 		$this->setDefaultOptions();
+		$this->migrateTables();
 		register_activation_hook( dirname(dirname( dirname(__FILE__) )) . '/simplelocator.php', array($this, 'install') );
 	}
 
@@ -58,6 +61,14 @@ class Activation
 	private function migrateMaps()
 	{
 		new MapStyles;
+	}
+
+	/**
+	* Table Migration
+	*/
+	private function migrateTables()
+	{
+		new CreateTables;
 	}
 
 }

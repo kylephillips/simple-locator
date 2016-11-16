@@ -28,8 +28,9 @@ class CreateTables
 				user_ip VARCHAR(20),
 				user_lat VARCHAR(20),
 				user_lng VARCHAR(20),
+				search_lat VARCHAR(20),
+				search_lng VARCHAR(20),
 				search_term VARCHAR(100),
-				search_zip VARCHAR(20),
 				PRIMARY KEY  (id) )';
 			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 			dbDelta($sql);

@@ -4,6 +4,7 @@ namespace SimpleLocator\Listeners;
 
 use SimpleLocator\Services\LocationSearch\LocationSearch as Search;
 use SimpleLocator\Services\LocationSearch\LocationSearchValidator;
+use SimpleLocator\Services\LocationSearch\StoreSearch;
 
 /**
 * Non Ajax Location Search
@@ -33,10 +34,16 @@ class LocationSearch
 	*/
 	private $errors;
 
+	/**
+	* Search Store
+	*/
+	private $search_store;
+
 	public function __construct()
 	{
 		$this->location_search = new Search;
 		$this->validator = new LocationSearchValidator;
+		$this->search_store = new StoreSearch;
 		$this->validate();
 		$this->setViewData();
 	}
@@ -72,7 +79,17 @@ class LocationSearch
 			'page' => sanitize_text_field(intval($_POST['page'])) + 1,
 			'errors' => null
 		);
+		$this->storeSearch();
 		if ( $this->errors ) $this->data['errors'] = $this->errors;
+	}
+
+	/**
+	* Store the Search
+	*/
+	private function storeSearch()
+	{
+		if ( !get_option('wpsl_save_searches') ) return;
+		$this->search_store->save();
 	}
 
 	/**

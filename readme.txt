@@ -108,6 +108,7 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 * Google now requires a valid API key for all Javascript applications. 
 * Fix in importer CSV upload that was preventing some csv formatted files from being uploaded
 * Error handling added for missing API key on post edit screen.
+* Option added to store user searches in the database
 
 = 1.5.3 =
 * Bug fix where post data not being reset in all locations shortcode

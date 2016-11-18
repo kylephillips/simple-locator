@@ -9,13 +9,12 @@
 		<a class="nav-tab <?php if ( $tab == 'resultsfields' ) echo 'nav-tab-active'; ?>" href="options-general.php?page=wp_simple_locator&tab=resultsfields"><?php _e('Results Display', 'wpsimplelocator'); ?></a>
 		<a class="nav-tab <?php if ( $tab == 'import' ) echo 'nav-tab-active'; ?>" href="options-general.php?page=wp_simple_locator&tab=import"><?php _e('Import', 'wpsimplelocator'); ?></a>
 		<?php 
-		/*if ( get_option('wpsl_save_searches') == 'true' ) : 
+		if ( get_option('wpsl_save_searches') == 'true' ) : ?>
 		<a class="nav-tab <?php if ( $tab == 'search-history' ) echo 'nav-tab-active'; ?>" href="options-general.php?page=wp_simple_locator&tab=search-history"><?php _e('Search Log', 'wpsimplelocator'); ?></a>
 		<?php endif; ?>
-		*/?>
 	</h2>
 	
-	<?php if ( $tab !== "import" ) : ?>
+	<?php if ( $tab !== "import" && $tab !== 'search-history' ) : ?>
 	<form method="post" enctype="multipart/form-data" action="options.php">
 		<table class="form-table">
 			<?php
@@ -25,7 +24,13 @@
 		</table>
 		<?php submit_button(); ?>
 	</form>
-	<?php else : include('import-0.php'); endif; ?>
+	<?php 
+	elseif ( $tab == 'search-history' ) : 
+		include('search-history.php');
+	else : 
+		include('import-0.php'); 
+	endif; 
+	?>
 
 	<p class="wpsl-plugin-version"><?php _e('Simple Locator Version', 'wpsimplelocator'); echo ' ' . get_option('wpsl_version'); ?></p>
 </div>

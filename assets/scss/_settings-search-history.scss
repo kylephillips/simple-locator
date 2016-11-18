@@ -1,0 +1,27 @@
+//
+// Search History
+// --------------------------------------------------
+.wpsl-search-history-form {
+	margin-bottom: 1em;
+}
+
+.wpsl-search-history-table {
+	background-color: $white;
+	width: 100%;
+	border: 0;
+	border-collapse: collapse;
+	th, td {
+		text-align: left;
+		border-top: 1px solid darken($white, 8%);
+		border-left: 1px solid darken($white, 8%);
+		padding: 5px;
+		&:first-child {
+			border-left: 0;
+		}
+	}
+	th {
+		border-bottom: 1px solid darken($white, 8%);
+		border-left-color: darken($white, 15%);
+		background-color: darken($white, 10%);
+	}
+}

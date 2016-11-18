@@ -5,6 +5,7 @@ namespace SimpleLocator\Settings;
 use SimpleLocator\Repositories\FieldRepository;
 use SimpleLocator\Repositories\SettingsRepository;
 use SimpleLocator\Repositories\ImportRepository;
+use SimpleLocator\Repositories\SearchHistoryRepository;
 use SimpleLocator\Services\Import\CSV\Row;
 
 /**
@@ -53,6 +54,11 @@ class Settings
 	* Import Repository
 	*/
 	private $import_repo;
+
+	/**
+	* Search History Repository
+	*/
+	private $search_repo;
 	
 
 	public function __construct()
@@ -60,6 +66,7 @@ class Settings
 		$this->field_repo = new FieldRepository;
 		$this->settings_repo = new SettingsRepository;
 		$this->import_repo = new ImportRepository;
+		$this->search_repo = new SearchHistoryRepository;
 		$this->row = new Row;
 		$this->setUnit();
 		$this->setFieldType();

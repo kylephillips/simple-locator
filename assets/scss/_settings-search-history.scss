@@ -1,6 +1,16 @@
 //
 // Search History
 // --------------------------------------------------
+.wpsl-search-history-actions {
+	@include clearfix;
+	margin-bottom: 1em;
+	form, .button {
+		float: left;
+	}
+	.button {
+		margin-right: 1em;
+	}
+}
 .wpsl-search-history-form {
 	margin-bottom: 1em;
 	background-color: darken($white, 10%);

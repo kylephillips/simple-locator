@@ -18,9 +18,20 @@ if ( $all_searches ) :
 		echo ': ' . $total_count;
 	?>
 </h2>
-<?php if ( $is_search ) : ?>
-	<p><a href="<?php echo $page; ?>" class="button"><?php _e('View All', 'wpsimplelocator'); ?></a></p>
-<?php endif; ?>
+
+<div class="wpsl-search-history-actions">
+	<?php if ( $is_search ) : ?>
+	<a href="<?php echo $page; ?>" class="button"><?php _e('View All', 'wpsimplelocator'); ?></a>
+	<?php endif; ?>
+	<form action="<?php echo admin_url('admin-post.php'); ?>" method="post">
+		<input type="hidden" name="action" value="wpslhistorycsv">
+		<input type="hidden" name="page" value="<?php echo $page; ?>">
+		<input type="hidden" name="q" value="<?php if ( isset($search_term)  ) echo $search_term; ?>">
+		<input type="hidden" name="date_start" value="<?php if ( isset($date_start) ) echo $_GET['date_start']; ?>">
+		<input type="hidden" name="date_end" value="<?php if ( isset($date_end) ) echo $_GET['date_end']; ?>">
+		<button class="button button-primary"><?php _e('Download CSV', 'wpsimplelocator'); ?></button>
+	</form>
+</div>
 
 <div class="wpsl-search-history-form">
 	<form action="<?php echo admin_url('admin-post.php'); ?>" method="post">

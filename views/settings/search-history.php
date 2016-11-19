@@ -3,6 +3,10 @@ $total_count = $this->search_repo->getTotalCount();
 $all_searches = $this->search_repo->getAllSearches();
 $date_format = get_option('date_format');
 $is_search = ( isset($_GET['q']) ) ? true : false;
+
+if ( isset($_GET['date_start']) && $_GET['date_start'] !== '' ) $date_start = date('F j, Y', strtotime('@' . $_GET['date_start']));
+if ( isset($_GET['date_end']) && $_GET['date_end'] !== '' ) $date_end = date('F j, Y', strtotime('@' . $_GET['date_end']));
+
 $page = admin_url('options-general.php?page=wp_simple_locator&tab=search-history');
 if ( $all_searches ) :
 ?>
@@ -22,7 +26,16 @@ if ( $all_searches ) :
 		<input type="hidden" name="action" value="wpslhistorysearch">
 		<input type="hidden" name="page" value="<?php echo $page; ?>">
 		<?php wp_nonce_field('wpsl-nonce', 'nonce'); ?>
-		<input type="text" name="search_term" placeholder="<?php _e('Search Terms', 'wpsimplelocator'); ?>" />
+		<h4><?php _e('Filter Searches', 'wpsimplelocator'); ?></h4>
+		<div class="keyword">
+			<label><?php _e('Search Keywords', 'wpsimplelocator'); ?></label>
+			<input type="text" name="search_term" placeholder="<?php _e('Search Terms', 'wpsimplelocator'); ?>" />
+		</div><!-- .keyword -->
+		<div class="date-range">
+			<label><?php _e('Date Range', 'wpsimplelocator'); ?></label>
+			<input type="text" name="date_start" data-date-picker placeholder="<?php _e('Start', 'wpsimplelocator'); ?>" <?php if ( isset($date_start) ) echo 'value="' . $date_start . '"';?>>
+			<input type="text" name="date_end" data-date-picker placeholder="<?php _e('End', 'wpsimplelocator'); ?>" <?php if ( isset($date_end) ) echo 'value="' . $date_end . '"';?>>
+		</div><!-- .date-range -->
 		<input type="submit" name="" class="button" value="Search">
 	</form>
 </div>

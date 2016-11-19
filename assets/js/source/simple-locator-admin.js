@@ -423,6 +423,15 @@ jQuery(function($){
 		tinymce.activeEditor.execCommand('mceInsertContent', false, field);
 	}
 
+	// Enable Datepicker Fields
+	$(document).ready(function(){
+		$('[data-date-picker]').datepicker({
+			beforeShow: function(input, inst){
+				$('#ui-datepicker-div').addClass('wpsl-datepicker');
+			}
+		});
+	});	
+
 	
 
 }); // jQuery

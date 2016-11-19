@@ -45,7 +45,7 @@ class AdminDependencies extends DependencyBase
 			wp_enqueue_script(
 				'simple-locator-admin', 
 				$this->plugin_dir . '/assets/js/simple-locator-admin.js', 
-				array('jquery', 'jquery-ui-sortable'), 
+				array('jquery', 'jquery-ui-sortable', 'jquery-ui-datepicker'), 
 				$this->version
 			);
 			$data = array( 

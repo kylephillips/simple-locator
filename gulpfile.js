@@ -22,11 +22,12 @@ var js_admin_source = [
 	'assets/js/source/bs-transition.js',
 	'assets/js/source/bs-modal.js',
 	'assets/js/source/simple-locator-admin.js',
-	'assets/js/source/simple-locator-import.js'
+	'assets/js/source/simple-locator-import.js',
 ];
 
 var js_admin_maps_source = 'assets/js/source/simple-locator-admin-maps.js';
 var js_admin_defaultmap_source = 'assets/js/source/simple-locator-admin-defaultmap.js';
+var js_admin_search_history_source = 'assets/js/source/simple-locator-admin-search-history.js';
 
 var js_compiled = 'assets/js/';
 
@@ -74,6 +75,16 @@ gulp.task('admin_default_map_scripts', function(){
 		.pipe(gulp.dest(js_compiled))
 });
 
+/**
+* Admin Search History Map
+*/
+gulp.task('admin_search_history', function(){
+	return gulp.src(js_admin_search_history_source)
+		.pipe(gulp.dest(js_compiled))
+		.pipe(uglify())
+		.pipe(gulp.dest(js_compiled))
+});
+
 
 /**
 * Front end js
@@ -96,6 +107,7 @@ gulp.task('watch', function(){
 	gulp.watch(js_admin_source, ['admin_scripts']);
 	gulp.watch(js_admin_maps_source, ['admin_maps_scripts']);
 	gulp.watch(js_admin_defaultmap_source, ['admin_default_map_scripts']);
+	gulp.watch(js_admin_search_history_source, ['admin_search_history']);
 });
 
 
@@ -108,5 +120,6 @@ gulp.task('default', [
 	'admin_scripts', 
 	'admin_maps_scripts', 
 	'admin_default_map_scripts',
+	'admin_search_history',
 	'watch'
 ]);

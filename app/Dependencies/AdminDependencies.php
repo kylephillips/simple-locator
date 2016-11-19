@@ -15,6 +15,7 @@ class AdminDependencies extends DependencyBase
 		add_action( 'admin_enqueue_scripts', array( $this, 'scripts' ));
 		add_action( 'admin_enqueue_scripts', array( $this, 'mapSettings' ));
 		add_action( 'admin_enqueue_scripts', array( $this, 'defaultMapSettings' ));
+		add_action( 'admin_enqueue_scripts', array( $this, 'searchHistory' ));
 	}
 
 	/**
@@ -116,6 +117,34 @@ class AdminDependencies extends DependencyBase
 					'searchtext' 	=> __('Search for a location', 'wpsimplelocator'),
 					'styles' 		=> $this->styles_repo->getLocalizedStyles(),
 					'mappin' 		=> get_option('wpsl_map_pin')
+				)
+			);
+		}
+	}
+
+	/**
+	* Search History Page
+	*/
+	public function searchHistory()
+	{
+		$screen = get_current_screen();
+		if ( ($screen->id == 'settings_page_wp_simple_locator') && (isset($_GET['tab'])) && ($_GET['tab'] == 'search-history') ){
+			wp_enqueue_script(
+				'simple-locator-admin-searchhistory', 
+				$this->plugin_dir . '/assets/js/simple-locator-admin-search-history.js', 
+				array('jquery'), 
+				$this->version
+			);
+			wp_localize_script( 
+				'simple-locator-admin-searchhistory', 
+				'wpsl_locator_searchhistory', 
+				array(
+					'styles' 		=> $this->styles_repo->getLocalizedStyles(),
+					'mappin' 		=> get_option('wpsl_map_pin'),
+					'userIp' 		=> __('User IP', 'wpsimplelocator'),
+					'searchTermFormatted' => __('Search Term Formatted', 'wpsimplelocator'),
+					'searchTerm' => __('Search Term', 'wpsimplelocator'),
+					'distance' 		=> __('Distance', 'wpsimplelocator')
 				)
 			);
 		}

@@ -19,7 +19,7 @@ if ( $all_searches ) :
 	?>
 </h2>
 <?php if ( $is_search ) : ?>
-	<p><a href="<?php echo $page; ?>"><?php _e('View All', 'wpsimplelocator'); ?></a></p>
+	<p><a href="<?php echo $page; ?>" class="button"><?php _e('View All', 'wpsimplelocator'); ?></a></p>
 <?php endif; ?>
 
 <div class="wpsl-search-history-form">
@@ -39,7 +39,9 @@ if ( $all_searches ) :
 		</div><!-- .date-range -->
 		<input type="submit" name="" class="button" value="Search">
 	</form>
-</div>
+</div><!-- .wpsl-search-history-form -->
+
+<div id="wpsl-search-history-map"></div>
 
 <table class="wpsl-search-history-table">
 	<thead>
@@ -74,6 +76,31 @@ if ( $all_searches ) :
 	</tbody>
 </table>
 
+<script>
+	var locations = [
+		<?php 
+		$i = 1;
+		$out = "";
+		foreach ( $all_searches as $search ) :
+			$date = date_i18n( $date_format, strtotime( $search->time ) );
+			$out .= "{";
+			$out .= 'search_term : "' . $search->search_term . '",';
+			$out .= 'search_term_formatted : "' . $search->search_term_formatted . '",';
+			$out .= 'user_ip : "' . $search->user_ip . '",';
+			$out .= 'latitude : ' . $search->search_lat . ',';
+			$out .= 'longitude : ' . $search->search_lng . ',';
+			$out .= 'date : "' . $date. '",';
+			$out .= 'distance : ' . $search->distance;
+			$out .= ( $i < count($all_searches) ) ? "}," : "}";
+		$i++; endforeach; 
+		echo $out;
+		?>
+	];
+	jQuery(document).ready(function(){
+		var map = new WPSL_SearchHistoryMap(locations, 'wpsl-search-history-map');
+	});
+</script>
+
 <?php else : // No searches yet ?>
 <h2>
 	<?php 
@@ -85,4 +112,5 @@ if ( $all_searches ) :
 <?php if ( $is_search ) : ?>
 	<p><a href="<?php echo $page; ?>"><?php _e('View All', 'wpsimplelocator'); ?></a></p>
 <?php endif; ?>
+
 <?php endif; ?>

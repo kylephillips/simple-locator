@@ -6,6 +6,7 @@ $is_search = ( isset($_GET['q']) ) ? true : false;
 
 if ( isset($_GET['date_start']) && $_GET['date_start'] !== '' ) $date_start = date('F j, Y', strtotime('@' . $_GET['date_start']));
 if ( isset($_GET['date_end']) && $_GET['date_end'] !== '' ) $date_end = date('F j, Y', strtotime('@' . $_GET['date_end']));
+if ( isset($_GET['q']) && $_GET['q'] !== '' ) $search_term = sanitize_text_field($_GET['q']);
 
 $page = admin_url('options-general.php?page=wp_simple_locator&tab=search-history');
 if ( $all_searches ) :
@@ -29,7 +30,7 @@ if ( $all_searches ) :
 		<h4><?php _e('Filter Searches', 'wpsimplelocator'); ?></h4>
 		<div class="keyword">
 			<label><?php _e('Search Keywords', 'wpsimplelocator'); ?></label>
-			<input type="text" name="search_term" placeholder="<?php _e('Search Terms', 'wpsimplelocator'); ?>" />
+			<input type="text" name="search_term" placeholder="<?php _e('Search Terms', 'wpsimplelocator'); ?>" value="<?php if ( isset($search_term) ) echo $search_term; ?>" />
 		</div><!-- .keyword -->
 		<div class="date-range">
 			<label><?php _e('Date Range', 'wpsimplelocator'); ?></label>

@@ -105,7 +105,7 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 == Changelog ==
 
 = 1.5.5 =
-* Search log (list view) added
+* Search log (list & map view) added along with filters and CSV export. History save must be enabled to view the search log.
 
 = 1.5.4 =
 * Google now requires a valid API key for all Javascript applications. 

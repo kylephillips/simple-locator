@@ -58,7 +58,7 @@ class SearchHistoryRepository
 			$query .= ' unix_timestamp(time) <= ' . $date_end;
 		endif;
 
-		$query .= ';';
+		$query .= ' ORDER BY time DESC;';
 
 		$results = $this->wpdb->get_results($query);
 		$this->results = $results;

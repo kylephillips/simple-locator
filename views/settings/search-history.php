@@ -1,6 +1,10 @@
 <?php
+$total_count = $this->search_repo->setSearch('GET', false);
 $total_count = $this->search_repo->getTotalCount();
-$all_searches = $this->search_repo->getAllSearches();
+
+$search_rows = $this->search_repo->setSearch('GET', true);
+$search_rows = $this->search_repo->getResults();
+
 $date_format = get_option('date_format');
 $is_search = ( isset($_GET['q']) ) ? true : false;
 
@@ -8,8 +12,11 @@ if ( isset($_GET['date_start']) && $_GET['date_start'] !== '' ) $date_start = da
 if ( isset($_GET['date_end']) && $_GET['date_end'] !== '' ) $date_end = date('F j, Y', strtotime('@' . $_GET['date_end']));
 if ( isset($_GET['q']) && $_GET['q'] !== '' ) $search_term = sanitize_text_field($_GET['q']);
 
+$per_page = ( isset($_GET['per_page']) && $_GET['per_page'] !== '' ) ? intval($_GET['per_page']) : 20;
+$current_page = ( isset($_GET['p']) && $_GET['p'] !== '' ) ? intval($_GET['p']) : 1;
+
 $page = admin_url('options-general.php?page=wp_simple_locator&tab=search-history');
-if ( $all_searches ) :
+if ( $search_rows ) :
 ?>
 
 <h2>
@@ -33,8 +40,8 @@ if ( $all_searches ) :
 	</form>
 </div>
 
-<div class="wpsl-search-history-form">
-	<form action="<?php echo admin_url('admin-post.php'); ?>" method="post">
+<form action="<?php echo admin_url('admin-post.php'); ?>" method="post">
+	<div class="wpsl-search-history-form">
 		<input type="hidden" name="action" value="wpslhistorysearch">
 		<input type="hidden" name="page" value="<?php echo $page; ?>">
 		<?php wp_nonce_field('wpsl-nonce', 'nonce'); ?>
@@ -48,9 +55,33 @@ if ( $all_searches ) :
 			<input type="text" name="date_start" data-date-picker placeholder="<?php _e('Start', 'wpsimplelocator'); ?>" <?php if ( isset($date_start) ) echo 'value="' . $date_start . '"';?>>
 			<input type="text" name="date_end" data-date-picker placeholder="<?php _e('End', 'wpsimplelocator'); ?>" <?php if ( isset($date_end) ) echo 'value="' . $date_end . '"';?>>
 		</div><!-- .date-range -->
+
+		<hr>
+		
 		<input type="submit" name="" class="button" value="Search">
-	</form>
-</div><!-- .wpsl-search-history-form -->
+
+	</div><!-- .wpsl-search-history-form -->
+
+	<div class="wpsl-search-history-table-header">
+		<h3><?php echo __('Page', 'wpsimplelocator') . ' ' . $current_page . ' ' . __('of', 'wpsimplelocator') . ' ' . $this->search_repo->totalPages(); ?> </h3>
+		<select name="per_page" data-wpsl-history-per-page>
+			<?php
+			$page_options = array(200, 100, 50, 20, 10, 5, 3);
+			foreach ( $page_options as $option ) :
+				$out = '<option value="' . $option . '"';
+				if ( $option == $per_page ) $out .= ' selected';
+				$out .= '>' . $option . ' ' . __('Per Page', 'wpsimplelocator') . '</option>';
+				echo $out;
+			endforeach;
+			?>
+		</select>
+
+		<div class="wpsl-search-history-pagination">
+			<?php echo $this->search_repo->pagination(__('Previous Page', 'wpsimplelocator'), __('Next Page', 'wpsimplelocator')); ?>
+		</div>
+	</div>
+
+</form>
 
 <div id="wpsl-search-history-map"></div>
 
@@ -67,7 +98,7 @@ if ( $all_searches ) :
 	</thead>
 	<tbody>
 		<?php 
-			foreach ( $all_searches as $search ) : 
+			foreach ( $search_rows as $search ) : 
 			$date = date_i18n( $date_format, strtotime( $search->time ) );
 			$link = 'http://maps.google.com/maps?q=loc:' . $search->search_lat . ',' . $search->search_lng;
 			?>
@@ -87,12 +118,16 @@ if ( $all_searches ) :
 	</tbody>
 </table>
 
+<div class="wpsl-search-history-pagination">
+	<?php echo $this->search_repo->pagination(__('Previous Page', 'wpsimplelocator'), __('Next Page', 'wpsimplelocator')); ?>
+</div>
+
 <script>
 	var locations = [
 		<?php 
 		$i = 1;
 		$out = "";
-		foreach ( $all_searches as $search ) :
+		foreach ( $search_rows as $search ) :
 			$date = date_i18n( $date_format, strtotime( $search->time ) );
 			$out .= "{";
 			$out .= 'search_term : "' . $search->search_term . '",';
@@ -102,13 +137,14 @@ if ( $all_searches ) :
 			$out .= 'longitude : ' . $search->search_lng . ',';
 			$out .= 'date : "' . $date. '",';
 			$out .= 'distance : ' . $search->distance;
-			$out .= ( $i < count($all_searches) ) ? "}," : "}";
+			$out .= ( $i < count($search_rows) ) ? "}," : "}";
 		$i++; endforeach; 
 		echo $out;
 		?>
 	];
+	var map = new WPSL_SearchHistoryMap(locations, 'wpsl-search-history-map');
 	jQuery(document).ready(function(){
-		var map = new WPSL_SearchHistoryMap(locations, 'wpsl-search-history-map');
+		map.loadmap();
 	});
 </script>
 

@@ -9,6 +9,14 @@ var WPSL_SearchHistoryMap = function(locations, container)
 	plugin.locations = locations;
 	plugin.container = container;
 
+
+	plugin.bindEvents = function()
+	{
+		$('[data-wpsl-history-per-page]').on('change', function(){
+			$(this).parents('form').submit();
+		});
+	}
+
 	/**
 	* Load the Map
 	*/
@@ -75,5 +83,5 @@ var WPSL_SearchHistoryMap = function(locations, container)
 
 	} // loadmap()
 
-	return plugin.loadmap();
+	return plugin.bindEvents();
 }

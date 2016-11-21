@@ -28,7 +28,8 @@ class HistoryCsvDownload
 	*/
 	private function getResults()
 	{
-		$this->results = $this->search_history_repo->setSearchHistory('POST');
+		$this->search_history_repo->setSearch('POST', false);
+		$this->results = $this->search_history_repo->getResults();
 	}
 
 	/**

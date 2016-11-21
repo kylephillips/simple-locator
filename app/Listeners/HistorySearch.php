@@ -33,9 +33,12 @@ class HistorySearch
 		$q = sanitize_text_field($_POST['search_term']);
 		$date_start = strtotime(sanitize_text_field($_POST['date_start']));
 		$date_end = strtotime(sanitize_text_field($_POST['date_end']));
+		$per_page = ( intval(sanitize_text_field($_POST['per_page'])) );
 		$this->url .= '&q=' . $q;
 		$this->url .= '&date_start=' . $date_start;
 		$this->url .= '&date_end=' . $date_end;
+		$this->url .= '&per_page=' . $per_page;
+		$this->url .= '&p=1';
 	}
 
 

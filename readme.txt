@@ -4,7 +4,7 @@ Donate link: http://locatewp.com/
 Tags: location, store locator, google maps, store map
 Requires at least: 3.8
 Tested up to: 4.6
-Stable tag: 1.5.4
+Stable tag: 1.5.5
 
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -103,6 +103,9 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 10. Import locations in bulk from a CSV file. Locations will be automatically geocoded using the Google Maps Geocode API (Import functionality requires PHP version 5.4+ and a valid Google Maps API key with the Geocoding API enabled).
 
 == Changelog ==
+
+= 1.5.6 =
+* Pagination added to search log.
 
 = 1.5.5 =
 * Search log (list & map view) added along with filters and CSV export. History save must be enabled to view the search log.

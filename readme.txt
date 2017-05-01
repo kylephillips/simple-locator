@@ -104,6 +104,9 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 
 == Changelog ==
 
+= 1.5.7 =
+* Bug fix where previously entered location post meta could not be removed.
+
 = 1.5.6 =
 * Pagination added to search log.
 

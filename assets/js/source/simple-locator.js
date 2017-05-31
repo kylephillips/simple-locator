@@ -3,13 +3,16 @@
 */
 function openInfoWindow(id){
 	google.maps.event.trigger(markers[id], 'click');
-	googlemap.panTo(markers[id].getPosition());
-	googlemap.fitBounds(markers[id].getPosition());
+	var lat = markers[id].getPosition().lat();
+	var lng = markers[id].getPosition().lng();
+	var position = new google.maps.LatLng(lat,lng);
+	googlemap.panTo(position);
+	googlemap.fitBounds(position);
 	googlemap.setZoom(12);
 	return false;
 }
 var markers = [];
-var googlemap = '';
+var googlemap;
 
 
 /**

@@ -102,7 +102,7 @@ function queue_default_map(errors)
 		} else {
 			loadDefault();
 		}
-	}	
+	}
 }
 
 function default_load_results()
@@ -158,6 +158,7 @@ function generate_nonce(form, formelements, processform)
 			$('.locator-nonce').remove();
 			$(form).find('form').append('<input type="hidden" class="locator-nonce" name="nonce" value="' + data.nonce + '" />');
 			if ( processform ) geocodeAddress(formelements);
+            $( 'body' ).trigger( 'nonce-ready' ); //trigger nonce ready event
 		}
 	});
 }
@@ -188,7 +189,7 @@ function loadDefault(userlocation, position)
 		// Override options if custom options are set
 		if ( wpsl_locator.custom_map_options === '1' )	mapOptions = wpsl_locator.map_options;
 		mapOptions.center = center;
-		
+
 		var map = new google.maps.Map(formelements.map[0],mapOptions);
 	});
 }
@@ -244,7 +245,7 @@ function setFormElements(form)
 function geocodeAddress(formelements)
 {
 	var address = $(formelements.address).val();
-	
+
 	if ( $(formelements.form).hasClass('allow-empty') && address === ""){
 		return sendFormData(formelements);
 	}
@@ -268,10 +269,10 @@ function geocodeAddress(formelements)
 				console.log('Google Geocode Response');
 				console.log(results);
 			}
-			
+
 			$(formelements.latitude).val(latitude);
 			$(formelements.longitude).val(longitude);
-			
+
 			if ( $(formelements.form).find('#wpsl_action').length === 0 ){
 				return sendFormData(formelements);
 			}
@@ -305,7 +306,7 @@ function appendNonAjaxFields(formelements)
 function sendFormData(formelements)
 {
 	var taxonomies = $(formelements.taxonomy).serializeArray(); // checkboxes
-	
+
 	// Select Menus
 	if ( formelements.taxonomy.length == 0 ) {
 		var inputs = $(formelements.taxonomy_select);
@@ -317,13 +318,13 @@ function sendFormData(formelements)
 			taxonomies.push(selected);
 		});
 	}
-	
+
 	// Create an array from the selected taxonomies
 	var taxonomy_array = {};
 	$.each(taxonomies, function(i, v){
 		var tax_name = this.name.replace( /(^.*\[|\].*$)/g, '' );
-		if ( (typeof taxonomy_array[tax_name] == undefined) 
-			|| !(taxonomy_array[tax_name] instanceof Array) ) 
+		if ( (typeof taxonomy_array[tax_name] == undefined)
+			|| !(taxonomy_array[tax_name] instanceof Array) )
 			taxonomy_array[tax_name] = [];
 		if ( tax_name) taxonomy_array[tax_name].push(this.value);
 	});
@@ -397,7 +398,7 @@ function loadLocationResults(data, formelements)
 		if ( data.latitude !== "" ) output += ' ' + wpsl_locator.found_within + ' ' + data.distance + ' ' + data.unit + ' ' + wpsl_locator.of + ' ';
 		output += ( data.using_geolocation === "true" ) ? wpsl_locator.yourlocation : data.formatted_address;
 		output += '</h3>';
-		
+
 		if ( wpsl_locator_options.resultswrapper !== "" ) output += '<' + wpsl_locator_options.resultswrapper + '>';
 
 		for( i = 0; i < data.results.length; i++ ) {
@@ -435,7 +436,7 @@ function showLocationMap(data, formelements)
 
 	// Set the optional user parameters
 	var mapcont = $(formelements.map)[0];
-	
+
 	if ( typeof wpsl_locator_options != 'undefined' ){
 		var disablecontrols = ( wpsl_locator_options.mapcontrols === 'show') ? false : true;
 	} else {
@@ -448,7 +449,7 @@ function showLocationMap(data, formelements)
 	} else {
 		var controlposition = "TOP_LEFT";
 	}
-	
+
 	var mappin = ( wpsl_locator.mappin ) ? wpsl_locator.mappin : '';
 	var map;
 	var bounds = new google.maps.LatLngBounds();
@@ -469,9 +470,9 @@ function showLocationMap(data, formelements)
 	if ( wpsl_locator.custom_map_options === '1' ) mapOptions = wpsl_locator.map_options;
 	var locations = [];
 	var infoWindow = new google.maps.InfoWindow(), marker, i;
-	
+
 	map = new google.maps.Map( mapcont, mapOptions );
-	
+
 	// Array of locations
 	for (var i = 0, length = data.results.length; i < length; i++) {
 		var location = {
@@ -483,20 +484,20 @@ function showLocationMap(data, formelements)
 		};
 		locations.push(location);
 	}
-	
-	// Loop through array of markers & place each one on the map  
+
+	// Loop through array of markers & place each one on the map
 	for( i = 0; i < locations.length; i++ ) {
 		var position = new google.maps.LatLng(locations[i].lat, locations[i].lng);
 		bounds.extend(position);
-		
+
 		marker = new google.maps.Marker({
 			position: position,
 			map: map,
 			title: locations[i].title,
 			icon: mappin
-		});	
+		});
 
-		// Info window for each marker 
+		// Info window for each marker
 		google.maps.event.addListener(marker, 'click', (function(marker, i) {
 			return function() {
 				infoWindow.setContent(locations[i].infowindow);
@@ -509,14 +510,14 @@ function showLocationMap(data, formelements)
 
 		 // Push the marker to the global 'markers' array
         markers.push(marker);
-		
+
 		// Center the Map
 		map.fitBounds(bounds);
-		var listener = google.maps.event.addListener(map, "idle", function() { 
+		var listener = google.maps.event.addListener(map, "idle", function() {
 				if ( data.results.length < 2 ) {
 				map.setZoom(13);
 			}
-			google.maps.event.removeListener(listener); 
+			google.maps.event.removeListener(listener);
 		});
 	}
 
@@ -575,8 +576,15 @@ function process_geo_button(position, formelements)
 	$(formelements.longitude).val(longitude);
 
 	geolocation = true;
-	
-	sendFormData(formelements);
+
+    //check if nonce has been received
+    if ( typeof $( '.locator-nonce' ).val() !== 'undefined' ) {
+        sendFormData( formelements ); //nonce is ready so go ahead and send form
+    } else {
+        $( 'body' ).one( 'nonce-ready', function () { //only listen for 1 event
+            sendFormData( formelements );
+        } );
+    }
 }
 
 $(document).ready(function(){
@@ -588,24 +596,24 @@ $(document).ready(function(){
 
 $(document).on('click', '.wpsl-geo-button', function(e){
 	e.preventDefault();
-	
+
 	var form = $(this).parents('.simple-locator-form');
 	active_form = form;
 	var formelements = setFormElements(form);
 
 	$(formelements.errordiv).hide();
-	
+
 	if ( wpsl_locator.default_enabled ){
 		$(formelements.map).find('.gm-style').remove();
 	} else {
 		$(formelements.map).hide();
 	}
-	
+
 	$(formelements.results).empty().addClass('loading').show();
 
 	navigator.geolocation.getCurrentPosition(function(position){
 		process_geo_button(position, formelements);
 	});
-});	
+});
 
 }); // jQuery

@@ -37,6 +37,7 @@ SimpleLocator.Factory = function()
 	self.init = function()
 	{
 		new SimpleLocator.SingleLocation;
+		new SimpleLocator.AllLocations;
 		self.bindEvents();
 	}
 

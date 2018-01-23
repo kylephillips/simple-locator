@@ -118,12 +118,6 @@ class Singular
 		if ( (isset($this->location_data['latitude'])) && (isset($this->location_data['longitude'])) ){
 			wp_enqueue_script('google-maps');
 			wp_enqueue_script('simple-locator');
-			// wp_enqueue_script(
-			// 	'simple-locator-single', 
-			// 	\SimpleLocator\Helpers::plugin_url(). '/assets/js/simple-locator-single.js', 
-			// 	array('jquery'), 
-			// 	'1.0'
-			// );
 			wp_localize_script( 
 				'simple-locator', 
 				'wpsl_locator_single', 

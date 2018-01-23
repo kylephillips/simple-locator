@@ -76,14 +76,8 @@ class AllLocationsShortcode
 	{
 		wp_enqueue_script('google-maps');
 		wp_enqueue_script('simple-locator');
-		wp_enqueue_script(
-			'simple-locator-all',
-			\SimpleLocator\Helpers::plugin_url(). '/assets/js/simple-locator-all-locations.js',
-			array('jquery'),
-			'1.0'
-		);
 		wp_localize_script(
-			'simple-locator-all',
+			'simple-locator',
 			'wpsl_locator_all',
 			array(
 				'locations' => $this->locations

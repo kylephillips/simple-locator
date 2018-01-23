@@ -1,13 +1,21 @@
 /**
-* All locations map scripts
+* Display a single location map
 */
-jQuery(function($){
+var SimpleLocator = SimpleLocator || {};
+SimpleLocator.AllLocations = function()
+{
+	var self = this;
+	var $ = jQuery;
 
-	$(document).ready(function(){
-		loadmap();
-	});
+	self.bindEvents = function()
+	{
+		if ( typeof wpsl_locator_all === 'undefined' || wpsl_locator_all == '' ) return;
+		$(document).ready(function(){
+			self.loadMap();
+		});
+	}
 
-	function loadmap()
+	self.loadMap = function()
 	{
 		var locations = wpsl_locator_all.locations;
 		var mapstyles = wpsl_locator.mapstyles;	
@@ -63,7 +71,7 @@ jQuery(function($){
 		});
 
 		wpsl_all_locations_rendered(map);
+	}
 
-	} // loadmap()
-
-});
+	return self.bindEvents();
+}

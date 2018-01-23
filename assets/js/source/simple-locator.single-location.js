@@ -1,13 +1,22 @@
 /**
-* Single View Map Functionality
+* Display a single location map
 */
-jQuery(function($){
-	
-	$(document).ready(function(){
-		loadmap();
-	});
+var SimpleLocator = SimpleLocator || {};
+SimpleLocator.SingleLocation = function()
+{
+	var self = this;
+	var $ = jQuery;
 
-	function loadmap()
+	self.bindEvents = function()
+	{
+		if ( typeof wpsl_locator_single === 'undefined' || wpsl_locator_single == '' ) return;
+		
+		$(document).ready(function(){
+			self.loadMap();
+		});
+	}
+
+	self.loadMap = function()
 	{
 		var mappin = ( wpsl_locator.mappin ) ? wpsl_locator.mappin : '';
 		var position = new google.maps.LatLng( parseFloat(wpsl_locator_single.latitude), parseFloat(wpsl_locator_single.longitude) );
@@ -29,4 +38,5 @@ jQuery(function($){
 		});
 	}
 
-}); // jQuery
+	return self.bindEvents();
+}

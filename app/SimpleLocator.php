@@ -9,10 +9,10 @@ class SimpleLocator
 	{
 		// dev/live
 		global $simple_locator_env;
-		$ls_env = 'live';
+		$simple_locator_env = 'live';
 
 		global $simple_locator_version;
-		$simple_locator_version = '1.5.6';
+		$simple_locator_version = '2.0.1';
 
 		$app = new SimpleLocator\Bootstrap;
 	}

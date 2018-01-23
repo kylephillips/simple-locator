@@ -41,7 +41,7 @@ class PublicDependencies extends DependencyBase
 
 		wp_register_script(
 			'simple-locator', 
-			$this->plugin_dir . '/assets/js/simple-locator.js', 
+			$this->plugin_dir . '/assets/js/simple-locator.min.js', 
 			$dependencies, 
 			$this->version, 
 			true

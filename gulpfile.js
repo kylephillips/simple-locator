@@ -3,9 +3,9 @@ var sass = require('gulp-sass');
 var autoprefix = require('gulp-autoprefixer');
 var livereload = require('gulp-livereload');
 var notify = require('gulp-notify');
-var jshint = require('gulp-jshint');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
+var pump = require('pump');
 
 // Paths
 var scss = 'assets/scss/**/*';
@@ -13,10 +13,11 @@ var css = 'assets/css/';
 
 var js_source = [
 	'assets/js/source/simple-locator.js',
-	'assets/js/source/simple-locator-single.js',
-	'assets/js/source/simple-locator-all-locations.js',
-	'assets/js/source/simple-locator-non-ajax-results.js'
-]
+	//'assets/js/source/simple-locator-all-locations.js',
+	//'assets/js/source/simple-locator-non-ajax-results.js',
+	'assets/js/source/simple-locator.single-location.js', // Start v2
+	'assets/js/source/simple-locator.factory.js'
+];
 
 var js_admin_source = [
 	'assets/js/source/bs-transition.js',
@@ -35,65 +36,78 @@ var js_compiled = 'assets/js/';
 /**
 * Smush the admin Styles and output
 */
-gulp.task('scss', function(){
-	return gulp.src(scss)
-		.pipe(sass({ outputStyle: 'compressed' }))
-		.pipe(autoprefix('last 15 version'))
-		.pipe(gulp.dest(css))
-		.pipe(livereload())
-		.pipe(notify('Simple Locator styles compiled & compressed.'));
+gulp.task('scss', function(callback){
+	pump([
+		gulp.src(scss),
+		sass({ outputStyle: 'compressed' }),
+		autoprefix('last 15 version'),
+		gulp.dest(css),
+		livereload(),
+		notify('Simple Locator styles compiled & compressed.')
+	], callback);
 });
 
 /**
 * Admin JS
 */
-gulp.task('admin_scripts', function(){
-	return gulp.src(js_admin_source)
-		.pipe(concat('simple-locator-admin.js'))
-		.pipe(gulp.dest(js_compiled))
-		.pipe(uglify())
-		.pipe(gulp.dest(js_compiled))
+gulp.task('admin_scripts', function(callback){
+	pump([
+		gulp.src(js_admin_source),
+		concat('simple-locator-admin.js'),
+		gulp.dest(js_compiled),
+		uglify(),
+		gulp.dest(js_compiled)
+	], callback);
 });
 
 /**
 * Admin Maps JS
 */
-gulp.task('admin_maps_scripts', function(){
-	return gulp.src(js_admin_maps_source)
-		.pipe(gulp.dest(js_compiled))
-		.pipe(uglify())
-		.pipe(gulp.dest(js_compiled))
+gulp.task('admin_maps_scripts', function(callback){
+	pump([
+		gulp.src(js_admin_maps_source),
+		gulp.dest(js_compiled),
+		uglify(),
+		gulp.dest(js_compiled)
+	], callback);
 });
 
 /**
 * Admin Default Map
 */
-gulp.task('admin_default_map_scripts', function(){
-	return gulp.src(js_admin_defaultmap_source)
-		.pipe(gulp.dest(js_compiled))
-		.pipe(uglify())
-		.pipe(gulp.dest(js_compiled))
+gulp.task('admin_default_map_scripts', function(callback){
+	pump([
+		gulp.src(js_admin_defaultmap_source),
+		gulp.dest(js_compiled),
+		uglify(),
+		gulp.dest(js_compiled)
+	], callback);
 });
 
 /**
 * Admin Search History Map
 */
-gulp.task('admin_search_history', function(){
-	return gulp.src(js_admin_search_history_source)
-		.pipe(gulp.dest(js_compiled))
-		.pipe(uglify())
-		.pipe(gulp.dest(js_compiled))
+gulp.task('admin_search_history', function(callback){
+	pump([
+		gulp.src(js_admin_search_history_source),
+		gulp.dest(js_compiled),
+		uglify(),
+		gulp.dest(js_compiled)
+	], callback);
 });
 
 
 /**
 * Front end js
 */
-gulp.task('scripts', function(){
-	return gulp.src(js_source)
-		.pipe(gulp.dest(js_compiled))
-		.pipe(uglify())
-		.pipe(gulp.dest(js_compiled))
+gulp.task('scripts', function(callback){
+	pump([
+		gulp.src(js_source),
+		concat('simple-locator.min.js'),
+		gulp.dest(js_compiled),
+		//uglify(),
+		gulp.dest(js_compiled)
+	], callback);
 });
 
 

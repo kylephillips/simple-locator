@@ -46,7 +46,7 @@ class Singular
 	*/
 	private function setPostType()
 	{
-		$this->post_type = get_option('wpsl_post_type');
+		$this->post_type = $this->settings_repo->getLocationPostType();
 	}
 
 	/**
@@ -62,11 +62,11 @@ class Singular
 	*/
 	private function filterContent()
 	{
-		add_filter('the_content', array($this, 'addFilteredContent'));
+		add_filter('the_content', [$this, 'addFilteredContent']);
 	}
 
 	/**
-	* Set the location data for use in map
+	* Set the location data for use in map and on page
 	*/
 	private function setLocationData()
 	{
@@ -91,12 +91,11 @@ class Singular
 	public function addFilteredContent($content)
 	{	
 		if ( ( is_singular($this->post_type) ) && ( get_option('wpsl_singular_data') == 'true') ){
+			if ( !is_main_query() ) return;
 			$this->setLocationData();
 			$this->enqueueScript();
-			if ( is_main_query() ){
-				$output = $this->addmap();
-				$content = $output . $content;
-			}
+			$output = $this->addmap();
+			$content = $output . $content;
 		} 
 		return $content;
 	}
@@ -118,11 +117,6 @@ class Singular
 		if ( (isset($this->location_data['latitude'])) && (isset($this->location_data['longitude'])) ){
 			wp_enqueue_script('google-maps');
 			wp_enqueue_script('simple-locator');
-			wp_localize_script( 
-				'simple-locator', 
-				'wpsl_locator_single', 
-				$this->location_data
-			);
 		}
 	}
 

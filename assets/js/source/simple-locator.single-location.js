@@ -8,21 +8,39 @@ SimpleLocator.SingleLocation = function()
 	var self = this;
 	var $ = jQuery;
 
+	self.selectors = {
+		mapContainer : 'data-simple-locator-single-map',
+		latitude : 'data-latitude',
+		longitude : 'data-longitude',
+		title : 'data-title'
+	}
+
 	self.bindEvents = function()
 	{
-		if ( typeof wpsl_locator_single === 'undefined' || wpsl_locator_single == '' ) return;
 		$(document).ready(function(){
-			self.loadMap();
+			self.loadAllMaps();
+		});
+	}
+
+	self.loadAllMaps = function()
+	{
+		var maps = $('[' + self.selectors.mapContainer + ']');
+		$.each(maps, function(){
+			self.loadMap($(this));
 		});
 	}
 
 	/**
 	* Load the map
 	*/
-	self.loadMap = function()
+	self.loadMap = function(container)
 	{
+		var latitude = parseFloat($(container).attr(self.selectors.latitude));
+		var longitude = parseFloat($(container).attr(self.selectors.longitude));
+		var title = $(container).attr(self.selectors.title);
+
 		var mappin = ( wpsl_locator.mappin ) ? wpsl_locator.mappin : '';
-		var position = new google.maps.LatLng( parseFloat(wpsl_locator_single.latitude), parseFloat(wpsl_locator_single.longitude) );
+		var position = new google.maps.LatLng( latitude, longitude );
 		var options = {
 			zoom: 12,
 			styles: wpsl_locator.mapstyles
@@ -32,12 +50,12 @@ SimpleLocator.SingleLocation = function()
 		if ( wpsl_locator.custom_map_options === '1' ) options = wpsl_locator.map_options;
 		options.center = position;
 
-		var map = new google.maps.Map( document.getElementById('locationmap') , options );
+		var map = new google.maps.Map(container[0], options);
 		var marker = new google.maps.Marker({
 			position: position,
 			map: map,
 			icon: mappin,
-			title: wpsl_locator_single.title
+			title: title
 		});
 	}
 

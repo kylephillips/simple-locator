@@ -21,7 +21,9 @@ $output .= '>
 	<div class="wpsl-error alert alert-error" style="display:none;"></div>
 	<div class="address-input form-field">
 		<label for="zip">' . $this->options['addresslabel'] . '</label>
-		<input type="text" name="address" class="address wpsl-search-form" placeholder="' . $this->options['placeholder'] . '" />
+		<input type="text" name="address" class="address wpsl-search-form" placeholder="' . $this->options['placeholder'] . '"';
+		if ( $this->settings_repo->autocomplete() ) $output .= ' data-simple-locator-autocomplete';
+		$output .= ' />
 	</div>
 	<div class="distance form-field">
 		<label for="distance">' . __('Distance', 'wpsimplelocator'). '</label>

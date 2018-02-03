@@ -39,6 +39,7 @@ SimpleLocator.Factory = function()
 
 	self.init = function()
 	{
+		new SimpleLocator.PlacesAutocomplete;
 		new SimpleLocator.SingleLocation;
 		new SimpleLocator.AllLocations;
 		self.bindEvents();

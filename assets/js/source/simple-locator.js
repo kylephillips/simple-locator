@@ -59,26 +59,8 @@ var geolocation = false;
 jQuery(function($){
 
 $(document).ready(function(){
-	enable_autocomplete();
 	queue_default_map();
 });
-
-
-/**
-* Enable Places Autocomplete on the search form
-*/
-function enable_autocomplete()
-{
-	if ( wpsl_locator.autocomplete !== '1' ) return;
-	var inputs = $('.wpsl-search-form');
-	$.each(inputs, function(i, v){
-		var autocomplete = new google.maps.places.Autocomplete(this);
-		var submitBtn = $(this).parents('form').find('.wpslsubmit');
-		google.maps.event.addListener(autocomplete, 'place_changed', function(){
-			$(submitBtn).click();
-		});
-	});
-}
 
 /**
 * Queue the default map

@@ -77,7 +77,6 @@ class PublicDependencies extends DependencyBase
 			'default_longitude'		=> $this->settings_repo->defaultMap('longitude'),
 			'default_zoom' 			=> intval($this->settings_repo->defaultMap('zoom')),
 			'default_user_center'	=> $this->settings_repo->defaultMap('user_location'),
-			'autocomplete'			=> $this->settings_repo->autocomplete(),
 			'custom_map_options'	=> $this->settings_repo->customMapOptions(),
 			'postfields'			=> apply_filters('simple_locator_post_fields', false),
 			'l10n_print_after' 		=> 'wpsl_locator.map_options = ' . $this->settings_repo->mapOptions(),

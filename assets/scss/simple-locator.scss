@@ -96,7 +96,7 @@
 }
 
 // Map
-.wpsl-map, #locationmap {
+.wpsl-map {
 	clear: both;
 	width: 100%;
 	height: 250px;
@@ -109,12 +109,10 @@
 		width: auto;
 		max-width: none !important;
 	}
+	&.loading {
+		display: none;
+	}
 }
-
-#locationmap {
-	display: block;
-}
-
 
 // Results
 .wpsl-results {

@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\API;
 
 use SimpleLocator\Repositories\PostRepository;

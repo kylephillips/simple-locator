@@ -3,7 +3,7 @@ $out = "";
 
 // Output the map
 if ( ($this->location_data['latitude'] !== "") && ($this->location_data['longitude'] !== "") ) :
-	$out = '<div class="wpsl-map" data-simple-locator-single-map data-latitude="' . $this->location_data['latitude'] . '" data-longitude="' . $this->location_data['longitude'] . '" data-title="' . $this->location_data['title'] . '"></div>';
+	$out = '<div class="wpsl-map loading" data-simple-locator-single-map data-latitude="' . $this->location_data['latitude'] . '" data-longitude="' . $this->location_data['longitude'] . '" data-title="' . $this->location_data['title'] . '"></div>';
 endif;
 
 // It's the built in location post type, safe to use fields

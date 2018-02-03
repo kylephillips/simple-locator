@@ -57,6 +57,7 @@ SimpleLocator.SingleLocation = function()
 			icon: mappin,
 			title: title
 		});
+		$(container).removeClass('loading');
 	}
 
 	return self.bindEvents();

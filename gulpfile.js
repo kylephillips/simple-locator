@@ -15,7 +15,9 @@ var js_source = [
 	'assets/js/source/simple-locator.js',
 	//'assets/js/source/simple-locator-non-ajax-results.js',
 	'assets/js/source/simple-locator.single-location.js', // Start v2
+	'assets/js/source/simple-locator.user-location.js',
 	'assets/js/source/simple-locator.places-autocomplete.js',
+	'assets/js/source/simple-locator.default-map.js',
 	'assets/js/source/simple-locator.all-locations.js',
 	'assets/js/source/simple-locator.factory.js'
 ];

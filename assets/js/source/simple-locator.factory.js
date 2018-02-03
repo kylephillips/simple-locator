@@ -17,6 +17,7 @@ SimpleLocator.selectors = {
 
 // JS Data
 SimpleLocator.jsData = {
+	secure : false,
 	// ajaxurl : ajaxurl,
 	// nonce : wpsl_locator.np_nonce,
 }
@@ -39,7 +40,10 @@ SimpleLocator.Factory = function()
 
 	self.init = function()
 	{
+		SimpleLocator.jsData.secure = ( location.protocol === 'https:' ) ? true : false;
+
 		new SimpleLocator.PlacesAutocomplete;
+		new SimpleLocator.DefaultMap;
 		new SimpleLocator.SingleLocation;
 		new SimpleLocator.AllLocations;
 		self.bindEvents();

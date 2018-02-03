@@ -28,6 +28,7 @@ class Bootstrap
 		new \SimpleLocator\WPData\MetaFields;
 		new \SimpleLocator\WPData\UploadFilter;
 		new \SimpleLocator\Settings\Settings;
+		new \SimpleLocator\API\RegisterEndpoints;
 		new \SimpleLocator\API\FormShortcode;
 		new \SimpleLocator\API\SingleLocationShortcode;
 		new \SimpleLocator\API\AllLocationsShortcode;

@@ -41,7 +41,6 @@ class AJAXLocationSearch extends AJAXListenerBase
 		$this->search_validator = new LocationSearchValidator;
 		$this->response_factory = new JsonResponseFactory;
 		$this->search_store = new StoreSearch;
-		parent::__construct();
 		$this->validate();
 		$this->performSearch();
 	}

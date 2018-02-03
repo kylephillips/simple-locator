@@ -53,9 +53,10 @@ $output .= '>
 	<div class="geo_button_cont"></div>
 	</form>';
 if ( $this->options['mapcontainer'] === '.wpsl-map' ){
-	$output .= ( isset($mapheight) && $mapheight !== "" ) 
-		? '<div class="wpsl-map loading" style="height:' . $mapheight . 'px;"></div>' 
-		: '<div class="wpsl-map loading"></div>';
+	$output .= '<div class="wpsl-map loading"';
+	if ( isset($mapheight) && $mapheight !== "" )  $output .= 'style="height:' . $mapheight . 'px;"';
+	if ( $this->settings_repo->showDefaultMap() ) $output .= ' data-simple-locator-default-enabled';
+	$output .= '></div><!-- .wpsl-map -->';
 }
 
 $output .= '

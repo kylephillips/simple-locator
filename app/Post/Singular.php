@@ -111,7 +111,7 @@ class Singular
 	}
 
 	/**
-	* Enqueue the single view script & add localized data
+	* Enqueue the simple locator scripts & add localized data to them
 	*/
 	private function enqueueScript()
 	{

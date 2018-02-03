@@ -26,6 +26,9 @@ SimpleLocator.formActions = {
 	
 }
 
+// Map Objects
+SimpleLocator.maps = {}
+
 /**
 * Primary Simple Locator Class
 */

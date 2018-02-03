@@ -13,7 +13,6 @@ var css = 'assets/css/';
 
 var js_source = [
 	'assets/js/source/simple-locator.js',
-	//'assets/js/source/simple-locator-all-locations.js',
 	//'assets/js/source/simple-locator-non-ajax-results.js',
 	'assets/js/source/simple-locator.single-location.js', // Start v2
 	'assets/js/source/simple-locator.all-locations.js',

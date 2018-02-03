@@ -6,7 +6,7 @@ if ( ($this->location_data['latitude'] !== "") && ($this->location_data['longitu
 }
 
 // It's the built in location post type, safe to use fields
-if ( ($this->settings_repo->getLocationPostType() == 'location') && ($this->location_data['additionalfields'] == 'show') ) :
+if ( ($this->settings_repo->getLocationPostType() == 'location') && (isset($this->location_data['additionalfields'])) && ($this->location_data['additionalfields'] == 'show') ) :
 
 	$out .= '<div class="wpsl-location-info">';
 

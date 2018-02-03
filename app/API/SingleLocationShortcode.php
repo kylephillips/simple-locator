@@ -66,14 +66,10 @@ class SingleLocationShortcode
 	private function enqueueScripts()
 	{
 		if ( (isset($this->location_data['latitude'])) && (isset($this->location_data['longitude'])) ){
-			wp_enqueue_script(
-				'simple-locator-single', 
-				\SimpleLocator\Helpers::plugin_url(). '/assets/js/simple-locator-single.js', 
-				array('jquery', 'simple-locator'), 
-				'1.0'
-			);
+			wp_enqueue_script('google-maps');
+			wp_enqueue_script('simple-locator');
 			wp_localize_script( 
-				'simple-locator-single', 
+				'simple-locator', 
 				'wpsl_locator_single', 
 				$this->location_data
 			);

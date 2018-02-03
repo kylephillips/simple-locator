@@ -1,5 +1,6 @@
 /**
 * Display a single location map
+* @package simple-locator
 */
 var SimpleLocator = SimpleLocator || {};
 SimpleLocator.SingleLocation = function()
@@ -10,12 +11,14 @@ SimpleLocator.SingleLocation = function()
 	self.bindEvents = function()
 	{
 		if ( typeof wpsl_locator_single === 'undefined' || wpsl_locator_single == '' ) return;
-		
 		$(document).ready(function(){
 			self.loadMap();
 		});
 	}
 
+	/**
+	* Load the map
+	*/
 	self.loadMap = function()
 	{
 		var mappin = ( wpsl_locator.mappin ) ? wpsl_locator.mappin : '';

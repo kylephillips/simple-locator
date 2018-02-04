@@ -20,6 +20,7 @@ SimpleLocator.ResultsList = function()
 			self.activeForm = $(form);
 			self.activeFormContainer = $(form).parents('[' + SimpleLocator.selectors.formContainer + ']');
 			self.data = data;
+			self.setListContainer();
 			self.setMapIndex();
 			self.loadList();
 		});
@@ -30,9 +31,21 @@ SimpleLocator.ResultsList = function()
 	*/
 	self.setMapIndex = function()
 	{
-		var lists = $('[' + SimpleLocator.selectors.results + ']');
-		self.activeList = $(self.activeFormContainer).find('[' + SimpleLocator.selectors.results + ']');
-		self.listIndex = $(self.activeList).index(lists);
+		var forms = $('[' + SimpleLocator.selectors.form + ']');
+		self.listIndex = $(self.activeForm).index(forms);
+	}
+
+	/**
+	* Set the list container
+	*/
+	self.setListContainer = function()
+	{
+		var container = $(self.activeForm).attr('data-simple-locator-results-container');
+		if ( typeof container === 'undefined' || container === ''){
+			self.activeList = $(self.activeFormContainer).find('[' + SimpleLocator.selectors.results + ']');
+			return;
+		}
+		self.activeList = $(container);
 	}
 
 	/**
@@ -80,6 +93,7 @@ SimpleLocator.ResultsList = function()
 			return;
 		}
 		$(self.activeList).removeClass('loading');
+		$(self.activeList).show();
 	}
 
 	return self.bindEvents();

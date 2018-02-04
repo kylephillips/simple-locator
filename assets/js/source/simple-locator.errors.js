@@ -14,7 +14,7 @@ SimpleLocator.Errors = function()
 
 	self.bindEvents = function()
 	{
-		$(document).on('simple-locator-error', function(e, error, form, message){
+		$(document).on('simple-locator-error', function(e, form, message){
 			self.form = form;
 			self.formContainer = $(form).parents('[' + SimpleLocator.selectors.formContainer + ']');
 			self.toggleError(message);

@@ -23,7 +23,7 @@ SimpleLocator.Geocoder = function()
 			'address' : searchTerm
 		}, function(results, status){
 			if ( status == google.maps.GeocoderStatus.OK ){
-				googlemaps_response = results;
+				googlemaps_response = results; // deprecated
 				searchResults['latitude'] = results[0].geometry.location.lat();
 				searchResults['longitude'] = results[0].geometry.location.lng();
 				searchResults['formatted_address'] = results[0].formatted_address;
@@ -33,7 +33,7 @@ SimpleLocator.Geocoder = function()
 				}
 				$(document).trigger('simple-locator-address-geocoded', [searchResults, form]);
 			} else {
-				$(document).trigger('simple-locator-error', ['geocode-error', form, wpsl_locator.notfounderror]);
+				$(document).trigger('simple-locator-error', [form, wpsl_locator.notfounderror]);
 			}
 		});
 	}

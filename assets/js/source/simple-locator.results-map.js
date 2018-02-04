@@ -11,6 +11,7 @@ SimpleLocator.ResultsMap = function()
 	self.activeForm;
 	self.activeFormContainer;
 	self.activeMap;
+	self.mapContainer;
 	self.data;
 	self.mapIndex;
 
@@ -20,6 +21,7 @@ SimpleLocator.ResultsMap = function()
 			self.activeForm = $(form);
 			self.activeFormContainer = $(form).parents('[' + SimpleLocator.selectors.formContainer + ']');
 			self.data = data;
+			self.setMapContainer();
 			self.setMapIndex();
 			self.loadMap();
 		});
@@ -30,9 +32,21 @@ SimpleLocator.ResultsMap = function()
 	*/
 	self.setMapIndex = function()
 	{
-		var maps = $('[' + SimpleLocator.selectors.map + ']');
-		self.activeMap = $(self.activeFormContainer).find('[' + SimpleLocator.selectors.map + ']');
-		self.mapIndex = $(self.activeMap).index(maps);
+		var forms = $('[' + SimpleLocator.selectors.form + ']');
+		self.mapIndex = $(self.activeForm).index(forms);
+	}
+
+	/**
+	* Set the map container
+	*/
+	self.setMapContainer = function()
+	{
+		var container = $(self.activeForm).attr('data-simple-locator-map-container');
+		if ( typeof container === 'undefined' || container === ''){
+			self.activeMap = $(self.activeFormContainer).find('[' + SimpleLocator.selectors.map + ']');
+			return;
+		}
+		self.activeMap = $(container);
 	}
 
 	self.loadMap = function()

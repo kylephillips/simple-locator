@@ -21,6 +21,7 @@ SimpleLocator.Form = function()
 			e.preventDefault();
 			self.activeForm = $(this).parents('[' + SimpleLocator.selectors.form + ']');
 			self.activeFormContainer = $(this).parents('[' + SimpleLocator.selectors.formContainer + ']');
+			active_form = self.activeForm; // Deprecated
 			wpsl_before_submit(self.activeForm); // Deprecated
 			$(document).trigger('simple-locator-before-submit', [self.activeForm]);
 			self.processForm();
@@ -156,13 +157,13 @@ SimpleLocator.Form = function()
 					console.log(data);
 				}
 				if (data.status === 'error'){
-					$(document).trigger('simple-locator-error', ['form-error', self.activeForm, data.message]);
+					$(document).trigger('simple-locator-error', [self.activeForm, data.message]);
 					return;
 				}
 				if ( data.result_count === 0 ){
 					var message = wpsl_locator.nolocationserror + ' ' + data.formatted_address;
 					$(document).trigger('simple-locator-error', ['form-error', self.activeForm, message]);
-					wpsl_no_results(self.formData, self.activeForm); // Deprecated
+					wpsl_no_results(self.formData.formatted_address, self.activeForm); // Deprecated
 					return;
 				}
 				$(document).trigger('simple-locator-form-success', [data, self.activeForm]);

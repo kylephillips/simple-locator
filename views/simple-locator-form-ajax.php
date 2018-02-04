@@ -16,6 +16,8 @@ $output .= '
 <form data-simple-locator-form';
 if ( isset($this->options['allowemptyaddress']) && $this->options['allowemptyaddress'] == 'true' ) $output .= 'class="allow-empty" data-simple-locator-form-allow-empty';
 if ( $this->options['mapcontrols'] != 'show' ) $output .= ' data-simple-locator-hide-map-controls="true"';
+if ( $this->options['mapcontainer'] != '') $output .= ' data-simple-locator-map-container="' . $this->options['mapcontainer'] . '"';
+if ( $this->options['resultscontainer'] != '') $output .= ' data-simple-locator-results-container="' . $this->options['resultscontainer'] . '"';
 $output .= ' data-simple-locator-map-control-position="' . $this->options['mapcontrolsposition'] . '"';
 $output .= '>
 	<div class="wpsl-error alert alert-error" style="display:none;" data-simple-locator-form-error></div>

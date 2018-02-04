@@ -5,6 +5,11 @@
 * Deprecated as of version 2 in place of events.
 */
 
+// Deprecated global vars replaced with scoped variables
+var active_form = '';
+var formatted_address = '';
+var googlemaps_response = '';
+
 // Replaced with data-simple-locator-open-infowindow attribute on link
 function openInfoWindow(id){
 	google.maps.event.trigger(SimpleLocator.markers[0][id], 'click');
@@ -53,3 +58,7 @@ function wpsl_all_locations_rendered(map){}
 // Runs after clicking on a marker in all locations map
 // Replaced with event: simple-locator-all-locations-marker-clicked[marker, infoWindow]
 function wpsl_all_locations_marker_clicked(marker, infoWindow){}
+
+function wpsl_googlemaps_response(){
+	return googlemaps_response;
+}

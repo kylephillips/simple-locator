@@ -297,8 +297,7 @@ jQuery(function($){
 			type: 'POST',
 			url: ajaxurl,
 			data: {
-				action: 'wpslresetposttype',
-				nonce: wpsl_locator.locatorNonce
+				action: 'wpslresetposttype'
 			},
 			success: function(data){
 				location.reload();

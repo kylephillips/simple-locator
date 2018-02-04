@@ -12,7 +12,6 @@ var scss = 'assets/scss/**/*';
 var css = 'assets/css/';
 
 var js_source = [
-	// 'assets/js/source/simple-locator.js',
 	//'assets/js/source/simple-locator-non-ajax-results.js',
 	'assets/js/source/simple-locator.functions-deprecated.js',
 	'assets/js/source/simple-locator.single-location.js',

@@ -99,7 +99,8 @@ SimpleLocator.ResultsMap = function()
 					infoWindow.open(SimpleLocator.maps[self.mapIndex], marker);
 
 					// Simple Locator Callback function for click event
-					wpsl_click_marker(marker, i, self.activeForm, locations[i].id);
+					$(document).trigger('simple-locator-marker-clicked', [marker, i, self.activeForm, locations[i].id]);
+					wpsl_click_marker(marker, i, self.activeForm, locations[i].id); // Deprecated
 				}
 			})(marker, i));
 
@@ -117,6 +118,7 @@ SimpleLocator.ResultsMap = function()
 		}
 
 		self.toggleLoading(false);
+		$(document).trigger('simple-locator-map-rendered', [self.mapIndex, self.activeForm]);
 	}
 
 	/**

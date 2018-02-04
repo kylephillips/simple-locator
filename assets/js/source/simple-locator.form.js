@@ -21,11 +21,15 @@ SimpleLocator.Form = function()
 			e.preventDefault();
 			self.activeForm = $(this).parents('[' + SimpleLocator.selectors.form + ']');
 			self.activeFormContainer = $(this).parents('[' + SimpleLocator.selectors.formContainer + ']');
+			wpsl_before_submit(self.activeForm); // Deprecated
+			$(document).trigger('simple-locator-before-submit', [self.activeForm]);
 			self.processForm();
 		});
 		$(document).on('simple-locator-geolocation-success', function(e, form){
 			self.activeForm = $(form);
 			self.activeFormContainer = $(form).parents('[' + SimpleLocator.selectors.formContainer + ']');
+			wpsl_before_submit(self.activeForm); // Deprecated
+			$(document).trigger('simple-locator-before-submit', [self.activeForm]);
 			self.setResultsContainers();
 			self.setFormData();
 			self.submitForm();
@@ -81,8 +85,7 @@ SimpleLocator.Form = function()
 		distance = ( typeof distance === 'undefined' ) ? false : $(distance).val();
 
 		var geolocation = $(self.activeForm).find('[' + SimpleLocator.selectors.inputGeocode + ']').val();
-		geolocation = ( geolocation === '' || geolocation === 'false' ) ? false : true;
-		console.log(geolocation);
+		geolocation = ( geolocation === '' || geolocation === 'false' ) ? false : true;	
 
 		self.formData = {
 			address : address,
@@ -159,9 +162,11 @@ SimpleLocator.Form = function()
 				if ( data.result_count === 0 ){
 					var message = wpsl_locator.nolocationserror + ' ' + data.formatted_address;
 					$(document).trigger('simple-locator-error', ['form-error', self.activeForm, message]);
+					wpsl_no_results(self.formData, self.activeForm); // Deprecated
 					return;
 				}
 				$(document).trigger('simple-locator-form-success', [data, self.activeForm]);
+				wpsl_success(data.result_count, data.results, self.activeForm); // Deprecated
 			},
 			error: function(data){
 				if ( wpsl_locator.jsdebug === '1' ){

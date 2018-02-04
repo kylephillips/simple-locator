@@ -9,6 +9,7 @@
 * simple-locator-form-success[results, form]
 * simple-locator-infowindow-opened[mapIndex, markerIndex]
 * simple-locator-geolocation-success[form]
+* simple-locator-marker-clicked[marker, markerIndex, form, locationId]
 */
 
 jQuery(document).ready(function(){

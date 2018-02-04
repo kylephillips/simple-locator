@@ -79,7 +79,8 @@ SimpleLocator.AllLocations = function()
 					return function() {
 						infoWindow.setContent(locations[i].infowindow);
 						infoWindow.open(map, marker);
-						wpsl_all_locations_marker_clicked(marker, infoWindow)
+						$(document).trigger('simple-locator-all-locations-marker-clicked', [marker, infoWindow]);
+						wpsl_all_locations_marker_clicked(marker, infoWindow); // Deprecated
 					}
 				})(marker, i));
 				
@@ -93,12 +94,8 @@ SimpleLocator.AllLocations = function()
 				});
 			}
 
-			// Fit the map bounds to all the pins
-			var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
-				google.maps.event.removeListener(boundsListener);
-			});
-
-			wpsl_all_locations_rendered(map);
+			$(document).trigger('simple-locator-all-locations-rendered', [map]);
+			wpsl_all_locations_rendered(map); // Deprecated
 		});
 	}
 

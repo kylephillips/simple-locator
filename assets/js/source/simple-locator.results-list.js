@@ -66,8 +66,8 @@ SimpleLocator.ResultsList = function()
 		self.toggleLoading(false);
 		$(self.activeList).removeClass('loading').html(output);
 
-		// Simple Locator Callback function after results have rendered
-		wpsl_after_render(self.activeList);
+		$(document).trigger('simple-locator-results-rendered', [self.listIndex, self.activeForm]);
+		wpsl_after_render(self.activeList); // Deprecated
 	}
 
 	/**

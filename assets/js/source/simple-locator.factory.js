@@ -4,12 +4,14 @@
 * @author Kyle Phillips - https://github.com/kylephillips
 *
 * Document Events:
-* simple-locator-error[error-type, form]
+* simple-locator-error[form, message]
 * simple-locator-address-geocoded[results, form]
 * simple-locator-form-success[results, form]
 * simple-locator-infowindow-opened[mapIndex, markerIndex]
+* simple-locator-geolocation-available-set[available]
 * simple-locator-geolocation-success[form]
 * simple-locator-marker-clicked[marker, markerIndex, form, locationId]
+* simple-locator-results-rendered[listIndex, form]
 */
 
 jQuery(document).ready(function(){

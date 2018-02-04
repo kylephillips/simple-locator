@@ -45,10 +45,14 @@ SimpleLocator.Geolocation = function()
 	*/
 	self.setGeolocationAvailable = function()
 	{
-		if ( !navigator.geolocation ) return available;
+		$('[' + SimpleLocator.selectors.formContainer + ']').removeClass('no-geolocation');
+		if ( !navigator.geolocation ) return false;
 		navigator.permissions.query({name:'geolocation'}).then(function(permissionStatus){  
-    		if ( permissionStatus.state == 'denied' ) self.geolocationAvailable = false;
-    		$(document).trigger('simple-locator-geolocation-available-set');
+    		if ( permissionStatus.state == 'denied' ) {
+    			self.geolocationAvailable = false;
+    			$('[' + SimpleLocator.selectors.formContainer + ']').addClass('no-geolocation');
+    		}
+    		$(document).trigger('simple-locator-geolocation-available-set', [self.geolocationAvailable]);
     	});
 	}
 

@@ -39,18 +39,13 @@ SimpleLocator.ResultsMap = function()
 	{
 		SimpleLocator.markers[self.mapIndex] = [];
 		
-		if ( typeof wpsl_locator_options != 'undefined' ){
-			var disablecontrols = ( wpsl_locator_options.mapcontrols === 'show') ? false : true;
-		} else {
-			var disablecontrols = false;
-		}
+		// Map Controls
+		var disablecontrols = $(self.activeForm).attr('data-simple-locator-hide-map-controls');
+		disablecontrols = ( typeof disablecontrols === 'undefined' || disablecontrols === '' ) ? false : true;
 
 		// Control Position
-		if ( typeof wpsl_locator_options != 'undefined' ){
-			var controlposition = google.maps.ControlPosition[wpsl_locator_options.mapcontrolsposition];
-		} else {
-			var controlposition = "TOP_LEFT";
-		}
+		var controlposition = $(self.activeForm).attr('data-simple-locator-map-control-position');
+		controlposition = ( typeof controlposition === 'undefined' || controlposition === '' ) ? 'TOP_LEFT' : controlposition;
 		
 		var mappin = ( wpsl_locator.mappin ) ? wpsl_locator.mappin : '';
 		var bounds = new google.maps.LatLngBounds();
@@ -62,8 +57,7 @@ SimpleLocator.ResultsMap = function()
 			panControl : false,
 			disableDefaultUI: disablecontrols,
 			zoomControlOptions : {
-				style: google.maps.ZoomControlStyle.SMALL,
-				position : controlposition
+				position : google.maps.ControlPosition[controlposition]
 			}
 		}
 

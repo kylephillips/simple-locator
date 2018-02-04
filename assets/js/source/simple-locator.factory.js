@@ -8,6 +8,7 @@
 * simple-locator-address-geocoded[results, form]
 * simple-locator-form-success[results, form]
 * simple-locator-infowindow-opened[mapIndex, markerIndex]
+* simple-locator-geolocation-success[form]
 */
 
 jQuery(document).ready(function(){
@@ -31,12 +32,8 @@ SimpleLocator.selectors = {
 	inputFormattedLocation : 'data-simple-locator-input-formatted-location',
 	inputGeocode : 'data-simple-locator-input-geocode',
 	submitButton : 'data-simple-locator-submit',
-	infoWindowLink : 'data-simple-locator-open-infowindow'
-}
-
-// JS Data
-SimpleLocator.jsData = {
-	secure : false,
+	infoWindowLink : 'data-simple-locator-open-infowindow',
+	geoButton : 'data-simple-locator-geolocation-button'
 }
 
 // API Endpoints
@@ -61,8 +58,8 @@ SimpleLocator.Factory = function()
 
 	self.init = function()
 	{
-		SimpleLocator.jsData.secure = ( location.protocol === 'https:' ) ? true : false;
 		new SimpleLocator.Geocoder;
+		new SimpleLocator.Geolocation;
 		new SimpleLocator.PlacesAutocomplete;
 		new SimpleLocator.DefaultMap;
 		new SimpleLocator.SingleLocation;

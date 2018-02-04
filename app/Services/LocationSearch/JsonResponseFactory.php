@@ -31,6 +31,7 @@ class JsonResponseFactory
 			'latitude' => sanitize_text_field($this->request['latitude']),
 			'longitude' => sanitize_text_field($this->request['longitude']),
 			'unit' => sanitize_text_field($this->request['unit']),
+			'geolocation' => sanitize_text_field($this->request['geolocation']),
 			'taxonomies' => $taxonomies,
 			'allow_empty_address' => $this->request['allow_empty_address']
 		);
@@ -53,6 +54,7 @@ class JsonResponseFactory
 			'formatted_address' => $this->data['formatted_address'],
 			'results' => $results,
 			'result_count' => $results_count,
+			'geolocation' => $this->data['geolocation'],
 			'taxonomies' => $this->data['taxonomies'],
 			'allow_empty_address' => $this->data['allow_empty_address']
 		);

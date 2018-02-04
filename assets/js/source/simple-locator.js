@@ -284,42 +284,42 @@ function sendFormData(formelements)
 /**
 * Load the results into the view
 */
-function loadLocationResults(data, formelements)
-{
-	if ( data.result_count > 0 ){
+// function loadLocationResults(data, formelements)
+// {
+// 	if ( data.result_count > 0 ){
 
-		var location = ( data.result_count === 1 ) ? wpsl_locator.location : wpsl_locator.locations;
+// 		var location = ( data.result_count === 1 ) ? wpsl_locator.location : wpsl_locator.locations;
 
-		var output = '<h3 class="wpsl-results-header">' + data.result_count + ' ' + location;
-		if ( data.latitude !== "" ) output += ' ' + wpsl_locator.found_within + ' ' + data.distance + ' ' + data.unit + ' ' + wpsl_locator.of + ' ';
-		output += ( data.using_geolocation === "true" ) ? wpsl_locator.yourlocation : data.formatted_address;
-		output += '</h3>';
+// 		var output = '<h3 class="wpsl-results-header">' + data.result_count + ' ' + location;
+// 		if ( data.latitude !== "" ) output += ' ' + wpsl_locator.found_within + ' ' + data.distance + ' ' + data.unit + ' ' + wpsl_locator.of + ' ';
+// 		output += ( data.using_geolocation === "true" ) ? wpsl_locator.yourlocation : data.formatted_address;
+// 		output += '</h3>';
 		
-		if ( wpsl_locator_options.resultswrapper !== "" ) output += '<' + wpsl_locator_options.resultswrapper + '>';
+// 		if ( wpsl_locator_options.resultswrapper !== "" ) output += '<' + wpsl_locator_options.resultswrapper + '>';
 
-		for( i = 0; i < data.results.length; i++ ) {
-			output = output + data.results[i].output;
-		}
+// 		for( i = 0; i < data.results.length; i++ ) {
+// 			output = output + data.results[i].output;
+// 		}
 
-		if ( wpsl_locator_options.resultswrapper !== "" ) output += '</' + wpsl_locator_options.resultswrapper + '>';
+// 		if ( wpsl_locator_options.resultswrapper !== "" ) output += '</' + wpsl_locator_options.resultswrapper + '>';
 
-		$(formelements.results).removeClass('loading').html(output);
+// 		$(formelements.results).removeClass('loading').html(output);
 
-		$(formelements.map).show();
-		$(formelements.zip).val('').blur();
-		showLocationMap(data, formelements);
+// 		$(formelements.map).show();
+// 		$(formelements.zip).val('').blur();
+// 		showLocationMap(data, formelements);
 
-		// Simple Locator Callback function after results have rendered
-		wpsl_after_render(active_form);
+// 		// Simple Locator Callback function after results have rendered
+// 		wpsl_after_render(active_form);
 
-	} else {
-		// No results were returned
-		$(formelements.errordiv).text(wpsl_locator_options.noresultstext).show();
-		$(formelements.results).hide();
-		$(formelements.map).hide();
-		wpsl_no_results(data.formatted_address, active_form);
-	}
-}
+// 	} else {
+// 		// No results were returned
+// 		$(formelements.errordiv).text(wpsl_locator_options.noresultstext).show();
+// 		$(formelements.results).hide();
+// 		$(formelements.map).hide();
+// 		wpsl_no_results(data.formatted_address, active_form);
+// 	}
+// }
 
 
 /**
@@ -436,16 +436,16 @@ function showLocationMap(data, formelements)
 /**
 * Returns user coordinates if available, false if not
 */
-function get_user_coordinates()
-{
-	var coords = {};
-	if (navigator.geolocation){
-		navigator.geolocation.getCurrentPosition(function(position){
-			loadDefault(true, position);
-		});
-	}
-	return false;
-}
+// function get_user_coordinates()
+// {
+// 	var coords = {};
+// 	if (navigator.geolocation){
+// 		navigator.geolocation.getCurrentPosition(function(position){
+// 			loadDefault(true, position);
+// 		});
+// 	}
+// 	return false;
+// }
 
 
 /**
@@ -453,53 +453,53 @@ function get_user_coordinates()
 * Geolocation button
 * ======================================================
 */
-function append_geo_button()
-{
-	if ( wpsl_locator.showgeobutton !== 'true' ) return false;
-	if (navigator.geolocation){
-		var html = '<button class="wpsl-geo-button">' + wpsl_locator.geobuttontext + '</button>';
-		$('.geo_button_cont').html(html);
-	}
+// function append_geo_button()
+// {
+// 	if ( wpsl_locator.showgeobutton !== 'true' ) return false;
+// 	if (navigator.geolocation){
+// 		var html = '<button class="wpsl-geo-button">' + wpsl_locator.geobuttontext + '</button>';
+// 		$('.geo_button_cont').html(html);
+// 	}
 
-}
+// }
 
-function process_geo_button(position, formelements)
-{
-	var longitude = position.coords.longitude;
-	var latitude = position.coords.latitude;
+// function process_geo_button(position, formelements)
+// {
+// 	var longitude = position.coords.longitude;
+// 	var latitude = position.coords.latitude;
 
-	$(formelements.latitude).val(latitude);
-	$(formelements.longitude).val(longitude);
+// 	$(formelements.latitude).val(latitude);
+// 	$(formelements.longitude).val(longitude);
 
-	geolocation = true;
+// 	geolocation = true;
 	
-	sendFormData(formelements);
-}
+// 	sendFormData(formelements);
+// }
 
-$(document).ready(function(){
-	append_geo_button();
-});
+// $(document).ready(function(){
+// 	append_geo_button();
+// });
 
-$(document).on('click', '.wpsl-geo-button', function(e){
-	e.preventDefault();
+// $(document).on('click', '.wpsl-geo-button', function(e){
+// 	e.preventDefault();
 	
-	var form = $(this).parents('.simple-locator-form');
-	active_form = form;
-	var formelements = setFormElements(form);
+// 	var form = $(this).parents('.simple-locator-form');
+// 	active_form = form;
+// 	var formelements = setFormElements(form);
 
-	$(formelements.errordiv).hide();
+// 	$(formelements.errordiv).hide();
 	
-	if ( wpsl_locator.default_enabled ){
-		$(formelements.map).find('.gm-style').remove();
-	} else {
-		$(formelements.map).hide();
-	}
+// 	if ( wpsl_locator.default_enabled ){
+// 		$(formelements.map).find('.gm-style').remove();
+// 	} else {
+// 		$(formelements.map).hide();
+// 	}
 	
-	$(formelements.results).empty().addClass('loading').show();
+// 	$(formelements.results).empty().addClass('loading').show();
 
-	navigator.geolocation.getCurrentPosition(function(position){
-		process_geo_button(position, formelements);
-	});
-});	
+// 	navigator.geolocation.getCurrentPosition(function(position){
+// 		process_geo_button(position, formelements);
+// 	});
+// });	
 
 }); // jQuery

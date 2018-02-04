@@ -21,7 +21,7 @@ var js_source = [
 	'assets/js/source/simple-locator.results-map.js',
 	'assets/js/source/simple-locator.results-list.js',
 	'assets/js/source/simple-locator.infowindow-open.js',
-	'assets/js/source/simple-locator.user-location.js',
+	'assets/js/source/simple-locator.geolocation.js',
 	'assets/js/source/simple-locator.places-autocomplete.js',
 	'assets/js/source/simple-locator.default-map.js',
 	'assets/js/source/simple-locator.all-locations.js',

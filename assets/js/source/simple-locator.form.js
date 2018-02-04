@@ -23,6 +23,13 @@ SimpleLocator.Form = function()
 			self.activeFormContainer = $(this).parents('[' + SimpleLocator.selectors.formContainer + ']');
 			self.processForm();
 		});
+		$(document).on('simple-locator-geolocation-success', function(e, form){
+			self.activeForm = $(form);
+			self.activeFormContainer = $(form).parents('[' + SimpleLocator.selectors.formContainer + ']');
+			self.setResultsContainers();
+			self.setFormData();
+			self.submitForm();
+		});
 		$(document).on('simple-locator-address-geocoded', function(e, results, form){
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLatitude + ']').val(results.latitude);
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLongitude + ']').val(results.longitude);
@@ -35,7 +42,7 @@ SimpleLocator.Form = function()
 	/**
 	* Process the form submission
 	*/
-	self.processForm = function()
+	self.processForm = function(geocode)
 	{
 		self.toggleLoading(true);
 		self.setResultsContainers();
@@ -75,6 +82,7 @@ SimpleLocator.Form = function()
 
 		var geolocation = $(self.activeForm).find('[' + SimpleLocator.selectors.inputGeocode + ']').val();
 		geolocation = ( geolocation === '' || geolocation === 'false' ) ? false : true;
+		console.log(geolocation);
 
 		self.formData = {
 			address : address,
@@ -172,6 +180,7 @@ SimpleLocator.Form = function()
 		if ( loading ){
 			$('[' + SimpleLocator.selectors.inputLatitude + ']').val('');
 			$('[' + SimpleLocator.selectors.inputLongitude + ']').val('');
+			$('[' + SimpleLocator.selectors.inputGeocode + ']').val('');
 			$('[' + SimpleLocator.selectors.inputFormattedLocation + ']').val('');
 			$(self.activeFormContainer).find('[' + SimpleLocator.selectors.formError + ']').hide();
 			$(self.activeFormContainer).find('[' + SimpleLocator.selectors.results + ']').empty().addClass('loading').show();

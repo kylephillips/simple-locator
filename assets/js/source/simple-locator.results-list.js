@@ -52,7 +52,7 @@ SimpleLocator.ResultsList = function()
 
 		var output = '<h3 class="wpsl-results-header">' + self.data.result_count + ' ' + location;
 		if ( self.data.latitude !== "" ) output += ' ' + wpsl_locator.found_within + ' ' + self.data.distance + ' ' + self.data.unit + ' ' + wpsl_locator.of + ' ';
-		output += ( self.data.using_geolocation === "true" ) ? wpsl_locator.yourlocation : self.data.formatted_address;
+		output += ( self.data.geolocation === "true" ) ? wpsl_locator.yourlocation : self.data.formatted_address;
 		output += '</h3>';
 		
 		if ( wpsl_locator_options.resultswrapper !== "" ) output += '<' + wpsl_locator_options.resultswrapper + '>';

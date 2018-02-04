@@ -251,6 +251,7 @@ function sendFormData(formelements)
 		datatype: 'jsonp',
 		data: formdata,
 		success: function(data){
+			console.log(data);
 			if ( wpsl_locator.jsdebug === '1' ){
 				console.log('Form Response');
 				console.log(data);

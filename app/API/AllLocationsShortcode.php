@@ -1,10 +1,6 @@
 <?php
 namespace SimpleLocator\API;
 
-use \SimpleLocator\Repositories\MapStyles;
-use \SimpleLocator\Repositories\SettingsRepository;
-use \SimpleLocator\Repositories\PostRepository;
-
 class AllLocationsShortcode
 {
 	/**
@@ -13,27 +9,9 @@ class AllLocationsShortcode
 	*/
 	public $options;
 
-	/**
-	* All Locations
-	*/
-	private $locations;
-
-	/**
-	* Post Repository
-	*/
-	private $post_repo;
-
-	/**
-	* Settings Repository
-	*/
-	private $settings_repo;
-
-
 	public function __construct()
 	{
-		$this->post_repo = new PostRepository;
-		$this->settings_repo = new SettingsRepository;
-		add_shortcode('simple_locator_all_locations', array($this, 'renderView'));
+		add_shortcode('simple_locator_all_locations', [$this, 'renderView']);
 	}
 
 	/**
@@ -41,30 +19,9 @@ class AllLocationsShortcode
 	*/
 	private function setOptions($options)
 	{
-		$this->options = shortcode_atts(array(
+		$this->options = shortcode_atts([
 			'limit' => '-1',
-		), $options);
-	}
-
-	/**
-	* Get all locations
-	*/
-	private function getAllLocations()
-	{
-		$this->locations = $this->post_repo->allLocations($this->options['limit']);
-		$this->formatInfoWindows();
-	}
-
-	/**
-	* Apply Infowindow Formatting to locations
-	*/
-	private function formatInfoWindows()
-	{
-		foreach ($this->locations as $key => $location) :
-			$infowindow = '<div data-result="' . $key . '"><h4>'. $location->title . '</h4><p><a href="' . $location->permalink . '" data-location-id="'. $location->id .'">' . __('View Location', 'wpsimplelocator') . '</a></p></div>';
-			$infowindow = apply_filters('simple_locator_infowindow', $infowindow, $location, $key);
-			$this->locations[$key]->infowindow = $infowindow;
-		endforeach;
+		], $options);
 	}
 
 	/**
@@ -74,13 +31,6 @@ class AllLocationsShortcode
 	{
 		wp_enqueue_script('google-maps');
 		wp_enqueue_script('simple-locator');
-		wp_localize_script(
-			'simple-locator',
-			'wpsl_locator_all',
-			array(
-				'locations' => $this->locations
-			)
-		);
 	}
 
 	/**
@@ -89,8 +39,7 @@ class AllLocationsShortcode
 	public function renderView($options)
 	{
 		$this->setOptions($options);
-		$this->getAllLocations();
 		$this->enqueueScripts();
-		return '<div id="alllocationsmap" class="wpsl-map" style="display:block;"></div>';
+		return '<div data-simple-locator-all-locations-map class="wpsl-map loading" style="display:block;"></div>';
 	}
 }

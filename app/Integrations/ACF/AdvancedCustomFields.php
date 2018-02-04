@@ -15,7 +15,7 @@ class AdvancedCustomFields
 	{
 		if ( !function_exists('acf_field_type_exists') ) return;
 		$this->settings_repo = new SettingsRepository;
-		add_action( 'acf/save_post', array($this, 'saveMapFieldCoordinates'), 10 );
+		add_action( 'acf/save_post', [$this, 'saveMapFieldCoordinates'], 10 );
 	}
 
 	/**

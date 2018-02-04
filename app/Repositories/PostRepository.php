@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Repositories;
 
 use SimpleLocator\Repositories\SettingsRepository;
@@ -83,5 +82,4 @@ class PostRepository
 		if ( !$post ) return false;
 		return true;
 	}
-
 }

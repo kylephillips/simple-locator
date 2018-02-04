@@ -1,5 +1,4 @@
 <?php
-
 namespace SimpleLocator\Integrations\ACF;
 
 use SimpleLocator\Repositories\SettingsRepository;

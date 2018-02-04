@@ -1,5 +1,4 @@
 <?php
-
 namespace SimpleLocator\Integrations;
 
 use SimpleLocator\Integrations\ACF\AdvancedCustomFields;

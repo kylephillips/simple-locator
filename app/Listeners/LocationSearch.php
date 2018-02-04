@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Listeners;
 
 use SimpleLocator\Services\LocationSearch\LocationSearch as Search;

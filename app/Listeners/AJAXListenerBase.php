@@ -31,5 +31,4 @@ abstract class AJAXListenerBase
 	{
 		$this->respond(array('status' => 'error', 'message' => $message));
 	}
-
 }

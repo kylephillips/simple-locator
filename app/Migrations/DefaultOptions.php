@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Migrations;
 
 /**
@@ -7,7 +6,6 @@ namespace SimpleLocator\Migrations;
 */
 class DefaultOptions 
 {
-
 	public function __construct()
 	{
 		$this->setOptions();
@@ -89,5 +87,4 @@ class DefaultOptions
 			));
 		}
 	}
-
 }

@@ -24,7 +24,7 @@ class SearchHistoryRepository
 	*/
 	public function setSearch($request_type = 'GET', $paginated = true)
 	{
-		$request = array();
+		$request = [];
 		$offset = null;
 		$per_page = ( isset($_GET['per_page']) ) ? intval($_GET['per_page']) : 20;
 

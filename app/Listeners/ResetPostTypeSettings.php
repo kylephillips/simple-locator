@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Listeners;
 
 /**
@@ -7,7 +6,6 @@ namespace SimpleLocator\Listeners;
 */
 class ResetPostTypeSettings extends AJAXAdminListenerBase 
 {
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -27,5 +25,4 @@ class ResetPostTypeSettings extends AJAXAdminListenerBase
 		flush_rewrite_rules(false);
 		$this->success(__('Post Type successfully reset', 'wpsimplelocator'));
 	}
-
 }

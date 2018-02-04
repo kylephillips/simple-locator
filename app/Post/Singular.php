@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Post;
 
 use SimpleLocator\Repositories\SettingsRepository;
@@ -9,7 +8,6 @@ use SimpleLocator\Repositories\SettingsRepository;
 */
 class Singular 
 {
-
 	/**
 	* Location Post Type
 	* @var string
@@ -119,5 +117,4 @@ class Singular
 			wp_enqueue_script('simple-locator');
 		}
 	}
-
 }

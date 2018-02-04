@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Migrations;
 
 /**
@@ -7,7 +6,6 @@ namespace SimpleLocator\Migrations;
 */
 class MapStyles 
 {
-
 	/**
 	* The directory where the styles are
 	* @var string
@@ -19,7 +17,6 @@ class MapStyles
 	* @var int
 	*/
 	private $file_id;
-
 
 	public function __construct()
 	{
@@ -85,5 +82,4 @@ class MapStyles
 		wp_reset_postdata();
 		return $exists;
 	}
-
 }

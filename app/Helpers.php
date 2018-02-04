@@ -1,10 +1,8 @@
 <?php 
-
 namespace SimpleLocator;
 
 class Helpers 
 {
-
 	/**
 	* Plugin Root Directory
 	*/
@@ -77,5 +75,4 @@ class Helpers
 		global $wp;
 		return home_url(add_query_arg(array(), $wp->request));
 	}
-
 }

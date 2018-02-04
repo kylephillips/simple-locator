@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\WPData;
 
 /**
@@ -7,7 +6,6 @@ namespace SimpleLocator\WPData;
 */
 class PostTypes 
 {
-
 	/**
 	* Post Type Option
 	* @var array
@@ -17,11 +15,11 @@ class PostTypes
 	function __construct()
 	{
 		$this->setLabels();
-		add_action( 'init', array( $this, 'registerLocation') );
-		add_action( 'init', array( $this, 'registerMaps') );
-		add_action( 'init', array( $this, 'registerImports') );
-		add_filter( 'manage_location_posts_columns', array($this,'locations_table_head'));
-		add_action( 'manage_location_posts_custom_column', array($this, 'locations_table_columns'), 10, 2);
+		add_action( 'init', [$this, 'registerLocation']);
+		add_action( 'init', [$this, 'registerMaps']);
+		add_action( 'init', [$this, 'registerImports']);
+		add_filter( 'manage_location_posts_columns', [$this,'locations_table_head']);
+		add_action( 'manage_location_posts_custom_column', [$this, 'locations_table_columns'], 10, 2);
 	}
 
 	/**
@@ -167,5 +165,4 @@ class PostTypes
 			echo get_post_meta($post_id, 'wpsl_website', true);
 		}
 	}
-
 }

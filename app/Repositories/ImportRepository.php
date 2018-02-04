@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Repositories;
 
 class ImportRepository
@@ -53,5 +52,4 @@ class ImportRepository
 	{
 		return get_post_meta($id, 'wpsl_import_data', true);
 	}
-
 }

@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\WPData;
 
 /**
@@ -7,7 +6,6 @@ namespace SimpleLocator\WPData;
 */
 class MetaFields 
 {
-
 	/**
 	* Meta Data
 	*/
@@ -21,8 +19,8 @@ class MetaFields
 	function __construct()
 	{
 		$this->setFields();
-		add_action( 'add_meta_boxes', array( $this, 'metaBox' ));
-		add_action( 'save_post', array($this, 'savePost' ));
+		add_action( 'add_meta_boxes', [$this, 'metaBox']);
+		add_action( 'save_post', [$this, 'savePost']);
 	}
 
 	/**
@@ -30,7 +28,7 @@ class MetaFields
 	*/
 	private function setFields()
 	{
-		$this->fields = array(
+		$this->fields = [
 			'latitude' => 'wpsl_latitude',
 			'longitude' => 'wpsl_longitude',
 			'address' => 'wpsl_address',
@@ -43,7 +41,7 @@ class MetaFields
 			'website' => 'wpsl_website',
 			'additionalinfo' => 'wpsl_additionalinfo',
 			'mappinrelocated' => 'wpsl_custom_geo'
-		);
+		];
 	}
 
 	/**
@@ -54,7 +52,7 @@ class MetaFields
     	add_meta_box( 
     		'wpsl-meta-box', 
     		__('Location Information', 'wpsimplelocator'), 
-    		array($this, 'displayMeta'), 
+    		[$this, 'displayMeta'], 
     		$this->getPostType(), 
     		'normal', 
     		'high' 
@@ -111,5 +109,4 @@ class MetaFields
 		if ( $hide_meta == 'true' ) return ' ';
 		return ( $posttype !== "" ) ? $posttype : 'location';
 	}
-
 }

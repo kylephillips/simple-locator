@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Repositories;
 
 /**
@@ -7,7 +6,6 @@ namespace SimpleLocator\Repositories;
 */
 class SettingsRepository 
 {
-
 	/**
 	* Get Geo Button Options
 	* @param $return string 
@@ -188,5 +186,4 @@ class SettingsRepository
 		if ( $option && $option == 'true' ) return true;
 		return false;
 	}
-
 }

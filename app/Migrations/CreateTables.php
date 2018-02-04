@@ -37,5 +37,4 @@ class CreateTables
 			update_option('wpsl_search_table_installed', true);
 		endif;
 	}
-
 }

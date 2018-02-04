@@ -1,18 +1,15 @@
 <?php 
-
 namespace SimpleLocator\Migrations;
 
 use SimpleLocator\Migrations\DefaultOptions;
 use SimpleLocator\Migrations\CreateTables;
 use SimpleLocator\WPData\PostTypes;
 
-
 /**
 * Plugin Activation
 */
 class Activation 
 {
-
 	/**
 	* Plugin Version
 	*/
@@ -70,5 +67,4 @@ class Activation
 	{
 		new CreateTables;
 	}
-
 }

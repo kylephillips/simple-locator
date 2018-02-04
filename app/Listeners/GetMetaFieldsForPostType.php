@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Listeners;
 
 use \SimpleLocator\Repositories\FieldRepository;
@@ -9,7 +8,6 @@ use \SimpleLocator\Repositories\FieldRepository;
 */
 class GetMetaFieldsForPostType 
 {
-
 	/**
 	* Field Repository
 	* @var object
@@ -27,7 +25,6 @@ class GetMetaFieldsForPostType
 	* @var array
 	*/
 	private $data;
-
 
 	public function __construct()
 	{
@@ -79,5 +76,4 @@ class GetMetaFieldsForPostType
 	{
 		return wp_send_json($response);
 	}
-
 }

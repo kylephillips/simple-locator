@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Dependencies;
 
 use SimpleLocator\Repositories\MapStyles;

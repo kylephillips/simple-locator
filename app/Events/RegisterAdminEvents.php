@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Events;
 
 use SimpleLocator\Listeners\GetMetaFieldsForPostType;
@@ -16,10 +15,10 @@ class RegisterAdminEvents
 	public function __construct()
 	{
 		// Admin Settings Post Type Select
-		add_action( 'wp_ajax_wpslposttype', array($this, 'PostTypeMetaRequested' ));
-		add_action( 'wp_ajax_wpslresetposttype', array($this, 'PostTypeResetRequested' ));
-		add_action( 'admin_post_wpslhistorysearch', array($this, 'SearchHistoryQueried'));
-		add_action( 'admin_post_wpslhistorycsv', array($this, 'SearchHistoryCSVTriggered'));
+		add_action( 'wp_ajax_wpslposttype', [$this, 'PostTypeMetaRequested']);
+		add_action( 'wp_ajax_wpslresetposttype', [$this, 'PostTypeResetRequested']);
+		add_action( 'admin_post_wpslhistorysearch', [$this, 'SearchHistoryQueried']);
+		add_action( 'admin_post_wpslhistorycsv', [$this, 'SearchHistoryCSVTriggered']);
 	}
 
 	/**
@@ -53,5 +52,4 @@ class RegisterAdminEvents
 	{
 		new HistoryCsvDownload;
 	}
-
 }

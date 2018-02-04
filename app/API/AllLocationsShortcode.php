@@ -1,5 +1,4 @@
 <?php
-
 namespace SimpleLocator\API;
 
 use \SimpleLocator\Repositories\MapStyles;
@@ -8,7 +7,6 @@ use \SimpleLocator\Repositories\PostRepository;
 
 class AllLocationsShortcode
 {
-
 	/**
 	* Shortcode Options
 	* @var arrat
@@ -95,5 +93,4 @@ class AllLocationsShortcode
 		$this->enqueueScripts();
 		return '<div id="alllocationsmap" class="wpsl-map" style="display:block;"></div>';
 	}
-
 }

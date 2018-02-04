@@ -1,12 +1,10 @@
 <?php 
-
 namespace SimpleLocator\Listeners;
 
 use SimpleLocator\Services\Validation\NonceValidator;
 
 abstract class AJAXAdminListenerBase 
 {
-
 	/**
 	* Nonce Validator
 	*/
@@ -47,5 +45,4 @@ abstract class AJAXAdminListenerBase
 		return wp_send_json(array('status'=>'error', 'message'=>$error));
 		die();
 	}
-
 }

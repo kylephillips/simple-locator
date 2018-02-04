@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Repositories;
 
 /**
@@ -7,17 +6,16 @@ namespace SimpleLocator\Repositories;
 */
 class MapStyles 
 {
-
 	/**
 	* Output the necessary JS object
 	*/
 	public function getAllStyles()
 	{
-		$styles = array();
-		$map_query = new \WP_Query(array(
+		$styles = [];
+		$map_query = new \WP_Query([
 			'post_type' => 'wpslmaps',
 			'posts_per_page' => -1
-		));
+		]);
 		if ( $map_query->have_posts() ) : $i = 0; while ( $map_query->have_posts() ) : $map_query->the_post();
 			$styles[$i]['title'] = get_the_title();
 			$styles[$i]['styles'] = get_the_content();
@@ -55,5 +53,4 @@ class MapStyles
 		wp_reset_postdata();
 		return $style_content;
 	}
-
 }

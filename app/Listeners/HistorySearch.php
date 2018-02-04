@@ -41,7 +41,6 @@ class HistorySearch
 		$this->url .= '&p=1';
 	}
 
-
 	/**
 	* Redirect to new URL
 	*/

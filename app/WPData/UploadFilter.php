@@ -6,10 +6,9 @@ namespace SimpleLocator\WPData;
 */
 class UploadFilter 
 {
-
 	public function __construct()
 	{
-		add_action('admin_init', array($this, 'changeUploadDirectory'));
+		add_action('admin_init', [$this, 'changeUploadDirectory']);
 	}
 
 	/**
@@ -18,7 +17,7 @@ class UploadFilter
 	public function changeUploadDirectory()
 	{
 		if ( isset($_POST['action']) && $_POST['action'] == 'wpslimportupload' && !empty($_FILES['file']) ){
-			add_filter( 'upload_dir', array($this, 'uploadFilter') );
+			add_filter( 'upload_dir', [$this, 'uploadFilter']);
     	}
 	}
 
@@ -32,5 +31,4 @@ class UploadFilter
 		$upload['url']  = $upload['baseurl'] . $upload['subdir'];
 		return $upload;
 	}
-
 }

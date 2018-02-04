@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Dependencies;
 
 /**
@@ -7,7 +6,6 @@ namespace SimpleLocator\Dependencies;
 */
 class PublicDependencies extends DependencyBase 
 {
-
 	public function __construct()
 	{
 		parent::__construct();

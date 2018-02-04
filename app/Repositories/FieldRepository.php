@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Repositories;
 
 /**
@@ -7,7 +6,6 @@ namespace SimpleLocator\Repositories;
 */
 class FieldRepository 
 {
-
 	/**
 	* Get all the post types
 	* @return array
@@ -112,5 +110,4 @@ class FieldRepository
 		}
 		return $map_fields;
 	}
-
 }

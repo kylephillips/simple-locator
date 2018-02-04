@@ -35,7 +35,7 @@ class FormWidget extends \WP_Widget
 		parent::__construct(
 			'simple_locator',
 			__('Simple Locator', 'wpsimplelocator'),
-			array( 'description' => __( 'Display the Simple Locator Form', 'wpsimplelocator' ) )
+			['description' => __( 'Display the Simple Locator Form', 'wpsimplelocator' )]
 		);
 	}
 
@@ -60,6 +60,8 @@ class FormWidget extends \WP_Widget
 		$this->options['geobuttontext'] = $this->settings_repo->showGeoButton('text');
 		$this->options['placeholder'] = __('Enter a Location', 'wpsimplelocator');
 		$this->options['noresultstext'] = __('No results found', 'wpsimplelocator');
+		$this->options['addresslabel'] = __('Zip/Postal Code', 'wpsimplelocator');
+		$this->options['mapcontainer'] = '';
 	}
 
 	/**
@@ -84,14 +86,6 @@ class FormWidget extends \WP_Widget
 		wp_enqueue_script('google-maps');
 		if ( wp_script_is('simple-locator', 'enqueued') ) return;
 		wp_enqueue_script('simple-locator');
-		$localized_data = array(
-			'noresultstext' => $this->options['noresultstext']
-		);
-		wp_localize_script( 
-			'simple-locator', 
-			'wpsl_locator_options', 
-			$localized_data
-		);
 	}
 
 	/**
@@ -109,7 +103,7 @@ class FormWidget extends \WP_Widget
 	* Save Widget Form Data
 	*/
 	public function update( $new_instance, $old_instance ) {
-		$instance = array();
+		$instance = [];
 		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
 		$instance['distance_options'] = ( ! empty( $new_instance['distance_options'] ) ) ? strip_tags( $new_instance['distance_options'] ) : '5,10,20,50,100';
 		$instance['map_height'] = ( ! empty( $new_instance['map_height'] ) ) ? strip_tags( intval($new_instance['map_height']) ) : '';

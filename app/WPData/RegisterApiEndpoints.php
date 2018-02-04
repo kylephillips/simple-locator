@@ -5,7 +5,7 @@ use SimpleLocator\Listeners\APILocationSearch;
 use SimpleLocator\Listeners\APIAllLocations;
 
 /**
-* Register the WP API Endpoints for use in the Applications
+* Register the WP API Endpoints for use in the Application
 */ 
 class RegisterApiEndpoints 
 {

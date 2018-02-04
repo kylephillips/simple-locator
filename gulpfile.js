@@ -12,13 +12,20 @@ var scss = 'assets/scss/**/*';
 var css = 'assets/css/';
 
 var js_source = [
-	'assets/js/source/simple-locator.js',
+	// 'assets/js/source/simple-locator.js',
 	//'assets/js/source/simple-locator-non-ajax-results.js',
-	'assets/js/source/simple-locator.single-location.js', // Start v2
+	'assets/js/source/simple-locator.functions-deprecated.js',
+	'assets/js/source/simple-locator.single-location.js',
+	'assets/js/source/simple-locator.form.js',
+	'assets/js/source/simple-locator.geocoder.js',
+	'assets/js/source/simple-locator.results-map.js',
+	'assets/js/source/simple-locator.results-list.js',
+	'assets/js/source/simple-locator.infowindow-open.js',
 	'assets/js/source/simple-locator.user-location.js',
 	'assets/js/source/simple-locator.places-autocomplete.js',
 	'assets/js/source/simple-locator.default-map.js',
 	'assets/js/source/simple-locator.all-locations.js',
+	'assets/js/source/simple-locator.errors.js',
 	'assets/js/source/simple-locator.factory.js'
 ];
 

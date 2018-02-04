@@ -135,7 +135,7 @@ class LocationResultPresenter
 		}
 
 		// Show on Map Link
-		$maplink = '<a href="#" class="infowindow-open map-link" onClick="event.preventDefault(); openInfoWindow(' . $this->count . ');">' . __('Show on Map', 'wpsimplelocator') . '</a>';
+		$maplink = '<a href="#" class="infowindow-open map-link" data-simple-locator-open-infowindow="' . $this->count . '">' . __('Show on Map', 'wpsimplelocator') . '</a>';
 		$output = str_replace('[show_on_map]', $maplink, $output);
 
 		return $output;

@@ -61,6 +61,7 @@ class PublicDependencies extends DependencyBase
 			'showonmap' 			=> __('Show on Map', 'wpsimplelocator'),
 			'viewlocation' 			=> __('View Location', 'wpsimplelocator'),
 			'notfounderror' 		=> __('Address not found', 'wpsimplelocator'),
+			'nolocationserror' 		=> __('No locations were found near', 'wpsimplelocator'),
 			'mappin' 				=> get_option('wpsl_map_pin'),
 			'showgeobutton'			=> $this->settings_repo->showGeoButton('enabled'),
 			'geobuttontext'			=> $this->settings_repo->showGeoButton('text'),

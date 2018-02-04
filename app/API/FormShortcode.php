@@ -69,6 +69,7 @@ class FormShortcode
 		$tax_array = explode(',', $this->options['taxonomies']);
 		foreach ( $tax_array as $key => $tax ){
 			$taxonomy = get_taxonomy($tax);
+			if ( !$taxonomy ) continue;
 			$tax_label = $taxonomy->labels->name; // Get the label
 			$terms = get_terms($tax); // Get the terms
 			if ( !$terms ) continue;
@@ -95,8 +96,8 @@ class FormShortcode
 		$this->options = shortcode_atts(array(
 			'distances' => '5,10,20,50,100',
 			'mapheight' => '250',
-			'mapcontainer' => '.wpsl-map',
-			'resultscontainer' => '.wpsl-results',
+			'mapcontainer' => '',
+			'resultscontainer' => '',
 			'buttontext' => __('Search', 'wpsimplelocator'),
 			'addresslabel' => __('Zip/Postal Code', 'wpsimplelocator'),
 			'mapcontrols' => 'show',
@@ -108,6 +109,7 @@ class FormShortcode
 			'perpage' => get_option('posts_per_page'),
 			'noresultstext' => __('No results found.', 'wpsimplelocator'),
 			'taxonomies' => '',
+			'taxonomy_field_type' => 'select', // or checkbox
 			'allowemptyaddress' => 'false',
 			'resultswrapper' => ''
 		), $options);

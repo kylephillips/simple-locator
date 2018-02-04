@@ -4,23 +4,24 @@ namespace SimpleLocator\Services\LocationSearch;
 
 class LocationSearchValidator 
 {
-
-	public function validate()
+	public function validate($request = null)
 	{
+		if ( !$request ) $request = $_POST;
+
 		// Unit
-		if ( ($_POST['unit'] !== 'miles') && ($_POST['unit'] !== 'kilometers') ){
-			throw new \Exception(__('Invalid unit.', 'wpsimplelocator'));
+		if ( (!isset($request['unit'])) || ($request['unit'] !== 'miles') && ($request['unit'] !== 'kilometers') ){
+			throw new \Exception(__('Please provide a radius measurement unit (miles or kilometers).', 'wpsimplelocator'));
 		}
 
-		if ( isset($_POST['allow_empty_address']) && $_POST['allow_empty_address'] == 'true' ) return;
+		if ( isset($request['allow_empty_address']) && $request['allow_empty_address'] == 'true' ) return;
 
 		// Latitude & Longitude
-		if ( !is_numeric($_POST['latitude']) || !is_numeric($_POST['longitude']) ) {
-			throw new \Exception(__('The address could not be located at this time.', 'wpsimplelocator'));
+		if ( !isset($request['latitude']) || !is_numeric($request['latitude']) || !isset($request['longitude']) || !is_numeric($request['longitude']) ) {
+			throw new \Exception(__('Please provide a valid latitude and longitude.', 'wpsimplelocator'));
 		}
 
 		// Distance
-		if ( !ctype_digit($_POST['distance']) ) {
+		if ( !isset($request['distance']) || !ctype_digit($request['distance']) ) {
 			throw new \Exception(__('Please enter a valid distance.', 'wpsimplelocator'));
 		}
 	}

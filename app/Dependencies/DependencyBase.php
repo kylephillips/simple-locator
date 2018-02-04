@@ -10,7 +10,6 @@ use SimpleLocator\Repositories\SettingsRepository;
 */
 abstract class DependencyBase 
 {
-
 	/**
 	* Plugin Directory
 	*/
@@ -92,5 +91,4 @@ abstract class DependencyBase
 	{
 		return $this->styles_repo->getAllStyles();
 	}
-
 }

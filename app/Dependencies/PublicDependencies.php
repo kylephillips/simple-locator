@@ -11,8 +11,8 @@ class PublicDependencies extends DependencyBase
 	public function __construct()
 	{
 		parent::__construct();
-		add_action( 'wp_enqueue_scripts', array( $this, 'styles' ));
-		add_action( 'wp_enqueue_scripts', array( $this, 'scripts' ));
+		add_action( 'wp_enqueue_scripts', [$this, 'styles']);
+		add_action( 'wp_enqueue_scripts', [$this, 'scripts']);
 	}
 
 	/**
@@ -35,10 +35,8 @@ class PublicDependencies extends DependencyBase
 	public function scripts()
 	{
 		$this->addGoogleMaps();
-
-		$dependencies = array('jquery');
+		$dependencies = ['jquery'];
 		if ( $this->settings_repo->customMapOptions() || $this->settings_repo->outputGMaps() ) $dependencies[] = 'google-maps';
-
 		wp_register_script(
 			'simple-locator', 
 			$this->plugin_dir . '/assets/js/simple-locator.min.js', 
@@ -46,7 +44,6 @@ class PublicDependencies extends DependencyBase
 			$this->version, 
 			true
 		);
-
 		wp_register_script(
 			'simple-locator-non-ajax-results', 
 			$this->plugin_dir . '/assets/js/simple-locator-non-ajax-results.js', 
@@ -54,10 +51,8 @@ class PublicDependencies extends DependencyBase
 			$this->version, 
 			true
 		);
-
-		$localized_data = array(
-			'ajaxurl' 				=> admin_url( 'admin-ajax.php' ),
-			'locatorNonce' 			=> wp_create_nonce( 'wpsl_locator-locator-nonce' ),
+		$localized_data = [
+			'rest_url'				=> get_rest_url() . 'simplelocator/v2',
 			'distance' 				=> __( 'Distance', 'wpsimplelocator' ), 
 			'website' 				=> __('Website', 'wpsimplelocator'),
 			'location' 				=> __('location', 'wpsimplelocator'),
@@ -81,14 +76,12 @@ class PublicDependencies extends DependencyBase
 			'postfields'			=> apply_filters('simple_locator_post_fields', false),
 			'l10n_print_after' 		=> 'wpsl_locator.map_options = ' . $this->settings_repo->mapOptions(),
 			'jsdebug'				=> $this->settings_repo->jsDebug()
-		);
-		$localized_data['mapstyles'] = $this->styles_repo->getLocalizedStyles();    		
-
+		];
+		$localized_data['mapstyles'] = $this->styles_repo->getLocalizedStyles();
 		wp_localize_script( 
 			'simple-locator', 
 			'wpsl_locator', 
 			$localized_data
 		);
 	}
-
 }

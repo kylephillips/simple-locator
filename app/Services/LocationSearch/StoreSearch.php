@@ -10,13 +10,14 @@ class StoreSearch
 	* Store the Search
 	* @param array $search_data
 	*/
-	public function save()
+	public function save($request = null)
 	{
-		$address = sanitize_text_field($_POST['address']);
-		$formatted_address = sanitize_text_field($_POST['formatted_address']);
-		$distance = sanitize_text_field($_POST['distance']);
-		$latitude = sanitize_text_field($_POST['latitude']);
-		$longitude = sanitize_text_field($_POST['longitude']);
+		$request = ( $request ) ? $request : $_POST;
+		$address = sanitize_text_field($request['address']);
+		$formatted_address = sanitize_text_field($request['formatted_address']);
+		$distance = sanitize_text_field($request['distance']);
+		$latitude = sanitize_text_field($request['latitude']);
+		$longitude = sanitize_text_field($request['longitude']);
 		$ip = $this->getIP();
 		
 		global $wpdb;

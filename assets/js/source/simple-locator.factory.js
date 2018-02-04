@@ -41,7 +41,6 @@ SimpleLocator.Factory = function()
 	self.init = function()
 	{
 		SimpleLocator.jsData.secure = ( location.protocol === 'https:' ) ? true : false;
-
 		new SimpleLocator.PlacesAutocomplete;
 		new SimpleLocator.DefaultMap;
 		new SimpleLocator.SingleLocation;

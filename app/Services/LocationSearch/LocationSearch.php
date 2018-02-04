@@ -11,6 +11,11 @@ use SimpleLocator\Helpers;
 */
 class LocationSearch 
 {
+	/**
+	* The request
+	* @var array
+	*/
+	private $request;
 
 	/**
 	* Form Data
@@ -80,8 +85,9 @@ class LocationSearch
 	/**
 	* Perform the Search
 	*/
-	public function search()
+	public function search($request = null)
 	{
+		$this->request = ( $request ) ? $request : $_POST;
 		$this->setResultsFields();
 		$this->setAddress();
 		$this->setData();
@@ -103,7 +109,7 @@ class LocationSearch
 	*/
 	private function setAddress()
 	{
-		$this->address = ( $_POST['latitude'] != "") ? true : false;
+		$this->address = ( $this->request['latitude'] != "") ? true : false;
 	}
 
 	/**
@@ -112,14 +118,14 @@ class LocationSearch
 	private function setData()
 	{
 		$this->data = array(
-			'distance' => sanitize_text_field($_POST['distance']),
-			'latitude' => sanitize_text_field($_POST['latitude']),
-			'longitude' => sanitize_text_field($_POST['longitude']),
-			'unit' => sanitize_text_field($_POST['unit']),
-			'offset' => ( isset($_POST['page']) ) ? sanitize_text_field(intval($_POST['page'])) : null,
-			'limit' => ( isset($_POST['limit']) ) ? sanitize_text_field(intval($_POST['limit'])) : null
+			'distance' => sanitize_text_field($this->request['distance']),
+			'latitude' => sanitize_text_field($this->request['latitude']),
+			'longitude' => sanitize_text_field($this->request['longitude']),
+			'unit' => sanitize_text_field($this->request['unit']),
+			'offset' => ( isset($this->request['page']) ) ? sanitize_text_field(intval($this->request['page'])) : null,
+			'limit' => ( isset($this->request['limit']) ) ? sanitize_text_field(intval($this->request['limit'])) : null
 		);
-		if ( isset($_POST['taxonomies']) ) $this->setTaxonomies();
+		if ( isset($this->request['taxonomies']) ) $this->setTaxonomies();
 	}
 
 	/**
@@ -127,7 +133,7 @@ class LocationSearch
 	*/
 	private function setTaxonomies()
 	{
-		$terms = $_POST['taxonomies'];
+		$terms = $this->request['taxonomies'];
 		$this->data['taxonomies'] = $terms;
 	}
 

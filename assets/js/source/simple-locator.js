@@ -228,7 +228,6 @@ function sendFormData(formelements)
 		action : 'locate',
 		address : address,
 		formatted_address : formatted_address,
-		locatorNonce : $('.locator-nonce').val(),
 		distance : distance,
 		latitude : $(formelements.latitude).val(),
 		longitude : $(formelements.longitude).val(),
@@ -247,9 +246,9 @@ function sendFormData(formelements)
 	}
 
 	$.ajax({
-		url: wpsl_locator.ajaxurl,
-		type: 'post',
-		datatype: 'json',
+		url : wpsl_locator.rest_url + '/locations',
+		type: 'GET',
+		datatype: 'jsonp',
 		data: formdata,
 		success: function(data){
 			if ( wpsl_locator.jsdebug === '1' ){

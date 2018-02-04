@@ -1,5 +1,7 @@
 <?php
-namespace SimpleLocator\API;
+namespace SimpleLocator\WPData;
+
+use SimpleLocator\Listeners\APILocationSearch;
 
 /**
 * Register the WP API Endpoints for use in the Applications
@@ -21,7 +23,15 @@ class RegisterEndpoints
 
 	public function getLocations(\WP_REST_Request $request)
 	{
-		$params = $request->get_query_params();
-		return $params;
+		$search = new APILocationSearch($request->get_query_params());
+		try {
+			$results = $search->getResults();
+			return $results;
+		} catch ( \Exception $e ){
+			return [
+				'status' => 'error',
+				'message' => $e->getMessage()
+			];
+		}
 	}
 }

@@ -11,11 +11,11 @@ class AdminDependencies extends DependencyBase
 	public function __construct()
 	{
 		parent::__construct();
-		add_action( 'admin_enqueue_scripts', array( $this, 'styles' ));
-		add_action( 'admin_enqueue_scripts', array( $this, 'scripts' ));
-		add_action( 'admin_enqueue_scripts', array( $this, 'mapSettings' ));
-		add_action( 'admin_enqueue_scripts', array( $this, 'defaultMapSettings' ));
-		add_action( 'admin_enqueue_scripts', array( $this, 'searchHistory' ));
+		add_action( 'admin_enqueue_scripts', [$this, 'styles']);
+		add_action( 'admin_enqueue_scripts', [$this, 'scripts']);
+		add_action( 'admin_enqueue_scripts', [$this, 'mapSettings']);
+		add_action( 'admin_enqueue_scripts', [$this, 'defaultMapSettings']);
+		add_action( 'admin_enqueue_scripts', [$this, 'searchHistory']);
 	}
 
 	/**
@@ -26,7 +26,7 @@ class AdminDependencies extends DependencyBase
 		wp_enqueue_style(
 			'simplelocator', 
 			$this->plugin_dir . '/assets/css/simple-locator-admin.css', 
-			array(), 
+			[], 
 			$this->version
 		);
 	}
@@ -46,10 +46,10 @@ class AdminDependencies extends DependencyBase
 			wp_enqueue_script(
 				'simple-locator-admin', 
 				$this->plugin_dir . '/assets/js/simple-locator-admin.js', 
-				array('jquery', 'jquery-ui-sortable', 'jquery-ui-datepicker'), 
+				['jquery', 'jquery-ui-sortable', 'jquery-ui-datepicker'], 
 				$this->version
 			);
-			$data = array( 
+			$data = [
 				'locatorNonce' 		=> wp_create_nonce( 'wpsl_locator-locator-nonce' ),
 				'upload' 			=> __('Upload', 'wpsimplelocator'),
 				'remove' 			=> __('Remove', 'wpsimplelocator'),
@@ -59,7 +59,7 @@ class AdminDependencies extends DependencyBase
 				'map_field'			=> get_option('wpsl_acf_map_field'),
 				'location_not_found'	=> __('The address could not be found at this time.', 'wpsimplelocator'),
 				'api_load_error'	=> __('There was an error loading the Google Maps API. This may be due to a missing or invalid API key.', 'wpsimplelocator')
-			);
+			];
 			$data = $this->importVars($data);
 			$data['confirm_undo'] 	= __('Are you sure you want to undo this import? This action cannot be undone.', 'wpsimplelocator');
 			$data['confirm_redo'] 	= __('Are you sure you want to redo this import? This will erase any currently pending imports.', 'wpsimplelocator');
@@ -82,7 +82,7 @@ class AdminDependencies extends DependencyBase
 			wp_enqueue_script(
 				'simple-locator-admin-maps', 
 				$this->plugin_dir . '/assets/js/simple-locator-admin-maps.js', 
-				array('jquery'), 
+				['jquery'], 
 				$this->version
 			);
 			wp_localize_script( 
@@ -103,13 +103,13 @@ class AdminDependencies extends DependencyBase
 			wp_enqueue_script(
 				'simple-locator-admin-defaultmap', 
 				$this->plugin_dir . '/assets/js/simple-locator-admin-defaultmap.js', 
-				array('jquery'), 
+				['jquery'], 
 				$this->version
 			);
 			wp_localize_script( 
 				'simple-locator-admin-defaultmap', 
 				'wpsl_locator_defaultmap', 
-				array(
+				[
 					'enabled' 		=> $this->settings_repo->showDefaultMap(),
 					'latitude' 		=> $this->settings_repo->defaultMap('latitude'),
 					'longitude' 	=> $this->settings_repo->defaultMap('longitude'),
@@ -117,7 +117,7 @@ class AdminDependencies extends DependencyBase
 					'searchtext' 	=> __('Search for a location', 'wpsimplelocator'),
 					'styles' 		=> $this->styles_repo->getLocalizedStyles(),
 					'mappin' 		=> get_option('wpsl_map_pin')
-				)
+				]
 			);
 		}
 	}
@@ -132,20 +132,20 @@ class AdminDependencies extends DependencyBase
 			wp_enqueue_script(
 				'simple-locator-admin-searchhistory', 
 				$this->plugin_dir . '/assets/js/simple-locator-admin-search-history.js', 
-				array('jquery'), 
+				['jquery'], 
 				$this->version
 			);
 			wp_localize_script( 
 				'simple-locator-admin-searchhistory', 
 				'wpsl_locator_searchhistory', 
-				array(
+				[
 					'styles' 		=> $this->styles_repo->getLocalizedStyles(),
 					'mappin' 		=> get_option('wpsl_map_pin'),
 					'userIp' 		=> __('User IP', 'wpsimplelocator'),
 					'searchTermFormatted' => __('Search Term Formatted', 'wpsimplelocator'),
 					'searchTerm' => __('Search Term', 'wpsimplelocator'),
 					'distance' 		=> __('Distance', 'wpsimplelocator')
-				)
+				]
 			);
 		}
 	}

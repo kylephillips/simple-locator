@@ -32,6 +32,7 @@ SimpleLocator.DefaultMap = function()
 				self.loadDefault(map);
 				return;
 			}
+			
 			// var userLocation = new SimpleLocator.UserLocation;
 			// userLocation = userLocation.getLocation();
 			// console.log(userLocation);

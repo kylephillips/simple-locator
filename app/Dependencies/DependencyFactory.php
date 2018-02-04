@@ -10,19 +10,9 @@ use SimpleLocator\Dependencies\PublicDependencies;
 */
 class DependencyFactory 
 {
-
 	public function __construct()
-	{
-		$this->build();
-	}
-
-	/**
-	* Build Dependencies
-	*/
-	public function build()
 	{
 		new AdminDependencies;
 		new PublicDependencies;
 	}
-
 }

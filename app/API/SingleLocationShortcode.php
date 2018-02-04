@@ -74,7 +74,7 @@ class SingleLocationShortcode
 	* The View
 	*/
 	public function renderView($options)
-	{	
+	{
 		$this->setOptions($options);
 		$this->setLocationData();
 		$this->enqueueScripts();

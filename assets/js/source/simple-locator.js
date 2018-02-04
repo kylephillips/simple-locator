@@ -246,7 +246,7 @@ function sendFormData(formelements)
 	}
 
 	$.ajax({
-		url : wpsl_locator.rest_url + '/locations',
+		url : wpsl_locator.rest_url + '/search',
 		type: 'GET',
 		datatype: 'jsonp',
 		data: formdata,

@@ -16,20 +16,20 @@ class RegisterApiEndpoints
 
 	public function registerRoutes()
 	{
+		register_rest_route( 'simplelocator/v2', '/search/', [
+			'methods'  => 'GET',
+			'callback' => [$this, 'searchLocations'],
+		]);
 		register_rest_route( 'simplelocator/v2', '/locations/', [
 			'methods'  => 'GET',
 			'callback' => [$this, 'getLocations'],
-		]);
-		register_rest_route( 'simplelocator/v2', '/all-locations/', [
-			'methods'  => 'GET',
-			'callback' => [$this, 'getAllLocations'],
 		]);
 	}
 
 	/**
 	* Get locations from a search request
 	*/
-	public function getLocations(\WP_REST_Request $request)
+	public function searchLocations(\WP_REST_Request $request)
 	{
 		$search = new APILocationSearch($request->get_query_params());
 		try {
@@ -46,7 +46,7 @@ class RegisterApiEndpoints
 	/**
 	* Get all locations
 	*/
-	public function getAllLocations(\WP_REST_Request $request)
+	public function getLocations(\WP_REST_Request $request)
 	{
 		$locations = new APIAllLocations($request->get_query_params());
 		return $locations->getLocations();

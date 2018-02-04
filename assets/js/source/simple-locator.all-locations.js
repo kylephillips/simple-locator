@@ -24,7 +24,7 @@ SimpleLocator.AllLocations = function()
 	self.getData = function()
 	{
 		$.ajax({
-			url : wpsl_locator.rest_url + '/all-locations',
+			url : wpsl_locator.rest_url + '/locations',
 			type: 'GET',
 			datatype: 'jsonp',
 			success: function(data){

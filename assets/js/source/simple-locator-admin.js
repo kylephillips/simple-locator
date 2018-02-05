@@ -401,35 +401,35 @@ jQuery(function($){
 	* Settings Page - Results Fields (WYSIWYG)
 	* ------------------------------------------------------
 	*/
-	$(document).on('click', '.wpsl-field-add', function(e){
-		e.preventDefault();
-		add_result_field();
-	});
-	function add_result_field()
-	{
-		var field = '[' + $('#wpsl-fields').val() + ']';
-		tinymce.activeEditor.execCommand('mceInsertContent', false, field);
-	}
+	// $(document).on('click', '.wpsl-field-add', function(e){
+	// 	e.preventDefault();
+	// 	add_result_field();
+	// });
+	// function add_result_field()
+	// {
+	// 	var field = '[' + $('#wpsl-fields').val() + ']';
+	// 	tinymce.activeEditor.execCommand('mceInsertContent', false, field);
+	// }
 
 
-	$(document).on('click', '.wpsl-post-field-add', function(e){
-		e.preventDefault();
-		add_post_field();
-	});
-	function add_post_field()
-	{
-		var field = '[' + $('#wpsl-post-fields').val() + ']';
-		tinymce.activeEditor.execCommand('mceInsertContent', false, field);
-	}
+	// $(document).on('click', '.wpsl-post-field-add', function(e){
+	// 	e.preventDefault();
+	// 	add_post_field();
+	// });
+	// function add_post_field()
+	// {
+	// 	var field = '[' + $('#wpsl-post-fields').val() + ']';
+	// 	tinymce.activeEditor.execCommand('mceInsertContent', false, field);
+	// }
 
-	// Enable Datepicker Fields
-	$(document).ready(function(){
-		$('[data-date-picker]').datepicker({
-			beforeShow: function(input, inst){
-				$('#ui-datepicker-div').addClass('wpsl-datepicker');
-			}
-		});
-	});	
+	// // Enable Datepicker Fields
+	// $(document).ready(function(){
+	// 	$('[data-date-picker]').datepicker({
+	// 		beforeShow: function(input, inst){
+	// 			$('#ui-datepicker-div').addClass('wpsl-datepicker');
+	// 		}
+	// 	});
+	// });	
 
 	
 

@@ -377,23 +377,23 @@ jQuery(function($){
 	* Settings Page - Map Styles Type
 	* ------------------------------------------------------
 	*/
-	$(document).on('change', '#wpsl_map_styles_type', function(){
-		var choice = $(this).val();
-		toggle_map_style_choice(choice);
-	});
+	// $(document).on('change', '#wpsl_map_styles_type', function(){
+	// 	var choice = $(this).val();
+	// 	toggle_map_style_choice(choice);
+	// });
 
-	function toggle_map_style_choice(choice)
-	{
-		if ( choice === 'none' ){
-			$('#map-styles-choice, #map-styles-custom').hide();
-		} else if ( choice === 'custom' ){
-			$('#map-styles-custom').show();
-			$('#map-styles-choice').hide();
-		} else {
-			$('#map-styles-choice').show();
-			$('#map-styles-custom').hide();
-		}
-	}
+	// function toggle_map_style_choice(choice)
+	// {
+	// 	if ( choice === 'none' ){
+	// 		$('#map-styles-choice, #map-styles-custom').hide();
+	// 	} else if ( choice === 'custom' ){
+	// 		$('#map-styles-custom').show();
+	// 		$('#map-styles-choice').hide();
+	// 	} else {
+	// 		$('#map-styles-choice').show();
+	// 		$('#map-styles-custom').hide();
+	// 	}
+	// }
 
 
 	/**

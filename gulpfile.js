@@ -29,15 +29,15 @@ var js_source = [
 ];
 
 var js_admin_source = [
-	'assets/js/source/bs-transition.js',
-	'assets/js/source/bs-modal.js',
-	'assets/js/source/simple-locator-admin.js',
-	'assets/js/source/simple-locator-import.js',
+	//'assets/js/source/bs-transition.js',
+	//'assets/js/source/bs-modal.js',
+	//'assets/js/source/simple-locator-admin.js',
+	//'assets/js/source/simple-locator-import.js',
+	'assets/js/source/admin/simple-locator-admin.default-map.js',
+	'assets/js/source/admin/simple-locator-admin.map-display.js',
+	'assets/js/source/admin/simple-locator-admin.search-history.js',
+	'assets/js/source/admin/simple-locator-admin.factory.js'
 ];
-
-var js_admin_maps_source = 'assets/js/source/simple-locator-admin-maps.js';
-var js_admin_defaultmap_source = 'assets/js/source/simple-locator-admin-defaultmap.js';
-var js_admin_search_history_source = 'assets/js/source/simple-locator-admin-search-history.js';
 
 var js_compiled = 'assets/js/';
 
@@ -62,49 +62,12 @@ gulp.task('scss', function(callback){
 gulp.task('admin_scripts', function(callback){
 	pump([
 		gulp.src(js_admin_source),
-		concat('simple-locator-admin.js'),
+		concat('simple-locator-admin.min.js'),
 		gulp.dest(js_compiled),
 		uglify(),
 		gulp.dest(js_compiled)
 	], callback);
 });
-
-/**
-* Admin Maps JS
-*/
-gulp.task('admin_maps_scripts', function(callback){
-	pump([
-		gulp.src(js_admin_maps_source),
-		gulp.dest(js_compiled),
-		uglify(),
-		gulp.dest(js_compiled)
-	], callback);
-});
-
-/**
-* Admin Default Map
-*/
-gulp.task('admin_default_map_scripts', function(callback){
-	pump([
-		gulp.src(js_admin_defaultmap_source),
-		gulp.dest(js_compiled),
-		uglify(),
-		gulp.dest(js_compiled)
-	], callback);
-});
-
-/**
-* Admin Search History Map
-*/
-gulp.task('admin_search_history', function(callback){
-	pump([
-		gulp.src(js_admin_search_history_source),
-		gulp.dest(js_compiled),
-		uglify(),
-		gulp.dest(js_compiled)
-	], callback);
-});
-
 
 /**
 * Front end js
@@ -128,9 +91,6 @@ gulp.task('watch', function(){
 	gulp.watch(scss, ['scss']);
 	gulp.watch(js_source, ['scripts']);
 	gulp.watch(js_admin_source, ['admin_scripts']);
-	gulp.watch(js_admin_maps_source, ['admin_maps_scripts']);
-	gulp.watch(js_admin_defaultmap_source, ['admin_default_map_scripts']);
-	gulp.watch(js_admin_search_history_source, ['admin_search_history']);
 });
 
 
@@ -141,8 +101,5 @@ gulp.task('default', [
 	'scss', 
 	'scripts', 
 	'admin_scripts', 
-	'admin_maps_scripts', 
-	'admin_default_map_scripts',
-	'admin_search_history',
 	'watch'
 ]);

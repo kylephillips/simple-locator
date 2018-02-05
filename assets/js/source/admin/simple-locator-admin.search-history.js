@@ -1,18 +1,27 @@
 /**
 * Search History Map
 */
-var WPSL_SearchHistoryMap = function(locations, container)
+var SimpleLocatorAdmin = SimpleLocatorAdmin || {};
+SimpleLocatorAdmin.SearchHistory = function()
 {
-	var plugin = this;
+	var self = this;
 	var $ = jQuery;
 
-	plugin.locations = locations;
-	plugin.container = container;
+	self.locations;
 
+	self.selectors = {
+		container : 'data-simple-locator-search-history-map',
+		perPage : 'data-simple-locator-history-per-page'
+	}
 
-	plugin.bindEvents = function()
+	self.bindEvents = function()
 	{
-		$('[data-wpsl-history-per-page]').on('change', function(){
+		$(document).ready(function(){
+			if ( $('[' + self.selectors.container + ']').length < 1 ) return;
+			self.locations = search_history_locations;
+			self.loadMap();
+		});
+		$('[' + self.selectors.perPage + ']').on('change', function(){
 			$(this).parents('form').submit();
 		});
 	}
@@ -20,12 +29,13 @@ var WPSL_SearchHistoryMap = function(locations, container)
 	/**
 	* Load the Map
 	*/
-	plugin.loadmap = function()
+	self.loadMap = function()
 	{
 		var mapstyles = wpsl_locator_searchhistory.mapstyles;	
 		var mappin = ( wpsl_locator_searchhistory.mappin ) ? wpsl_locator_searchhistory.mappin : '';
 		var bounds = new google.maps.LatLngBounds();
-		var locations = plugin.locations;
+		var locations = self.locations;
+		var container = $('[' + self.selectors.container + ']');
 
 		var mapOptions = {
 			mapTypeId: 'roadmap',
@@ -37,7 +47,7 @@ var WPSL_SearchHistoryMap = function(locations, container)
 		}
 			
 		var infoWindow = new google.maps.InfoWindow(), marker, i;
-		var map = new google.maps.Map( document.getElementById(plugin.container), mapOptions );
+		var map = new google.maps.Map( container[0], mapOptions );
 		
 		// Loop through array of markers & place each one on the map  
 		for( i = 0; i < locations.length; i++ ) {
@@ -82,7 +92,7 @@ var WPSL_SearchHistoryMap = function(locations, container)
 			google.maps.event.removeListener(boundsListener);
 		});
 
-	} // loadmap()
+	}
 
-	return plugin.bindEvents();
+	return self.bindEvents();
 }

@@ -64,7 +64,7 @@ if ( $search_rows ) :
 
 	<div class="wpsl-search-history-table-header">
 		<h3><?php echo __('Page', 'wpsimplelocator') . ' ' . $current_page . ' ' . __('of', 'wpsimplelocator') . ' ' . $this->search_repo->totalPages(); ?> </h3>
-		<select name="per_page" data-wpsl-history-per-page>
+		<select name="per_page" data-simple-locator-history-per-page>
 			<?php
 			$page_options = array(200, 100, 50, 20, 10, 5, 3);
 			foreach ( $page_options as $option ) :
@@ -83,7 +83,7 @@ if ( $search_rows ) :
 
 </form>
 
-<div id="wpsl-search-history-map"></div>
+<div id="wpsl-search-history-map" data-simple-locator-search-history-map></div>
 
 <table class="wpsl-search-history-table">
 	<thead>
@@ -123,7 +123,7 @@ if ( $search_rows ) :
 </div>
 
 <script>
-	var locations = [
+	var search_history_locations = [
 		<?php 
 		$i = 1;
 		$out = "";
@@ -142,10 +142,6 @@ if ( $search_rows ) :
 		echo $out;
 		?>
 	];
-	var map = new WPSL_SearchHistoryMap(locations, 'wpsl-search-history-map');
-	jQuery(document).ready(function(){
-		map.loadmap();
-	});
 </script>
 
 <?php else : // No searches yet ?>

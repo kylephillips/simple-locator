@@ -44,7 +44,7 @@ class AdminDependencies extends DependencyBase
 			wp_enqueue_style('thickbox');
 			wp_enqueue_script(
 				'simple-locator-admin', 
-				$this->plugin_dir . '/assets/js/simple-locator-admin.js', 
+				$this->plugin_dir . '/assets/js/simple-locator-admin.min.js', 
 				['jquery', 'jquery-ui-sortable', 'jquery-ui-datepicker'], 
 				$this->version
 			);
@@ -78,14 +78,8 @@ class AdminDependencies extends DependencyBase
 	{
 		$screen = get_current_screen();
 		if ( ($screen->id == 'settings_page_wp_simple_locator') && (isset($_GET['tab'])) && ($_GET['tab'] == 'map') ){
-			wp_enqueue_script(
-				'simple-locator-admin-maps', 
-				$this->plugin_dir . '/assets/js/simple-locator-admin-maps.js', 
-				['jquery'], 
-				$this->version
-			);
 			wp_localize_script( 
-				'simple-locator-admin-maps', 
+				'simple-locator-admin', 
 				'wpsl_locator_mapstyles', 
 				$this->mapStyleData()
 			);
@@ -99,14 +93,8 @@ class AdminDependencies extends DependencyBase
 	{
 		$screen = get_current_screen();
 		if ( ($screen->id == 'settings_page_wp_simple_locator') && (isset($_GET['tab'])) && ($_GET['tab'] == 'defaultmap') ){
-			wp_enqueue_script(
-				'simple-locator-admin-defaultmap', 
-				$this->plugin_dir . '/assets/js/simple-locator-admin-defaultmap.js', 
-				['jquery'], 
-				$this->version
-			);
 			wp_localize_script( 
-				'simple-locator-admin-defaultmap', 
+				'simple-locator-admin', 
 				'wpsl_locator_defaultmap', 
 				[
 					'enabled' 		=> $this->settings_repo->showDefaultMap(),
@@ -128,14 +116,8 @@ class AdminDependencies extends DependencyBase
 	{
 		$screen = get_current_screen();
 		if ( ($screen->id == 'settings_page_wp_simple_locator') && (isset($_GET['tab'])) && ($_GET['tab'] == 'search-history') ){
-			wp_enqueue_script(
-				'simple-locator-admin-searchhistory', 
-				$this->plugin_dir . '/assets/js/simple-locator-admin-search-history.js', 
-				['jquery'], 
-				$this->version
-			);
 			wp_localize_script( 
-				'simple-locator-admin-searchhistory', 
+				'simple-locator-admin', 
 				'wpsl_locator_searchhistory', 
 				[
 					'styles' 		=> $this->styles_repo->getLocalizedStyles(),

@@ -26,10 +26,21 @@ SimpleLocatorAdmin.Factory = function()
 
 	self.init = function()
 	{
+		new SimpleLocatorAdmin.Modals;
+		new SimpleLocatorAdmin.PostEdit;
 		new SimpleLocatorAdmin.MapDisplay;
 		new SimpleLocatorAdmin.DefaultMap;
 		new SimpleLocatorAdmin.SearchHistory;
 	}
 
 	return self.init();
+}
+
+/**
+* Global function catches Google API Errors
+* @link https://developers.google.com/maps/documentation/javascript/events#auth-errors
+*/
+var editScreenGoogleApiError = false;
+function gm_authFailure(e){
+	editScreenGoogleApiError = true;
 }

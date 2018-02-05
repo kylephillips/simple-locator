@@ -2,15 +2,15 @@
 * Global function catches Google API Errors
 * @link https://developers.google.com/maps/documentation/javascript/events#auth-errors
 */
-var editScreenGoogleApiError = false;
-function gm_authFailure(e) {
-	editScreenGoogleApiError = true;
-}
+// var editScreenGoogleApiError = false;
+// function gm_authFailure(e) {
+// 	editScreenGoogleApiError = true;
+// }
 
 jQuery(function($){
 
-	var lookupaddress = true;
-	var mappinrelocated = false;
+	// var lookupaddress = true;
+	// var mappinrelocated = false;
 
 	/**
 	* ------------------------------------------------------
@@ -21,143 +21,143 @@ jQuery(function($){
 	/**
 	* Geocode Address when saving Location Posts
 	*/
-	var form = $("form[name='post']");
-	$(form).find("#publish").on('click', function(e){
-		if ( wpsl_locator.lat_field !== 'wpsl_latitude' && wpsl_locator.map_field !== "" ) return;
-		e.preventDefault();
+	// var form = $("form[name='post']");
+	// $(form).find("#publish").on('click', function(e){
+	// 	if ( wpsl_locator.lat_field !== 'wpsl_latitude' && wpsl_locator.map_field !== "" ) return;
+	// 	e.preventDefault();
 
-		if ( editScreenGoogleApiError ){
-			displayErrorModal(wpsl_locator.api_load_error);
-			return;
-		}
-		var address = formatAddress();
-		googleGeocodeAddress(address);
-	});
+	// 	if ( editScreenGoogleApiError ){
+	// 		displayErrorModal(wpsl_locator.api_load_error);
+	// 		return;
+	// 	}
+	// 	var address = formatAddress();
+	// 	googleGeocodeAddress(address);
+	// });
 
 
-	/**
-	* Format the provided address to submit for geocoding
-	*/
-	function formatAddress()
-	{
-		var streetaddress = $('#wpsl_address').val();
-		var city = $('#wpsl_city').val();
-		var state = $('#wpsl_state').val();
-		var zip = $('#wpsl_zip').val();
-		var address = streetaddress + ' ' + city + ' ' + state + ' ' + zip;
-		return address;
-	}
+	// /**
+	// * Format the provided address to submit for geocoding
+	// */
+	// function formatAddress()
+	// {
+	// 	var streetaddress = $('#wpsl_address').val();
+	// 	var city = $('#wpsl_city').val();
+	// 	var state = $('#wpsl_state').val();
+	// 	var zip = $('#wpsl_zip').val();
+	// 	var address = streetaddress + ' ' + city + ' ' + state + ' ' + zip;
+	// 	return address;
+	// }
 
 
 	/**
 	* Submit the address to Google for Geocoding
 	*/
-	function googleGeocodeAddress(address)
-	{
-		geocoder = new google.maps.Geocoder();
+	// function googleGeocodeAddress(address)
+	// {
+	// 	geocoder = new google.maps.Geocoder();
 			
-		geocoder.geocode({
-			'address' : address
-		}, 
-		function(results, status){
-			if ( lookupaddress == true && !mappinrelocated ){
-				if ( status == google.maps.GeocoderStatus.OK ){
-					var lat = results[0].geometry.location.lat();
-					var lng = results[0].geometry.location.lng();
-					setFormCoordinates(lat, lng);
-					$('#publish').unbind('click').click();
-				} else {
-					displayErrorModal(wpsl_locator.address_not_found);
-				}
-			} else {
-				$('#publish').unbind('click').click();
-			}
-		});
-	}
+	// 	geocoder.geocode({
+	// 		'address' : address
+	// 	}, 
+	// 	function(results, status){
+	// 		if ( lookupaddress == true && !mappinrelocated ){
+	// 			if ( status == google.maps.GeocoderStatus.OK ){
+	// 				var lat = results[0].geometry.location.lat();
+	// 				var lng = results[0].geometry.location.lng();
+	// 				setFormCoordinates(lat, lng);
+	// 				$('#publish').unbind('click').click();
+	// 			} else {
+	// 				displayErrorModal(wpsl_locator.address_not_found);
+	// 			}
+	// 		} else {
+	// 			$('#publish').unbind('click').click();
+	// 		}
+	// 	});
+	// }
 
 	/**
 	* Display the error modal
 	*/
-	function displayErrorModal(text)
-	{
-		$('#wpsl-error-modal').find('h3').text(text);
-		$('#wpsl-error-modal').modal('show');
-	}
+	// function displayErrorModal(text)
+	// {
+	// 	$('#wpsl-error-modal').find('h3').text(text);
+	// 	$('#wpsl-error-modal').modal('show');
+	// }
 
 	/**
 	* Save the post without location data
 	*/
-	$('.wpsl-address-confirm').on('click', function(e){
-		e.preventDefault()
-		$('#wpsl-error-modal').modal('hide');
-		lookupaddress = false;
-		$('#publish').unbind('click').click();
-	});
+	// $('.wpsl-address-confirm').on('click', function(e){
+	// 	e.preventDefault()
+	// 	$('#wpsl-error-modal').modal('hide');
+	// 	lookupaddress = false;
+	// 	$('#publish').unbind('click').click();
+	// });
 
 
 	/**
 	* Set the Lat & Lng Form Fields
 	*/
-	function setFormCoordinates(lat, lng)
-	{
-		$('#wpsl_latitude').val(lat);
-		$('#wpsl_longitude').val(lng);
-	}
+	// function setFormCoordinates(lat, lng)
+	// {
+	// 	$('#wpsl_latitude').val(lat);
+	// 	$('#wpsl_longitude').val(lng);
+	// }
 
 
 	/**
 	* Check if the Location has Geocode Saved
 	*/
-	$(document).ready(function(){
-		checkMapStatus();
-		if ( $('#wpsl_custom_geo').val() === 'true' ) mappinrelocated = true;
-	});
+	// $(document).ready(function(){
+	// 	checkMapStatus();
+	// 	if ( $('#wpsl_custom_geo').val() === 'true' ) mappinrelocated = true;
+	// });
 	// For custom ACF Tab Placement
-	$(document).on('click', '.acf-tab-button', function(){
-		checkMapStatus();
-	});
-	function checkMapStatus()
-	{
-		if ( $("#wpslmap").length > 0 ){
-			var lat = $('#wpsl_latitude').val();
-			var lng = $('#wpsl_longitude').val();
-			if ( (lat !== "") && (lng !== "") ){
-				$('#wpslmap').show();
-				loadGoogleMap(lat, lng);
-			}
-		}
-	}
+	// $(document).on('click', '.acf-tab-button', function(){
+	// 	checkMapStatus();
+	// });
+	// function checkMapStatus()
+	// {
+	// 	if ( $("#wpslmap").length > 0 ){
+	// 		var lat = $('#wpsl_latitude').val();
+	// 		var lng = $('#wpsl_longitude').val();
+	// 		if ( (lat !== "") && (lng !== "") ){
+	// 			$('#wpslmap').show();
+	// 			loadGoogleMap(lat, lng);
+	// 		}
+	// 	}
+	// }
 
 
 	/*
 	* Load the Google Map in Admin View
 	*/
-	function loadGoogleMap(lat, lng){
-		var map = new google.maps.Map(document.getElementById('wpslmap'), {
-			zoom: 14,
-			center: new google.maps.LatLng(lat,lng),
-			mapTypeId: google.maps.MapTypeId.ROADMAP,
-			mapTypeControl: false,
-			scaleControl : false,
-		});
+	// function loadGoogleMap(lat, lng){
+	// 	var map = new google.maps.Map(document.getElementById('wpslmap'), {
+	// 		zoom: 14,
+	// 		center: new google.maps.LatLng(lat,lng),
+	// 		mapTypeId: google.maps.MapTypeId.ROADMAP,
+	// 		mapTypeControl: false,
+	// 		scaleControl : false,
+	// 	});
 
-		var marker, i;
+	// 	var marker, i;
 
-		marker = new google.maps.Marker({
-			position: new google.maps.LatLng(lat, lng),
-			map: map,
-			draggable: true
-		});
+	// 	marker = new google.maps.Marker({
+	// 		position: new google.maps.LatLng(lat, lng),
+	// 		map: map,
+	// 		draggable: true
+	// 	});
 
-		// Make Marker Draggable and update on change
-		google.maps.event.addListener(marker, 'drag', function(){
-			$('#wpsl_latitude').val(marker.position.lat());
-			$('#wpsl_longitude').val(marker.position.lng());
-			$('#wpsl_latitude, #wpsl_longitude').attr('readonly', false);
-			$('#wpsl_custom_geo').val('true');
-			mappinrelocated = true;
-		});
-	}
+	// 	// Make Marker Draggable and update on change
+	// 	google.maps.event.addListener(marker, 'drag', function(){
+	// 		$('#wpsl_latitude').val(marker.position.lat());
+	// 		$('#wpsl_longitude').val(marker.position.lng());
+	// 		$('#wpsl_latitude, #wpsl_longitude').attr('readonly', false);
+	// 		$('#wpsl_custom_geo').val('true');
+	// 		mappinrelocated = true;
+	// 	});
+	// }
 
 	/**
 	* ------------------------------------------------------

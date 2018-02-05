@@ -3,14 +3,13 @@
 * Error Modal
 */
 ?>
-<div class="wpsl-modal wpsl-error-modal fade" id="wpsl-error-modal">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-body">
-				<h3><?php _e('The address could not be found at this time.', 'wpsimplelocator'); ?></h3>
-				<a href="#" class="wpsl-cancel-trash button" data-dismiss="modal"><?php _e('Cancel', 'wpsimplelocator'); ?></a>
-				<a href="#" class="wpsl-address-confirm button-primary"><?php _e('Save without location', 'wpsimplelocator'); ?></a>
-			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+<div class="modal-backdrop" data-modal="post-edit-error" data-modal-backdrop></div>
+<div class="modal-content small" data-modal="post-edit-error">
+	<div class="modal-content-body">
+		<h3><?php _e('The address could not be found at this time.', 'wpsimplelocator'); ?></h3>
+	</div>
+	<div class="modal-content-footer">
+		<a href="#" class="wpsl-cancel-trash button" data-dismiss="modal"><?php _e('Cancel', 'wpsimplelocator'); ?></a>
+		<a href="#" class="wpsl-address-confirm button-primary" data-simple-locator-confirm-no-address><?php _e('Save without location', 'wpsimplelocator'); ?></a>
+	</div>
+</div><!-- .modal-content -->

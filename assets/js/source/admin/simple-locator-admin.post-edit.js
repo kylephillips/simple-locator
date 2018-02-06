@@ -55,7 +55,7 @@ SimpleLocatorAdmin.PostEdit = function()
 	*/
 	self.setMapPinStatus = function()
 	{
-		self.mappinrelocated = ( $('#wpsl_custom_geo').val('true') ) ? true : false;
+		self.mappinrelocated = ( $('#wpsl_custom_geo').val() == 'true' ) ? true : false;
 	}
 
 	/**
@@ -146,7 +146,7 @@ SimpleLocatorAdmin.PostEdit = function()
 			$(self.selectors.inputLongitude).val(marker.position.lng());
 			$(self.selectors.inputLatitude + ',' +  self.selectors.inputLongitude).attr('readonly', false);
 			$('#wpsl_custom_geo').val('true');
-			mappinrelocated = true;
+			self.mappinrelocated = true;
 		});
 	}
 

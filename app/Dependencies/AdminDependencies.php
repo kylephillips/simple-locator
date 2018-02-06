@@ -41,7 +41,7 @@ class AdminDependencies extends DependencyBase
 			wp_enqueue_script('google-maps');
 			wp_enqueue_media();
 			wp_enqueue_script(
-				'simple-locator-admin', 
+				'simple-locator-admin',
 				$this->plugin_dir . '/assets/js/simple-locator-admin.min.js', 
 				['jquery', 'jquery-ui-sortable', 'jquery-ui-datepicker'], 
 				$this->version
@@ -54,7 +54,7 @@ class AdminDependencies extends DependencyBase
 				'posttype_setting'	=> get_option('wpsl_post_type'),
 				'lat_field'			=> $this->settings_repo->getGeoField('lat'),
 				'lng_field'			=> $this->settings_repo->getGeoField('lng'),
-				'map_field'			=> get_option('wpsl_acf_map_field'),
+				'map_field'			=> $this->settings_repo->acfMapField(),
 				'location_not_found'	=> __('The address could not be found at this time.', 'wpsimplelocator'),
 				'api_load_error'	=> __('There was an error loading the Google Maps API. This may be due to a missing or invalid API key.', 'wpsimplelocator')
 			];

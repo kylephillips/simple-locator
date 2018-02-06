@@ -148,6 +148,15 @@ class SettingsRepository
 	}
 
 	/**
+	* Get the ACF map field if exists
+	*/
+	public function acfMapField()
+	{
+		$option = get_option('wpsl_acf_map_field');
+		return ( $option !== '' ) ? $option : false;
+	}
+
+	/**
 	* Is Autocomplete enabled?
 	* @return boolean
 	*/

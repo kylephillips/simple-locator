@@ -73,7 +73,7 @@ if ( class_exists('acf_field_google_map') ) :
 		<?php 
 			foreach ( $map_fields as $key => $label ){
 				$out = '<option value="' . $key . '"';
-				if ( $key == get_option('wpsl_acf_map_field') ) $out .= ' selected';
+				if ( $key == $this->settings_repo->acfMapField() ) $out .= ' selected';
 				$out .= '>' . $label . '</option>';
 				echo $out;
 			}

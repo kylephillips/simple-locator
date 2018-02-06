@@ -20,7 +20,8 @@ SimpleLocatorAdmin.PostType = function()
 		latLngOptions : 'data-simple-locator-lat-lng-options',
 		showHiddenCheckbox : 'data-simple-locator-show-hidden',
 		hidePostTypeCheckbox : 'data-simple-locator-hide-post-type',
-		hideIncludedFieldsCheckbox : 'data-simple-locator-hide-included-fields'
+		hideIncludedFieldsCheckbox : 'data-simple-locator-hide-included-fields',
+		resetButton : 'data-simple-locator-reset-post-type'
 	}
 
 	self.bindEvents = function()
@@ -31,6 +32,7 @@ SimpleLocatorAdmin.PostType = function()
 			self.toggleCustomFieldOptions();
 			self.toggleHideDefaultCheckbox();
 			self.toggleHideIncludedFieldsCheckbox();
+			self.loadPostTypeFields();
 		});
 		$(document).on('change', '[' + self.selectors.postTypeField + ']', function(){
 			self.togglePostTypeLabels();
@@ -48,6 +50,11 @@ SimpleLocatorAdmin.PostType = function()
 		});
 		$(document).on('change', '[' + self.selectors.showHiddenCheckbox + ']', function(){
 			self.loadPostTypeFields();
+		});
+		$(document).on('click', '[' + self.selectors.resetButton + ']', function(e){
+			e.preventDefault();
+			if ( !confirm('Are you sure you want to reset to the default post type?') ) return false;
+			self.resetPostType();
 		});
 	}
 
@@ -178,6 +185,23 @@ SimpleLocatorAdmin.PostType = function()
 			return;
 		}
 		$(checkboxParent).show();
+	}
+
+	/**
+	* Reset to default settings
+	*/
+	self.resetPostType = function()
+	{
+		$.ajax({
+			type: 'POST',
+			url: ajaxurl,
+			data: {
+				action: 'wpslresetposttype'
+			},
+			success: function(data){
+				location.reload();
+			}
+		});
 	}
 
 	return self.bindEvents();

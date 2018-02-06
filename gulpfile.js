@@ -29,7 +29,6 @@ var js_source = [
 ];
 
 var js_admin_source = [
-	//'assets/js/source/admin/simple-locator-admin.js',
 	'assets/js/source/admin/simple-locator-admin.modals.js',
 	'assets/js/source/admin/simple-locator-admin.general-settings.js',
 	'assets/js/source/admin/simple-locator-admin.post-type.js',

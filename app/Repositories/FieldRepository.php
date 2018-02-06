@@ -28,7 +28,7 @@ class FieldRepository
 	* @param string post_type
 	* @return array
 	*/
-	public function getFieldsForPostType($post_type, $show_hidden = false)
+	public function getFieldsForPostType($post_type, $show_hidden = false, $include_wpsl = true)
 	{
 		global $wpdb;
 		$post_table = $wpdb->prefix . 'posts';
@@ -40,7 +40,7 @@ class FieldRepository
 		}
 		$results = $wpdb->get_results($sql);
 		$fields = ( $results ) ? $this->fieldsArray($results) : array();
-		$fields = $this->addSimpleLocatorMeta($post_type, $fields);
+		if ( $include_wpsl ) $fields = $this->addSimpleLocatorMeta($post_type, $fields);
 		return $fields;
 	}
 
@@ -78,9 +78,9 @@ class FieldRepository
 	* @param string post_type
 	* @return html
 	*/
-	public function displayFieldOptions($post_type, $show_hidden = false)
+	public function displayFieldOptions($post_type, $show_hidden = false, $include_wpsl = true)
 	{
-		$fields = $this->getFieldsForPostType($post_type, $show_hidden);
+		$fields = $this->getFieldsForPostType($post_type, $show_hidden, $include_wpsl);
 		$out = '';
 		foreach($fields as $field){
 			$out .= '<option value="' . $field . '">' . $field . '</option>';

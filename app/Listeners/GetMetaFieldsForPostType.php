@@ -40,9 +40,11 @@ class GetMetaFieldsForPostType
 	private function setData()
 	{
 		$show_hidden = ( $_GET['show_hidden'] == 'true' ) ? true : false;
+		$include_wpsl = ( $_GET['include_wpsl'] == 'true' ) ? true : false;
 		$this->data = array(
 			'nonce' => sanitize_text_field($_GET['nonce']),
 			'post_type' => sanitize_text_field($_GET['post_type']),
+			'include_wpsl' => $include_wpsl,
 			'show_hidden' => $show_hidden
 		);
 	}
@@ -62,7 +64,7 @@ class GetMetaFieldsForPostType
 	*/
 	private function getFields()
 	{
-		$fields = $this->field_repo->displayFieldOptions($this->data['post_type'], $this->data['show_hidden']);
+		$fields = $this->field_repo->displayFieldOptions($this->data['post_type'], $this->data['show_hidden'], $this->data['include_wpsl']);
 		$response = array('status'=>'success', 'fields'=>$fields);
 		$this->sendResponse($response);
 	}

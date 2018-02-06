@@ -72,6 +72,10 @@ SimpleLocatorAdmin.PostType = function()
 	self.loadPostTypeFields = function()
 	{
 		var postType = $('[' + self.selectors.postTypeField + ']').val();
+		if ( $('[' + self.selectors.useLocatorFieldsRadio + ']').is(':checked') ){
+			self.selectLocationFields();
+			return;
+		}
 		$('[' + self.selectors.latitudeSelectField + '],[' + self.selectors.longitudeSelectField + ']').empty();
 		self.getCustomFields(postType);
 	}
@@ -95,6 +99,7 @@ SimpleLocatorAdmin.PostType = function()
 	self.getCustomFields = function(postType)
 	{
 		var showHidden = ( $('[' + self.selectors.showHidden + ']').is(':checked') ) ? 'true' : 'false';
+		var include_wpsl = ( $('[' + self.selectors.useLocatorFieldsRadio + ']').is(':checked') ) ? 'true' : 'false';
 		$.ajax({
 			type: 'GET',
 			url: ajaxurl,
@@ -102,7 +107,8 @@ SimpleLocatorAdmin.PostType = function()
 				action: 'wpslposttype',
 				nonce: wpsl_locator.locatorNonce,
 				post_type: postType,
-				show_hidden: showHidden
+				show_hidden: showHidden,
+				include_wpsl : include_wpsl
 			},
 			success: function(data){
 				$('[' + self.selectors.latitudeSelectField + '],[' + self.selectors.longitudeSelectField + ']').html(data.fields);

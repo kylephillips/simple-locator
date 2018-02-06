@@ -164,22 +164,22 @@ jQuery(function($){
 	* Settings Page – Hide/Show location button text
 	* ------------------------------------------------------
 	*/
-	function hideGeoText()
-	{
-		if ( $('#wpsl_geo_button_enable').is(':checked') ){
-			$('.wpsl-location-text').show();
-		} else {
-			$('.wpsl-location-text').hide();
-		}
-	}
+	// function hideGeoText()
+	// {
+	// 	if ( $('#wpsl_geo_button_enable').is(':checked') ){
+	// 		$('.wpsl-location-text').show();
+	// 	} else {
+	// 		$('.wpsl-location-text').hide();
+	// 	}
+	// }
 
-	$('#wpsl_geo_button_enable').on('change', function(){
-		hideGeoText();
-	});
+	// $('#wpsl_geo_button_enable').on('change', function(){
+	// 	hideGeoText();
+	// });
 
-	$(document).ready(function(){
-		hideGeoText();
-	});
+	// $(document).ready(function(){
+	// 	hideGeoText();
+	// });
 
 
 	/**
@@ -312,34 +312,34 @@ jQuery(function($){
 	* Settings Page - Map Pin
 	* ------------------------------------------------------
 	*/
-	$(document).ready(function() {
+	// $(document).ready(function() {
 
-		$(document).on('click', '#upload_image_button', function() {
-			formfield = $('#upload_image').attr('name');
-			tb_show('', 'media-upload.php?type=image&TB_iframe=true');
-			return false;
-		});
+		// $(document).on('click', '#upload_image_button', function() {
+		// 	formfield = $('#upload_image').attr('name');
+		// 	tb_show('', 'media-upload.php?type=image&TB_iframe=true');
+		// 	return false;
+		// });
 
-		window.send_to_editor = function(html) {
-			imgurl = $('a' + html).attr('href');
-			console.log(html);
-			var imagehtml = '<img src="' + imgurl + '" id="map-pin-image" />';
-			imagehtml += '<input id="remove_map_pin" type="button" value="' + wpsl_locator.remove + '" class="button action" style="margin-right:5px;margin-left:10px;" />';
-			$('#map-pin-image-cont').append(imagehtml);
-			$('#upload_image_button').remove();
-			$('#wpsl_map_pin').val(imgurl);
-			tb_remove();
-		}
+		// window.send_to_editor = function(html) {
+		// 	imgurl = $('a' + html).attr('href');
+		// 	console.log(html);
+		// 	var imagehtml = '<img src="' + imgurl + '" id="map-pin-image" />';
+		// 	imagehtml += '<input id="remove_map_pin" type="button" value="' + wpsl_locator.remove + '" class="button action" style="margin-right:5px;margin-left:10px;" />';
+		// 	$('#map-pin-image-cont').append(imagehtml);
+		// 	$('#upload_image_button').remove();
+		// 	$('#wpsl_map_pin').val(imgurl);
+		// 	tb_remove();
+		// }
 
-	});
+	// });
 
-	$(document).on('click', '#remove_map_pin', function(e){
-		e.preventDefault();
-		$('#map-pin-image').remove();
-		$('#wpsl_map_pin').prop('value', '');
-		$('#map-pin-image-cont').append('<input id="upload_image_button" type="button" value="' + wpsl_locator.upload + '" class="button action" />');
-		$(this).remove();
-	});
+	// $(document).on('click', '#remove_map_pin', function(e){
+	// 	e.preventDefault();
+	// 	$('#map-pin-image').remove();
+	// 	$('#wpsl_map_pin').prop('value', '');
+	// 	$('#map-pin-image-cont').append('<input id="upload_image_button" type="button" value="' + wpsl_locator.upload + '" class="button action" />');
+	// 	$(this).remove();
+	// });
 
 
 

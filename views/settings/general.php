@@ -34,20 +34,20 @@ if ( !isset($location_btn['text']) || $location_btn['text'] == "" ) $location_bt
 <tr valign="top">
 	<th scope="row"><?php _e('Custom Map Pin', 'wpsimplelocator'); ?></th>
 	<td>
-		<div id="map-pin-image-cont" style="float:left;">
+		<div id="map-pin-image-cont" style="float:left;" data-simple-locator-map-pin-image-container>
 			<?php 
 			if ( get_option('wpsl_map_pin') ){
-				echo '<img src="' . get_option('wpsl_map_pin') . '" id="map-pin-image" />';
+				echo '<img src="' . get_option('wpsl_map_pin') . '" id="map-pin-image" data-simple-locator-map-pin-image />';
 			}
 			?>
 		</div>
 		<?php 
 		if ( get_option('wpsl_map_pin') ){
-			echo '<input id="remove_map_pin" type="button" value="' . __('Remove', 'wpsimplelocator') . '" class="button action" style="margin-right:5px;margin-left:10px;" />';
+			echo '<input id="remove_map_pin" type="button" value="' . __('Remove', 'wpsimplelocator') . '" class="button action" style="margin-right:5px;margin-left:10px;" data-simple-locator-remove-pin-button />';
 		} else {
-			echo '<input id="upload_image_button" type="button" value="Upload" class="button action" />';
+			echo '<input id="upload_image_button" type="button" value="Upload" class="button action" data-simple-locator-upload-pin-button />';
 		} ?>
-		<input id="wpsl_map_pin" type="text" size="36" name="wpsl_map_pin" value="<?php echo get_option('wpsl_map_pin'); ?>" style="display:none;" />
+		<input id="wpsl_map_pin" type="text" size="36" name="wpsl_map_pin" value="<?php echo get_option('wpsl_map_pin'); ?>" style="display:none;" data-simple-locator-map-pin-input />
 	</td>
 </tr>
 <tr valign="top">
@@ -117,13 +117,13 @@ if ( !isset($location_btn['text']) || $location_btn['text'] == "" ) $location_bt
 	<th scope="row"><?php _e('Location Button', 'wpsimplelocator'); ?></th>
 	<td>
 		<label>
-			<input type="checkbox" id="wpsl_geo_button_enable" name="wpsl_geo_button[enabled]" value="true" <?php if ( $location_btn['enabled'] ) echo 'checked'; ?> />
+			<input type="checkbox" id="wpsl_geo_button_enable" name="wpsl_geo_button[enabled]" value="true" <?php if ( $location_btn['enabled'] ) echo 'checked'; ?> data-simple-locator-geo-enabled-checkbox />
 			<?php _e('Display location button on geolocation enabled devices/browsers', 'wpsimplelocator');?>
 
 		</label>
 	</td>
 </tr>
-<tr valign="top" class="wpsl-location-text">
+<tr valign="top" class="wpsl-location-text" data-simple-locator-location-button-text>
 	<th scope="row"><?php _e('Location Button Text', 'wpsimplelocator'); ?></th>
 	<td>
 		<input type="text" name="wpsl_geo_button[text]" value="<?php echo esc_html($location_btn['text']); ?>" />

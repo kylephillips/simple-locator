@@ -39,9 +39,7 @@ class AdminDependencies extends DependencyBase
 		if ( ($screen->post_type == get_option('wpsl_post_type')) || ($screen->id == 'settings_page_wp_simple_locator') ) {
 			$this->addGoogleMaps();
 			wp_enqueue_script('google-maps');
-			wp_enqueue_script('media-upload');
-			wp_enqueue_script('thickbox');
-			wp_enqueue_style('thickbox');
+			wp_enqueue_media();
 			wp_enqueue_script(
 				'simple-locator-admin', 
 				$this->plugin_dir . '/assets/js/simple-locator-admin.min.js', 

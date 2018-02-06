@@ -37,7 +37,7 @@ class SingleLocationShortcode
 	{
 		$this->post_repo = new PostRepository;
 		$this->settings_repo = new SettingsRepository;
-		add_shortcode('wp_simple_locator_map', array($this, 'renderView'));
+		add_shortcode('wp_simple_locator_map', [$this, 'renderView']);
 	}
 
 	/**
@@ -45,10 +45,10 @@ class SingleLocationShortcode
 	*/
 	private function setOptions($options)
 	{
-		$this->options = shortcode_atts(array(
+		$this->options = shortcode_atts([
 			'post' => get_the_id(),
 			'additionalfields' => 'hide'
-		), $options);
+		], $options);
 	}
 
 	/**
@@ -78,7 +78,7 @@ class SingleLocationShortcode
 		$this->setOptions($options);
 		$this->setLocationData();
 		$this->enqueueScripts();
-
+	
 		include ( \SimpleLocator\Helpers::view('singular-post') );
 		return $out;
 	}

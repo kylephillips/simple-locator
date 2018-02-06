@@ -18,9 +18,9 @@ SimpleLocatorAdmin.Modals = function()
 	plugin.modalOpen = false;
 
 	plugin.selectors = {
-		toggleBtn : '[data-modal-toggle]',
-		backdrop : '[data-modal-backdrop]',
-		closeBtn : '[data-modal-close]'
+		toggleBtn : '[data-wpsl-modal-toggle]',
+		backdrop : '[data-wpsl-modal-backdrop]',
+		closeBtn : '[data-wpsl-modal-close]'
 	}
 
 	plugin.bindEvents = function()
@@ -34,11 +34,12 @@ SimpleLocatorAdmin.Modals = function()
 			e.preventDefault();
 			plugin.closeModals();
 		});
-		$(document).on('open-modal-manual', function(e, modal){
-			plugin.activeModal = $('*[data-modal="' + modal + '"]');
+		$(document).on('open-wpsl-modal-manual', function(e, modal){
+			plugin.activeModal = $('*[data-wpsl-modal="' + modal + '"]');
+			console.log(plugin.activeModal);
 			plugin.openModal();
 		});
-		$(document).on('close-modal-manual', function(e){
+		$(document).on('close-wpsl-modal-manual', function(e){
 			plugin.closeModals();
 		});
 		$(document).on('click', plugin.selectors.backdrop, function(e){
@@ -56,12 +57,12 @@ SimpleLocatorAdmin.Modals = function()
 			return;
 		}
 		if ( $(plugin.activeBtn).length > 0 ){
-			var modal = $(plugin.activeBtn).attr('data-modal-toggle');
-			plugin.activeModal = $('*[data-modal="' + modal + '"]');
+			var modal = $(plugin.activeBtn).attr('data-wpsl-modal-toggle');
+			plugin.activeModal = $('*[data-wpsl-modal="' + modal + '"]');
 		}
 		$(plugin.activeModal).addClass('active');
 		plugin.modalOpen = true;
-		$(document).trigger('open-modal', [plugin.activeBtn, plugin.activeModal]);
+		$(document).trigger('open-wpsl-modal', [plugin.activeBtn, plugin.activeModal]);
 	}
 
 	/**
@@ -70,8 +71,8 @@ SimpleLocatorAdmin.Modals = function()
 	plugin.closeModals = function()
 	{
 		plugin.modalOpen = false;
-		$('[data-modal]').removeClass('active');
-		$(document).trigger('close-modal', [plugin.activeBtn, plugin.activeModal]);
+		$('[data-wpsl-modal]').removeClass('active');
+		$(document).trigger('close-wpsl-modal', [plugin.activeBtn, plugin.activeModal]);
 	}
 
 	return plugin.bindEvents();

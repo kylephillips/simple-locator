@@ -38,7 +38,7 @@ SimpleLocatorAdmin.PostEdit = function()
 			if ( self.mappinrelocated ) return;
 			e.preventDefault();
 			if ( editScreenGoogleApiError ){
-				$(document).trigger('open-modal-manual', ['post-edit-error'])
+				$(document).trigger('open-wpsl-modal-manual', ['post-edit-error'])
 				return;
 			}
 			var address = self.formatAddress();
@@ -89,7 +89,7 @@ SimpleLocatorAdmin.PostEdit = function()
 				self.lookupaddress = false;
 				$(self.selectors.publishButton).click();
 			} else {
-				$(document).trigger('open-modal-manual', ['post-edit-error'])
+				$(document).trigger('open-wpsl-modal-manual', ['post-edit-error'])
 			}
 		});
 	}
@@ -99,7 +99,7 @@ SimpleLocatorAdmin.PostEdit = function()
 	*/
 	self.saveWithoutLocation = function()
 	{
-		$(document).trigger('close-modal-manual');
+		$(document).trigger('close-wpsl-modal-manual');
 		self.lookupaddress = false;
 		$(self.selectors.publishButton).click();
 	}

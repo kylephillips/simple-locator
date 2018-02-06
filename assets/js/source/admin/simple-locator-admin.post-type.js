@@ -28,7 +28,6 @@ SimpleLocatorAdmin.PostType = function()
 	{
 		$(document).ready(function(){
 			self.togglePostTypeLabels();
-			self.toggleIncludedOptions();
 			self.toggleCustomFieldOptions();
 			self.toggleHideDefaultCheckbox();
 			self.toggleHideIncludedFieldsCheckbox();
@@ -37,7 +36,6 @@ SimpleLocatorAdmin.PostType = function()
 		$(document).on('change', '[' + self.selectors.postTypeField + ']', function(){
 			self.togglePostTypeLabels();
 			self.loadPostTypeFields();
-			self.toggleIncludedOptions();
 			self.toggleHideDefaultCheckbox();
 			self.toggleHideIncludedFieldsCheckbox();
 		});
@@ -45,6 +43,9 @@ SimpleLocatorAdmin.PostType = function()
 			self.updateLatLngValues();
 		});
 		$(document).on('change', '[' + self.selectors.useLocatorFieldsRadio + '],[' + self.selectors.useCustomFieldsRadio + ']', function(){
+			if ( $('[' + self.selectors.useLocatorFieldsRadio + ']').is(':checked') ){
+				self.selectLocationFields();
+			}
 			self.toggleCustomFieldOptions();
 			self.toggleHideIncludedFieldsCheckbox();
 		});
@@ -56,17 +57,6 @@ SimpleLocatorAdmin.PostType = function()
 			if ( !confirm('Are you sure you want to reset to the default post type?') ) return false;
 			self.resetPostType();
 		});
-	}
-
-	self.toggleIncludedOptions = function()
-	{
-		var pt = $('[' + self.selectors.postTypeField + ']').val();
-		if ( pt !== wpsl_locator.posttype ){
-			$('[' + self.selectors.useLocatorFieldsRadio + ']').attr('disabled', true).removeAttr('checked');
-			$('[' + self.selectors.useCustomFieldsRadio + ']').attr('checked', true);
-			return;
-		}
-		$('[' + self.selectors.useLocatorFieldsRadio + ']').removeAttr('disabled');
 	}
 
 	self.togglePostTypeLabels = function()
@@ -82,14 +72,6 @@ SimpleLocatorAdmin.PostType = function()
 	self.loadPostTypeFields = function()
 	{
 		var postType = $('[' + self.selectors.postTypeField + ']').val();
-		if ( postType !== wpsl_locator.posttype ){
-			$('[' + self.selectors.useLocatorFieldsRadio + ']').attr('disabled', true).removeAttr('checked');
-			$('[' + self.selectors.useCustomFieldsRadio + ']').attr('checked', true);
-			$('[' + self.selectors.latLngOptions + ']').show();
-		} else {
-			$('[' + self.selectors.useCustomFieldsRadio + ']').removeAttr('disabled');
-			self.selectLocationFields();
-		}
 		$('[' + self.selectors.latitudeSelectField + '],[' + self.selectors.longitudeSelectField + ']').empty();
 		self.getCustomFields(postType);
 	}
@@ -175,11 +157,10 @@ SimpleLocatorAdmin.PostType = function()
 	*/
 	self.toggleHideIncludedFieldsCheckbox = function()
 	{
-		var posttype = $('[' + self.selectors.postTypeField + ']').val();
 		var checkbox = $('[' + self.selectors.hideIncludedFieldsCheckbox + ']');
 		var checkboxParent = $(checkbox).parent('label').parent('p');
 		var useIncluded = ( $('[' + self.selectors.useLocatorFieldsRadio + ']').is(':checked') ) ? true : false;
-		if ( posttype !== wpsl_locator.posttype || useIncluded ){
+		if ( useIncluded ){
 			$(checkbox).removeAttr('checked');
 			$(checkboxParent).hide();
 			return;

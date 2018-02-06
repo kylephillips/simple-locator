@@ -91,33 +91,12 @@ if ( class_exists('acf_field_google_map') ) :
 
 	<div class="wpsl-left-field">
 		<label class="wpsl-block-label"><?php _e('Latitude Field', 'wpsimplelocator'); ?></label>
-		<select id="lat_select" data-simple-locator-latitude-select>
-			<?php 
-				$show_hidden = ( get_option('wpsl_show_hidden') == 'true' ) ? true : false;
-				$fields = $this->field_repo->getFieldsForPostType($this->post_type, $show_hidden);
-				foreach ( $fields as $field ){
-					$out = '<option value="' . $field . '"';
-					if ( $field == get_option('wpsl_lat_field') ) $out .= ' selected';
-					$out .= '>' . $field . '</option>';
-					echo $out;
-				}
-			?>
-		</select>
+		<select id="lat_select" data-simple-locator-latitude-select></select>
 	</div>
 
 	<div class="wpsl-right-field">
 		<label class="wpsl-block-label"><?php _e('Longitude Field', 'wpsimplelocator'); ?></label>
-		<select id="lng_select" data-simple-locator-longitude-select>
-			<?php 
-				$fields = $this->field_repo->getFieldsForPostType($this->post_type, $show_hidden);
-				foreach ( $fields as $field ){
-					$out = '<option value="' . $field . '"';
-					if ( $field == get_option('wpsl_lng_field') ) $out .= ' selected';
-					$out .= '>' . $field . '</option>';
-					echo $out;
-				}
-			?>
-		</select>
+		<select id="lng_select" data-simple-locator-longitude-select></select>
 	</div>
 
 	<p class="wpsl-degree-info"><?php _e('Latitude and Longitude fields must be separate fields. Entries must be formatted in decimal degree format (not DMS format).', 'wpsimplelocator'); ?></p>

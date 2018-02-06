@@ -51,6 +51,7 @@ class AdminDependencies extends DependencyBase
 				'upload' 			=> __('Upload', 'wpsimplelocator'),
 				'remove' 			=> __('Remove', 'wpsimplelocator'),
 				'posttype' 			=> $this->post_type,
+				'posttype_setting'	=> get_option('wpsl_post_type'),
 				'lat_field'			=> $this->settings_repo->getGeoField('lat'),
 				'lng_field'			=> $this->settings_repo->getGeoField('lng'),
 				'map_field'			=> get_option('wpsl_acf_map_field'),

@@ -24,16 +24,20 @@ class JsonResponseFactory
 	private function setData()
 	{
 		$taxonomies = ( isset($this->request['taxonomies']) ) ? $this->request['taxonomies'] : null;
+		$address = ( isset($this->request['address']) ) ? sanitize_text_field($this->request['address']) : null;
+		$formatted_address = ( isset($this->request['formatted_address']) ) ? sanitize_text_field($this->request['formatted_address']) : null;
+		$geolocation = ( isset($this->request['geolocation']) && $this->request['geolocation'] == 'true' ) ? true : false;
+		$allow_empty_address = ( isset($this->request['allow_empty_address']) && $this->request['allow_empty_address'] == 'true' ) ? true : false;
 		$this->data = array(
-			'address' => sanitize_text_field($this->request['address']),
-			'formatted_address' => sanitize_text_field($this->request['formatted_address']),
+			'address' => $address,
+			'formatted_address' => $formatted_address,
 			'distance' => sanitize_text_field($this->request['distance']),
 			'latitude' => sanitize_text_field($this->request['latitude']),
 			'longitude' => sanitize_text_field($this->request['longitude']),
 			'unit' => sanitize_text_field($this->request['unit']),
-			'geolocation' => sanitize_text_field($this->request['geolocation']),
+			'geolocation' => $geolocation,
 			'taxonomies' => $taxonomies,
-			'allow_empty_address' => $this->request['allow_empty_address']
+			'allow_empty_address' => $allow_empty_address
 		);
 	}
 

@@ -13,8 +13,8 @@ class StoreSearch
 	public function save($request = null)
 	{
 		$request = ( $request ) ? $request : $_POST;
-		$address = sanitize_text_field($request['address']);
-		$formatted_address = sanitize_text_field($request['formatted_address']);
+		$address = ( isset($request['address']) ) ? sanitize_text_field($request['address']) : 'none';
+		$formatted_address = ( isset($request['formatted_address']) ) ? sanitize_text_field($request['formatted_address']) : 'none';
 		$distance = sanitize_text_field($request['distance']);
 		$latitude = sanitize_text_field($request['latitude']);
 		$longitude = sanitize_text_field($request['longitude']);

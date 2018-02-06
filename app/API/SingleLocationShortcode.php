@@ -38,6 +38,7 @@ class SingleLocationShortcode
 		$this->post_repo = new PostRepository;
 		$this->settings_repo = new SettingsRepository;
 		add_shortcode('wp_simple_locator_map', [$this, 'renderView']);
+		add_shortcode('simple_locator_single', [$this, 'renderView']);
 	}
 
 	/**

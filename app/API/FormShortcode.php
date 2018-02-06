@@ -39,8 +39,9 @@ class FormShortcode
 	{
 		$this->styles_repo = new MapStyles;
 		$this->settings_repo = new SettingsRepository();
-		add_action('init', array($this, 'init'));
-		add_shortcode('wp_simple_locator', array($this, 'renderView'));
+		add_action('init', [$this, 'init']);
+		add_shortcode('wp_simple_locator', [$this, 'renderView']);
+		add_shortcode('simple_locator', [$this, 'renderView']);
 	}
 
 	/**
@@ -93,7 +94,7 @@ class FormShortcode
 	*/
 	private function setOptions($options)
 	{
-		$this->options = shortcode_atts(array(
+		$this->options = shortcode_atts([
 			'distances' => '5,10,20,50,100',
 			'mapheight' => '250',
 			'mapcontainer' => '',
@@ -112,7 +113,7 @@ class FormShortcode
 			'taxonomy_field_type' => 'select', // or checkbox
 			'allowemptyaddress' => 'false',
 			'resultswrapper' => ''
-		), $options);
+		], $options);
 	}
 
 	/**
@@ -134,7 +135,7 @@ class FormShortcode
 	*/ 
 	private function localizeOptions()
 	{
-		$localized_data = array(
+		$localized_data = [
 			'mapcont' => $this->options['mapcontainer'],
 			'resultscontainer' => $this->options['resultscontainer'],
 			'mapcontrols' => $this->options['mapcontrols'],
@@ -142,7 +143,7 @@ class FormShortcode
 			'ajax' => $this->options['ajax'],
 			'noresultstext' => $this->options['noresultstext'],
 			'resultswrapper' => $this->options['resultswrapper']
-		);
+		];
 		wp_localize_script( 
 			'simple-locator', 
 			'wpsl_locator_options', 
@@ -167,5 +168,4 @@ class FormShortcode
 		include ( \SimpleLocator\Helpers::view('simple-locator-form') );
 		return apply_filters('simple_locator_form', $output, $this->options['distances'], $this->taxonomies, $widget);
 	}
-
 }

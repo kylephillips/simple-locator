@@ -56,6 +56,7 @@ class APILocationSearch
 		$response = $this->response_factory->build(
 			$this->location_search->getResults(), 
 			$this->location_search->getResultCount(),
+			$this->location_search->getTotalResultCount(),
 			$this->request
 		);
 		$this->storeSearch();

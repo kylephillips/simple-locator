@@ -28,6 +28,9 @@ class JsonResponseFactory
 		$formatted_address = ( isset($this->request['formatted_address']) ) ? sanitize_text_field($this->request['formatted_address']) : null;
 		$geolocation = ( isset($this->request['geolocation']) && $this->request['geolocation'] == 'true' ) ? true : false;
 		$allow_empty_address = ( isset($this->request['allow_empty_address']) && $this->request['allow_empty_address'] == 'true' ) ? true : false;
+		$page = ( isset($this->request['page']) ) ? intval($this->request['page']) : null;
+		$per_page = ( isset($this->request['per_page']) ) ? intval($this->request['per_page']) : -1;
+
 		$this->data = array(
 			'address' => $address,
 			'formatted_address' => $formatted_address,
@@ -37,7 +40,9 @@ class JsonResponseFactory
 			'unit' => sanitize_text_field($this->request['unit']),
 			'geolocation' => $geolocation,
 			'taxonomies' => $taxonomies,
-			'allow_empty_address' => $allow_empty_address
+			'allow_empty_address' => $allow_empty_address,
+			'page' => $page,
+			'per_page' => $per_page
 		);
 	}
 
@@ -45,7 +50,7 @@ class JsonResponseFactory
 	* Build the Response Array
 	* @return array
 	*/
-	public function build($results, $results_count, $request = null)
+	public function build($results, $results_count, $total_count = 0, $request = null)
 	{
 		$this->request = ( $request ) ? $request : $_POST;
 		$this->setData();
@@ -56,11 +61,14 @@ class JsonResponseFactory
 			'longitude' => $this->data['longitude'],
 			'unit' => $this->data['unit'],
 			'formatted_address' => $this->data['formatted_address'],
-			'results' => $results,
 			'result_count' => $results_count,
 			'geolocation' => $this->data['geolocation'],
 			'taxonomies' => $this->data['taxonomies'],
-			'allow_empty_address' => $this->data['allow_empty_address']
+			'allow_empty_address' => $this->data['allow_empty_address'],
+			'total_count' => $total_count,
+			'page' => $this->data['page'],
+			'per_page' => $this->data['per_page'],
+			'results' => $results
 		);
 	}
 

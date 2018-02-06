@@ -123,7 +123,7 @@ class LocationSearch
 			'longitude' => sanitize_text_field($this->request['longitude']),
 			'unit' => sanitize_text_field($this->request['unit']),
 			'offset' => ( isset($this->request['page']) ) ? sanitize_text_field(intval($this->request['page'])) : null,
-			'limit' => ( isset($this->request['limit']) ) ? sanitize_text_field(intval($this->request['limit'])) : null
+			'limit' => ( isset($this->request['per_page']) ) ? sanitize_text_field(intval($this->request['per_page'])) : null
 		);
 		if ( isset($this->request['taxonomies']) ) $this->setTaxonomies();
 	}
@@ -221,7 +221,7 @@ class LocationSearch
 		if ( $this->data['limit'] ) {
 			$limit = "LIMIT ";
 			if ( $this->data['offset'] ) $limit .= $this->data['offset'] . ',';
-			$limit .= $this->data['limit'] + 1;
+			$limit .= $this->data['limit'];
 			return $limit;
 		}
 		$limit = $this->settings_repo->resultsLimit();
@@ -253,7 +253,7 @@ class LocationSearch
 	/**
 	* Set the Query
 	*/
-	private function setQuery()
+	private function setQuery($include_limit = true)
 	{
 		$sql = "
 			SELECT DISTINCT p.post_title AS title, p.ID AS id" .
@@ -268,7 +268,7 @@ class LocationSearch
 			$sql .= $this->taxonomyJoins();
 			$sql .= $this->sqlWhere();
 			if ( $this->address ) $sql .= "\nHAVING distance < @distance\nORDER BY distance\n";
-			$sql .= $this->sqlLimit() . ";";
+			$sql .= ($include_limit) ? $this->sqlLimit() . ";" : ';';
 		$this->sql = $sql;
 	}
 
@@ -292,7 +292,7 @@ class LocationSearch
 		$results = $wpdb->get_results($this->sql);
 		$this->result_count = count($results);
 		$this->setResults($results);
-		if ( $this->data['limit'] ) $this->setTotalResults();
+		$this->setTotalResults();
 	}
 
 	/**
@@ -330,7 +330,8 @@ class LocationSearch
 			$wpdb->query("SET @dist_unit = " . $this->query_data['distance_unit'] . ";");
 		}
 		
-		$results = $wpdb->get_results($sql);
+		$this->setQuery(false);
+		$results = $wpdb->get_results($this->sql);
 		$this->total_results = count($results);
 	}
 

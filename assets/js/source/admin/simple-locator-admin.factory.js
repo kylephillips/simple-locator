@@ -29,6 +29,7 @@ SimpleLocatorAdmin.Factory = function()
 		new SimpleLocatorAdmin.Modals;
 		new SimpleLocatorAdmin.PostEdit;
 		new SimpleLocatorAdmin.GeneralSettings;
+		new SimpleLocatorAdmin.PostType;
 		new SimpleLocatorAdmin.MapDisplay;
 		new SimpleLocatorAdmin.ResultsDisplay;
 		new SimpleLocatorAdmin.DefaultMap;

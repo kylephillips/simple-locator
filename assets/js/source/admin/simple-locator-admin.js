@@ -187,98 +187,98 @@ jQuery(function($){
 	* Settings Page – Post Type & Geocode Fields
 	* ------------------------------------------------------
 	*/
-	$(document).ready(function(){
-		post_type_labels();
-		var pt = $('#wpsl_post_type').val();
-		if ( pt !== wpsl_locator.posttype ){
-			$('#field_wpsl').attr('disabled', 'disabled').removeAttr('checked');
-			$('#field_custom').attr('checked','checked');
-		}
+	// $(document).ready(function(){
+	// 	// post_type_labels();
+	// 	var pt = $('#wpsl_post_type').val();
+	// 	if ( pt !== wpsl_locator.posttype ){
+	// 		$('#field_wpsl').attr('disabled', 'disabled').removeAttr('checked');
+	// 		$('#field_custom').attr('checked','checked');
+	// 	}
 
-		var ft = $('input[name="wpsl_field_type"]:checked').val();
+	// 	var ft = $('input[name="wpsl_field_type"]:checked').val();
 	
-		if ( ft === 'wpsl' ) $('.latlng').hide();
-	});
+	// 	if ( ft === 'wpsl' ) $('.latlng').hide();
+	// });
 
 	// Prevent the selection of wspl geo fields if another post type is selected
-	$(document).on('change', '#wpsl_post_type, #wpsl_show_hidden', function(){
-		load_posttype_fields();
-		post_type_labels();
-	});
+	// $(document).on('change', '#wpsl_post_type, #wpsl_show_hidden', function(){
+		// load_posttype_fields();
+		// post_type_labels();
+	// });
 
 	/**
 	* Load the post type meta fields
 	*/
-	function load_posttype_fields()
-	{
-		var value = $('#wpsl_post_type').val();
-		if ( value !== wpsl_locator.posttype ){
-			$('#field_wpsl').attr('disabled', 'disabled').removeAttr('checked');
-			$('#field_custom').attr('checked','checked');
-			$('.latlng').show();
-		} else {
-			$('#field_wpsl').removeAttr('disabled');
-			select_wpsl_fields();
-		}
+	// function load_posttype_fields()
+	// {
+	// 	var value = $('#wpsl_post_type').val();
+	// 	if ( value !== wpsl_locator.posttype ){
+	// 		$('#field_wpsl').attr('disabled', 'disabled').removeAttr('checked');
+	// 		$('#field_custom').attr('checked','checked');
+	// 		$('.latlng').show();
+	// 	} else {
+	// 		$('#field_wpsl').removeAttr('disabled');
+	// 		select_wpsl_fields();
+	// 	}
 
-		// Load field selections with select post type's custom fields
-		$('#lat_select, #lng_select').empty();
-		get_fields_for_posttype(value);
-	}
+	// 	// Load field selections with select post type's custom fields
+	// 	$('#lat_select, #lng_select').empty();
+	// 	get_fields_for_posttype(value);
+	// }
 
 
-	$(document).on('change', 'input[name="wpsl_field_type"]:radio', function(){
-		var type = $(this).val();
-		if ( type == 'wpsl' ){
-			$('.latlng').hide();
-			select_wpsl_fields();
-		} else {
-			$('.latlng').show();
-			update_lat_lng_values();
-		}
-	});
+	// $(document).on('change', 'input[name="wpsl_field_type"]:radio', function(){
+	// 	var type = $(this).val();
+	// 	if ( type == 'wpsl' ){
+	// 		$('.latlng').hide();
+	// 		select_wpsl_fields();
+	// 	} else {
+	// 		$('.latlng').show();
+	// 		update_lat_lng_values();
+	// 	}
+	// });
 
 	// Update lat field on select change
-	$(document).on('change', '#lat_select, #lng_select', function(){
-		update_lat_lng_values();
-	});
+	// $(document).on('change', '#lat_select, #lng_select', function(){
+	// 	update_lat_lng_values();
+	// });
 
 
 	/**
 	* Update the hidden latitude and longitude fields
 	*/
-	function update_lat_lng_values()
-	{
-		var lat = $('#lat_select').val();
-		var lng = $('#lng_select').val();
-		$('#wpsl_lat_field').val(lat);
-		$('#wpsl_lng_field').val(lng);
-	}
+	// function update_lat_lng_values()
+	// {
+	// 	var lat = $('#lat_select').val();
+	// 	var lng = $('#lng_select').val();
+	// 	$('#wpsl_lat_field').val(lat);
+	// 	$('#wpsl_lng_field').val(lng);
+	// }
 
 	/**
 	* Select the WPSL latlng fields
 	*/
-	function select_wpsl_fields()
-	{	
-		$('#field_wpsl').attr('checked','checked');
-		$('#field_custom').removeAttr('checked','checked');
-		$('#wpsl_lat_field').val('wpsl_latitude');
-		$('#wpsl_lng_field').val('wpsl_longitude');
-		$('#lat_select').val('wpsl_latitude');
-		$('#lng_select').val('wpsl_longitude');
-	}
+	// function select_wpsl_fields()
+	// {	
+	// 	$('#field_wpsl').attr('checked','checked');
+	// 	$('#field_custom').removeAttr('checked','checked');
+	// 	$('#wpsl_lat_field').val('wpsl_latitude');
+	// 	$('#wpsl_lng_field').val('wpsl_longitude');
+	// 	$('#lat_select').val('wpsl_latitude');
+	// 	$('#lng_select').val('wpsl_longitude');
+	// }
 
 	/**
 	* Show/Hide the Post Type Label Fields
 	*/
-	function post_type_labels()
-	{
-		if ( $('#wpsl_post_type').val() === wpsl_locator.posttype ){
-			$('.wpsl-label-row').show();
-		} else {
-			$('.wpsl-label-row').hide();
-		}
-	}
+	// function post_type_labels()
+	// {
+	// 	if ( $('#wpsl_post_type').val() === wpsl_locator.posttype ){
+	// 		$('.wpsl-label-row').show();
+	// 	} else {
+	// 		$('.wpsl-label-row').hide();
+	// 	}
+	// }
 
 	/**
 	* ------------------------------------------------------
@@ -348,28 +348,28 @@ jQuery(function($){
 	* Settings Page - AJAX Field List for Post Types
 	* ------------------------------------------------------
 	*/
-	function get_fields_for_posttype(post_type)
-	{
-		var showHidden = ( $('#wpsl_show_hidden').is(':checked') ) ? 'true' : 'false';
-		$.ajax({
-			type: 'GET',
-			url: ajaxurl,
-			data: {
-				action: 'wpslposttype',
-				nonce: wpsl_locator.locatorNonce,
-				post_type: post_type,
-				show_hidden: showHidden
-			},
-			success: function(data){
-				console.log(data);
-				$('#lat_select, #lng_select').html(data.fields);
-				update_lat_lng_values();
-				if ( post_type === 'location' ){
-					select_wpsl_fields();
-				}
-			}
-		});
-	}
+	// function get_fields_for_posttype(post_type)
+	// {
+	// 	var showHidden = ( $('#wpsl_show_hidden').is(':checked') ) ? 'true' : 'false';
+	// 	$.ajax({
+	// 		type: 'GET',
+	// 		url: ajaxurl,
+	// 		data: {
+	// 			action: 'wpslposttype',
+	// 			nonce: wpsl_locator.locatorNonce,
+	// 			post_type: post_type,
+	// 			show_hidden: showHidden
+	// 		},
+	// 		success: function(data){
+	// 			console.log(data);
+	// 			$('#lat_select, #lng_select').html(data.fields);
+	// 			update_lat_lng_values();
+	// 			if ( post_type === 'location' ){
+	// 				select_wpsl_fields();
+	// 			}
+	// 		}
+	// 	});
+	// }
 
 
 	/**

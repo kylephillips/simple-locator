@@ -10,7 +10,7 @@
 <tr valign="top">
 	<td colspan="2" style="padding:0 0 20px 0;">		
 		<label for="wpsl_post_type" class="wpsl-block-label"><?php _e('Post Type for locations', 'wpsimplelocator'); ?></label>
-		<select name="wpsl_post_type" id="wpsl_post_type" style="width:100%;max-width:540px;">
+		<select name="wpsl_post_type" id="wpsl_post_type" style="width:100%;max-width:540px;" data-simple-locator-post-type-field>
 		<?php
 		foreach ( $this->field_repo->getPostTypes() as $type ){
 			$out = '<option value="' . $type['name'] . '"';
@@ -28,13 +28,13 @@
 	<td colspan="2" style="padding:0 0 20px 0;">
 		<p>
 			<label for="wpsl_hide_default">
-				<input type="checkbox" name="wpsl_hide_default" value="true" id="wpsl_hide_default" <?php if ( get_option('wpsl_hide_default') == 'true') echo 'checked'; ?> />
+				<input type="checkbox" name="wpsl_hide_default" value="true" id="wpsl_hide_default" <?php if ( get_option('wpsl_hide_default') == 'true') echo 'checked'; ?> data-simple-locator-hide-post-type />
 				<?php _e('Hide Default Post Type', 'wpsimplelocator'); ?>
 			</label>
 		</p>
 		<p>
 			<label for="wpsl_hide_default_fields">
-				<input type="checkbox" name="wpsl_hide_default_fields" value="true" id="wpsl_hide_default_fields" <?php if ( get_option('wpsl_hide_default_fields') == 'true') echo 'checked'; ?> />
+				<input type="checkbox" name="wpsl_hide_default_fields" value="true" id="wpsl_hide_default_fields" <?php if ( get_option('wpsl_hide_default_fields') == 'true') echo 'checked'; ?> data-simple-locator-hide-included-fields />
 				<?php _e('Hide Included Location Fields', 'wpsimplelocator'); ?>
 			</label>
 		</p>
@@ -45,13 +45,13 @@
 		<label class="wpsl-block-label"><?php _e('Latitude & Longitude Fields', 'wpsimplelocator'); ?></label>
 		<p>
 			<label for="field_wpsl" class="wpsl-field-type">
-				<input type="radio" name="wpsl_field_type" id="field_wpsl" value="wpsl" <?php if ( $this->field_type == 'wpsl' ) echo ' checked'; ?>>
+				<input type="radio" name="wpsl_field_type" id="field_wpsl" value="wpsl" <?php if ( $this->field_type == 'wpsl' ) echo ' checked'; ?> data-simple-locator-use-included-fields>
 				<?php _e('Use Simple Locator Fields', 'wpsimplelocator'); ?>
 			</label>
 		</p>
 		<p>
 			<label for="field_custom" class="wpsl-field-type">
-				<input type="radio" name="wpsl_field_type" id="field_custom" value="custom" <?php if ( $this->field_type == 'custom' ) echo ' checked'; ?>>
+				<input type="radio" name="wpsl_field_type" id="field_custom" value="custom" <?php if ( $this->field_type == 'custom' ) echo ' checked'; ?> data-simple-locator-use-custom-fields>
 				<?php _e('Use Custom Fields', 'wpsimplelocator'); ?>
 			</label>
 		</p>
@@ -83,15 +83,15 @@ if ( class_exists('acf_field_google_map') ) :
 <?php endif; endif; ?>
 
 
-<div class="latlng">
+<div class="latlng" data-simple-locator-lat-lng-options>
 	<label class="wpsl-show-hidden">
-		<input type="checkbox" name="wpsl_show_hidden" value="true" id="wpsl_show_hidden" <?php if ( get_option('wpsl_show_hidden') == 'true' ) echo 'checked'; ?>> 
+		<input type="checkbox" name="wpsl_show_hidden" value="true" id="wpsl_show_hidden" <?php if ( get_option('wpsl_show_hidden') == 'true' ) echo 'checked'; ?> data-simple-locator-show-hidden> 
 		<?php _e('Show Hidden Fields', 'wpsimplelocator'); ?>
 	</label>
 
 	<div class="wpsl-left-field">
 		<label class="wpsl-block-label"><?php _e('Latitude Field', 'wpsimplelocator'); ?></label>
-		<select id="lat_select">';
+		<select id="lat_select" data-simple-locator-latitude-select>
 			<?php 
 				$show_hidden = ( get_option('wpsl_show_hidden') == 'true' ) ? true : false;
 				$fields = $this->field_repo->getFieldsForPostType($this->post_type, $show_hidden);
@@ -107,7 +107,7 @@ if ( class_exists('acf_field_google_map') ) :
 
 	<div class="wpsl-right-field">
 		<label class="wpsl-block-label"><?php _e('Longitude Field', 'wpsimplelocator'); ?></label>
-		<select id="lng_select">
+		<select id="lng_select" data-simple-locator-longitude-select>
 			<?php 
 				$fields = $this->field_repo->getFieldsForPostType($this->post_type, $show_hidden);
 				foreach ( $fields as $field ){
@@ -123,14 +123,14 @@ if ( class_exists('acf_field_google_map') ) :
 	<p class="wpsl-degree-info"><?php _e('Latitude and Longitude fields must be separate fields. Entries must be formatted in decimal degree format (not DMS format).', 'wpsimplelocator'); ?></p>
 
 	<input type="hidden" id="wpsl_lat_field" name="wpsl_lat_field" 
-	value="<?php echo ( get_option('wpsl_lat_field') ) ? get_option('wpsl_lat_field') : 'wpsl_latitude'; ?>" />
+	value="<?php echo ( get_option('wpsl_lat_field') ) ? get_option('wpsl_lat_field') : 'wpsl_latitude'; ?>"  data-simple-locator-latitude-field />
 
 	<input type="hidden" id="wpsl_lng_field" name="wpsl_lng_field"
-	value="<?php echo ( get_option('wpsl_lng_field') ) ? get_option('wpsl_lng_field') : 'wpsl_longitude'; ?>" />
+	value="<?php echo ( get_option('wpsl_lng_field') ) ? get_option('wpsl_lng_field') : 'wpsl_longitude'; ?>"  data-simple-locator-longitude-field />
 		
 </div><!-- .latlng -->
 
-<div class="wpsl-posttype-fields wpsl-label-row">
+<div class="wpsl-posttype-fields wpsl-label-row" data-simple-locator-post-type-labels>
 	<h3><?php _e('Location Post Type Name & Labels', 'wpsimplelocator'); ?></h3>
 	<p><strong class="wpsl-red"><?php _e('Important:', 'wpsimplelocator'); ?></strong> <?php _e('Changing the name or slug will remove content already published under existing post type from view. For more information, visit', 'wpsimplelocator'); ?><a href="http://codex.wordpress.org/Function_Reference/register_post_type" target="_blank"> wordpress.org</a>. <?php _e('If you change settings inadvertently and lose access to your location entries, you can reset to the plugin defaults using the "Reset to Default" button above.', 'wpsimplelocator'); ?></p>
 	<table class="form-table">

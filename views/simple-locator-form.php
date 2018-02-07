@@ -1,4 +1,5 @@
 <?php
+$ajax = ( $this->options['ajax'] == 'false' ) ? false : true;
 $output = "";
 
 // Is this a widget form or a shortcode form
@@ -18,7 +19,7 @@ if ( isset($this->options['allowemptyaddress']) && $this->options['allowemptyadd
 if ( $this->options['mapcontrols'] != 'show' ) $output .= ' data-simple-locator-hide-map-controls="true"';
 if ( $this->options['mapcontainer'] != '') $output .= ' data-simple-locator-map-container="' . $this->options['mapcontainer'] . '"';
 if ( $this->options['resultscontainer'] != '') $output .= ' data-simple-locator-results-container="' . $this->options['resultscontainer'] . '"';
-if ( $this->options['ajax'] != 'false' ) $output .= ' data-simple-locator-ajax-form="true"';
+if ( $ajax ) $output .= ' data-simple-locator-ajax-form="true"';
 $output .= ' data-simple-locator-map-control-position="' . $this->options['mapcontrolsposition'] . '"';
 $output .= '>
 	<div class="wpsl-error alert alert-error" style="display:none;" data-simple-locator-form-error></div>
@@ -62,6 +63,7 @@ $output .= '>
 		<input type="hidden" data-simple-locator-input-latitude name="latitude" class="latitude" />
 		<input type="hidden" data-simple-locator-input-longitude name="longitude" class="longitude" />
 		<input type="hidden" data-simple-locator-input-formatted-location name="formatted_location" />
+		<input type="hidden" name="per_page" value="' . $this->options['perpage'] . '" />
 		<input type="hidden" name="simple_locator_results" value="true" />
 		<input type="hidden" data-simple-locator-input-geocode name="geocode" />
 		<input type="hidden" data-simple-locator-input-unit name="unit" value="' . $this->unit_raw . '" class="unit" />

@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Services\LocationSearch;
 
 /**
@@ -7,7 +6,6 @@ namespace SimpleLocator\Services\LocationSearch;
 */
 class JsonResponseFactory 
 {
-
 	/**
 	* Response Data
 	*/
@@ -31,7 +29,7 @@ class JsonResponseFactory
 		$page = ( isset($this->request['page']) ) ? intval($this->request['page']) : null;
 		$per_page = ( isset($this->request['per_page']) ) ? intval($this->request['per_page']) : -1;
 
-		$this->data = array(
+		$this->data = [
 			'address' => $address,
 			'formatted_address' => $formatted_address,
 			'distance' => sanitize_text_field($this->request['distance']),
@@ -43,7 +41,7 @@ class JsonResponseFactory
 			'allow_empty_address' => $allow_empty_address,
 			'page' => $page,
 			'per_page' => $per_page
-		);
+		];
 	}
 
 	/**
@@ -54,7 +52,7 @@ class JsonResponseFactory
 	{
 		$this->request = ( $request ) ? $request : $_POST;
 		$this->setData();
-		return array(
+		return [
 			'status' => 'success', 
 			'distance'=> $this->data['distance'],
 			'latitude' => $this->data['latitude'],
@@ -69,7 +67,6 @@ class JsonResponseFactory
 			'page' => $this->data['page'],
 			'per_page' => $this->data['per_page'],
 			'results' => $results
-		);
+		];
 	}
-
 }

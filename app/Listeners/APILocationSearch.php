@@ -5,7 +5,7 @@ use SimpleLocator\Listeners\AJAXListenerBase;
 use SimpleLocator\Services\LocationSearch\LocationSearchValidator;
 use SimpleLocator\Services\LocationSearch\LocationSearch;
 use SimpleLocator\Services\LocationSearch\JsonResponseFactory;
-use SimpleLocator\Services\LocationSearch\StoreSearch;
+use SimpleLocator\Services\LocationSearch\SaveSearch;
 
 /**
 * Perform a location search based on an API request
@@ -43,7 +43,7 @@ class APILocationSearch
 		$this->location_search = new LocationSearch;
 		$this->search_validator = new LocationSearchValidator;
 		$this->response_factory = new JsonResponseFactory;
-		$this->search_store = new StoreSearch;
+		$this->search_store = new SaveSearch;
 	}
 
 	/**
@@ -59,7 +59,7 @@ class APILocationSearch
 			$this->location_search->getTotalResultCount(),
 			$this->request
 		);
-		$this->storeSearch();
+		$this->saveSearch();
 		return $response;
 	}
 
@@ -78,7 +78,7 @@ class APILocationSearch
 	/**
 	* Store the Search
 	*/
-	private function storeSearch()
+	private function saveSearch()
 	{
 		if ( !get_option('wpsl_save_searches') ) return;
 		$this->search_store->save($this->request);

@@ -4,7 +4,7 @@ namespace SimpleLocator\Services\LocationSearch;
 /**
 * Store the search in the DB
 */
-class StoreSearch
+class SaveSearch
 {
 	/**
 	* Store the Search

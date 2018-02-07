@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Services\LocationSearch;
 
 use SimpleLocator\Repositories\SettingsRepository;
@@ -10,7 +9,6 @@ use SimpleLocator\Helpers;
 */
 class LocationResultPresenter 
 {
-
 	/**
 	* Result
 	* @var object - WP SQL result
@@ -44,7 +42,6 @@ class LocationResultPresenter
 	*/
 	private $distance_unit;
 
-
 	public function __construct()
 	{
 		$this->settings_repo = new SettingsRepository;
@@ -70,7 +67,7 @@ class LocationResultPresenter
 	*/
 	private function setData()
 	{
-		$location = array(
+		$location = [
 			'id' => $this->result->id,
 			'title' => $this->result->title,
 			'permalink' => get_permalink($this->result->id),
@@ -78,7 +75,7 @@ class LocationResultPresenter
 			'longitude' => $this->result->longitude,
 			'output' => $this->formatOutput(),
 			'infowindow' => $this->formatInfoWindow()
-		);
+		];
 		return $location;
 	}
 
@@ -176,5 +173,4 @@ class LocationResultPresenter
 			? get_the_post_thumbnail($this->result->id, $size)
 			: ' ';
 	}
-
 }

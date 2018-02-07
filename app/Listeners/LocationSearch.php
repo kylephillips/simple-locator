@@ -3,7 +3,6 @@ namespace SimpleLocator\Listeners;
 
 use SimpleLocator\Services\LocationSearch\LocationSearch as Search;
 use SimpleLocator\Services\LocationSearch\LocationSearchValidator;
-use SimpleLocator\Services\LocationSearch\StoreSearch;
 
 /**
 * Non Ajax Location Search

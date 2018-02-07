@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Services\LocationSearch;
 
 use SimpleLocator\Repositories\SettingsRepository;
@@ -117,14 +116,14 @@ class LocationSearch
 	*/
 	private function setData()
 	{
-		$this->data = array(
+		$this->data = [
 			'distance' => sanitize_text_field($this->request['distance']),
 			'latitude' => sanitize_text_field($this->request['latitude']),
 			'longitude' => sanitize_text_field($this->request['longitude']),
 			'unit' => sanitize_text_field($this->request['unit']),
 			'offset' => ( isset($this->request['page']) ) ? sanitize_text_field(intval($this->request['page'])) : null,
 			'limit' => ( isset($this->request['per_page']) ) ? sanitize_text_field(intval($this->request['per_page'])) : null
-		);
+		];
 		if ( isset($this->request['taxonomies']) ) $this->setTaxonomies();
 	}
 
@@ -312,14 +311,6 @@ class LocationSearch
 	private function setTotalResults()
 	{
 		global $wpdb;
-		$sql = "
-			SELECT DISTINCT p.ID";
-			$this->distanceVars();
-			$sql .= "\nFROM " . $this->query_data['post_table'] . " AS p";
-			$sql .= $this->sqlWhere();
-			if ( $this->address ) {
-				$sql .= "\nHAVING distance < @distance\n";
-			}
 
 		// Set the SQL Vars
 		if ( $this->address ){

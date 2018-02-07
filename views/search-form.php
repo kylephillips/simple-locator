@@ -1,4 +1,5 @@
 <?php
+global $post;
 $ajax = ( $this->options['ajax'] == 'false' ) ? false : true;
 $output = "";
 
@@ -14,7 +15,7 @@ if ( isset($widget_instance) ) {
 
 $output .= '
 <div class="simple-locator-form" data-simple-locator-form-container>
-<form method="get" action="' . $this->options['resultspage'] . '" data-simple-locator-form';
+<form method="' . $this->options['formmethod'] . '" action="' . get_the_permalink($this->options['resultspage']) . '" data-simple-locator-form';
 if ( isset($this->options['allowemptyaddress']) && $this->options['allowemptyaddress'] == 'true' ) $output .= 'class="allow-empty" data-simple-locator-form-allow-empty';
 if ( $this->options['mapcontrols'] != 'show' ) $output .= ' data-simple-locator-hide-map-controls="true"';
 if ( $this->options['mapcontainer'] != '') $output .= ' data-simple-locator-map-container="' . $this->options['mapcontainer'] . '"';
@@ -63,8 +64,11 @@ $output .= '>
 		<input type="hidden" data-simple-locator-input-latitude name="latitude" class="latitude" />
 		<input type="hidden" data-simple-locator-input-longitude name="longitude" class="longitude" />
 		<input type="hidden" data-simple-locator-input-formatted-location name="formatted_location" />
+		<input type="hidden" name="search_page" value="' . $post->ID . '" />
+		<input type="hidden" name="results_page" value="' . $this->options['resultspage'] . '" />
 		<input type="hidden" name="per_page" value="' . $this->options['perpage'] . '" />
 		<input type="hidden" name="simple_locator_results" value="true" />
+		<input type="hidden" name="method" value="' . $this->options['formmethod'] . '" />
 		<input type="hidden" data-simple-locator-input-geocode name="geocode" />
 		<input type="hidden" data-simple-locator-input-unit name="unit" value="' . $this->unit_raw . '" class="unit" />
 		<button type="submit" data-simple-locator-submit class="wpslsubmit">' . html_entity_decode($this->options['buttontext']) . '</button>

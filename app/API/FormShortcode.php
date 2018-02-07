@@ -92,6 +92,7 @@ class FormShortcode
 	*/
 	private function setOptions($options)
 	{
+		global $post;
 		$this->options = shortcode_atts([
 			'distances' => '5,10,20,50,100',
 			'mapheight' => '250',
@@ -105,15 +106,16 @@ class FormShortcode
 			'geobuttontext' => $this->settings_repo->showGeoButton('text'),
 			'placeholder'=> __('Enter a Location', 'wpsimplelocator'),
 			'ajax' => 'true',
+			'formmethod' => 'post',
 			'perpage' => get_option('posts_per_page'),
-			'resultspage' => '',
+			'resultspage' => $post->ID,
 			'noresultstext' => __('No results found.', 'wpsimplelocator'),
 			'taxonomies' => '',
 			'taxonomy_field_type' => 'select', // or checkbox
 			'allowemptyaddress' => 'false',
 			'resultswrapper' => ''
 		], $options);
-		if ( $this->options['resultspage'] !== '' ) $this->options['resultspage'] = get_the_permalink($this->options['resultspage']);
+		$this->options['formmethod'] = ( $this->options['formmethod'] == 'post' ) ? 'post' : 'get';
 	}
 
 	/**
@@ -156,12 +158,14 @@ class FormShortcode
 	*/
 	public function renderView($options)
 	{	
+		if ( $this->options['formmethod'] == 'post' && isset($_POST['simple_locator_results']) ) return;
+		if ( $this->options['formmethod'] == 'get' && isset($_GET['simple_locator_results']) ) return;
 		$this->setOptions($options);
 		$this->setTaxonomies();
 		$this->enqueueScripts();
 		$this->localizeOptions();
 		$widget = ( isset($widget_instance) ) ? true : false;
-		include ( \SimpleLocator\Helpers::view('simple-locator-form') );
+		include ( \SimpleLocator\Helpers::view('search-form') );
 		return apply_filters('simple_locator_form', $output, $this->options['distances'], $this->taxonomies, $widget);
 	}
 }

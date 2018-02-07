@@ -1,14 +1,20 @@
-<?php 
+<?php
 namespace SimpleLocator\Listeners;
 
 use SimpleLocator\Services\LocationSearch\LocationSearch as Search;
 use SimpleLocator\Services\LocationSearch\LocationSearchValidator;
+use SimpleLocator\Services\LocationSearch\SaveSearch;
 
 /**
-* Non Ajax Location Search
+* Display Search Results for Non-Ajax Forms
 */
-class LocationSearch 
+class LocationSearch
 {
+	/**
+	* Request
+	*/ 
+	private $request;
+
 	/**
 	* Location Search Object
 	* @var SimpleLocator\Services\LocationSearch\LocationSearch
@@ -22,170 +28,85 @@ class LocationSearch
 	private $validator;
 
 	/**
-	* View Data
-	* @var array
+	* Search Storing Class
+	* @var SimpleLocator\Services\LocationSearch\SaveSearch
 	*/
-	private $data;
-	
-	/**
-	* Form Errors
-	*/
-	private $errors;
+	private $save_search;
 
 	/**
-	* Search Store
+	* Search Data
 	*/
-	private $search_store;
+	private $search_data;
 
 	public function __construct()
 	{
+		if ( !isset($_POST['simple_locator_results']) && !isset($_GET['simple_locator_results']) ) return;
 		$this->location_search = new Search;
 		$this->validator = new LocationSearchValidator;
-		$this->search_store = new StoreSearch;
-		$this->validate();
-		$this->setViewData();
+		$this->save_search = new SaveSearch;
+		add_action('init', [$this, 'initialize']);
+		add_action('wp_head', [$this, 'addScriptData']);
+		add_filter('the_content', [$this, 'displayResults']);
+		
 	}
 
-	/**
-	* Validate
-	*/
-	private function validate()
+	public function initialize()
 	{
-		try {
-			$this->validator->validate();
-			$this->search();
-		} catch ( \Exception $e ){
-			$this->errors = $e->getMessage();
+		$this->setRequest();
+		$this->search();		
+	}
+
+	public function addScriptData()
+	{
+		global $post;
+		if ( $this->request['results_page'] != $post->ID ) return;
+		$scripts = '<script>var simple_locator_results = [';
+		foreach($this->search_data['results'] as $key => $result){
+			$scripts .= '{id : ' . $result['id'] . ', title : "' . $result['title'] . '", lat : ' . $result['latitude'] . ', lng : ' . $result['longitude'] . ', infowindow : "' . str_replace('"', '\"', $result['infowindow']) . '"}';
+			if ( ($key + 1) > count($this->search_data['results']) ) $scripts .= ',';
 		}
+		$scripts .= ']; console.log(simple_locator_results);</script>';
+		echo $scripts;
 	}
 
-	/**
-	* Set Additional Response Data
-	*/
-	private function setViewData()
+	public function displayResults($content)
 	{
-		$this->data = array(
-			'address' => sanitize_text_field($_POST['address']),
-			'formatted_address' => sanitize_text_field($_POST['formatted_address']),
-			'distance' => sanitize_text_field($_POST['distance']),
-			'latitude' => sanitize_text_field($_POST['latitude']),
-			'longitude' => sanitize_text_field($_POST['longitude']),
-			'unit' => sanitize_text_field($_POST['unit']),
-			'geolocation' => sanitize_text_field($_POST['geolocation']),
-			'limit' => sanitize_text_field(intval($_POST['limit'])),
-			'max_num_pages' => ceil($this->resultCount() / sanitize_text_field(intval($_POST['limit'])) ),
-			'page' => sanitize_text_field(intval($_POST['page'])) + 1,
-			'errors' => null
-		);
-		$this->storeSearch();
-		if ( $this->errors ) $this->data['errors'] = $this->errors;
+		global $post;
+		if ( $this->request['results_page'] != $post->ID ) return $content;
+		include(\SimpleLocator\Helpers::view('search-results'));
+		$content .= apply_filters('simple_locator_results_non_ajax', $output, $this->request);
+		return $content;
 	}
 
 	/**
-	* Store the Search
+	* Set the request data
 	*/
-	private function storeSearch()
+	private function setRequest()
 	{
-		if ( !get_option('wpsl_save_searches') ) return;
-		$this->search_store->save();
+		$temp_request = ( isset($_GET['method']) ) ? $_GET : $_POST;
+		$this->request = [];
+		$this->request['page'] = ( isset($temp_request['page']) ) ? intval($temp_request['page']) : 0;
+		$this->request['per_page'] = ( isset($temp_request['per_page']) ) ? intval($temp_request['per_page']) : get_option('posts_per_page');
+		$this->request['address'] = ( isset($temp_request['address']) ) ? sanitize_text_field($temp_request['address']) : null;
+		$this->request['formatted_address'] = ( isset($temp_request['formatted_location']) ) ? sanitize_text_field($temp_request['formatted_location']) : null;
+		$this->request['distance'] = ( isset($temp_request['distance']) ) ? intval($temp_request['distance']) : null;
+		$this->request['latitude'] = ( isset($temp_request['latitude']) ) ? $temp_request['latitude'] : null;
+		$this->request['longitude'] = ( isset($temp_request['longitude']) ) ? $temp_request['longitude'] : null;
+		$this->request['unit'] = ( isset($temp_request['unit']) ) ? $temp_request['unit'] : 'miles';
+		$this->request['geolocation'] = ( isset($temp_request['geolocation']) && $temp_request['geolocation'] == 'true' ) ? true : false;
+		$this->request['search_page'] = ( isset($temp_request['search_page']) ) ? intval($temp_request['search_page']) : null;
+		$this->request['results_page'] = ( isset($temp_request['results_page']) ) ? intval($temp_request['results_page']) : null;
+		$this->request['allow_empty_address'] = ( isset($temp_request['allow_empty_address']) && $temp_request['allow_empty_address'] == 'true' ) ? true : false;
+		// 'taxonomies' => $taxonomies,
 	}
 
 	/**
-	* Perform the Search
+	* Perform the search
 	*/
 	private function search()
 	{
-		$this->location_search->search();
+		$this->location_search->search($this->request);
+		$this->search_data['results'] = $this->location_search->getResults();
+		$this->search_data['total_results'] = $this->location_search->getTotalResultCount();
 	}
-
-	/**
-	* Get the Query Results
-	* @return array
-	*/
-	public function results()
-	{
-		return $this->location_search->getResults();
-	}
-
-	/**
-	* Get the Total Number of Results
-	* @return array
-	*/
-	public function resultCount()
-	{
-		return $this->location_search->getTotalResultCount();
-	}
-
-	/**
-	* Get the Additional Data
-	* @param string $key - data key to retrieve
-	* @return string
-	*/
-	public function data($key)
-	{
-		return $this->data[$key];
-	}
-
-	/**
-	* Pagination
-	*/
-	public function pagination()
-	{
-		$out = '<div class="wpsl-pagination">';
-		if ( $this->data['page'] !== 1) $out .= $this->previousButton();
-		if ( $this->data['page'] < $this->data['max_num_pages'] ) $out .= $this->nextButton();
-		$out .= '</div>';
-		return $out;
-	}
-
-	/**
-	* Pagination Fields
-	*/
-	public function paginationFields()
-	{
-		$out = '
-			<input type="hidden" name="nonce" value="' . $_POST['nonce'] . '">
-			<input type="hidden" name="address" value="' . $this->data['address'] . '">
-			<input type="hidden" name="geolocation" value="' . $this->data['geolocation'] . '">
-			<input type="hidden" name="limit" value="' . $this->data['limit'] . '" />
-			<input type="hidden" name="latitude" value="' . $this->data['latitude'] . '" />
-			<input type="hidden" name="longitude" value="' . $this->data['longitude'] . '" />
-			<input type="hidden" name="distance" value="' . $this->data['distance'] . '" />
-			<input type="hidden" name="unit" value="' . $this->data['unit'] . '" />
-			<input type="hidden" name="formatted_address" value="' . $this->data['formatted_address'] . '" />
-		';
-		return $out;
-	}
-
-	/**
-	* Next Button
-	*/
-	public function nextButton()
-	{	
-		$out = '<form action="" method="post" class="wpsl-pagination-button next">';
-		$out .= $this->paginationFields();
-		$out .= '
-			<input type="hidden" name="page" value="' . $this->data['page'] . '" />
-			<input type="submit" value="' . __('Next', 'wpsimplelocator') . '" class="button" />
-			</form>
-		';
-		return $out;
-	}
-
-	/**
-	* Previous Button
-	*/
-	public function previousButton()
-	{	
-		$out = '<form action="" method="post" class="wpsl-pagination-button previous">';
-		$out .= $this->paginationFields();
-		$page = $this->data['page'] - 2;
-		$out .= '
-			<input type="hidden" name="page" value="' . $page . '" />
-			<input type="submit" value="' . __('Previous', 'wpsimplelocator') . '" class="button" />
-			</form>
-		';
-		return $out;
-	}
-
 }

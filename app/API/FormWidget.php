@@ -123,7 +123,7 @@ class FormWidget extends \WP_Widget
 		
 		$this->enqueueScripts();
 		$widget_instance = true;
-		include( \SimpleLocator\Helpers::view('simple-locator-form') );
+		include( \SimpleLocator\Helpers::view('search-form') );
 		echo $output;
 
 		echo $args['after_widget'];

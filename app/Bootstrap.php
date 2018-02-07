@@ -33,7 +33,7 @@ class Bootstrap
 		new \SimpleLocator\API\SingleLocationShortcode;
 		new \SimpleLocator\API\AllLocationsShortcode;
 		new \SimpleLocator\Post\Singular;
-		new \SimpleLocator\Services\LocationSearch\SearchResults;
+		new \SimpleLocator\Listeners\LocationSearch;
 		new \SimpleLocator\Integrations\IntegrationFactory;
 		add_action( 'widgets_init', array($this, 'formWidget'));
 	}

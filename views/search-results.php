@@ -1,5 +1,7 @@
 <?php
-// TODO: Error Handling, 0 results
+/**
+*  @todo Error Handling, No results, Page Jump, AJAX Pagination, New Search Link, Dont store paginated searches
+*/
 $output .= '<div data-simple-locator-results-wrapper class="wpsl-results non-ajax" style="display:block;">';
 
 // Results

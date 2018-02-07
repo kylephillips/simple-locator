@@ -25,8 +25,8 @@ SimpleLocator.InfoWindowOpen = function()
 	*/
 	self.setIndexes = function(link)
 	{
-		var activeList = $(link).parents('[' + SimpleLocator.selectors.results + ']');
-		var lists = $('[' + SimpleLocator.selectors.results + ']');
+		var activeList = $(link).parents('[' + SimpleLocator.selectors.resultsWrapper + ']');
+		var lists = $('[' + SimpleLocator.selectors.resultsWrapper + ']');
 		self.mapIndex = $(activeList).index(lists);
 		self.markerIndex = parseInt($(link).attr(SimpleLocator.selectors.infoWindowLink));
 	}

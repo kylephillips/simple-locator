@@ -83,6 +83,7 @@ class FormWidget extends \WP_Widget
 		wp_enqueue_script('google-maps');
 		if ( wp_script_is('simple-locator', 'enqueued') ) return;
 		wp_enqueue_script('simple-locator');
+		
 	}
 
 	/**
@@ -122,7 +123,7 @@ class FormWidget extends \WP_Widget
 		
 		$this->enqueueScripts();
 		$widget_instance = true;
-		include( \SimpleLocator\Helpers::view('simple-locator-form-ajax') );
+		include( \SimpleLocator\Helpers::view('simple-locator-form') );
 		echo $output;
 
 		echo $args['after_widget'];

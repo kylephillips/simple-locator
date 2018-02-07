@@ -60,15 +60,15 @@ class PostTypes
 	public function registerLocation()
 	{
 		if ( $this->hideDefaultPostType() ) return;
-		$labels = array(
+		$labels = [
 			'name' => $this->pt_labels->label,  
 			'singular_name' => $this->pt_labels->singular,
 			'add_new_item'=> $this->pt_labels->add_new,
 			'edit_item' => $this->pt_labels->edit_item,
 			'view_item' => $this->pt_labels->view_item,
 			'search_items' => $this->pt_labels->search_item
-		);
-		$args = array(
+		];
+		$args = [
 			'labels' => $labels,
 			'public' => true,  
 			'show_ui' => true,
@@ -77,9 +77,9 @@ class PostTypes
 			'capability_type' => 'post',  
 			'hierarchical' => false,  
 			'has_archive' => true,
-			'supports' => array('title','editor','thumbnail'),
-			'rewrite' => array('slug' =>  $this->pt_labels->slug, 'with_front' => false)
-		);
+			'supports' => ['title','editor','thumbnail'],
+			'rewrite' => ['slug' =>  $this->pt_labels->slug, 'with_front' => false]
+		];
 		register_post_type(  $this->pt_labels->name , $args );
 	}
 
@@ -89,19 +89,19 @@ class PostTypes
 	*/
 	public function registerMaps()
 	{
-		$labels = array(
+		$labels = [
 			'name' => __('Simple Locator Maps'),  
 			'singular_name' => __('Simple Locator Map')
-		);
-		$args = array(
+		];
+		$args = [
 			'labels' => $labels,
 			'public' => false, 
 			'show_ui' => false,
 			'capability_type' => 'post',  
 			'hierarchical' => false,  
 			'has_archive' => false,
-			'supports' => array('title','editor'),
-		);
+			'supports' => ['title','editor'],
+		];
 		register_post_type( 'wpslmaps' , $args );
 	}
 
@@ -111,19 +111,19 @@ class PostTypes
 	*/
 	public function registerImports()
 	{
-		$labels = array(
+		$labels = [
 			'name' => __('Simple Locator Imports'),  
 			'singular_name' => __('Simple Locator Import')
-		);
-		$args = array(
+		];
+		$args = [
 			'labels' => $labels,
 			'public' => false,  
 			'show_ui' => false,
 			'capability_type' => 'post',  
 			'hierarchical' => false,  
 			'has_archive' => false,
-			'supports' => array('title','editor'),
-		);
+			'supports' => ['title','editor'],
+		];
 		register_post_type( 'wpslimport' , $args );
 	}
 

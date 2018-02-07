@@ -1,12 +1,10 @@
 <?php 
-
 namespace SimpleLocator\API;
 
 use \SimpleLocator\Repositories\SettingsRepository;
 
 class FormWidget extends \WP_Widget 
 {
-
 	/**
 	* Unit of Measurement
 	*/
@@ -26,7 +24,6 @@ class FormWidget extends \WP_Widget
 	* Settings Repository
 	*/
 	private $settings_repo;
-
 
 	public function __construct()
 	{
@@ -130,5 +127,4 @@ class FormWidget extends \WP_Widget
 
 		echo $args['after_widget'];
 	}
-
 }

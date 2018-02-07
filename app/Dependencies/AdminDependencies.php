@@ -160,5 +160,4 @@ class AdminDependencies extends DependencyBase
 		$data['error_count'] 		= ( isset($transient['error_rows']) ) ? count($transient['error_rows']) : 0;
 		return $data;
 	}
-
 }

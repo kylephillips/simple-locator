@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Services\Import;
 
 use GuzzleHttp\Client;
@@ -56,10 +55,10 @@ class GoogleMapGeocode
 			return false;
 		}
 
-		$this->coordinates = array(
+		$this->coordinates = [
 			'lat' => $json['results'][0]['geometry']['location']['lat'],
 			'lng' => $json['results'][0]['geometry']['location']['lng']
-		);
+		];
 		return true;
 	}
 

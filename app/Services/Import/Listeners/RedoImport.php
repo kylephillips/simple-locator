@@ -1,5 +1,4 @@
 <?php
-
 namespace SimpleLocator\Services\Import\Listeners;
 
 use SimpleLocator\Repositories\ImportRepository;
@@ -45,10 +44,10 @@ class RedoImport extends ImportListenerBase
 	private function resetTransient()
 	{
 		$import_data = $this->import_repo->getImportData($this->import_id);
-		$import_data['error_rows'] = array();
+		$import_data['error_rows'] = [];
 		$import_data['complete_rows'] = 0;
 		$import_data['last_imported'] = 0;
-		$import_data['post_ids'] = array();
+		$import_data['post_ids'] = [];
 		$import_data['complete'] = false;
 		$import_data['last_imported_time'] = time();
 		set_transient('wpsl_import_file', $import_data, 1 * YEAR_IN_SECONDS);

@@ -5,7 +5,6 @@ use SimpleLocator\Repositories\SettingsRepository;
 
 class PostRepository 
 {
-
 	/**
 	* Settings Repo
 	*/
@@ -45,10 +44,10 @@ class PostRepository
 	*/
 	public function allLocations($limit = '-1')
 	{
-		$args = array(
+		$args = [
 			'post_type'=> $this->settings_repo->getLocationPostType(),
 			'posts_per_page' => $limit
-		);
+		];
 		/**
 		* @filter simple_locator_all_locations
 		*/

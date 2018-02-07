@@ -22,7 +22,7 @@ class Activation
 		$this->setVersion();
 		$this->setDefaultOptions();
 		$this->migrateTables();
-		register_activation_hook( dirname(dirname( dirname(__FILE__) )) . '/simplelocator.php', array($this, 'install') );
+		register_activation_hook( dirname(dirname( dirname(__FILE__) )) . '/simplelocator.php', [$this, 'install'] );
 	}
 
 	/**

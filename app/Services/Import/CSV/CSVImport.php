@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Services\Import\CSV;
 
 use SimpleLocator\Services\Import\PostImporter;
@@ -56,7 +55,7 @@ class CSVImport
 	* Newly Imported Post IDs
 	* @var array
 	*/
-	private $post_ids = array();
+	private $post_ids = [];
 
 
 	public function __construct()

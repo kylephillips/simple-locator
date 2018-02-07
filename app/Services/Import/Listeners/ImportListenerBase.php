@@ -1,12 +1,10 @@
 <?php 
-
 namespace SimpleLocator\Services\Import\Listeners;
 
 use SimpleLocator\Services\Validation\NonceValidator;
 
 abstract class ImportListenerBase 
 {
-
 	/**
 	* Nonce Validator
 	*/

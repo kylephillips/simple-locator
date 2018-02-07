@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Services\Import\Listeners;
 
 use SimpleLocator\Services\Validation\NonceValidator;
@@ -44,8 +43,7 @@ abstract class ImportAJAXListenerBase
 	*/
 	protected function error($error)
 	{
-		wp_send_json(array('status' => 'error', 'message' => $error));
+		wp_send_json(['status' => 'error', 'message' => $error]);
 		die();
 	}
-
 }

@@ -89,7 +89,7 @@ class SettingsRepository
 	*/
 	public function getResultsFieldArray()
 	{
-		$exclude = array('post_title','distance','post_excerpt','post_permalink','show_on_map','post_thumbnail' );
+		$exclude = ['post_title','distance','post_excerpt','post_permalink','show_on_map','post_thumbnail'];
 		$resultoutput = get_option('wpsl_results_fields_formatted');
 		$resultoutput = $resultoutput['output'];
 		preg_match_all("/\[([^\]]*)\]/", $resultoutput, $matches);

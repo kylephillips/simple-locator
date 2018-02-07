@@ -72,12 +72,12 @@ class MapStyles
 	*/
 	private function mapExists()
 	{
-		$map_query = new \WP_Query(array(
+		$map_query = new \WP_Query([
 			'post_type' => 'wpslmaps',
 			'posts_per_page' => -1,
 			'meta_key' => 'wpsl_map_id',
 			'meta_value' => $this->file_id
-		));
+		]);
 		$exists = ( $map_query->have_posts() ) ? true : false;
 		wp_reset_postdata();
 		return $exists;

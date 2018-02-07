@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Services\Import;
 
 use SimpleLocator\Services\Import\GoogleMapGeocode;
@@ -111,7 +110,7 @@ class PostImporter
 	private function importPost()
 	{
 		$this->import_status = true;
-		$post = array();
+		$post = [];
 		$post['post_type'] = $this->transient['post_type'];
 		$post['post_status'] = $this->transient['import_status'];
 		foreach ( $this->transient['columns'] as $field ){
@@ -141,7 +140,7 @@ class PostImporter
 	*/
 	private function addMeta()
 	{
-		$exclude_fields = array('title', 'content');
+		$exclude_fields = ['title', 'content'];
 		foreach ( $this->transient['columns'] as $field ){
 			if ( in_array($field->field, $exclude_fields) ) continue;
 			$column_value = ( isset($this->post_data[$field->csv_column]) ) ? sanitize_text_field($this->post_data[$field->csv_column]) : "";
@@ -167,10 +166,10 @@ class PostImporter
 	{
 		$this->import_status = false;
 		$transient = get_transient('wpsl_import_file'); // Calling manually for multiple errors
-		$row_error = array(
+		$row_error = [
 			'row' => $this->post_data['record_number'],
 			'error' => $error
-		);
+		];
 		$transient['error_rows'][] = $row_error;
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 	}

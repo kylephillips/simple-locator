@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Services\Import\Events;
 
 use SimpleLocator\Services\Import\Listeners\FileUploader;
@@ -20,21 +19,21 @@ class RegisterImportEvents
 	public function __construct()
 	{
 		// Import Handlers
-		add_action( 'admin_post_wpslimportupload', array($this, 'FileWasUploaded'));
-		add_action( 'admin_post_wpslmapcolumns', array($this, 'ColumnMapWasSaved'));
-		add_action( 'wp_ajax_wpsldoimport', array($this, 'ImportRequestMade' ));
+		add_action( 'admin_post_wpslimportupload', [$this, 'FileWasUploaded']);
+		add_action( 'admin_post_wpslmapcolumns', [$this, 'ColumnMapWasSaved']);
+		add_action( 'wp_ajax_wpsldoimport', [$this, 'ImportRequestMade']);
 
-		add_action( 'wp_ajax_wpslimportcolumns', array($this, 'CSVRowRequested' ));
-		add_action( 'wp_ajax_wpslfinishimport', array($this, 'ImportComplete'));
+		add_action( 'wp_ajax_wpslimportcolumns', [$this, 'CSVRowRequested']);
+		add_action( 'wp_ajax_wpslfinishimport', [$this, 'ImportComplete']);
 
 		// Undo an Import
-		add_action( 'admin_post_wpslundoimport', array($this, 'undoImportRequested' ));
+		add_action( 'admin_post_wpslundoimport', [$this, 'undoImportRequested']);
 
 		// Redo an Import
-		add_action( 'admin_post_wpslredoimport', array($this, 'redoImportRequested' ));
+		add_action( 'admin_post_wpslredoimport', [$this, 'redoImportRequested']);
 
 		// Remove an Import
-		add_action( 'admin_post_wpslremoveimport', array($this, 'removeImportRequested' ));
+		add_action( 'admin_post_wpslremoveimport', [$this, 'removeImportRequested']);
 	}
 
 	/**

@@ -83,5 +83,4 @@ class SingleLocationShortcode
 		include ( \SimpleLocator\Helpers::view('singular-post') );
 		return $out;
 	}
-
 }

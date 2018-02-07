@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Services\Import\Listeners;
 
 use SimpleLocator\Services\Import\CSV\Row;
@@ -32,7 +31,7 @@ class GetCSVRow extends ImportAJAXListenerBase
 			$this->error($e->getMessage);
 		}
 
-		$this->respond(array('status'=>'success', 'columns' => $columns, 'row_count' => $this->totalRowCount()));
+		$this->respond(['status'=>'success', 'columns' => $columns, 'row_count' => $this->totalRowCount()]);
 	}
 
 	/**
@@ -43,5 +42,4 @@ class GetCSVRow extends ImportAJAXListenerBase
 		$transient = get_transient('wpsl_import_file');
 		return $transient['row_count'];
 	}
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace SimpleLocator\Services\Import\Listeners;
 
 use SimpleLocator\Repositories\ImportRepository;
@@ -26,7 +25,6 @@ class UndoImport extends ImportListenerBase
 	* @var object
 	*/
 	private $import_repo;
-
 
 	public function __construct()
 	{

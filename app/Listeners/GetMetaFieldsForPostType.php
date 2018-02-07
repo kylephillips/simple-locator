@@ -41,12 +41,12 @@ class GetMetaFieldsForPostType
 	{
 		$show_hidden = ( $_GET['show_hidden'] == 'true' ) ? true : false;
 		$include_wpsl = ( $_GET['include_wpsl'] == 'true' ) ? true : false;
-		$this->data = array(
+		$this->data = [
 			'nonce' => sanitize_text_field($_GET['nonce']),
 			'post_type' => sanitize_text_field($_GET['post_type']),
 			'include_wpsl' => $include_wpsl,
 			'show_hidden' => $show_hidden
-		);
+		];
 	}
 
 	/**
@@ -55,7 +55,7 @@ class GetMetaFieldsForPostType
 	private function validateNonce()
 	{
 		if ( ! wp_verify_nonce( $this->data['nonce'], 'wpsl_locator-locator-nonce' ) ){
-			$this->sendResponse(array('status'=>'error', 'message'=>'Incorrect Form Field'));
+			$this->sendResponse(['status'=>'error', 'message'=>'Incorrect Form Field']);
 		}
 	}
 
@@ -65,7 +65,7 @@ class GetMetaFieldsForPostType
 	private function getFields()
 	{
 		$fields = $this->field_repo->displayFieldOptions($this->data['post_type'], $this->data['show_hidden'], $this->data['include_wpsl']);
-		$response = array('status'=>'success', 'fields'=>$fields);
+		$response = ['status'=>'success', 'fields'=>$fields];
 		$this->sendResponse($response);
 	}
 

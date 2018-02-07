@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Services\Import\Listeners;
 
 use League\Csv\Reader;
@@ -25,7 +24,7 @@ class FileUploader extends ImportListenerBase
 		if ( $_FILES['file']['name'] == "" ) return $this->error('Please include a file.');
 		if ( !$this->isCsv($_FILES['file']['type']) ) return $this->error('File must be CSV format. This file\'s format is ' . $_FILES['file']['type']);
 		$file = $_FILES['file'];
-		$upload_overrides = array( 'test_form' => false );
+		$upload_overrides = [ 'test_form' => false ];
 		$movefile = wp_handle_upload($file, $upload_overrides);
 		if ( isset($movefile['error']) ) return $this->error($movefile['error']);
 		
@@ -41,7 +40,7 @@ class FileUploader extends ImportListenerBase
 	{
 		$mac = ( isset($_POST['mac_formatted']) ) ? true : false;
 		$rowcount = $this->rowCount($file, $mac);
-		$transient = array(
+		$transient = [
 			'file' => $file, // full path to file
 			'mac' => $mac, // is mac formatted?
 			'row_count' => $rowcount, // total rows in CSV file
@@ -55,7 +54,7 @@ class FileUploader extends ImportListenerBase
 			'import_type' => $_FILES['file']['type'],
 			'post_ids' => array(),
 			'complete' => false
-		);
+		];
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 	}
 
@@ -87,7 +86,7 @@ class FileUploader extends ImportListenerBase
 	*/
 	private function isCsv($type)
 	{
-		$csv_mimetypes = array(
+		$csv_mimetypes = [
 			'text/csv',
 			'text/plain',
 			'application/csv',
@@ -98,11 +97,10 @@ class FileUploader extends ImportListenerBase
 			'text/anytext',
 			'application/octet-stream',
 			'application/txt',
-		);
+		];
 		if (in_array($type, $csv_mimetypes)) {
 			return true;
 		}
 		return false;
 	}
-
 }

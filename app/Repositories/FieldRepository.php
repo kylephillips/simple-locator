@@ -12,13 +12,12 @@ class FieldRepository
 	*/
 	public function getPostTypes()
 	{
-		$types = get_post_types(array('public' => true, 'publicly_queryable' => true ), 'objects');
-		$post_types = array();
+		$types = get_post_types(['public' => true, 'publicly_queryable' => true ], 'objects');
+		$post_types = [];
 		foreach( $types as $key => $type ){ 
 			if ( $type->name == 'attachment' ) continue;
 			$post_types[$key]['name'] = $type->name;
 			$post_types[$key]['label'] = $type->labels->name;
-			
 		}
 		return $post_types;
 	}
@@ -53,9 +52,7 @@ class FieldRepository
 	{
 		$location_type = get_option('wpsl_post_type');
 		if ( $post_type !== $location_type ) return $fields;
-		$sl_meta = array(
-			'wpsl_address', 'wpsl_address_two', 'wpsl_city', 'wpsl_state', 'wpsl_zip', 'wpsl_country', 'wpsl_phone', 'wpsl_website'
-		);
+		$sl_meta = ['wpsl_address', 'wpsl_address_two', 'wpsl_city', 'wpsl_state', 'wpsl_zip', 'wpsl_country', 'wpsl_phone', 'wpsl_website'];
 		return array_unique(array_merge($fields, $sl_meta));
 	}
 
@@ -64,8 +61,8 @@ class FieldRepository
 	*/
 	private function fieldsArray($results)
 	{
-		$fields = array();
-		$exclude = array('_wp_page_template', '_edit_lock', '_edit_last', '_wp_trash_meta_status', '_wp_trash_meta_time', 'layout', 'position', 'rule', 'hide_on_screen');
+		$fields = [];
+		$exclude = ['_wp_page_template', '_edit_lock', '_edit_last', '_wp_trash_meta_status', '_wp_trash_meta_time', 'layout', 'position', 'rule', 'hide_on_screen'];
 		foreach ( $results as $field ){
 			if ( !in_array($field->meta_key, $exclude) ) 
 				array_push($fields, $field->meta_key);
@@ -95,12 +92,12 @@ class FieldRepository
 	*/
 	public function getAcfMapFields()
 	{
-		$map_fields = array();
+		$map_fields = [];
 		if ( !function_exists('acf_get_field_groups') ) return $map_fields;
 		$post_type = get_option('wpsl_post_type');
 
 		// Get the field groups for the post type
-		$field_groups = acf_get_field_groups(array('post_type' => $post_type));
+		$field_groups = acf_get_field_groups(['post_type' => $post_type]);
 		foreach ( $field_groups as $group ){
 			$fields = acf_get_fields($group);
 			foreach($fields as $field){

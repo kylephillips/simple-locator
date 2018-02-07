@@ -1,10 +1,8 @@
 <?php 
-
 namespace SimpleLocator\Services\Import\Listeners;
 
 class FinishImport 
 {
-
 	/**
 	* Transient
 	*/
@@ -33,11 +31,11 @@ class FinishImport
 	private function saveImport()
 	{
 		$title = __('Import on ', 'wpsimplelocator') . date_i18n( 'Y-m-d H:m:s', time() );
-		$importpost = array(
+		$importpost = [
 			'post_title' => $title, 
 			'post_status' => 'publish',
 			'post_type' => 'wpslimport'
-		);
+		];
 		$post_id = wp_insert_post($importpost);
 		add_post_meta($post_id, 'wpsl_import_data', $this->transient);
 	}
@@ -47,12 +45,11 @@ class FinishImport
 	*/
 	private function response()
 	{
-		return wp_send_json(array(
+		return wp_send_json([
 			'status' => 'success', 
 			'import_count' => $this->transient['complete_rows'], 
 			'error_count'=> count($this->transient['error_rows']), 
 			'errors' => $this->transient['error_rows']
-		));
+		]);
 	}
-
 }

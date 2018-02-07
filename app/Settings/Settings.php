@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Settings;
 
 use SimpleLocator\Repositories\FieldRepository;
@@ -13,7 +12,6 @@ use SimpleLocator\Services\Import\CSV\Row;
 */
 class Settings 
 {
-
 	/**
 	* Selected Unit of Measurement
 	*/
@@ -72,9 +70,9 @@ class Settings
 		$this->setFieldType();
 		$this->setPostType();
 		$this->setMapOptions();
-		add_action( 'admin_menu', array( $this, 'registerPage' ) );
-		add_action( 'admin_init', array($this, 'registerSettings' ) );
-		add_action( 'updated_option', array($this, 'flushRewrites'), 10, 3);
+		add_action( 'admin_menu', [$this, 'registerPage'] );
+		add_action( 'admin_init', [$this, 'registerSettings'] );
+		add_action( 'updated_option', [$this, 'flushRewrites'], 10, 3);
 	}
 
 	/**
@@ -120,7 +118,7 @@ class Settings
 			'Simple Locator',
 			'manage_options',
 			'wp_simple_locator', 
-			array( $this, 'settingsPage' ) 
+			[$this, 'settingsPage']
 		);
 	}
 

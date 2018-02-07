@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Services\Import\Listeners;
 
 /**

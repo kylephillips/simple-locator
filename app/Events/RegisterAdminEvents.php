@@ -11,10 +11,8 @@ use SimpleLocator\Services\CSVDownload\HistoryCsvDownload;
 */
 class RegisterAdminEvents 
 {
-
 	public function __construct()
 	{
-		// Admin Settings Post Type Select
 		add_action( 'wp_ajax_wpslposttype', [$this, 'PostTypeMetaRequested']);
 		add_action( 'wp_ajax_wpslresetposttype', [$this, 'PostTypeResetRequested']);
 		add_action( 'admin_post_wpslhistorysearch', [$this, 'SearchHistoryQueried']);

@@ -1,5 +1,4 @@
 <?php 
-
 namespace SimpleLocator\Services\Import\Listeners;
 
 /**
@@ -57,7 +56,7 @@ class Import extends ImportAJAXListenerBase
 		try {
 			$ids = $this->import_class->doImport($offset, $request_number, $this->transient);
 		} catch (\SimpleLocator\Services\Import\Exceptions\ImportCompleteException $e ) {
-			$this->respond(array('status' => 'complete'));
+			$this->respond(['status' => 'complete']);
 		} catch ( \Exception $e ){
 			$this->error($e->getMessage());
 		}
@@ -80,12 +79,11 @@ class Import extends ImportAJAXListenerBase
 	*/
 	private function sendResponse()
 	{
-		$this->respond(array(
+		$this->respond([
 			'status' => 'success', 
 			'failed_count' => $this->import_class->getFailedCount(), 
 			'import_count' => $this->import_class->getImportCount(),
 			'complete_rows' => $this->import_class->getCompleteCount()
-		));
+		]);
 	}
-
 }

@@ -22,11 +22,13 @@ var SimpleLocator = SimpleLocator || {};
 
 // DOM Selectors
 SimpleLocator.selectors = {
+	resultsWrapper : 'data-simple-locator-results-wrapper',
 	form : 'data-simple-locator-form',
 	formContainer : 'data-simple-locator-form-container',
 	formError : 'data-simple-locator-form-error',
 	results : 'data-simple-locator-results',
 	map : 'data-simple-locator-map',
+	mapNonAjax : 'data-simple-locator-map-non-ajax',
 	inputAddress : 'data-simple-locator-input-address',
 	inputLatitude : 'data-simple-locator-input-latitude',
 	inputLongitude : 'data-simple-locator-input-longitude',
@@ -66,6 +68,7 @@ SimpleLocator.Factory = function()
 		new SimpleLocator.Geolocation;
 		new SimpleLocator.PlacesAutocomplete;
 		new SimpleLocator.DefaultMap;
+		new SimpleLocator.ResultsMapNonAjax;
 		new SimpleLocator.SingleLocation;
 		new SimpleLocator.AllLocations;
 		new SimpleLocator.Form;

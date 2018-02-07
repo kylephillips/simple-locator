@@ -84,7 +84,6 @@ class FormShortcode
 	{
 		wp_enqueue_script('google-maps');
 		wp_enqueue_script('simple-locator');
-		if ( $this->options['ajax'] !== 'true' ) wp_enqueue_script('simple-locator-non-ajax-results');
 	}
 
 	/**
@@ -96,22 +95,22 @@ class FormShortcode
 		$this->options = shortcode_atts([
 			'distances' => '5,10,20,50,100',
 			'mapheight' => '250',
-			'mapcontainer' => '',
-			'resultscontainer' => '',
+			'mapcontainer' => '', // AJAX Only
+			'resultscontainer' => '', // AJAX Only
 			'buttontext' => __('Search', 'wpsimplelocator'),
 			'addresslabel' => __('Zip/Postal Code', 'wpsimplelocator'),
-			'mapcontrols' => 'show',
-			'mapcontrolsposition' => 'TOP_LEFT',
+			'mapcontrols' => 'show', // AJAX Only
+			'mapcontrolsposition' => 'TOP_LEFT', // AJAX Only
 			'showgeobutton' => $this->settings_repo->showGeoButton('enabled'),
 			'geobuttontext' => $this->settings_repo->showGeoButton('text'),
 			'placeholder'=> __('Enter a Location', 'wpsimplelocator'),
 			'ajax' => 'true',
-			'formmethod' => 'post',
-			'perpage' => get_option('posts_per_page'),
-			'resultspage' => $post->ID,
-			'noresultstext' => __('No results found.', 'wpsimplelocator'),
+			'formmethod' => 'post', // Non-AJAX Only
+			'perpage' => get_option('posts_per_page'), // Set to empty of 0 for no pagination
+			'resultspage' => $post->ID, // Non-AJAX Only
+			'noresultstext' => __('No results found.', 'wpsimplelocator'), // AJAX Only
 			'taxonomies' => '',
-			'taxonomy_field_type' => 'select', // or checkbox
+			'taxonomy_field_type' => 'select', // or Checkbox
 			'allowemptyaddress' => 'false',
 			'resultswrapper' => ''
 		], $options);
@@ -158,8 +157,7 @@ class FormShortcode
 	*/
 	public function renderView($options)
 	{	
-		if ( $this->options['formmethod'] == 'post' && isset($_POST['simple_locator_results']) ) return;
-		if ( $this->options['formmethod'] == 'get' && isset($_GET['simple_locator_results']) ) return;
+		if ( isset($_POST['simple_locator_results']) || isset($_GET['simple_locator_results']) ) return;
 		$this->setOptions($options);
 		$this->setTaxonomies();
 		$this->enqueueScripts();

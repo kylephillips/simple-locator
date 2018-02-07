@@ -121,9 +121,12 @@ class LocationSearch
 			'latitude' => sanitize_text_field($this->request['latitude']),
 			'longitude' => sanitize_text_field($this->request['longitude']),
 			'unit' => sanitize_text_field($this->request['unit']),
-			'offset' => ( isset($this->request['page']) ) ? sanitize_text_field(intval($this->request['page'])) : null,
+			'offset' => null,
 			'limit' => ( isset($this->request['per_page']) ) ? sanitize_text_field(intval($this->request['per_page'])) : null
 		];
+		if ( isset($this->request['page']) && $this->data['limit']){
+			$this->data['offset'] = intval($this->request['page']) * $this->data['limit'];;
+		}
 		if ( isset($this->request['taxonomies']) ) $this->setTaxonomies();
 	}
 

@@ -1,27 +1,23 @@
 /**
-* Display results on a map
+* Display results on a map (non-ajax results)
 * @package simple-locator
 */
 var SimpleLocator = SimpleLocator || {};
-SimpleLocator.ResultsMap = function()
+SimpleLocator.ResultsMapNonAjax = function()
 {
 	var self = this;
 	var $ = jQuery;
 
-	self.activeForm;
-	self.activeFormContainer;
 	self.activeMap;
-	self.mapContainer;
-	self.data;
+	self.activeWrapper;
 	self.mapIndex;
 
 	self.bindEvents = function()
 	{
-		$(document).on('simple-locator-form-success', function(e, data, form){
-			self.activeForm = $(form);
-			self.activeFormContainer = $(form).parents('[' + SimpleLocator.selectors.formContainer + ']');
-			self.data = data;
-			self.setMapContainer();
+		$(document).ready(function(){
+			self.activeMap = $('[' + SimpleLocator.selectors.mapNonAjax + ']');
+			if ( self.activeMap.length < 1 ) return;
+			self.toggleLoading(true);
 			self.setMapIndex();
 			self.loadMap();
 		});
@@ -33,33 +29,13 @@ SimpleLocator.ResultsMap = function()
 	self.setMapIndex = function()
 	{
 		var wrappers = $('[' + SimpleLocator.selectors.resultsWrapper + ']');
-		self.mapIndex = $(self.activeFormContainer).index(wrappers);
-	}
-
-	/**
-	* Set the map container
-	*/
-	self.setMapContainer = function()
-	{
-		var container = $(self.activeForm).attr('data-simple-locator-map-container');
-		if ( typeof container === 'undefined' || container === ''){
-			self.activeMap = $(self.activeFormContainer).find('[' + SimpleLocator.selectors.map + ']');
-			return;
-		}
-		self.activeMap = $(container);
+		self.activeWrapper = $(self.activeMap).parents('[' + SimpleLocator.selectors.resultsWrapper + ']');
+		self.mapIndex = $(self.activeWrapper).index(wrappers);
 	}
 
 	self.loadMap = function()
 	{
 		SimpleLocator.markers[self.mapIndex] = [];
-		
-		// Map Controls
-		var disablecontrols = $(self.activeForm).attr('data-simple-locator-hide-map-controls');
-		disablecontrols = ( typeof disablecontrols === 'undefined' || disablecontrols === '' ) ? false : true;
-
-		// Control Position
-		var controlposition = $(self.activeForm).attr('data-simple-locator-map-control-position');
-		controlposition = ( typeof controlposition === 'undefined' || controlposition === '' ) ? 'TOP_LEFT' : controlposition;
 		
 		var mappin = ( wpsl_locator.mappin ) ? wpsl_locator.mappin : '';
 		var bounds = new google.maps.LatLngBounds();
@@ -68,11 +44,7 @@ SimpleLocator.ResultsMap = function()
 			mapTypeControl: false,
 			zoom: 8,
 			styles: wpsl_locator.mapstyles,
-			panControl : false,
-			disableDefaultUI: disablecontrols,
-			zoomControlOptions : {
-				position : google.maps.ControlPosition[controlposition]
-			}
+			panControl : false
 		}
 
 		// Override options if custom options are set
@@ -83,22 +55,21 @@ SimpleLocator.ResultsMap = function()
 		SimpleLocator.maps[self.mapIndex] = new google.maps.Map( self.activeMap[0], mapOptions );
 		
 		// Array of locations
-		for (var i = 0, length = self.data.results.length; i < length; i++) {
+		for (var i = 0; i < simple_locator_results.length; i++) {
 			var location = {
-				title: self.data.results[i].title,
-				lat: self.data.results[i].latitude,
-				lng: self.data.results[i].longitude,
-				id: self.data.results[i].id,
-				infowindow: self.data.results[i].infowindow
+				title: simple_locator_results[i].title,
+				lat: simple_locator_results[i].lat,
+				lng: simple_locator_results[i].lng,
+				id: simple_locator_results[i].id,
+				infowindow: simple_locator_results[i].infowindow
 			};
 			locations.push(location);
 		}
-		
+
 		// Loop through array of markers & place each one on the map  
 		for( i = 0; i < locations.length; i++ ) {
 			var position = new google.maps.LatLng(locations[i].lat, locations[i].lng);
-			bounds.extend(position);
-			
+			bounds.extend(position);			
 			marker = new google.maps.Marker({
 				position: position,
 				map: SimpleLocator.maps[self.mapIndex],
@@ -113,8 +84,8 @@ SimpleLocator.ResultsMap = function()
 					infoWindow.open(SimpleLocator.maps[self.mapIndex], marker);
 
 					// Simple Locator Callback function for click event
-					$(document).trigger('simple-locator-marker-clicked', [marker, i, self.activeForm, locations[i].id]);
-					wpsl_click_marker(marker, i, self.activeForm, locations[i].id); // Deprecated
+					$(document).trigger('simple-locator-marker-clicked', [marker, i, self.activeWrapper, locations[i].id]);
+					wpsl_click_marker(marker, i, self.activeWrapper, locations[i].id); // Deprecated
 				}
 			})(marker, i));
 
@@ -124,7 +95,7 @@ SimpleLocator.ResultsMap = function()
 			// Center the Map
 			SimpleLocator.maps[self.mapIndex].fitBounds(bounds);
 			var listener = google.maps.event.addListener(SimpleLocator.maps[self.mapIndex], "idle", function() { 
-					if ( self.data.results.length < 2 ) {
+					if ( simple_locator_results.length < 2 ) {
 					SimpleLocator.maps[self.mapIndex].setZoom(13);
 				}
 				google.maps.event.removeListener(listener); 
@@ -132,7 +103,7 @@ SimpleLocator.ResultsMap = function()
 		}
 
 		self.toggleLoading(false);
-		$(document).trigger('simple-locator-map-rendered', [self.mapIndex, self.activeForm]);
+		$(document).trigger('simple-locator-map-rendered', [self.mapIndex, self.activeWrapper]);
 	}
 
 	/**

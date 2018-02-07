@@ -16,6 +16,7 @@ var js_source = [
 	'assets/js/source/simple-locator.single-location.js',
 	'assets/js/source/simple-locator.form.js',
 	'assets/js/source/simple-locator.geocoder.js',
+	'assets/js/source/simple-locator.results-map-non-ajax.js',
 	'assets/js/source/simple-locator.results-map.js',
 	'assets/js/source/simple-locator.results-list.js',
 	'assets/js/source/simple-locator.infowindow-open.js',

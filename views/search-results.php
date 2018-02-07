@@ -1,23 +1,26 @@
 <?php
-$total_results = $this->search_data['total_results'];
-$total_results = ( $total_results == 1 ) 
-	? $total_results . ' ' . apply_filters('simple_locator_non_ajax_location_text', __('location', 'simple-locator') )
-	: $total_results . ' ' . apply_filters('simple_locator_non_ajax_locations_text', __('locations', 'simple-locator'));
+// TODO: Error Handling, 0 results
+$output .= '<div data-simple-locator-results-wrapper class="wpsl-results non-ajax" style="display:block;">';
 
-$output = '<div class="wpsl-results non-ajax" style="display:block;">';
-
-$results_header = '<h3 class="wpsl-results-header">' . $total_results . ' ' . __('found within', 'simple-locator') . ' ' . $this->request['distance'] . ' ' . $this->request['unit'] . ' ' . __('of', 'simple-locator') . ' ' . $this->request['address'] . '</h3>';
-$output .= apply_filters('simple_locator_non_ajax_results_header', $results_header, $this->request);
-
+// Results
 if ( count($this->search_data['results']) > 0 ) :
+	$output .= $this->resultsHeader();
+	$output .= $this->currentResultCounts();
+
+	$output .= '<div data-simple-locator-map-non-ajax class="wpsl-map loading"';
+	if ( isset($this->request['mapheight']) && $this->request['mapheight'] !== "" )  $output .= 'style="height:' . $this->request['mapheight'] . 'px;"';
+	$output .= '></div><!-- .wpsl-map -->';
+
 	$results_output = '<div class="wpsl-results-wrapper">';
 	foreach($this->search_data['results'] as $result) :
 		$results_output .= $result['output'];
 	endforeach;
 	$results_output .= '</div>';
-	$output .= apply_filters('simple_locator_non_ajax_results_ouput', $results_output, $this->request);
+	$output .= apply_filters('simple_locator_non_ajax_results_output', $results_output, $this->request);
 endif;
 
-// TODO: Pagination, hidden form and fields
+$output .= $this->paginationForm('back');
+$output .= $this->paginationForm('next');
+$output .= $this->pagePosition();
 
-$output .= '</div>';
+$output .= '</div><!-- .wpsl-results -->';

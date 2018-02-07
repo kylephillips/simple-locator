@@ -31,8 +31,8 @@ SimpleLocator.ResultsList = function()
 	*/
 	self.setMapIndex = function()
 	{
-		var forms = $('[' + SimpleLocator.selectors.form + ']');
-		self.listIndex = $(self.activeForm).index(forms);
+		var wrappers = $('[' + SimpleLocator.selectors.resultsWrapper + ']');
+		self.listIndex = $(self.activeFormContainer).index(wrappers);
 	}
 
 	/**

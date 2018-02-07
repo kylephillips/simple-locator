@@ -4,6 +4,7 @@ namespace SimpleLocator\Listeners;
 use SimpleLocator\Services\LocationSearch\LocationSearch as Search;
 use SimpleLocator\Services\LocationSearch\LocationSearchValidator;
 use SimpleLocator\Services\LocationSearch\SaveSearch;
+use SimpleLocator\Services\LocationSearch\ResultsInfoPresenter;
 
 /**
 * Display Search Results for Non-Ajax Forms
@@ -34,6 +35,12 @@ class LocationSearch
 	private $save_search;
 
 	/**
+	* Pagination Presenter Class
+	* @var SimpleLocator\Services\LocationSearch\ResultsPaginationPresenter
+	*/
+	private $results_info;
+
+	/**
 	* Search Data
 	*/
 	private $search_data;
@@ -53,7 +60,8 @@ class LocationSearch
 	public function initialize()
 	{
 		$this->setRequest();
-		$this->search();		
+		$this->search();
+		$this->results_info = new ResultsInfoPresenter($this->request, $this->search_data);	
 	}
 
 	public function addScriptData()
@@ -105,41 +113,6 @@ class LocationSearch
 	}
 
 	/**
-	* Pagination Fields
-	*/
-	private function paginationForm($direction = 'next')
-	{
-		if ( $this->request['per_page'] == 0 ) return;
-		if ( $direction == 'back' && $this->request['page'] == 0 ) return;
-		if ( $direction == 'next' && ( ($this->request['page'] + 1 ) == $this->search_data['max_num_pages']) ) return;
-		$output = '<form method="' . $this->request['formmethod'] . '" action="' . get_the_permalink($this->request['resultspage']) . '" class="simple-locator-pagination-form';
-		if ( $this->request['allow_empty_address'] == 'true' ) $output .= ' allow-empty';
-		$output .= '">';
-		$page .= ( $direction == 'next' ) ? $this->request['page'] + 1 : $this->request['page'] - 1;
-		$output .= '
-			<input type="hidden" name="page_num" value="' . $page . '">
-			<input type="hidden" name="per_page" value="' . $this->request['per_page'] . '">
-			<input type="hidden" name="address" value="' . $this->request['address'] . '">
-			<input type="hidden" name="formatted_address" value="' . $this->request['formatted_address'] . '" />
-			<input type="hidden" name="distance" value="' . $this->request['distance'] . '" />
-			<input type="hidden" name="latitude" value="' . $this->request['latitude'] . '" />
-			<input type="hidden" name="longitude" value="' . $this->request['longitude'] . '" />
-			<input type="hidden" name="unit" value="' . $this->request['unit'] . '" />
-			<input type="hidden" name="geolocation" value="' . $this->request['geolocation'] . '">
-			<input type="hidden" name="search_page" value="' . $this->request['search_page'] . '" />
-			<input type="hidden" name="results_page" value="' . $this->request['resultspage'] . '" />
-			<input type="hidden" name="allow_empty_address" value="' . $this->request['allow_empty_address'] . '" />
-			<input type="hidden" name="method" value="' . $this->request['formmethod'] . '" />
-			<input type="hidden" name="mapheight" value="' . $this->request['mapheight'] . '" />
-			<input type="hidden" name="simple_locator_results" value="true" />
-		';
-		$button_text = ( $direction == 'next' ) ? __('Next', 'simple-locator') : __('Back', 'simple-locator');
-		$output .= '<input type="submit" class="button simple-locator-submit-button" value="' . $button_text . '">';
-		$output .= '</form>';
-		return $output;
-	}
-
-	/**
 	* Perform the search
 	*/
 	private function search()
@@ -149,45 +122,5 @@ class LocationSearch
 		$this->search_data['total_results'] = $this->location_search->getTotalResultCount();
 		if ( $this->request['per_page'] == 0 ) return;
 		$this->search_data['max_num_pages'] = ceil($this->search_data['total_results'] / $this->request['per_page']);
-	}
-
-	/**
-	* Result Header
-	*/
-	private function resultsHeader()
-	{
-		$total_results = $this->search_data['total_results'];
-		$total_results = ( $total_results == 1 ) 
-			? $total_results . ' ' . apply_filters('simple_locator_non_ajax_location_text', __('location', 'simple-locator') )
-			: $total_results . ' ' . apply_filters('simple_locator_non_ajax_locations_text', __('locations', 'simple-locator'));
-		$output = '<h3 class="wpsl-results-header">' . $total_results . ' ' . __('found within', 'simple-locator') . ' ' . $this->request['distance'] . ' ' . $this->request['unit'] . ' ' . __('of', 'simple-locator') . ' ' . $this->request['address'] . '</h3>';
-		return apply_filters('simple_locator_non_ajax_results_header', $output, $this->request, $this->search_data);
-	}
-
-	/**
-	* Get the current result counts
-	*/
-	private function currentResultCounts()
-	{
-		if ( $this->request['per_page'] == 0 ) return;
-		$current_start = $this->request['page'] * $this->request['per_page'] + 1;
-		$current_end = $current_start + count($this->search_data['results']) - 1;
-		$result_count = $current_start;
-		if ( $current_start != $current_end ) $result_count .= '&ndash;' . $current_end;
-		$result_text = ( $current_start != $current_end ) ? __('Showing results', 'simple-locator') : __('Showing result', 'simple-locator');
-		$output = '<p class="wpsl-results-current-count"><em>' . $result_text . ' ' . $result_count . ' ' . __('of', 'simple-locator') . ' ' . $this->search_data['total_results'] . '</em></p>';
-		return apply_filters('simple_locator_non_ajax_current_count', $output, $current_start, $current_end, $this->search_data['total_results']);
-	}
-
-	/**
-	* Page Position
-	*/
-	private function pagePosition()
-	{
-		if ( $this->request['per_page'] == 0 ) return;
-		$output = '<div class="simple-locator-form-page-selection">';
-		$output .= '<p>' . __('Page', 'simple-locator') . ' ' . ($this->request['page'] + 1) . ' ' . __('of', 'simple-locator') . ' ' . $this->search_data['max_num_pages'] . '</p>';
-		$output .= '</div>';
-		return apply_filters('simple_locator_non_ajax_page_position', $output, $this->request, $this->search_data);
 	}
 }

@@ -15,6 +15,7 @@ SimpleLocator.Form = function()
 	self.resultsContainer;
 	self.formData;
 	self.isAjax = false;
+	self.page = 0;
 
 	self.bindEvents = function()
 	{
@@ -101,6 +102,9 @@ SimpleLocator.Form = function()
 		var geolocation = $(self.activeForm).find('[' + SimpleLocator.selectors.inputGeocode + ']').val();
 		geolocation = ( geolocation === '' || geolocation === 'false' ) ? false : true;	
 
+		var limit = $(self.activeForm).find('[' + SimpleLocator.selectors.inputLimit + ']').val();
+		limit = ( limit === '' ) ? null : limit;
+
 		self.formData = {
 			address : address,
 			formatted_address : $(self.activeForm).find('[' + SimpleLocator.selectors.inputFormattedLocation + ']').val(),
@@ -110,7 +114,9 @@ SimpleLocator.Form = function()
 			unit : $(self.activeForm).find('[' + SimpleLocator.selectors.inputUnit + ']').val(),
 			geolocation : geolocation,
 			allow_empty_address : allow_empty_address,
-			ajax : self.isAjax
+			ajax : self.isAjax,
+			per_page : limit,
+			page : self.page
 		}
 
 		self.setTaxonomies();
@@ -170,6 +176,7 @@ SimpleLocator.Form = function()
 			datatype: 'jsonp',
 			data: self.formData,
 			success: function(data){
+				console.log(data);
 				if ( wpsl_locator.jsdebug === '1' ){
 					console.log('Form Response');
 					console.log(data);

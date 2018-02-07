@@ -67,7 +67,7 @@ $output .= '>
 		<input type="hidden" name="page_num" value="0" />
 		<input type="hidden" name="search_page" value="' . $post->ID . '" />
 		<input type="hidden" name="results_page" value="' . $this->options['resultspage'] . '" />
-		<input type="hidden" name="per_page" value="' . $this->options['perpage'] . '" />
+		<input type="hidden" data-simple-locator-input-limit name="per_page" value="' . $this->options['perpage'] . '" />
 		<input type="hidden" name="simple_locator_results" value="true" />
 		<input type="hidden" name="method" value="' . $this->options['formmethod'] . '" />
 		<input type="hidden" name="mapheight" value="' . $this->options['mapheight'] . '" />

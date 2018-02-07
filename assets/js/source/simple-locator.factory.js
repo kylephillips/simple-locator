@@ -36,6 +36,7 @@ SimpleLocator.selectors = {
 	inputDistance : 'data-simple-locator-input-distance',
 	inputFormattedLocation : 'data-simple-locator-input-formatted-location',
 	inputGeocode : 'data-simple-locator-input-geocode',
+	inputLimit : 'data-simple-locator-input-limit',
 	submitButton : 'data-simple-locator-submit',
 	infoWindowLink : 'data-simple-locator-open-infowindow',
 	geoButton : 'data-simple-locator-geolocation-button',

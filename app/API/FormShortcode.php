@@ -106,7 +106,7 @@ class FormShortcode
 			'placeholder'=> __('Enter a Location', 'wpsimplelocator'),
 			'ajax' => 'true',
 			'formmethod' => 'post', // Non-AJAX Only
-			'perpage' => get_option('posts_per_page'), // Set to empty of 0 for no pagination
+			'perpage' => '', // Set to empty of 0 for no pagination
 			'resultspage' => $post->ID, // Non-AJAX Only
 			'noresultstext' => __('No results found.', 'wpsimplelocator'), // AJAX Only
 			'taxonomies' => '',
@@ -115,6 +115,7 @@ class FormShortcode
 			'resultswrapper' => ''
 		], $options);
 		$this->options['formmethod'] = ( $this->options['formmethod'] == 'post' ) ? 'post' : 'get';
+		if ( $this->options['ajax'] == 'false' && $this->options['perpage'] == '' ) $this->options['perpage'] = get_option('posts_per_page');
 	}
 
 	/**

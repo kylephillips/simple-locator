@@ -1,6 +1,8 @@
 <?php 
 namespace SimpleLocator\Services\LocationSearch;
 
+use SimpleLocator\Services\LocationSearch\ResultsInfoPresenter;
+
 /**
 * Build the JSON Response Array for a Location Search
 */
@@ -19,7 +21,7 @@ class JsonResponseFactory
 	/**
 	* Set the Response Data
 	*/
-	private function setData()
+	private function setData($results, $total_count = 0)
 	{
 		$taxonomies = ( isset($this->request['taxonomies']) ) ? $this->request['taxonomies'] : null;
 		$address = ( isset($this->request['address']) ) ? sanitize_text_field($this->request['address']) : null;
@@ -28,6 +30,13 @@ class JsonResponseFactory
 		$allow_empty_address = ( isset($this->request['allow_empty_address']) && $this->request['allow_empty_address'] == 'true' ) ? true : false;
 		$page = ( isset($this->request['page']) ) ? intval($this->request['page']) : null;
 		$per_page = ( isset($this->request['per_page']) ) ? intval($this->request['per_page']) : -1;
+
+		// Additional Pagination/etc…
+		$search_data = [];
+		$search_data['results'] = $results;
+		$search_data['total_results'] = $total_count;
+		if ( $this->request['per_page'] > 0 ) $search_data['max_num_pages'] = ceil($total_count / $this->request['per_page']);
+		$result_info_presenter = new ResultsInfoPresenter($this->request, $search_data);
 
 		$this->data = [
 			'address' => $address,
@@ -40,7 +49,12 @@ class JsonResponseFactory
 			'taxonomies' => $taxonomies,
 			'allow_empty_address' => $allow_empty_address,
 			'page' => $page,
-			'per_page' => $per_page
+			'per_page' => $per_page,
+			'results_header' => $result_info_presenter->resultsHeader(),
+			'current_counts' => $result_info_presenter->currentResultCounts(),
+			'page_position' => $result_info_presenter->pagePosition(),
+			'back_button' => $result_info_presenter->pagination('back', false),
+			'next_button' => $result_info_presenter->pagination('next', false)
 		];
 	}
 
@@ -51,7 +65,7 @@ class JsonResponseFactory
 	public function build($results, $results_count, $total_count = 0, $request = null)
 	{
 		$this->request = ( $request ) ? $request : $_POST;
-		$this->setData();
+		$this->setData($results, $total_count);
 		return [
 			'status' => 'success', 
 			'distance'=> $this->data['distance'],
@@ -67,6 +81,11 @@ class JsonResponseFactory
 			'total_count' => $total_count,
 			'page' => $this->data['page'],
 			'per_page' => $this->data['per_page'],
+			'results_header' => $this->data['results_header'],
+			'current_counts' => $this->data['current_counts'],
+			'page_position' => $this->data['page_position'],
+			'back_button' => $this->data['back_button'],
+			'next_button' => $this->data['next_button'],
 			'results' => $results
 		];
 	}

@@ -14,6 +14,7 @@ SimpleLocator.Form = function()
 	self.mapContainer;
 	self.resultsContainer;
 	self.formData;
+	self.isAjax = false;
 
 	self.bindEvents = function()
 	{
@@ -21,6 +22,7 @@ SimpleLocator.Form = function()
 			e.preventDefault();
 			self.activeForm = $(this).parents('[' + SimpleLocator.selectors.form + ']');
 			self.activeFormContainer = $(this).parents('[' + SimpleLocator.selectors.formContainer + ']');
+			self.setAjax()
 			active_form = self.activeForm; // Deprecated
 			wpsl_before_submit(self.activeForm); // Deprecated
 			$(document).trigger('simple-locator-before-submit', [self.activeForm]);
@@ -29,6 +31,7 @@ SimpleLocator.Form = function()
 		$(document).on('simple-locator-geolocation-success', function(e, form){
 			self.activeForm = $(form);
 			self.activeFormContainer = $(form).parents('[' + SimpleLocator.selectors.formContainer + ']');
+			self.setAjax();
 			wpsl_before_submit(self.activeForm); // Deprecated
 			$(document).trigger('simple-locator-before-submit', [self.activeForm]);
 			self.setResultsContainers();
@@ -42,6 +45,15 @@ SimpleLocator.Form = function()
 			self.setFormData();
 			self.submitForm();
 		});
+	}
+
+	/**
+	* Set whether the active form is ajax or not
+	*/
+	self.setAjax = function()
+	{
+		var ajax = $(self.activeForm).attr(SimpleLocator.selectors.ajaxForm);
+		self.isAjax = ( typeof ajax === 'undefined' || ajax === '' ) ? false : true;
 	}
 
 	/**
@@ -96,7 +108,8 @@ SimpleLocator.Form = function()
 			longitude :  $(self.activeForm).find('[' + SimpleLocator.selectors.inputLongitude + ']').val(),
 			unit : $(self.activeForm).find('[' + SimpleLocator.selectors.inputUnit + ']').val(),
 			geolocation : geolocation,
-			allow_empty_address : allow_empty_address
+			allow_empty_address : allow_empty_address,
+			ajax : self.isAjax
 		}
 
 		self.setTaxonomies();
@@ -146,6 +159,10 @@ SimpleLocator.Form = function()
 	*/
 	self.submitForm = function()
 	{
+		if ( !self.formData.ajax ) {
+			$(self.activeForm).submit();
+			return;
+		}
 		$.ajax({
 			url : SimpleLocator.endpoints.search,
 			type: 'GET',

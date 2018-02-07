@@ -106,12 +106,14 @@ class FormShortcode
 			'placeholder'=> __('Enter a Location', 'wpsimplelocator'),
 			'ajax' => 'true',
 			'perpage' => get_option('posts_per_page'),
+			'resultspage' => '',
 			'noresultstext' => __('No results found.', 'wpsimplelocator'),
 			'taxonomies' => '',
 			'taxonomy_field_type' => 'select', // or checkbox
 			'allowemptyaddress' => 'false',
 			'resultswrapper' => ''
 		], $options);
+		if ( $this->options['resultspage'] !== '' ) $this->options['resultspage'] = get_the_permalink($this->options['resultspage']);
 	}
 
 	/**
@@ -159,10 +161,6 @@ class FormShortcode
 		$this->enqueueScripts();
 		$this->localizeOptions();
 		$widget = ( isset($widget_instance) ) ? true : false;
-		if ( $this->options['ajax'] !== 'false' ){
-			include ( \SimpleLocator\Helpers::view('simple-locator-form-ajax') );
-			return apply_filters('simple_locator_form', $output, $this->options['distances'], $this->taxonomies, $widget);
-		}
 		include ( \SimpleLocator\Helpers::view('simple-locator-form') );
 		return apply_filters('simple_locator_form', $output, $this->options['distances'], $this->taxonomies, $widget);
 	}

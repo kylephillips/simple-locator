@@ -59,6 +59,7 @@ class JsonResponseFactory
 			'longitude' => $this->data['longitude'],
 			'unit' => $this->data['unit'],
 			'formatted_address' => $this->data['formatted_address'],
+			'address' => $this->data['address'],
 			'result_count' => $results_count,
 			'geolocation' => $this->data['geolocation'],
 			'taxonomies' => $this->data['taxonomies'],

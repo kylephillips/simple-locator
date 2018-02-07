@@ -25,6 +25,10 @@ SimpleLocator.PlacesAutocomplete = function()
 		$.each(inputs, function(i, v){
 			var autocomplete = new google.maps.places.Autocomplete(this);
 			var submitBtn = $(this).parents('[' + SimpleLocator.selectors.form + ']').find('[' + SimpleLocator.selectors.submitButton + ']');
+			var form = $(this).parents('form');
+			var ajax = $(form).attr(SimpleLocator.selectors.ajaxForm);
+			ajax = ( typeof ajax === 'undefined' || ajax === '' ) ? false : true;
+			if ( !ajax ) return;
 			google.maps.event.addListener(autocomplete, 'place_changed', function(){
 				$(submitBtn).click();
 			});

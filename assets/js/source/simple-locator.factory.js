@@ -36,7 +36,8 @@ SimpleLocator.selectors = {
 	inputGeocode : 'data-simple-locator-input-geocode',
 	submitButton : 'data-simple-locator-submit',
 	infoWindowLink : 'data-simple-locator-open-infowindow',
-	geoButton : 'data-simple-locator-geolocation-button'
+	geoButton : 'data-simple-locator-geolocation-button',
+	ajaxForm : 'data-simple-locator-ajax-form'
 }
 
 // API Endpoints

@@ -1,7 +1,7 @@
 <?php
 /**
 * @see SimpleLocator\Listeners\LocationSearch
-* @todo Error Handling, No results, Page Jump, AJAX Pagination, New Search Link, Dont store paginated searches, taxonomies in non-ajax
+* @todo Error Handling, No results, Page Jump, AJAX Pagination, New Search Link, Dont store paginated searches, taxonomies in non-ajax, dont refresh map in ajax searches, add search center icon and setting to customize
 */
 $output = '<div data-simple-locator-results-wrapper class="wpsl-results non-ajax" style="display:block;">';
 

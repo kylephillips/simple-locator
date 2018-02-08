@@ -58,6 +58,7 @@ SimpleLocator.Form = function()
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLatitude + ']').val(place.geometry.location.lat());
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLongitude + ']').val(place.geometry.location.lng());
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputFormattedLocation + ']').val(place.formatted_address);
+			if ( self.page > 0 ) self.page = 0;
 			self.setFormData();
 			self.submitForm();
 		});

@@ -51,38 +51,39 @@ SimpleLocator.ResultsMap = function()
 
 	self.loadMap = function()
 	{
-		SimpleLocator.markers[self.mapIndex] = [];
-		
-		// Map Controls
-		var disablecontrols = $(self.activeForm).attr('data-simple-locator-hide-map-controls');
-		disablecontrols = ( typeof disablecontrols === 'undefined' || disablecontrols === '' ) ? false : true;
-
-		// Control Position
-		var controlposition = $(self.activeForm).attr('data-simple-locator-map-control-position');
-		controlposition = ( typeof controlposition === 'undefined' || controlposition === '' ) ? 'TOP_LEFT' : controlposition;
-		
 		var mappin = ( wpsl_locator.mappin ) ? wpsl_locator.mappin : '';
 		var bounds = new google.maps.LatLngBounds();
-		var mapOptions = {
-			mapTypeId: 'roadmap',
-			mapTypeControl: false,
-			zoom: 8,
-			styles: wpsl_locator.mapstyles,
-			panControl : false,
-			disableDefaultUI: disablecontrols,
-			zoomControlOptions : {
-				position : google.maps.ControlPosition[controlposition]
-			}
-		}
-
-		// Override options if custom options are set
-		if ( wpsl_locator.custom_map_options === '1' ) mapOptions = wpsl_locator.map_options;
-		var locations = [];
 		var infoWindow = new google.maps.InfoWindow(), marker, i;
 		
-		SimpleLocator.maps[self.mapIndex] = new google.maps.Map( self.activeMap[0], mapOptions );
+		if ( !SimpleLocator.maps[self.mapIndex] ){
+			// Map Controls
+			var disablecontrols = $(self.activeForm).attr('data-simple-locator-hide-map-controls');
+			disablecontrols = ( typeof disablecontrols === 'undefined' || disablecontrols === '' ) ? false : true;
+
+			// Control Position
+			var controlposition = $(self.activeForm).attr('data-simple-locator-map-control-position');
+			controlposition = ( typeof controlposition === 'undefined' || controlposition === '' ) ? 'TOP_LEFT' : controlposition;
+	
+			var mapOptions = {
+				mapTypeId: 'roadmap',
+				mapTypeControl: false,
+				zoom: 8,
+				styles: wpsl_locator.mapstyles,
+				panControl : false,
+				disableDefaultUI: disablecontrols,
+				zoomControlOptions : {
+					position : google.maps.ControlPosition[controlposition]
+				}
+			}
+
+			// Override options if custom options are set
+			if ( wpsl_locator.custom_map_options === '1' ) mapOptions = wpsl_locator.map_options;
+			SimpleLocator.maps[self.mapIndex] = new google.maps.Map( self.activeMap[0], mapOptions );
+			SimpleLocator.markers[self.mapIndex] = [];
+		}
 		
 		// Array of locations
+		var locations = [];
 		for (var i = 0, length = self.data.results.length; i < length; i++) {
 			var location = {
 				title: self.data.results[i].title,
@@ -94,6 +95,8 @@ SimpleLocator.ResultsMap = function()
 			locations.push(location);
 		}
 		
+		self.removeMapMarkers();
+
 		// Loop through array of markers & place each one on the map  
 		for( i = 0; i < locations.length; i++ ) {
 			var position = new google.maps.LatLng(locations[i].lat, locations[i].lng);
@@ -133,6 +136,17 @@ SimpleLocator.ResultsMap = function()
 
 		self.toggleLoading(false);
 		$(document).trigger('simple-locator-map-rendered', [self.mapIndex, self.activeForm]);
+	}
+
+	/**
+	* Remove all markers from the map
+	*/
+	self.removeMapMarkers = function()
+	{
+		for (var i = 0; i < SimpleLocator.markers[self.mapIndex].length; i++){
+			SimpleLocator.markers[self.mapIndex][i].setMap(null);
+		}
+		SimpleLocator.markers[self.mapIndex] = [];
 	}
 
 	/**

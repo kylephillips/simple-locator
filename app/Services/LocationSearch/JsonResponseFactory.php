@@ -55,7 +55,7 @@ class JsonResponseFactory
 			'page_position' => $result_info_presenter->pagePosition(),
 			'total_pages' => $search_data['max_num_pages'],
 			'back_button' => $result_info_presenter->pagination('back', false),
-			'next_button' => $result_info_presenter->pagination('next', false)
+			'next_button' => $result_info_presenter->pagination('next', false),
 		];
 	}
 

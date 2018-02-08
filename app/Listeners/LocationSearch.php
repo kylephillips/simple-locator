@@ -71,6 +71,7 @@ class LocationSearch
 
 		global $post;
 		if ( $this->request['resultspage'] != $post->ID ) return;
+		if ( count($this->search_data['results']) < 1 ) return;
 		$scripts = '<script>var simple_locator_results = [';
 		foreach($this->search_data['results'] as $key => $result){
 			$scripts .= '{id : ' . $result['id'] . ', title : "' . $result['title'] . '", lat : ' . $result['latitude'] . ', lng : ' . $result['longitude'] . ', infowindow : "' . str_replace('"', '\"', $result['infowindow']) . '"},';

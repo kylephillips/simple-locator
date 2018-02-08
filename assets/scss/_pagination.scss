@@ -1,0 +1,13 @@
+//
+// Pagination
+// --------------------------------------------------
+.wpsl-pagination-button {
+	float: left;
+	&.previous {
+		margin-right: 10px;
+	}
+}
+
+.wpsl-pagination {
+	@include clearfix;
+}

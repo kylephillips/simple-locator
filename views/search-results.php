@@ -1,12 +1,18 @@
 <?php
 /**
 * @see SimpleLocator\Listeners\LocationSearch
-* @todo Error Handling, No results, Page Jump, AJAX Pagination, New Search Link, Dont store paginated searches, taxonomies in non-ajax
+* @todo Error Handling, Page Jump, AJAX Pagination, New Search Link, Dont store paginated searches, taxonomies in non-ajax
 */
-$output = '<div data-simple-locator-results-wrapper class="wpsl-results non-ajax" style="display:block;">';
+$has_results = ( count($this->search_data['results']) < 1 ) ? false : true;
+$output = '<div data-simple-locator-results-wrapper class="wpsl-results non-ajax';
+if ( !$has_results ) $output .= ' wpsl-results-no-results';
+$output .= '" style="display:block;">';
+
+// No Results
+if ( !$has_results ) $output .= $this->results_info->noResultsFoundError();
 
 // Results
-if ( count($this->search_data['results']) > 0 ) :
+if ( $has_results ) :
 	$output .= $this->results_info->resultsHeader();
 	$output .= $this->results_info->currentResultCounts();
 
@@ -22,12 +28,12 @@ if ( count($this->search_data['results']) > 0 ) :
 	endforeach;
 	$results_output .= '</div>';
 	$output .= apply_filters('simple_locator_non_ajax_results_output', $results_output, $this->request);
-endif;
 
-$output .= '<div class="simple-locator-non-ajax-pagination">';
-$output .= $this->results_info->pagination('back');
-$output .= $this->results_info->pagination('next');
-$output .= $this->results_info->pagePosition();
-$output .= '</div>';
+	$output .= '<div class="simple-locator-non-ajax-pagination">';
+	$output .= $this->results_info->pagination('back');
+	$output .= $this->results_info->pagination('next');
+	$output .= $this->results_info->pagePosition();
+	$output .= '</div>';
+endif;
 
 $output .= '</div><!-- .wpsl-results -->';

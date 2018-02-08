@@ -107,11 +107,10 @@ SimpleLocator.ResultsList = function()
 	self.toggleLoading = function(loading)
 	{
 		if ( loading ){
-			$(self.activeList).addClass('loading');
+			$(self.activeFormContainer).addClass('loading');
 			return;
 		}
-		$(self.activeList).removeClass('loading');
-		$(self.activeList).show();
+		$(self.activeFormContainer).removeClass('loading');
 	}
 
 	return self.bindEvents();

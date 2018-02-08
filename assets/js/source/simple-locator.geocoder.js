@@ -34,6 +34,7 @@ SimpleLocator.Geocoder = function()
 				$(document).trigger('simple-locator-address-geocoded', [searchResults, form]);
 			} else {
 				$(document).trigger('simple-locator-error', [form, wpsl_locator.notfounderror]);
+				$(form).parents('[' + SimpleLocator.selectors.formContainer + ']').removeClass('loading');
 			}
 		});
 	}

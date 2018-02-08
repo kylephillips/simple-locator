@@ -1,0 +1,72 @@
+//
+// Form
+// --------------------------------------------------
+.simple-locator-form {
+	form {
+		margin-bottom: 20px;
+	}
+	label {
+		display: block;
+	}
+	.address-input {
+		float: left;
+		width: 60%;
+		input[type='text'],
+		input[type='tel']{
+			width: 100%;
+			box-sizing: border-box;
+		}
+	}
+	.distance {
+		float: right;
+		clear: none;
+		width: 35%;
+		select {
+			width: 100%;
+		}
+	}
+	.submit {
+		clear: both;
+		padding-top: 20px;
+		margin-bottom: 20px;
+	}
+	.geo_button_cont {
+		float: left;
+		padding-top: 20px;
+		margin: 0px 0px 20px 10px;
+	}
+	&.loading {
+		.wpsl-icon-spinner {
+			display: inline-block;
+		}
+	}
+}
+
+.wpsl-icon-spinner {
+	position: relative;
+	top: 5px;
+	width: 40px;
+	vertical-align: top;
+	display: none;
+}
+
+.wpsl-icon-spinner-image {
+	animation: wpslrotate linear 1.5s infinite;
+	position: absolute;
+	line-height: .1;
+}
+
+@keyframes wpslrotate {
+	0% {
+		transform: rotate(0deg);
+		transform-origin: center center;
+	}
+	50% {
+		transform: rotate(180deg);
+		transform-origin: center center;
+	}
+	100% {
+		transform: rotate(360deg);
+		transform-origin: center center;
+	}
+}

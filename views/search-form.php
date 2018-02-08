@@ -74,6 +74,7 @@ $output .= '>
 		<input type="hidden" data-simple-locator-input-geocode name="geocode" />
 		<input type="hidden" data-simple-locator-input-unit name="unit" value="' . $this->unit_raw . '" class="unit" />
 		<button type="submit" data-simple-locator-submit class="wpslsubmit">' . html_entity_decode($this->options['buttontext']) . '</button>
+		<div class="wpsl-icon-spinner"><div class="wpsl-icon-spinner-image"><img src="' . apply_filters('simple_locator_results_loading_spinner', \SimpleLocator\Helpers::plugin_url() . '/assets/images/loading-spinner.svg') . '" class="wpsl-spinner-image" /></div></div>
 	</div>
 	<div class="geo_button_cont"></div>
 	</form>';
@@ -85,7 +86,7 @@ if ( $this->options['mapcontainer'] === '' ){
 }
 
 $output .= '
-<div data-simple-locator-results class="wpsl-results loading"></div>
+<div data-simple-locator-results class="wpsl-results"></div>
 </div><!-- .simple-locator-form -->';
 
 if ( isset($widget_instance) ) $output .= '</div><!-- .simple-locator-widget -->';

@@ -102,4 +102,13 @@ class ResultsInfoPresenter
 		$output .= '</div>';
 		return apply_filters('simple_locator_non_ajax_page_position', $output, $this->request, $this->search_data);
 	}
+
+	/**
+	* No Results Found
+	*/
+	public function noResultsFoundError()
+	{
+		$error = '<div class="alert alert-error wpsl-error">' . __('No locations were found within', 'simple-locator') . ' ' . $this->request['distance'] . ' ' . $this->request['unit'] . ' ' . __('of','simple-locator') . ' ' . $this->request['formatted_address'] . '</div>';
+		return apply_filters('simple_locator_no_results_error', $error, $this->request, $this->search_data);
+	}
 }

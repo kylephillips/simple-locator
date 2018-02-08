@@ -1,0 +1,21 @@
+//
+// Form Results
+// --------------------------------------------------
+.wpsl-results {
+	clear: both;
+	ul {
+		@include unstyled();
+		@include clearfix();
+		li {
+			float: left;
+			width: 46%;
+			clear: both;
+			margin:0 0 20px 0 !important;
+			list-style: none !important;
+			&:nth-child(even){
+				float: right;
+				clear: none;
+			}
+		}
+	}
+} // .wpsl-results

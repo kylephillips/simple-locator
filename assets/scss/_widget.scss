@@ -1,0 +1,35 @@
+//
+// Widget Specific Styles
+// --------------------------------------------------
+.simple-locator-widget {
+
+	.simple-locator-form { 
+		.address-input, .distance {
+			float: none;
+			width: 100%;
+		}
+		.address-input {
+			margin-bottom: 10px;
+		}
+	}
+	
+	.wpsl-results ul li {
+		float: none;
+		width: 100%;
+	}
+
+	.wpsl-map {
+		background: url('../images/loading-white.gif') no-repeat;
+		background-position: center;	
+	}
+
+	.wpsl-results.loading {
+		background: url('../images/loading-white.gif') no-repeat;
+		background-position: center;
+	}
+
+	.geo_button_cont {
+		margin: 0;
+	}
+
+}

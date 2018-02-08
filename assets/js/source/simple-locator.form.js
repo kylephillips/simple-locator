@@ -34,12 +34,14 @@ SimpleLocator.Form = function()
 			self.activeFormContainer = $(form).parents('[' + SimpleLocator.selectors.formContainer + ']');
 			self.setAjax();
 			wpsl_before_submit(self.activeForm); // Deprecated
+			self.toggleLoading(true, true);
 			$(document).trigger('simple-locator-before-submit', [self.activeForm]);
 			self.setResultsContainers();
 			self.setFormData();
 			self.submitForm();
 		});
 		$(document).on('simple-locator-address-geocoded', function(e, results, form){
+			self.toggleLoading(true, true);
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLatitude + ']').val(results.latitude);
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLongitude + ']').val(results.longitude);
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputFormattedLocation + ']').val(results.formatted_address);
@@ -47,6 +49,7 @@ SimpleLocator.Form = function()
 			self.submitForm();
 		});
 		$(document).on('click', '[' + SimpleLocator.selectors.paginationButton + ']', function(e){
+			self.toggleLoading(true, true);
 			if ( !self.activeForm ) return;
 			e.preventDefault();
 			self.paginate($(this));
@@ -55,6 +58,7 @@ SimpleLocator.Form = function()
 			self.activeForm = $(form);
 			self.activeFormContainer = $(form).parents('[' + SimpleLocator.selectors.formContainer + ']');
 			self.setAjax();
+			self.toggleLoading(true, true);
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLatitude + ']').val(place.geometry.location.lat());
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLongitude + ']').val(place.geometry.location.lng());
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputFormattedLocation + ']').val(place.formatted_address);
@@ -198,12 +202,14 @@ SimpleLocator.Form = function()
 				}
 				if (data.status === 'error'){
 					$(document).trigger('simple-locator-error', [self.activeForm, data.message]);
+					self.toggleLoading(false, true);
 					return;
 				}
 				if ( data.result_count === 0 ){
 					var message = wpsl_locator.nolocationserror + ' ' + data.formatted_address;
 					$(document).trigger('simple-locator-error', [self.activeForm, message]);
 					wpsl_no_results(self.formData.formatted_address, self.activeForm); // Deprecated
+					self.toggleLoading(false, true);
 					return;
 				}
 				$(document).trigger('simple-locator-form-success', [data, self.activeForm]);
@@ -239,6 +245,7 @@ SimpleLocator.Form = function()
 	*/
 	self.toggleLoading = function(loading, clearvalues)
 	{
+		var results = $(self.activeFormContainer).find('[' + SimpleLocator.selectors.results + ']');
 		if ( loading ){
 			if ( clearvalues ){
 				$('[' + SimpleLocator.selectors.inputLatitude + ']').val('');
@@ -246,10 +253,12 @@ SimpleLocator.Form = function()
 				$('[' + SimpleLocator.selectors.inputGeocode + ']').val('');
 				$('[' + SimpleLocator.selectors.inputFormattedLocation + ']').val('');
 			}
+			$(self.activeFormContainer).addClass('loading');
 			$(self.activeFormContainer).find('[' + SimpleLocator.selectors.formError + ']').hide();
-			$(self.activeFormContainer).find('[' + SimpleLocator.selectors.results + ']').empty().addClass('loading').show();
+			$(results).empty();
 			return;
 		}
+		$(self.activeFormContainer).removeClass('loading');
 	}
 
 	return self.bindEvents();

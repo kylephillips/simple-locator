@@ -70,7 +70,7 @@ SimpleLocator.ResultsList = function()
 		var header = '<h3 class="wpsl-results-header">' + self.data.result_count + ' ' + location;
 		if ( self.data.latitude !== "" ) header += ' ' + wpsl_locator.found_within + ' ' + self.data.distance + ' ' + self.data.unit + ' ' + wpsl_locator.of + ' ';
 		header += ( self.data.geolocation === "true" ) ? wpsl_locator.yourlocation : self.data.formatted_address;
-		output += '</h3>';
+		header += '</h3>';
 		if ( self.paginated && self.data.results_header ) {
 			header = self.data.results_header;
 			if ( self.data.current_counts && self.data.total_pages > 1) header += self.data.current_counts;

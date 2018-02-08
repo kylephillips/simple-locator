@@ -49,9 +49,9 @@ SimpleLocator.Form = function()
 			self.submitForm();
 		});
 		$(document).on('click', '[' + SimpleLocator.selectors.paginationButton + ']', function(e){
-			self.toggleLoading(true, true);
 			if ( !self.activeForm ) return;
 			e.preventDefault();
+			$(self.activeFormContainer).addClass('loading');
 			self.paginate($(this));
 		});
 		$(document).on('simple-locator-autocomplete-changed', function(e, place, form){
@@ -230,7 +230,6 @@ SimpleLocator.Form = function()
 	self.paginate = function(button)
 	{
 		var direction = $(button).attr(SimpleLocator.selectors.paginationButton);
-		self.toggleLoading(true, false);
 		if ( direction === 'next' ){
 			self.page = self.page + 1;
 			self.submitForm();

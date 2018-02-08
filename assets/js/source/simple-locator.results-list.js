@@ -90,6 +90,7 @@ SimpleLocator.ResultsList = function()
 			output += '<div class="simple-locator-ajax-pagination">';
 			if ( self.data.back_button ) output += self.data.back_button;
 			if ( self.data.next_button ) output += self.data.next_button;
+			if ( self.data.loading_spinner ) output += self.data.loading_spinner;
 			if ( self.data.page_position ) output += self.data.page_position;
 			output += '</div>';
 		}

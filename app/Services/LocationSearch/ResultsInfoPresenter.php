@@ -111,4 +111,12 @@ class ResultsInfoPresenter
 		$error = '<div class="alert alert-error wpsl-error">' . __('No locations were found within', 'simple-locator') . ' ' . $this->request['distance'] . ' ' . $this->request['unit'] . ' ' . __('of','simple-locator') . ' ' . $this->request['formatted_address'] . '</div>';
 		return apply_filters('simple_locator_no_results_error', $error, $this->request, $this->search_data);
 	}
+
+	/**
+	* Loading Spinner
+	*/
+	public function loadingSpinner()
+	{
+		return '<div class="wpsl-icon-spinner"><div class="wpsl-icon-spinner-image"><img src="' . apply_filters('simple_locator_results_loading_spinner', \SimpleLocator\Helpers::plugin_url() . '/assets/images/loading-spinner.svg') . '" class="wpsl-spinner-image" /></div></div>';
+	}
 }

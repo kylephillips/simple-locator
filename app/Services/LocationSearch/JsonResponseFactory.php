@@ -56,6 +56,7 @@ class JsonResponseFactory
 			'total_pages' => $search_data['max_num_pages'],
 			'back_button' => $result_info_presenter->pagination('back', false),
 			'next_button' => $result_info_presenter->pagination('next', false),
+			'loading_spinner' => $result_info_presenter->loadingSpinner()
 		];
 	}
 
@@ -88,6 +89,7 @@ class JsonResponseFactory
 			'page_position' => $this->data['page_position'],
 			'back_button' => $this->data['back_button'],
 			'next_button' => $this->data['next_button'],
+			'loading_spinner' => $this->data['loading_spinner'],
 			'results' => $results
 		];
 	}

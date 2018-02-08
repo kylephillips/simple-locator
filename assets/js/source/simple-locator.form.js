@@ -51,6 +51,16 @@ SimpleLocator.Form = function()
 			e.preventDefault();
 			self.paginate($(this));
 		});
+		$(document).on('simple-locator-autocomplete-changed', function(e, place, form){
+			self.activeForm = $(form);
+			self.activeFormContainer = $(form).parents('[' + SimpleLocator.selectors.formContainer + ']');
+			self.setAjax();
+			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLatitude + ']').val(place.geometry.location.lat());
+			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLongitude + ']').val(place.geometry.location.lng());
+			$(self.activeForm).find('[' + SimpleLocator.selectors.inputFormattedLocation + ']').val(place.formatted_address);
+			self.setFormData();
+			self.submitForm();
+		});
 	}
 
 	/**

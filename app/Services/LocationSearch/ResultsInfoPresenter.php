@@ -52,7 +52,7 @@ class ResultsInfoPresenter
 		$output = '<form method="' . $this->request['formmethod'] . '" action="' . get_the_permalink($this->request['resultspage']) . '" class="simple-locator-pagination-form';
 		if ( $this->request['allow_empty_address'] == 'true' ) $output .= ' allow-empty';
 		$output .= '">';
-		$page .= ( $direction == 'next' ) ? $this->request['page'] + 1 : $this->request['page'] - 1;
+		$page = ( $direction == 'next' ) ? $this->request['page'] + 1 : $this->request['page'] - 1;
 		$output .= '
 			<input type="hidden" name="page_num" value="' . $page . '">
 			<input type="hidden" name="per_page" value="' . $this->request['per_page'] . '">

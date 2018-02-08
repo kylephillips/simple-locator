@@ -13,6 +13,7 @@ SimpleLocator.ResultsList = function()
 	self.activeList;
 	self.data;
 	self.listIndex;
+	self.paginated = false;
 
 	self.bindEvents = function()
 	{
@@ -20,6 +21,7 @@ SimpleLocator.ResultsList = function()
 			self.activeForm = $(form);
 			self.activeFormContainer = $(form).parents('[' + SimpleLocator.selectors.formContainer + ']');
 			self.data = data;
+			if ( self.data.per_page !== 0 ) self.paginated = true;
 			self.setListContainer();
 			self.setMapIndex();
 			self.loadList();
@@ -63,10 +65,18 @@ SimpleLocator.ResultsList = function()
 
 		var location = ( self.data.result_count === 1 ) ? wpsl_locator.location : wpsl_locator.locations;
 
-		var output = '<h3 class="wpsl-results-header">' + self.data.result_count + ' ' + location;
-		if ( self.data.latitude !== "" ) output += ' ' + wpsl_locator.found_within + ' ' + self.data.distance + ' ' + self.data.unit + ' ' + wpsl_locator.of + ' ';
-		output += ( self.data.geolocation === "true" ) ? wpsl_locator.yourlocation : self.data.formatted_address;
+		var output = '';
+
+		var header = '<h3 class="wpsl-results-header">' + self.data.result_count + ' ' + location;
+		if ( self.data.latitude !== "" ) header += ' ' + wpsl_locator.found_within + ' ' + self.data.distance + ' ' + self.data.unit + ' ' + wpsl_locator.of + ' ';
+		header += ( self.data.geolocation === "true" ) ? wpsl_locator.yourlocation : self.data.formatted_address;
 		output += '</h3>';
+		if ( self.paginated && self.data.results_header ) {
+			header = self.data.results_header;
+			if ( self.data.current_counts && self.data.total_pages > 1) header += self.data.current_counts;
+		}
+
+		output += header;
 		
 		if ( wpsl_locator_options.resultswrapper !== "" ) output += '<' + wpsl_locator_options.resultswrapper + '>';
 
@@ -75,6 +85,14 @@ SimpleLocator.ResultsList = function()
 		}
 
 		if ( wpsl_locator_options.resultswrapper !== "" ) output += '</' + wpsl_locator_options.resultswrapper + '>';
+
+		if ( self.paginated && self.data.total_pages > 1 ){
+			output += '<div class="simple-locator-ajax-pagination">';
+			if ( self.data.back_button ) output += self.data.back_button;
+			if ( self.data.next_button ) output += self.data.next_button;
+			if ( self.data.page_position ) output += self.data.page_position;
+			output += '</div>';
+		}
 
 		self.toggleLoading(false);
 		$(self.activeList).removeClass('loading').html(output);

@@ -3,7 +3,7 @@
 * @see SimpleLocator\Listeners\LocationSearch
 * @todo Error Handling, No results, Page Jump, AJAX Pagination, New Search Link, Dont store paginated searches, taxonomies in non-ajax
 */
-$output .= '<div data-simple-locator-results-wrapper class="wpsl-results non-ajax" style="display:block;">';
+$output = '<div data-simple-locator-results-wrapper class="wpsl-results non-ajax" style="display:block;">';
 
 // Results
 if ( count($this->search_data['results']) > 0 ) :
@@ -22,8 +22,10 @@ if ( count($this->search_data['results']) > 0 ) :
 	$output .= apply_filters('simple_locator_non_ajax_results_output', $results_output, $this->request);
 endif;
 
+$output .= '<div class="simple-locator-non-ajax-pagination">';
 $output .= $this->results_info->pagination('back');
 $output .= $this->results_info->pagination('next');
 $output .= $this->results_info->pagePosition();
+$output .= '</div>';
 
 $output .= '</div><!-- .wpsl-results -->';

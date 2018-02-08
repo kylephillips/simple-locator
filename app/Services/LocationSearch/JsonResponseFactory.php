@@ -53,6 +53,7 @@ class JsonResponseFactory
 			'results_header' => $result_info_presenter->resultsHeader(),
 			'current_counts' => $result_info_presenter->currentResultCounts(),
 			'page_position' => $result_info_presenter->pagePosition(),
+			'total_pages' => $search_data['max_num_pages'],
 			'back_button' => $result_info_presenter->pagination('back', false),
 			'next_button' => $result_info_presenter->pagination('next', false)
 		];
@@ -81,6 +82,7 @@ class JsonResponseFactory
 			'total_count' => $total_count,
 			'page' => $this->data['page'],
 			'per_page' => $this->data['per_page'],
+			'total_pages' => $this->data['total_pages'],
 			'results_header' => $this->data['results_header'],
 			'current_counts' => $this->data['current_counts'],
 			'page_position' => $this->data['page_position'],

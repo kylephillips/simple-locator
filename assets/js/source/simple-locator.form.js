@@ -46,6 +46,10 @@ SimpleLocator.Form = function()
 			self.setFormData();
 			self.submitForm();
 		});
+		$(document).on('click', '[' + SimpleLocator.selectors.paginationButton + ']', function(e){
+			e.preventDefault();
+			self.paginate($(this));
+		});
 	}
 
 	/**
@@ -62,7 +66,7 @@ SimpleLocator.Form = function()
 	*/
 	self.processForm = function(geocode)
 	{
-		self.toggleLoading(true);
+		self.toggleLoading(true, true);
 		self.setResultsContainers();
 		var geocoder = new SimpleLocator.Geocoder();
 		geocoder.getCoordinates(self.activeForm);
@@ -115,8 +119,7 @@ SimpleLocator.Form = function()
 			geolocation : geolocation,
 			allow_empty_address : allow_empty_address,
 			ajax : self.isAjax,
-			per_page : limit,
-			page : self.page
+			per_page : limit
 		}
 
 		self.setTaxonomies();
@@ -170,13 +173,13 @@ SimpleLocator.Form = function()
 			$(self.activeForm).submit();
 			return;
 		}
+		self.formData.page = self.page;
 		$.ajax({
 			url : SimpleLocator.endpoints.search,
 			type: 'GET',
 			datatype: 'jsonp',
 			data: self.formData,
 			success: function(data){
-				console.log(data);
 				if ( wpsl_locator.jsdebug === '1' ){
 					console.log('Form Response');
 					console.log(data);
@@ -204,15 +207,33 @@ SimpleLocator.Form = function()
 	}
 
 	/**
+	* Pagination Action
+	*/
+	self.paginate = function(button)
+	{
+		var direction = $(button).attr(SimpleLocator.selectors.paginationButton);
+		self.toggleLoading(true, false);
+		if ( direction === 'next' ){
+			self.page = self.page + 1;
+			self.submitForm();
+			return;
+		}
+		self.page = self.page - 1;
+		self.submitForm();
+	}
+
+	/**
 	* Toggle Loading
 	*/
-	self.toggleLoading = function(loading)
+	self.toggleLoading = function(loading, clearvalues)
 	{
 		if ( loading ){
-			$('[' + SimpleLocator.selectors.inputLatitude + ']').val('');
-			$('[' + SimpleLocator.selectors.inputLongitude + ']').val('');
-			$('[' + SimpleLocator.selectors.inputGeocode + ']').val('');
-			$('[' + SimpleLocator.selectors.inputFormattedLocation + ']').val('');
+			if ( clearvalues ){
+				$('[' + SimpleLocator.selectors.inputLatitude + ']').val('');
+				$('[' + SimpleLocator.selectors.inputLongitude + ']').val('');
+				$('[' + SimpleLocator.selectors.inputGeocode + ']').val('');
+				$('[' + SimpleLocator.selectors.inputFormattedLocation + ']').val('');
+			}
 			$(self.activeFormContainer).find('[' + SimpleLocator.selectors.formError + ']').hide();
 			$(self.activeFormContainer).find('[' + SimpleLocator.selectors.results + ']').empty().addClass('loading').show();
 			return;

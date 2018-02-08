@@ -145,6 +145,7 @@ SimpleLocator.ResultsMap = function()
 	self.addUserPin = function()
 	{
 		if ( wpsl_locator.includeuserpin === '' ) return;
+		if ( SimpleLocator.userPin[self.mapIndex] ) SimpleLocator.userPin[self.mapIndex].setMap(null);
 		var mappin = ( wpsl_locator.mappinuser ) ? wpsl_locator.mappinuser : '';
 		var position = new google.maps.LatLng(self.data.latitude, self.data.longitude);
 		marker = new google.maps.Marker({
@@ -152,6 +153,7 @@ SimpleLocator.ResultsMap = function()
 			map: SimpleLocator.maps[self.mapIndex],
 			icon: mappin
 		});	
+		SimpleLocator.userPin[self.mapIndex] = marker;
 	}
 
 	/**

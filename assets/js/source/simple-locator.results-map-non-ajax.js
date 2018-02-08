@@ -117,6 +117,8 @@ SimpleLocator.ResultsMapNonAjax = function()
 	*/
 	self.addUserPin = function()
 	{
+		if ( wpsl_locator.includeuserpin === '' ) return;
+		if ( SimpleLocator.userPin[self.mapIndex] ) SimpleLocator.userPin[self.mapIndex].setMap(null);
 		var mappin = ( wpsl_locator.mappinuser ) ? wpsl_locator.mappinuser : '';
 		var latitude = parseFloat($(self.activeMap).attr(self.selectors.latitude));
 		var longitude = parseFloat($(self.activeMap).attr(self.selectors.longitude));
@@ -126,6 +128,7 @@ SimpleLocator.ResultsMapNonAjax = function()
 			map: SimpleLocator.maps[self.mapIndex],
 			icon: mappin
 		});	
+		SimpleLocator.userPin[self.mapIndex] = marker;
 	}
 
 	/**

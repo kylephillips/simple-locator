@@ -47,6 +47,7 @@ SimpleLocator.Form = function()
 			self.submitForm();
 		});
 		$(document).on('click', '[' + SimpleLocator.selectors.paginationButton + ']', function(e){
+			if ( !self.activeForm ) return;
 			e.preventDefault();
 			self.paginate($(this));
 		});

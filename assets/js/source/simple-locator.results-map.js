@@ -96,6 +96,7 @@ SimpleLocator.ResultsMap = function()
 		}
 		
 		self.removeMapMarkers();
+		self.addUserPin();
 
 		// Loop through array of markers & place each one on the map  
 		for( i = 0; i < locations.length; i++ ) {
@@ -136,6 +137,21 @@ SimpleLocator.ResultsMap = function()
 
 		self.toggleLoading(false);
 		$(document).trigger('simple-locator-map-rendered', [self.mapIndex, self.activeForm]);
+	}
+
+	/**
+	* Add the user map pin
+	*/
+	self.addUserPin = function()
+	{
+		if ( wpsl_locator.includeuserpin === '' ) return;
+		var mappin = ( wpsl_locator.mappinuser ) ? wpsl_locator.mappinuser : '';
+		var position = new google.maps.LatLng(self.data.latitude, self.data.longitude);
+		marker = new google.maps.Marker({
+			position: position,
+			map: SimpleLocator.maps[self.mapIndex],
+			icon: mappin
+		});	
 	}
 
 	/**

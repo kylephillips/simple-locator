@@ -195,4 +195,28 @@ class SettingsRepository
 		if ( $option && $option == 'true' ) return true;
 		return false;
 	}
+
+	/**
+	* Include the user location as a pin in map?
+	*/
+	public function includeUserPin()
+	{
+		$option = get_option('wpsl_include_user_pin');
+		return ( !$option || $option !== 'true' ) ? false : true;
+	}
+
+	/**
+	* Get the Map Pin
+	*/
+	public function mapPin($style = 'standard')
+	{
+		if ( $style == 'standard' ){
+			$pin = get_option('wpsl_map_pin');
+			if ( !$pin && $pin == '' ) $pin = \SimpleLocator\Helpers::plugin_url() . '/assets/images/map-marker.svg';
+			return $pin;
+		}
+		$pin = get_option('wpsl_map_pin_user');
+		if ( !$pin && $pin == '' ) $pin = \SimpleLocator\Helpers::plugin_url() . '/assets/images/map-marker-blue.svg';
+		return $pin;
+	}
 }

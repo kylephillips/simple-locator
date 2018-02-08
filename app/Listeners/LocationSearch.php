@@ -75,7 +75,7 @@ class LocationSearch
 		foreach($this->search_data['results'] as $key => $result){
 			$scripts .= '{id : ' . $result['id'] . ', title : "' . $result['title'] . '", lat : ' . $result['latitude'] . ', lng : ' . $result['longitude'] . ', infowindow : "' . str_replace('"', '\"', $result['infowindow']) . '"},';
 		}
-		$scripts .= '];</script>';
+		$scripts .= ']</script>';
 		echo $scripts;
 	}
 

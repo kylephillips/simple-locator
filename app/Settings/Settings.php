@@ -131,7 +131,9 @@ class Settings
 		register_setting( 'wpsimplelocator-general', 'wpsl_google_geocode_api_key');
 		register_setting( 'wpsimplelocator-general', 'wpsl_measurement_unit' );
 		register_setting( 'wpsimplelocator-general', 'wpsl_output_css' );
+		register_setting( 'wpsimplelocator-general', 'wpsl_include_user_pin' );
 		register_setting( 'wpsimplelocator-general', 'wpsl_map_pin' );
+		register_setting( 'wpsimplelocator-general', 'wpsl_map_pin_user' );
 		register_setting( 'wpsimplelocator-general', 'wpsl_singular_data' );
 		register_setting( 'wpsimplelocator-general', 'wpsl_geo_button' );
 		register_setting( 'wpsimplelocator-general', 'wpsl_gmaps_api' );

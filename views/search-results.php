@@ -12,6 +12,8 @@ if ( count($this->search_data['results']) > 0 ) :
 
 	$output .= '<div data-simple-locator-map-non-ajax class="wpsl-map loading"';
 	if ( isset($this->request['mapheight']) && $this->request['mapheight'] !== "" )  $output .= 'style="height:' . $this->request['mapheight'] . 'px;"';
+	$output .= ' data-latitude="' . $this->request['latitude'] . '"';
+	$output .= ' data-longitude="' . $this->request['longitude'] . '"';
 	$output .= '></div><!-- .wpsl-map -->';
 
 	$results_output = '<div class="wpsl-results-wrapper">';

@@ -56,6 +56,7 @@ SimpleLocator.maps = [];
 
 // Map Markers
 SimpleLocator.markers = [];
+SimpleLocator.userPin = [];
 
 /**
 * Primary Simple Locator Class

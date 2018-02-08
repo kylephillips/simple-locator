@@ -32,22 +32,47 @@ if ( !isset($location_btn['text']) || $location_btn['text'] == "" ) $location_bt
 	</td>
 </tr>
 <tr valign="top">
-	<th scope="row"><?php _e('Custom Map Pin', 'wpsimplelocator'); ?></th>
+	<th scope="row"><?php _e('Custom Map Pin (Results)', 'wpsimplelocator'); ?></th>
 	<td>
-		<div id="map-pin-image-cont" style="float:left;" data-simple-locator-map-pin-image-container>
+		<div style="float:left;" data-simple-locator-map-pin-image-container>
 			<?php 
 			if ( get_option('wpsl_map_pin') ){
-				echo '<img src="' . get_option('wpsl_map_pin') . '" id="map-pin-image" data-simple-locator-map-pin-image />';
+				echo '<img src="' . get_option('wpsl_map_pin') . '" data-simple-locator-map-pin-image />';
 			}
 			?>
 		</div>
 		<?php 
 		if ( get_option('wpsl_map_pin') ){
-			echo '<input id="remove_map_pin" type="button" value="' . __('Remove', 'wpsimplelocator') . '" class="button action" style="margin-right:5px;margin-left:10px;" data-simple-locator-remove-pin-button />';
+			echo '<input type="button" value="' . __('Remove', 'wpsimplelocator') . '" class="button action" style="margin-right:5px;margin-left:10px;" data-simple-locator-remove-pin-button />';
 		} else {
-			echo '<input id="upload_image_button" type="button" value="Upload" class="button action" data-simple-locator-upload-pin-button />';
+			echo '<input type="button" value="Upload" class="button action" data-simple-locator-upload-pin-button />';
 		} ?>
-		<input id="wpsl_map_pin" type="text" size="36" name="wpsl_map_pin" value="<?php echo get_option('wpsl_map_pin'); ?>" style="display:none;" data-simple-locator-map-pin-input />
+		<input id="wpsl_map_pin" style="display:none;" type="text" size="36" name="wpsl_map_pin" value="<?php echo get_option('wpsl_map_pin'); ?>"  data-simple-locator-map-pin-input />
+	</td>
+</tr>
+<tr valign="top">
+	<th scope="row"><?php _e('User Map Pin', 'wpsimplelocator'); ?></th>
+	<td>
+		<label><input type="checkbox" data-simple-locator-toggle-user-pin name="wpsl_include_user_pin" value="true" <?php if ( $this->settings_repo->includeUserPin() ) echo 'checked'; ?> /><?php _e('Include the user\'s location on the map as a pin in search results', 'maytronics'); ?></label>
+	</td>
+</tr>
+<tr valign="top" data-simple-locator-user-map-pin>
+	<th scope="row"><?php _e('Custom Map Pin (User Location)', 'wpsimplelocator'); ?></th>
+	<td>
+		<div style="float:left;" data-simple-locator-map-pin-image-container>
+			<?php 
+			if ( get_option('wpsl_map_pin_user') ){
+				echo '<img src="' . get_option('wpsl_map_pin_user') . '" data-simple-locator-map-pin-image />';
+			}
+			?>
+		</div>
+		<?php 
+		if ( get_option('wpsl_map_pin_user') ){
+			echo '<input type="button" value="' . __('Remove', 'wpsimplelocator') . '" class="button action" style="margin-right:5px;margin-left:10px;" data-simple-locator-remove-pin-button />';
+		} else {
+			echo '<input type="button" value="Upload" class="button action" data-simple-locator-upload-pin-button />';
+		} ?>
+		<input id="wpsl_map_pin_user" type="text" size="36" name="wpsl_map_pin_user" value="<?php echo get_option('wpsl_map_pin_user'); ?>" style="display:none;" data-simple-locator-map-pin-input />
 	</td>
 </tr>
 <tr valign="top">

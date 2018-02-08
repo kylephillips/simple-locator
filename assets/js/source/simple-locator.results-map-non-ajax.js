@@ -12,6 +12,11 @@ SimpleLocator.ResultsMapNonAjax = function()
 	self.activeWrapper;
 	self.mapIndex;
 
+	self.selectors = {
+		latitude : 'data-latitude',
+		longitude : 'data-longitude',
+	}
+
 	self.bindEvents = function()
 	{
 		$(document).ready(function(){
@@ -53,6 +58,7 @@ SimpleLocator.ResultsMapNonAjax = function()
 		var infoWindow = new google.maps.InfoWindow(), marker, i;
 		
 		SimpleLocator.maps[self.mapIndex] = new google.maps.Map( self.activeMap[0], mapOptions );
+		self.addUserPin();
 		
 		// Array of locations
 		for (var i = 0; i < simple_locator_results.length; i++) {
@@ -104,6 +110,22 @@ SimpleLocator.ResultsMapNonAjax = function()
 
 		self.toggleLoading(false);
 		$(document).trigger('simple-locator-map-rendered', [self.mapIndex, self.activeWrapper]);
+	}
+
+	/**
+	* Add the user map pin
+	*/
+	self.addUserPin = function()
+	{
+		var mappin = ( wpsl_locator.mappinuser ) ? wpsl_locator.mappinuser : '';
+		var latitude = parseFloat($(self.activeMap).attr(self.selectors.latitude));
+		var longitude = parseFloat($(self.activeMap).attr(self.selectors.longitude));
+		var position = new google.maps.LatLng(latitude, longitude);
+		marker = new google.maps.Marker({
+			position: position,
+			map: SimpleLocator.maps[self.mapIndex],
+			icon: mappin
+		});	
 	}
 
 	/**

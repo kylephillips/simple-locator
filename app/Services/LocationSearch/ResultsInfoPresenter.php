@@ -45,7 +45,8 @@ class ResultsInfoPresenter
 		if ( $direction == 'next' && ( ($this->request['page'] + 1 ) == $this->search_data['max_num_pages']) ) return null;
 
 		$button_text = ( $direction == 'next' ) ? __('Next', 'simple-locator') : __('Back', 'simple-locator');
-		$button = '<input type="submit" data-simple-locator-pagination="' . $direction . '" class="button simple-locator-submit-button" value="' . $button_text . '">';
+		$button_class = ( $direction == 'next' ) ? 'button-next' : 'button-previous';
+		$button = '<button type="submit" data-simple-locator-pagination="' . $direction . '" class="button wpsl-pagination-button ' . $button_class . '">' . $button_text . '</button>';
 
 		if ( !$include_hidden_fields ) return $button;
 
@@ -70,7 +71,6 @@ class ResultsInfoPresenter
 			<input type="hidden" name="mapheight" value="' . $this->request['mapheight'] . '" />
 			<input type="hidden" name="simple_locator_results" value="true" />
 		';
-		$button_text = ( $direction == 'next' ) ? __('Next', 'simple-locator') : __('Back', 'simple-locator');
 		$output .= $button;
 		$output .= '</form>';
 		return $output;
@@ -97,7 +97,7 @@ class ResultsInfoPresenter
 	public function pagePosition()
 	{
 		if ( $this->request['per_page'] == 0 ) return;
-		$output = '<div class="simple-locator-form-page-selection">';
+		$output = '<div class="wpsl-form-page-selection">';
 		$output .= '<p>' . __('Page', 'simple-locator') . ' ' . ($this->request['page'] + 1) . ' ' . __('of', 'simple-locator') . ' ' . $this->search_data['max_num_pages'] . '</p>';
 		$output .= '</div>';
 		return apply_filters('simple_locator_non_ajax_page_position', $output, $this->request, $this->search_data);

@@ -25,6 +25,9 @@ SimpleLocator.ResultsMap = function()
 			self.setMapIndex();
 			self.loadMap();
 		});
+		document.addEventListener('simple-locator-form-success', function(e){
+			console.log('form success!');
+		}, false);
 	}
 
 	/**

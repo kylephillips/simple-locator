@@ -31,9 +31,8 @@
 		margin-bottom: 20px;
 	}
 	.geo_button_cont {
-		float: left;
-		padding-top: 20px;
-		margin: 0px 0px 20px 10px;
+		display: inline-block;
+		vertical-align: top;
 	}
 	&.loading {
 		.wpsl-icon-spinner {

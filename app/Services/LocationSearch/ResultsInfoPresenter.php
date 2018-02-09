@@ -28,17 +28,20 @@ class ResultsInfoPresenter
 	public function resultsHeader()
 	{
 		$total_results = $this->search_data['total_results'];
+		$location = ( $this->request['geolocation'] && $this->request['geolocation'] == 'true' ) 
+			? apply_filters('simple_locator_your_location_text', __('your location', 'simple-locator')) 
+			: $this->request['formatted_address'];
 		$total_results = ( $total_results == 1 ) 
 			? $total_results . ' ' . apply_filters('simple_locator_non_ajax_location_text', __('location', 'simple-locator') )
 			: $total_results . ' ' . apply_filters('simple_locator_non_ajax_locations_text', __('locations', 'simple-locator'));
-		$output = '<h3 class="wpsl-results-header">' . $total_results . ' ' . __('found within', 'simple-locator') . ' ' . $this->request['distance'] . ' ' . $this->request['unit'] . ' ' . __('of', 'simple-locator') . ' ' . $this->request['address'] . '</h3>';
+		$output = '<h3 class="wpsl-results-header">' . $total_results . ' ' . __('found within', 'simple-locator') . ' ' . $this->request['distance'] . ' ' . $this->request['unit'] . ' ' . __('of', 'simple-locator') . ' ' . $location . '</h3>';
 		return apply_filters('simple_locator_non_ajax_results_header', $output, $this->request, $this->search_data);
 	}
 
 	/**
 	* Pagination Fields
 	*/
-	public function pagination($direction = 'next', $include_hidden_fields = true)
+	public function pagination($direction = 'next', $include_hidden_fields = true, $autoload = false)
 	{
 		if ( $this->request['per_page'] == 0 ) return null;
 		if ( $direction == 'back' && $this->request['page'] == 0 ) return null;
@@ -48,18 +51,21 @@ class ResultsInfoPresenter
 		$button_class = ( $direction == 'next' ) ? 'button-next' : 'button-previous';
 		$button = '<button type="submit" data-simple-locator-pagination="' . $direction . '" class="button wpsl-pagination-button ' . $button_class . '">' . $button_text . '</button>';
 
-		if ( !$include_hidden_fields ) return $button;
+		if ( !$include_hidden_fields && !$autoload ) return $button;
 
 		$output = '<form method="' . $this->request['formmethod'] . '" action="' . get_the_permalink($this->request['resultspage']) . '" class="simple-locator-pagination-form';
 		if ( $this->request['allow_empty_address'] == 'true' ) $output .= ' allow-empty';
 		$output .= '">';
+		
 		$page = ( $direction == 'next' ) ? $this->request['page'] + 1 : $this->request['page'] - 1;
+		if ( $autoload ) $page = 1;
+		
 		$output .= '
 			<input type="hidden" name="page_num" value="' . $page . '">
 			<input type="hidden" name="per_page" value="' . $this->request['per_page'] . '">
 			<input type="hidden" name="address" value="' . $this->request['address'] . '">
 			<input type="hidden" name="formatted_address" value="' . $this->request['formatted_address'] . '" />
-			<input type="hidden" name="distance" value="' . $this->request['distance'] . '" />
+			<input type="hidden" name="wpsl_distance" value="' . $this->request['distance'] . '" />
 			<input type="hidden" name="latitude" value="' . $this->request['latitude'] . '" />
 			<input type="hidden" name="longitude" value="' . $this->request['longitude'] . '" />
 			<input type="hidden" name="unit" value="' . $this->request['unit'] . '" />
@@ -71,7 +77,7 @@ class ResultsInfoPresenter
 			<input type="hidden" name="mapheight" value="' . $this->request['mapheight'] . '" />
 			<input type="hidden" name="simple_locator_results" value="true" />
 		';
-		$output .= ( $direction == 'next' )
+		$output .= ( $direction && !$autoload == 'next' )
 			? '<input type="hidden" name="back" value="true">'
 			: '<input type="hidden" name="next" value="true">';
 		$output .= $button;

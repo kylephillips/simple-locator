@@ -15,12 +15,12 @@ SimpleLocator.Geolocation = function()
 	self.bindEvents = function()
 	{
 		$(document).ready(function(){
-			if ( wpsl_locator.showgeobutton !== 'true' ) return false;
 			self.setGeolocationAvailable();
 		});
 		$(document).on('simple-locator-geolocation-available-set', function(){
 			if ( !self.geolocationAvailable ) return;
 			self.appendButton();
+			self.setDefaultUserLocation();
 		});
 		$(document).on('click', '[' + SimpleLocator.selectors.geoButton + ']', function(e){
 			e.preventDefault();
@@ -37,7 +37,20 @@ SimpleLocator.Geolocation = function()
 	self.appendButton = function()
 	{
 		var html = '<button class="wpsl-geo-button" ' + SimpleLocator.selectors.geoButton + '>' + wpsl_locator.geobuttontext + '</button>';
-			$('.geo_button_cont').html(html);
+		$('.geo_button_cont').html(html);
+	}
+
+	/**
+	* If the default map is enabled with user-centered location, get the user's location
+	*/
+	self.setDefaultUserLocation = function()
+	{
+		if ( wpsl_locator.default_user_center !== 'true' ) return;
+		var defaultMap = $('[data-simple-locator-default-enabled]');
+		self.activeFormContainer = $(defaultMap).parents('[' + SimpleLocator.selectors.formContainer + ']');
+		self.activeForm = $(self.activeFormContainer).find('[' + SimpleLocator.selectors.form + ']');
+		$(self.activeFormContainer).addClass('loading');
+		self.getLocation();
 	}
 
 	/**
@@ -45,6 +58,7 @@ SimpleLocator.Geolocation = function()
 	*/
 	self.setGeolocationAvailable = function()
 	{
+		if ( wpsl_locator.showgeobutton !== 'true' ) return;
 		$('[' + SimpleLocator.selectors.formContainer + ']').removeClass('no-geolocation');
 		if ( !navigator.geolocation ) return false;
 		navigator.permissions.query({name:'geolocation'}).then(function(permissionStatus){  
@@ -62,12 +76,15 @@ SimpleLocator.Geolocation = function()
 	self.getLocation = function()
 	{
 		navigator.geolocation.getCurrentPosition(function(position){
-			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLatitude + ']').val(position.coords.latitude);
-			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLongitude + ']').val(position.coords.longitude);
-			$(self.activeForm).find('[' + SimpleLocator.selectors.inputGeocode + ']').val('1');
-			$(document).trigger('simple-locator-geolocation-success', [self.activeForm]);
+			var results = {
+				latitude : position.coords.latitude,
+				longitude : position.coords.longitude
+			};
+			$(self.activeFormContainer).addClass('has-geolocation');
+			$(document).trigger('simple-locator-geolocation-success', [self.activeForm, results]);
 		},
 		function(error){
+			$(document).trigger('simple-locator-error', [self.activeForm, 'Your location could not be determined']);
 			self.toggleLoading(false);
 		});
 	}
@@ -83,11 +100,11 @@ SimpleLocator.Geolocation = function()
 			$('[' + SimpleLocator.selectors.inputLongitude + ']').val('');
 			$('[' + SimpleLocator.selectors.inputGeocode + ']').val('');
 			$('[' + SimpleLocator.selectors.inputFormattedLocation + ']').val('');
+			$(self.activeFormContainer).addClass('loading');
 			$(self.activeFormContainer).find('[' + SimpleLocator.selectors.formError + ']').hide();
-			$(self.activeFormContainer).find('[' + SimpleLocator.selectors.results + ']').empty().addClass('loading').show();
 			return;
 		}
-		$(self.activeFormContainer).find('[' + SimpleLocator.selectors.results + ']').removeClass('loading').hide();
+		$(self.activeFormContainer).removeClass('loading');
 	}
 
 	return self.bindEvents();

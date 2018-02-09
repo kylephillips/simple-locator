@@ -17,45 +17,23 @@ SimpleLocator.DefaultMap = function()
 	self.bindEvents = function()
 	{
 		$(document).ready(function(){
+			if ( wpsl_locator.default_user_center === 'true' ) return; // See geolocation for user-centered automatic maps
 			self.queueDefaultMaps();
 		});
 	}
 
 	/**
 	* Queue the default map
-	* @param boolean errors (geolocation errors) - if true, show default map (not user centered)
 	*/
 	self.queueDefaultMaps = function(errors)
 	{
 		var maps = $('[' + self.selectors.map + ']');
 		$.each(maps, function(){
 			var map = $(this);
-			if ( wpsl_locator.default_user_center !== 'true' && !errors ){
 				self.setMapIndex(map);
 				self.loadDefault(map);
 				return;
-			}
-			
-			// var userLocation = new SimpleLocator.UserLocation;
-			// userLocation = userLocation.getLocation();
-			// console.log(userLocation);
 		});
-		
-			// if ( wpsl_locator.default_user_center === 'true' && navigator.geolocation && !errors ){
-			// 	var forms = $('.simple-locator-form');
-			// 	$.each(forms, function(i, v){
-			// 		var formelements = setFormElements($(this));
-			// 		$(formelements.results).empty().addClass('loading').show();
-			// 		navigator.geolocation.getCurrentPosition(function(position){
-			// 			process_geo_button(position, formelements);
-			// 		}, function(error){
-			// 			queue_default_map(true);
-			// 			$(formelements.results).empty().removeClass('loading').hide();
-			// 		});
-			// 	});
-			// } else {
-			// 	self.loadDefault();
-			// }
 	}
 
 	/**

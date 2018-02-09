@@ -73,17 +73,17 @@ $output .= '>
 		<input type="hidden" name="simple_locator_results" value="true" />
 		<input type="hidden" name="method" value="' . $this->options['formmethod'] . '" />
 		<input type="hidden" name="mapheight" value="' . $this->options['mapheight'] . '" />
-		<input type="hidden" data-simple-locator-input-geocode name="geocode" />
+		<input type="hidden" data-simple-locator-input-geocode name="geolocation" />
 		<input type="hidden" data-simple-locator-input-unit name="unit" value="' . $this->unit_raw . '" class="unit" />
 		<button type="submit" data-simple-locator-submit class="wpslsubmit">' . html_entity_decode($this->options['buttontext']) . '</button>
+		<div class="geo_button_cont"></div>
 		<div class="wpsl-icon-spinner"><div class="wpsl-icon-spinner-image"><img src="' . apply_filters('simple_locator_results_loading_spinner', \SimpleLocator\Helpers::plugin_url() . '/assets/images/loading-spinner.svg') . '" class="wpsl-spinner-image" /></div></div>
-	</div>
-	<div class="geo_button_cont"></div>
+		</div>
 	</form>';
 if ( $this->options['mapcontainer'] === '' ){
 	$output .= '<div data-simple-locator-map class="wpsl-map loading"';
 	if ( isset($mapheight) && $mapheight !== "" )  $output .= 'style="height:' . $mapheight . 'px;"';
-	if ( $this->settings_repo->showDefaultMap() ) $output .= ' data-simple-locator-default-enabled';
+	if ( $this->settings_repo->showDefaultMap() ) $output .= ' data-simple-locator-default-enabled="true"';
 	$output .= '></div><!-- .wpsl-map -->';
 }
 

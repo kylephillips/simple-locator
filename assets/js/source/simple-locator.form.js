@@ -23,25 +23,32 @@ SimpleLocator.Form = function()
 			e.preventDefault();
 			self.activeForm = $(this).parents('[' + SimpleLocator.selectors.form + ']');
 			self.activeFormContainer = $(this).parents('[' + SimpleLocator.selectors.formContainer + ']');
+			$(self.activeForm).find('[' + SimpleLocator.selectors.inputGeocode + ']').val('');
 			self.setAjax()
 			active_form = self.activeForm; // Deprecated
 			wpsl_before_submit(self.activeForm); // Deprecated
 			$(document).trigger('simple-locator-before-submit', [self.activeForm]);
 			self.processForm();
 		});
-		$(document).on('simple-locator-geolocation-success', function(e, form){
+		// Runs on geolocation success, whether by clicking button or auto-load
+		$(document).on('simple-locator-geolocation-success', function(e, form, results){
 			self.activeForm = $(form);
 			self.activeFormContainer = $(form).parents('[' + SimpleLocator.selectors.formContainer + ']');
+			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLatitude + ']').val(results.latitude);
+			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLongitude + ']').val(results.longitude);
+			$(self.activeForm).find('[' + SimpleLocator.selectors.inputGeocode + ']').val('1');
+			self.page = 0;
 			self.setAjax();
 			wpsl_before_submit(self.activeForm); // Deprecated
-			self.toggleLoading(true, true);
 			$(document).trigger('simple-locator-before-submit', [self.activeForm]);
 			self.setResultsContainers();
 			self.setFormData();
 			self.submitForm();
 		});
+		// Runs after a form has been manually submitted and geocoded
 		$(document).on('simple-locator-address-geocoded', function(e, results, form){
 			self.toggleLoading(true, true);
+			$(self.activeForm).find('[' + SimpleLocator.selectors.inputGeocode + ']').val('');
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLatitude + ']').val(results.latitude);
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLongitude + ']').val(results.longitude);
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputFormattedLocation + ']').val(results.formatted_address);
@@ -50,6 +57,7 @@ SimpleLocator.Form = function()
 		});
 		$(document).on('click', '[' + SimpleLocator.selectors.paginationButton + ']', function(e){
 			if ( !self.activeForm ) return;
+			if ( $(self.activeFormContainer).hasClass('has-geolocation') && !self.isAjax ) return;
 			e.preventDefault();
 			$(self.activeFormContainer).addClass('loading');
 			self.paginate($(this));
@@ -59,6 +67,7 @@ SimpleLocator.Form = function()
 			self.activeFormContainer = $(form).parents('[' + SimpleLocator.selectors.formContainer + ']');
 			self.setAjax();
 			self.toggleLoading(true, true);
+			$(self.activeForm).find('[' + SimpleLocator.selectors.inputGeocode + ']').val('');
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLatitude + ']').val(place.geometry.location.lat());
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLongitude + ']').val(place.geometry.location.lng());
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputFormattedLocation + ']').val(place.formatted_address);
@@ -74,7 +83,7 @@ SimpleLocator.Form = function()
 	self.setAjax = function()
 	{
 		var ajax = $(self.activeForm).attr(SimpleLocator.selectors.ajaxForm);
-		self.isAjax = ( typeof ajax === 'undefined' || ajax === '' ) ? false : true;
+		self.isAjax = ( typeof ajax === 'undefined' || ajax !== 'true' ) ? false : true;
 	}
 
 	/**
@@ -174,11 +183,28 @@ SimpleLocator.Form = function()
 	}
 
 	/**
+	* Set Autoload
+	* Adds necessary form data for non-ajax forms on auto-located user-centered forms
+	*/
+	self.setAutoload = function()
+	{
+		var autoload = $(self.activeFormContainer).hasClass('has-geolocation');
+		self.formData.autoload = autoload;
+		if ( !self.formData.autoload ) return;
+		self.formData.formmethod = $(self.activeForm).attr('method');
+		self.formData.resultspage = $(self.activeForm).find('input[name="results_page"]').val();
+		self.formData.mapheight = $(self.activeForm).find('input[name="mapheight"]').val();
+		self.formData.search_page = $(self.activeForm).find('input[name="search_page"]').val();
+	}
+
+	/**
 	* Submit the form
 	*/
 	self.submitForm = function()
 	{
-		if ( !self.formData.ajax ) {
+		self.setAutoload();
+
+		if ( !self.formData.ajax && !self.formData.autoload ){
 			$(self.activeForm).submit();
 			return;
 		}

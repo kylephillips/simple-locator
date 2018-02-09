@@ -36,7 +36,9 @@ class JsonResponseFactory
 		$search_data['results'] = $results;
 		$search_data['total_results'] = $total_count;
 		if ( $this->request['per_page'] > 0 ) $search_data['max_num_pages'] = ceil($total_count / $this->request['per_page']);
+
 		$result_info_presenter = new ResultsInfoPresenter($this->request, $search_data);
+		$autoload = ( $this->request['autoload'] ) ? true : false; // for pagination in non-ajax auto location
 
 		$this->data = [
 			'address' => $address,
@@ -54,8 +56,8 @@ class JsonResponseFactory
 			'current_counts' => $result_info_presenter->currentResultCounts(),
 			'page_position' => $result_info_presenter->pagePosition(),
 			'total_pages' => $search_data['max_num_pages'],
-			'back_button' => $result_info_presenter->pagination('back', false),
-			'next_button' => $result_info_presenter->pagination('next', false),
+			'back_button' => $result_info_presenter->pagination('back', false, $autoload),
+			'next_button' => $result_info_presenter->pagination('next', false, $autoload),
 			'loading_spinner' => $result_info_presenter->loadingSpinner()
 		];
 	}

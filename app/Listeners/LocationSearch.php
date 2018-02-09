@@ -100,11 +100,11 @@ class LocationSearch
 		$this->request['per_page'] = ( isset($temp_request['per_page']) ) ? intval($temp_request['per_page']) : get_option('posts_per_page');
 		$this->request['address'] = ( isset($temp_request['address']) ) ? sanitize_text_field($temp_request['address']) : null;
 		$this->request['formatted_address'] = ( isset($temp_request['formatted_location']) ) ? sanitize_text_field($temp_request['formatted_location']) : null;
-		$this->request['distance'] = ( isset($temp_request['distance']) ) ? intval($temp_request['distance']) : null;
+		$this->request['distance'] = ( isset($temp_request['wpsl_distance']) ) ? intval($temp_request['wpsl_distance']) : null;
 		$this->request['latitude'] = ( isset($temp_request['latitude']) ) ? $temp_request['latitude'] : null;
 		$this->request['longitude'] = ( isset($temp_request['longitude']) ) ? $temp_request['longitude'] : null;
 		$this->request['unit'] = ( isset($temp_request['unit']) ) ? $temp_request['unit'] : 'miles';
-		$this->request['geolocation'] = ( isset($temp_request['geolocation']) && $temp_request['geolocation'] == 'true' ) ? true : false;
+		$this->request['geolocation'] = ( isset($temp_request['geolocation']) && $temp_request['geolocation'] == '1' ) ? true : false;
 		$this->request['search_page'] = ( isset($temp_request['search_page']) ) ? intval($temp_request['search_page']) : null;
 		$this->request['resultspage'] = ( isset($temp_request['results_page']) ) ? intval($temp_request['results_page']) : null;
 		$this->request['allow_empty_address'] = ( isset($temp_request['allow_empty_address']) && $temp_request['allow_empty_address'] == 'true' ) ? true : false;

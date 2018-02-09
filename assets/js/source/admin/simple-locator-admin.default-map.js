@@ -16,7 +16,8 @@ SimpleLocatorAdmin.DefaultMap = function()
 		longitudeInput : 'data-simple-locator-longitude-input',
 		locationSearchButton : 'data-simple-locator-location-search-button',
 		locationSearchInput : 'data-simple-locator-location-search-input',
-		error : 'data-simple-locator-error'
+		error : 'data-simple-locator-error',
+		centerUserPositionCheckbox : 'data-simple-locator-user-position-default'
 	}
 
 	self.bindEvents = function()
@@ -24,6 +25,7 @@ SimpleLocatorAdmin.DefaultMap = function()
 		$(document).ready(function(){
 			if ( $('[' + self.selectors.defaultMap + ']').length < 1 ) return;
 			if ( wpsl_locator_defaultmap.enabled ) self.toggleDefaultMap(true);
+			self.toggleHttpsWarning();
 		});
 		$(document).on('change', '[' + self.selectors.showDefaultCheckbox + ']', function(){
 			if ( $(this).is(':checked') ) {
@@ -35,6 +37,9 @@ SimpleLocatorAdmin.DefaultMap = function()
 		$(document).on('click', '[' + self.selectors.locationSearchButton + ']', function(e){
 			e.preventDefault();
 			self.findLocation();
+		});
+		$(document).on('change', '[' + self.selectors.centerUserPositionCheckbox + ']', function(){
+			self.toggleHttpsWarning();
 		});
 	}
 
@@ -116,6 +121,17 @@ SimpleLocatorAdmin.DefaultMap = function()
 			return;
 		}
 		$('[' + self.selectors.error + ']').hide();
+	}
+
+	self.toggleHttpsWarning = function()
+	{
+		if ( $('[' + self.selectors.centerUserPositionCheckbox + ']').is(':checked') ){
+			if ( location.protocol !== 'https:' ){
+				$('[data-simple-locator-no-https]').show();
+			}
+			return;
+		}
+		$('[data-simple-locator-no-https]').hide();
 	}
 
 	return self.bindEvents();

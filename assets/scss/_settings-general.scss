@@ -13,3 +13,14 @@
 		margin: 0;
 	}
 }
+
+.wpsl-error {
+	display: block;
+	padding: .75rem 1.25rem;
+	border-radius: 3px;
+	margin: 0;
+	margin-bottom: 10px;
+	background-color: #f2dede;
+	color: #a94442;
+	border: 1px solid #ebcccc;
+}

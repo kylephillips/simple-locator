@@ -144,8 +144,8 @@ if ( !isset($location_btn['text']) || $location_btn['text'] == "" ) $location_bt
 		<label>
 			<input type="checkbox" id="wpsl_geo_button_enable" name="wpsl_geo_button[enabled]" value="true" <?php if ( $location_btn['enabled'] ) echo 'checked'; ?> data-simple-locator-geo-enabled-checkbox />
 			<?php _e('Display location button on geolocation enabled devices/browsers', 'wpsimplelocator');?>
-
 		</label>
+		<div style="display:none;" class="wpsl-error" data-simple-locator-no-https><?php _e('Your website doesn\'t appear to be running under the https protocol. User geolocation may not be available.', 'simple-locator'); ?> <a href="https://developers.google.com/web/updates/2016/04/geolocation-on-secure-contexts-only" target="_blank"><?php _e('Read More', 'simple-locator'); ?></a></div>
 	</td>
 </tr>
 <tr valign="top" class="wpsl-location-text" data-simple-locator-location-button-text>

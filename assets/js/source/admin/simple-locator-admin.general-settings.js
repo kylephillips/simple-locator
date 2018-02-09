@@ -46,9 +46,13 @@ SimpleLocatorAdmin.GeneralSettings = function()
 	{
 		var text = $('[' + self.selectors.locationButtonText + ']');
 		if ( $('[' + self.selectors.geoEnableCheckbox + ']').is(':checked') ){
+			if ( location.protocol !== 'https:' ){
+				$('[data-simple-locator-no-https]').show();
+			}
 			$(text).show();
 			return;
 		}
+		$('[data-simple-locator-no-https]').hide();
 		$(text).hide();
 	}
 
@@ -66,7 +70,6 @@ SimpleLocatorAdmin.GeneralSettings = function()
 	self.addMapPin = function(imageUrl, button)
 	{
 		var pinContainer = $(button).parent('td');
-		console.log(pinContainer);
 		var imagehtml = '<img src="' + imageUrl + '" id="map-pin-image" ' + self.selectors.mapPinImage + ' />';
 		var buttonhtml = '<input type="button" value="' + wpsl_locator.remove + '" class="button action" style="margin-right:5px;margin-left:10px;" ' + self.selectors.removeMapPinButton + ' />';
 		$(pinContainer).find('[' + self.selectors.mapPinContainer + ']').html(imagehtml);

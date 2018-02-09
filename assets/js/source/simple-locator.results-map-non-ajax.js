@@ -97,17 +97,22 @@ SimpleLocator.ResultsMapNonAjax = function()
 
 			 // Push the marker to the global 'markers' array
 	        SimpleLocator.markers[self.mapIndex].push(marker);
-			
-			// Center the Map
-			SimpleLocator.maps[self.mapIndex].fitBounds(bounds);
-			var listener = google.maps.event.addListener(SimpleLocator.maps[self.mapIndex], "idle", function() { 
-					if ( simple_locator_results.length < 2 ) {
-					SimpleLocator.maps[self.mapIndex].setZoom(13);
-				}
-				google.maps.event.removeListener(listener); 
-			});
 		}
 
+		if ( wpsl_locator.includeuserpin !== '' ){
+			var userposition = self.addUserPin();
+			bounds.extend(userposition);
+		}
+
+		SimpleLocator.maps[self.mapIndex].fitBounds(bounds);
+
+		// Zoom in if there is only one result and user location isnt enabled
+		var listener = google.maps.event.addListener(SimpleLocator.maps[self.mapIndex], "idle", function() { 
+			if ( simple_locator_results.length < 2 && wpsl_locator.includeuserpin === '' ) {
+				SimpleLocator.maps[self.mapIndex].setZoom(13);
+			}
+			google.maps.event.removeListener(listener); 
+		});
 		self.toggleLoading(false);
 		$(document).trigger('simple-locator-map-rendered', [self.mapIndex, self.activeWrapper]);
 	}
@@ -117,8 +122,10 @@ SimpleLocator.ResultsMapNonAjax = function()
 	*/
 	self.addUserPin = function()
 	{
-		if ( wpsl_locator.includeuserpin === '' ) return;
-		if ( SimpleLocator.userPin[self.mapIndex] ) SimpleLocator.userPin[self.mapIndex].setMap(null);
+		if ( SimpleLocator.userPin[self.mapIndex] ) {
+			SimpleLocator.userPin[self.mapIndex].setMap(null);
+			SimpleLocator.userPin[self.mapIndex] = null;
+		}
 		var mappin = ( wpsl_locator.mappinuser ) ? wpsl_locator.mappinuser : '';
 		var latitude = parseFloat($(self.activeMap).attr(self.selectors.latitude));
 		var longitude = parseFloat($(self.activeMap).attr(self.selectors.longitude));
@@ -129,6 +136,7 @@ SimpleLocator.ResultsMapNonAjax = function()
 			icon: mappin
 		});	
 		SimpleLocator.userPin[self.mapIndex] = marker;
+		return position;
 	}
 
 	/**

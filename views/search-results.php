@@ -1,7 +1,7 @@
 <?php
 /**
 * @see SimpleLocator\Listeners\LocationSearch
-* @todo Page Jump, New Search Link, Dont store paginated searches
+* @todo Page Jump, New Search Link
 */
 $has_results = ( count($this->search_data['results']) < 1 ) ? false : true;
 $output = '<div data-simple-locator-results-wrapper class="wpsl-results non-ajax';

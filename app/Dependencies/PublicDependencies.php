@@ -34,7 +34,7 @@ class PublicDependencies extends DependencyBase
 	{
 		$this->addGoogleMaps();
 		$dependencies = ['jquery'];
-		if ( $this->settings_repo->customMapOptions() || $this->settings_repo->outputGMaps() ) $dependencies[] = 'google-maps';
+		if ( $this->settings_repo->customMapOptions() || $this->settings_repo->outputMapsApi() ) $dependencies[] = 'google-maps';
 		wp_register_script(
 			'simple-locator', 
 			$this->plugin_dir . '/assets/js/simple-locator.min.js', 
@@ -62,6 +62,7 @@ class PublicDependencies extends DependencyBase
 			'viewlocation' 			=> __('View Location', 'simple-locator'),
 			'notfounderror' 		=> __('Address not found', 'simple-locator'),
 			'nolocationserror' 		=> __('No locations were found near', 'simple-locator'),
+			'mapservice'			=> $this->settings_repo->mapService(),
 			'mappinuser' 			=> $this->settings_repo->mapPin('user'),
 			'includeuserpin'		=> $this->settings_repo->includeUserPin(),
 			'showgeobutton'			=> $this->settings_repo->showGeoButton('enabled'),

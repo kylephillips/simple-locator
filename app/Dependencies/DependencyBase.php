@@ -71,7 +71,7 @@ abstract class DependencyBase
 	*/
 	protected function addGoogleMaps()
 	{
-		if ( !is_admin() && !$this->settings_repo->outputGMaps() ) return;
+		if ( !is_admin() && !$this->settings_repo->outputMapsApi() ) return;
 		if ( is_admin() && !$this->settings_repo->outputGMapsAdmin() ) return;
 		$maps_url = 'https://maps.google.com/maps/api/js?';
 		$maps_url .= ( get_option('wpsl_google_api_key') ) ? 'key=' . get_option('wpsl_google_api_key') . '&' : '';

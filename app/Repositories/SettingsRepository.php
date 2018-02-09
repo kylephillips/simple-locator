@@ -7,6 +7,15 @@ namespace SimpleLocator\Repositories;
 class SettingsRepository 
 {
 	/**
+	* Get the map service
+	*/
+	public function mapService()
+	{
+		$option = get_option('wpsl_map_service');
+		return ( !isset($option) || $option == '' ) ? 'google' : $option;
+	}
+
+	/**
 	* Get Geo Button Options
 	* @param $return string 
 	*/
@@ -20,10 +29,10 @@ class SettingsRepository
 	}
 
 	/**
-	* Output the Google Maps API
+	* Output the Maps API Key
 	* @return boolean
 	*/
-	public function outputGMaps()
+	public function outputMapsApi()
 	{
 		$option = get_option('wpsl_gmaps_api');
 		return ( $option == 'true' ) ? true : false;

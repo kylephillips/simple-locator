@@ -190,7 +190,6 @@ SimpleLocator.Form = function()
 	{
 		var autoload = $(self.activeFormContainer).hasClass('has-geolocation');
 		self.formData.autoload = autoload;
-		if ( !self.formData.autoload ) return;
 		self.formData.formmethod = $(self.activeForm).attr('method');
 		self.formData.resultspage = $(self.activeForm).find('input[name="results_page"]').val();
 		self.formData.mapheight = $(self.activeForm).find('input[name="mapheight"]').val();

@@ -77,7 +77,6 @@ SimpleLocator.ResultsMap = function()
 
 			// Override options if custom options are set
 			if ( wpsl_locator.custom_map_options === '1' ) mapOptions = wpsl_locator.map_options;
-			console.log(wpsl_locator.map_options);
 			SimpleLocator.maps[self.mapIndex] = new google.maps.Map( self.activeMap[0], mapOptions );
 			SimpleLocator.markers[self.mapIndex] = [];
 		}

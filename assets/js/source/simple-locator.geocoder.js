@@ -8,6 +8,10 @@ SimpleLocator.Geocoder = function()
 	var self = this;
 	var $ = jQuery;
 
+	self.form;
+	self.searchTerm;
+	self.results = [];
+
 	/**
 	* Get coordinates and formatted for a provided address
 	* @param address string
@@ -16,26 +20,42 @@ SimpleLocator.Geocoder = function()
 	*/
 	self.getCoordinates = function(form)
 	{
-		var searchTerm = $(form).find('[' + SimpleLocator.selectors.inputAddress + ']').val();
-		var searchResults = [];
+		self.form = form;
+		self.searchTerm = $(self.form).find('[' + SimpleLocator.selectors.inputAddress + ']').val();
+		if ( SimpleLocator.mapservice === 'google' ) self.queryGoogleMaps();
+	}
+
+	/**
+	* Query Google
+	*/
+	self.queryGoogleMaps = function()
+	{
 		geocoder = new google.maps.Geocoder();
 		geocoder.geocode({
-			'address' : searchTerm
+			'address' : self.searchTerm
 		}, function(results, status){
 			if ( status == google.maps.GeocoderStatus.OK ){
 				googlemaps_response = results; // deprecated
-				searchResults['latitude'] = results[0].geometry.location.lat();
-				searchResults['longitude'] = results[0].geometry.location.lng();
-				searchResults['formatted_address'] = results[0].formatted_address;
+				self.results['latitude'] = results[0].geometry.location.lat();
+				self.results['longitude'] = results[0].geometry.location.lng();
+				self.results['formatted_address'] = results[0].formatted_address;
 				if ( wpsl_locator.jsdebug === '1' ){
 					console.log('Google Geocode Response');
-					console.log(results);
+					console.log(self.results);
 				}
-				$(document).trigger('simple-locator-address-geocoded', [searchResults, form]);
+				$(document).trigger('simple-locator-address-geocoded', [self.results, self.form]);
 			} else {
-				$(document).trigger('simple-locator-error', [form, wpsl_locator.notfounderror]);
-				$(form).parents('[' + SimpleLocator.selectors.formContainer + ']').removeClass('loading');
+				$(document).trigger('simple-locator-error', [self.form, wpsl_locator.notfounderror]);
+				self.removeLoading();
 			}
 		});
+	}
+
+	/**
+	* Remove Loading
+	*/
+	self.removeLoading = function()
+	{
+		$(self.form).parents('[' + SimpleLocator.selectors.formContainer + ']').removeClass('loading');
 	}
 }

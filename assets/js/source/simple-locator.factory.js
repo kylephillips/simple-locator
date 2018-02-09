@@ -58,6 +58,8 @@ SimpleLocator.maps = [];
 SimpleLocator.markers = [];
 SimpleLocator.userPin = [];
 
+SimpleLocator.mapservice = wpsl_locator.mapservice;
+
 /**
 * Primary Simple Locator Class
 */

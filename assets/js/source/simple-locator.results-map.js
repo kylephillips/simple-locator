@@ -51,7 +51,6 @@ SimpleLocator.ResultsMap = function()
 
 	self.loadMap = function()
 	{
-		var mappin = ( wpsl_locator.mappin ) ? wpsl_locator.mappin : '';
 		var bounds = new google.maps.LatLngBounds();
 		var infoWindow = new google.maps.InfoWindow(), marker, i;
 		
@@ -91,6 +90,7 @@ SimpleLocator.ResultsMap = function()
 				lat: self.data.results[i].latitude,
 				lng: self.data.results[i].longitude,
 				id: self.data.results[i].id,
+				mappin : self.data.results[i].mappin,
 				infowindow: self.data.results[i].infowindow
 			};
 			locations.push(location);
@@ -107,7 +107,7 @@ SimpleLocator.ResultsMap = function()
 				position: position,
 				map: SimpleLocator.maps[self.mapIndex],
 				title: locations[i].title,
-				icon: mappin
+				icon: locations[i].mappin
 			});	
 
 			// Info window for each marker 

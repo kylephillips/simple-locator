@@ -42,7 +42,6 @@ SimpleLocator.ResultsMapNonAjax = function()
 	{
 		SimpleLocator.markers[self.mapIndex] = [];
 		
-		var mappin = ( wpsl_locator.mappin ) ? wpsl_locator.mappin : '';
 		var bounds = new google.maps.LatLngBounds();
 		var mapOptions = {
 			mapTypeId: 'roadmap',
@@ -67,6 +66,7 @@ SimpleLocator.ResultsMapNonAjax = function()
 				lat: simple_locator_results[i].lat,
 				lng: simple_locator_results[i].lng,
 				id: simple_locator_results[i].id,
+				mappin : simple_locator_results[i].mappin,
 				infowindow: simple_locator_results[i].infowindow
 			};
 			locations.push(location);
@@ -80,7 +80,7 @@ SimpleLocator.ResultsMapNonAjax = function()
 				position: position,
 				map: SimpleLocator.maps[self.mapIndex],
 				title: locations[i].title,
-				icon: mappin
+				icon: locations[i].mappin
 			});	
 
 			// Info window for each marker 

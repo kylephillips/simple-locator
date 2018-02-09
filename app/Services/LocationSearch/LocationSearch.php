@@ -303,7 +303,7 @@ class LocationSearch
 	private function setResults($results)
 	{
 		foreach ( $results as $key => $result ) {
-			$location = $this->result_presenter->present($result, $key);	
+			$location = $this->result_presenter->present($result, $key);
 			$this->results[] = $location;
 		}
 	}

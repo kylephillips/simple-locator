@@ -12,6 +12,7 @@ class LocationResultPresenter
 	/**
 	* Result
 	* @var object - WP SQL result
+	* Contains array of: 
 	*/
 	private $result;
 
@@ -74,7 +75,9 @@ class LocationResultPresenter
 			'latitude' => $this->result->latitude,
 			'longitude' => $this->result->longitude,
 			'output' => $this->formatOutput(),
-			'infowindow' => $this->formatInfoWindow()
+			'infowindow' => $this->formatInfoWindow(),
+			'mappin' => $this->mapPin(),
+			'result_data' => $this->result
 		];
 		return $location;
 	}
@@ -162,6 +165,15 @@ class LocationResultPresenter
 			}
 		}
 		return $output;		
+	}
+
+	/**
+	* Add the map pin (provides functionality to customize pin for each result)
+	*/
+	private function mapPin()
+	{
+		$custom_pin = $this->settings_repo->mapPin();
+		return apply_filters('simple_locator_map_pin', $custom_pin, $this->result);
 	}
 
 	/**

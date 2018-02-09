@@ -1,7 +1,7 @@
 <?php
 /**
 * @see SimpleLocator\Listeners\LocationSearch
-* @todo Page Jump, New Search Link
+* @todo Page Jump, namespace filters
 */
 $has_results = ( count($this->search_data['results']) < 1 ) ? false : true;
 $output = '<div data-simple-locator-results-wrapper class="wpsl-results non-ajax';
@@ -14,6 +14,7 @@ if ( !$has_results ) $output .= $this->results_info->noResultsFoundError();
 // Results
 if ( $has_results ) :
 	$output .= $this->results_info->resultsHeader();
+	$output .= '<p>' . $this->results_info->newSearchLink() . '</p>';
 	$output .= $this->results_info->currentResultCounts();
 
 	$output .= '<div data-simple-locator-map-non-ajax class="wpsl-map loading"';

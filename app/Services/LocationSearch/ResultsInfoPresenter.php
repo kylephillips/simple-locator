@@ -117,7 +117,7 @@ class ResultsInfoPresenter
 	*/
 	public function noResultsFoundError()
 	{
-		$error = '<div class="alert alert-error wpsl-error">' . __('No locations were found within', 'simple-locator') . ' ' . $this->request['distance'] . ' ' . $this->request['unit'] . ' ' . __('of','simple-locator') . ' ' . $this->request['formatted_address'] . '</div>';
+		$error = '<div class="alert alert-error wpsl-error">' . __('No locations were found within', 'simple-locator') . ' ' . $this->request['distance'] . ' ' . $this->request['unit'] . ' ' . __('of','simple-locator') . ' ' . $this->request['formatted_address'] . '. ' . $this->newSearchLink() . '</div>';
 		return apply_filters('simple_locator_no_results_error', $error, $this->request, $this->search_data);
 	}
 
@@ -127,5 +127,14 @@ class ResultsInfoPresenter
 	public function loadingSpinner()
 	{
 		return '<div class="wpsl-icon-spinner"><div class="wpsl-icon-spinner-image"><img src="' . apply_filters('simple_locator_results_loading_spinner', \SimpleLocator\Helpers::plugin_url() . '/assets/images/loading-spinner.svg') . '" class="wpsl-spinner-image" /></div></div>';
+	}
+
+	/**
+	* New Search link
+	*/
+	public function newSearchLink()
+	{
+		if ( !isset($this->request['search_page']) ) return;
+		return apply_filters('simple_locator_new_search_link', '<a href="' . get_the_permalink($this->request['search_page']) . '" class="wpsl-new-search-link">' . __('New Search', 'simple-locator') . '</a>');
 	}
 }

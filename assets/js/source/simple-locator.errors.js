@@ -36,6 +36,7 @@ SimpleLocator.Errors = function()
 	{
 		var wrappers = $('[' + SimpleLocator.selectors.resultsWrapper + ']');
 		var mapIndex = $(self.formContainer).index(wrappers);
+		if ( !SimpleLocator.markers[mapIndex] ) SimpleLocator.markers[mapIndex] = [];
 		for (var i = 0; i < SimpleLocator.markers[mapIndex].length; i++){
 			SimpleLocator.markers[mapIndex][i].setMap(null);
 		}

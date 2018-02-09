@@ -71,6 +71,9 @@ class ResultsInfoPresenter
 			<input type="hidden" name="mapheight" value="' . $this->request['mapheight'] . '" />
 			<input type="hidden" name="simple_locator_results" value="true" />
 		';
+		$output .= ( $direction == 'next' )
+			? '<input type="hidden" name="back" value="true">'
+			: '<input type="hidden" name="next" value="true">';
 		$output .= $button;
 		$output .= '</form>';
 		return $output;

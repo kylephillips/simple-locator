@@ -54,13 +54,13 @@ class LocationSearch
 		add_action('init', [$this, 'initialize']);
 		add_action('wp_head', [$this, 'addScriptData']);
 		add_filter('the_content', [$this, 'displayResults']);
-		
 	}
 
 	public function initialize()
 	{
 		$this->setRequest();
 		$this->search();
+		$this->saveSearch();
 		$this->results_info = new ResultsInfoPresenter($this->request, $this->search_data);	
 	}
 
@@ -111,6 +111,7 @@ class LocationSearch
 		$this->request['formmethod'] = ( isset($temp_request['method']) && $temp_request['method'] == 'post' ) ? 'post' : 'get';
 		$this->request['mapheight'] = ( isset($temp_request['mapheight']) ) ? intval($temp_request['mapheight']) : 250;
 		$this->request['taxfilter'] = ( isset($temp_request['taxfilter']) && is_array($temp_request['taxfilter']) ) ? $temp_request['taxfilter'] : null;
+		$this->request['new_search'] = ( isset($temp_request['back']) || isset($temp_request['next']) ) ? false : true;
 		$this->formatTaxonomies();
 	}
 
@@ -143,5 +144,15 @@ class LocationSearch
 		$this->search_data['total_results'] = $this->location_search->getTotalResultCount();
 		if ( $this->request['per_page'] == 0 ) return;
 		$this->search_data['max_num_pages'] = ceil($this->search_data['total_results'] / $this->request['per_page']);
+	}
+
+	/**
+	* Save the search
+	*/
+	private function saveSearch()
+	{
+		if ( !$this->request['new_search'] ) return;
+		if ( !get_option('wpsl_save_searches') ) return;
+		$this->save_search->save($this->request);
 	}
 }

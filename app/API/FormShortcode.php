@@ -163,8 +163,9 @@ class FormShortcode
 		$this->setTaxonomies();
 		$this->enqueueScripts();
 		$this->localizeOptions();
-		$widget = ( isset($widget_instance) ) ? true : false;
+		$widget = false;
 		include ( \SimpleLocator\Helpers::view('search-form') );
-		return apply_filters('simple_locator_form', $output, $this->options['distances'], $this->taxonomies, $widget);
+		$form = $output;
+		return apply_filters('simple_locator_form', $form, $this->options['distances'], $this->taxonomies, $widget);
 	}
 }

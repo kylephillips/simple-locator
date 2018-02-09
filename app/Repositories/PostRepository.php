@@ -52,7 +52,9 @@ class PostRepository
 		* @filter simple_locator_all_locations
 		*/
 		$location_query = new \WP_Query(apply_filters('simple_locator_all_locations', $args));
-		if ( $location_query->have_posts() ) : $c = 0;
+		if ( $location_query->have_posts() ) : 
+			$c = 0;
+			$custom_pin = $this->settings_repo->mapPin();
 			while ( $location_query->have_posts() ) : $location_query->the_post();
 				$locations[$c] = new \stdClass();
 				$locations[$c]->id = get_the_id();
@@ -60,6 +62,7 @@ class PostRepository
 				$locations[$c]->permalink = get_the_permalink();
 				$locations[$c]->latitude = get_post_meta(get_the_id(), $this->settings_repo->getGeoField('lat'), true);
 				$locations[$c]->longitude = get_post_meta(get_the_id(), $this->settings_repo->getGeoField('lng'), true);
+				$locations[$c]->mappin = apply_filters('simple_locator_map_pin', $custom_pin, $locations[$c]);
 			$c++;
 			endwhile; 
 		else : return false;

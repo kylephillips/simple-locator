@@ -23,10 +23,16 @@ SimpleLocator.AllLocations = function()
 
 	self.getData = function()
 	{
+		var limit = $('[' + self.selectors.map + ']').attr('data-limit');
+		if ( typeof limit === 'undefined' || limit === '' ) limit = '-1';
+
 		$.ajax({
 			url : SimpleLocator.endpoints.locations,
 			type: 'GET',
 			datatype: 'jsonp',
+			data : {
+				limit : limit
+			},
 			success: function(data){
 				self.locations = data;
 				self.loadMaps();
@@ -48,15 +54,14 @@ SimpleLocator.AllLocations = function()
 			var container = $(this);
 			var locations = self.locations;
 			var mapstyles = wpsl_locator.mapstyles;	
-			var mappin = ( wpsl_locator.mappin ) ? wpsl_locator.mappin : '';
 			var bounds = new google.maps.LatLngBounds();
 			var mapOptions = {
-					mapTypeId: 'roadmap',
-					mapTypeControl: false,
-					zoom: 8,
-					styles: mapstyles,
-					panControl : false
-				}
+				mapTypeId: 'roadmap',
+				mapTypeControl: false,
+				zoom: 8,
+				styles: mapstyles,
+				panControl : false
+			}
 			if ( wpsl_locator.custom_map_options === '1' )	mapOptions = wpsl_locator.map_options;
 				
 			var infoWindow = new google.maps.InfoWindow(), marker, i;
@@ -71,7 +76,7 @@ SimpleLocator.AllLocations = function()
 					position: position,
 					map: map,
 					title: locations[i].title,
-					icon: mappin
+					icon: locations[i].mappin
 				});	
 
 				// Info window for each marker 

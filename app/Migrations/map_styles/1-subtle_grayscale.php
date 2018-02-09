@@ -4,7 +4,7 @@
 * @link http://snazzymaps.com/style/15/subtle-grayscale
 */
 $map = array(
-	'post_title' => __('Subtle Gray', 'wpsimplelocator'),
+	'post_title' => __('Subtle Gray', 'simple-locator'),
 	'post_status' => 'publish',
 	'post_type' => 'wpslmaps',
 	'ping_status' => 'closed',
@@ -13,4 +13,3 @@ $map = array(
 );
 $post = wp_insert_post($map);
 add_post_meta($post, 'wpsl_map_id', $this->file_id);
-?>

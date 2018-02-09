@@ -43,15 +43,15 @@ class GoogleMapGeocode
 		//if ( $address == '5395 Sugarloaf Pkwy Lawrenceville GA 30043' ) $response_status = 'OVER_QUERY_LIMIT';
 
 		if ( $response_status == 'OVER_QUERY_LIMIT' ){
-			throw new GoogleQueryLimitException(__('Your API limit has been reached. Try again in 24 hours.', 'wpsimplelocator'));
+			throw new GoogleQueryLimitException(__('Your API limit has been reached. Try again in 24 hours.', 'simple-locator'));
 		}
 
 		if ( $response_status == 'REQUEST_DENIED' ){
-			throw new GoogleRequestDeniedException(__('Google Maps Error', 'wpsimplelocator') . ': ' . $json['error_message']);
+			throw new GoogleRequestDeniedException(__('Google Maps Error', 'simple-locator') . ': ' . $json['error_message']);
 		}
 
 		if ( $response_status !== 'OK' ) {
-			throw new GoogleAPIException(__('Google Maps Error', 'wpsimplelocator') . ': ' . $response_status);
+			throw new GoogleAPIException(__('Google Maps Error', 'simple-locator') . ': ' . $response_status);
 			return false;
 		}
 

@@ -140,9 +140,9 @@ class PostTypes
 	*/	
 	public function locations_table_head( $defaults )
 	{
-	    $defaults['address']  = __('Address', 'wpsimplelocator');
-	    $defaults['phone']    = __('Phone', 'wpsimplelocator');
-	    $defaults['website']  = __('Website', 'wpsimplelocator');
+	    $defaults['address']  = __('Address', 'simple-locator');
+	    $defaults['phone']    = __('Phone', 'simple-locator');
+	    $defaults['website']  = __('Website', 'simple-locator');
 	    return $defaults;
 	}
 	

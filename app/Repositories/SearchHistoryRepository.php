@@ -116,8 +116,8 @@ class SearchHistoryRepository
 	*/
 	public function pagination($prev = null, $next = null, $link_class = null)
 	{
-		if ( !isset($prev) ) $prev = __('Previous', 'wpsimplelocator');
-		if ( !isset($next) ) $next = __('Next', 'wpsimplelocator');
+		if ( !isset($prev) ) $prev = __('Previous', 'simple-locator');
+		if ( !isset($next) ) $next = __('Next', 'simple-locator');
 		if ( !isset($link_class) ) $link_class = 'button';
 
 		$query = $_GET;

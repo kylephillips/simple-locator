@@ -105,7 +105,7 @@ class LocationResultPresenter
 	*/
 	private function formatInfoWindow()
 	{
-		$infowindow = '<div data-result="' . $this->count . '"><h4>[post_title]</h4><p><a href="[post_permalink]" data-location-id="'.$this->result->id.'">'.__('View Location', 'wpsimplelocator').'</a></p></div>';
+		$infowindow = '<div data-result="' . $this->count . '"><h4>[post_title]</h4><p><a href="[post_permalink]" data-location-id="'.$this->result->id.'">'.__('View Location', 'simple-locator').'</a></p></div>';
 		$infowindow = $this->replacePostFields($infowindow);
 
 		$infowindow = apply_filters('simple_locator_infowindow', $infowindow, $this->result, $this->count);
@@ -132,7 +132,7 @@ class LocationResultPresenter
 		}
 
 		// Show on Map Link
-		$maplink = '<a href="#" class="infowindow-open map-link" data-simple-locator-open-infowindow="' . $this->count . '">' . __('Show on Map', 'wpsimplelocator') . '</a>';
+		$maplink = '<a href="#" class="infowindow-open map-link" data-simple-locator-open-infowindow="' . $this->count . '">' . __('Show on Map', 'simple-locator') . '</a>';
 		$output = str_replace('[show_on_map]', $maplink, $output);
 
 		return $output;

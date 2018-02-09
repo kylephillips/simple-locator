@@ -16,7 +16,7 @@ class SettingsRepository
 		if ( $return == 'enabled' ){
 			return ( !isset($option['enabled']) || $option['enabled'] == "" ) ? 'false' : 'true';
 		}
-		return ( !isset($option['text']) || $option['text'] == "" ) ? __('Use my location', 'wpsimplelocator') : $option['text'];
+		return ( !isset($option['text']) || $option['text'] == "" ) ? __('Use my location', 'simple-locator') : $option['text'];
 	}
 
 	/**
@@ -135,8 +135,8 @@ class SettingsRepository
 	public function getDistanceUnitLocalized()
 	{
 		$unit = get_option('wpsl_measurement_unit');
-		if ( $unit == "" || $unit == 'miles' ) return __('Miles', 'wpsimplelocator');
-		return __('Kilometers', 'wpsimplelocator');
+		if ( $unit == "" || $unit == 'miles' ) return __('Miles', 'simple-locator');
+		return __('Kilometers', 'simple-locator');
 	}
 
 	/**

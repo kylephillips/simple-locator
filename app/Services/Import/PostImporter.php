@@ -119,16 +119,16 @@ class PostImporter
 			if ( $field->field == 'content' && $column_value !== "" ) $post['post_content'] = sanitize_text_field($column_value);
 		}
 		if ( !isset($post['post_title']) ){
-			$this->failedRow(__('Missing Title', 'wpsimplelocator'));
+			$this->failedRow(__('Missing Title', 'simple-locator'));
 			return false;
 		}
 		if ( $this->post_repo->postExists($post['post_title']) ){
-			$this->failedRow(__('Location Exists', 'wpsimplelocator'));
+			$this->failedRow(__('Location Exists', 'simple-locator'));
 			return false;
 		}
 		$this->post_id = wp_insert_post($post);
 		if ( !$this->post_id ) {
-			$this->failedRow(__('WordPress Import Error', 'wpsimplelocator'));
+			$this->failedRow(__('WordPress Import Error', 'simple-locator'));
 			return false;
 		}
 		$this->addMeta();

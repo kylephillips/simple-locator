@@ -61,7 +61,7 @@ class UndoImport extends ImportListenerBase
 	*/
 	protected function success($step)
 	{
-		$url = admin_url('options-general.php?page=wp_simple_locator&tab=import&success=' . __('Import successfully undone. All post data has been removed.', 'wpsimplelocator'));
+		$url = admin_url('options-general.php?page=wp_simple_locator&tab=import&success=' . __('Import successfully undone. All post data has been removed.', 'simple-locator'));
 		return header('Location:' . $url);
 	}
 

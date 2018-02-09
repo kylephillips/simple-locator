@@ -31,8 +31,8 @@ class FormWidget extends \WP_Widget
 		$this->setUnit();
 		parent::__construct(
 			'simple_locator',
-			__('Simple Locator', 'wpsimplelocator'),
-			['description' => __( 'Display the Simple Locator Form', 'wpsimplelocator' )]
+			__('Simple Locator', 'simple-locator'),
+			['description' => __( 'Display the Simple Locator Form', 'simple-locator' )]
 		);
 	}
 
@@ -51,13 +51,13 @@ class FormWidget extends \WP_Widget
 	private function setOptions($instance)
 	{
 		$this->options['distances'] = (isset($instance['distance_options'])) ? $instance['distance_options'] : '5,10,20,50,100';
-		$this->options['buttontext'] = __('Search', 'wpsimplelocator');
+		$this->options['buttontext'] = __('Search', 'simple-locator');
 		$this->options['mapcontrols'] = 'show';
 		$this->options['showgeobutton'] = $this->settings_repo->showGeoButton('enabled');
 		$this->options['geobuttontext'] = $this->settings_repo->showGeoButton('text');
-		$this->options['placeholder'] = __('Enter a Location', 'wpsimplelocator');
-		$this->options['noresultstext'] = __('No results found', 'wpsimplelocator');
-		$this->options['addresslabel'] = __('Zip/Postal Code', 'wpsimplelocator');
+		$this->options['placeholder'] = __('Enter a Location', 'simple-locator');
+		$this->options['noresultstext'] = __('No results found', 'simple-locator');
+		$this->options['addresslabel'] = __('Zip/Postal Code', 'simple-locator');
 		$this->options['mapcontainer'] = '';
 	}
 
@@ -93,7 +93,7 @@ class FormWidget extends \WP_Widget
 		$title = ( isset($instance['title']) ) ? $instance[ 'title' ] : '';
 		$distance_options = ( isset($instance['distance_options']) ) ? $instance[ 'distance_options' ] : '';
 		$map_height = ( isset($instance['map_height']) ) ? $instance[ 'map_height' ] : '';
-		$placeholder = ( isset($instance['placeholder']) ) ? $instance['placeholder'] : __('Enter a Location', 'wpsimplelocator');
+		$placeholder = ( isset($instance['placeholder']) ) ? $instance['placeholder'] : __('Enter a Location', 'simple-locator');
 		include( \SimpleLocator\Helpers::view('widget-options') );
 	}
 

@@ -61,8 +61,8 @@ class Bootstrap
 	*/
 	public function settingsLink($links)
 	{ 
-  		$settings_link = '<a href="options-general.php?page=wp_simple_locator">' . __('Settings','wpsimplelocator') . '</a>'; 
-  		$help_link = '<a href="http://locatewp.com">' . __('FAQ','wpsimplelocator') . '</a>'; 
+  		$settings_link = '<a href="options-general.php?page=wp_simple_locator">' . __('Settings', 'simple-locator') . '</a>'; 
+  		$help_link = '<a href="http://locatewp.com">' . __('FAQ', 'simple-locator') . '</a>'; 
   		array_unshift($links, $help_link); 
   		array_unshift($links, $settings_link);
   		return $links; 
@@ -82,7 +82,7 @@ class Bootstrap
 	public function addLocalization()
 	{
 		load_plugin_textdomain(
-			'wpsimplelocator', 
+			'simple-locator', 
 			false, 
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages' );
 	}

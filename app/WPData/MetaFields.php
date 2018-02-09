@@ -51,7 +51,7 @@ class MetaFields
 	{
     	add_meta_box( 
     		'wpsl-meta-box', 
-    		__('Location Information', 'wpsimplelocator'), 
+    		__('Location Information', 'simple-locator'), 
     		[$this, 'displayMeta'], 
     		$this->getPostType(), 
     		'normal', 

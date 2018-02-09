@@ -6,12 +6,12 @@ Description: Location search in WordPress, made simple. Can be used for store or
 Version: 2.0.1
 Author: Kyle Phillips
 Author URI: https://github.com/kylephillips
-Text Domain: wpsimplelocator
+Text Domain: simple-locator
 Domain Path: /languages/
 License: GPLv2 or later.
 */
 
-/*  Copyright 2018 Kyle Phillips  (email : support@locatewp.com)
+/*  Copyright 2018 Kyle Phillips
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License, version 2, as 
@@ -29,7 +29,7 @@ License: GPLv2 or later.
 
 // Check versions before Instantiating Plugin Class
 register_activation_hook( __FILE__, 'wpsimplelocator_check_versions' );
-function wpsimplelocator_check_versions( $wp = '3.8', $php = '5.4.0' ) {
+function wpsimplelocator_check_versions( $wp = '4.4', $php = '5.4.0' ) {
 	global $wp_version;
 	if ( version_compare( PHP_VERSION, $php, '<' ) ) $flag = 'PHP';
 	elseif ( version_compare( $wp_version, $wp, '<' ) ) $flag = 'WordPress';

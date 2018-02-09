@@ -42,7 +42,7 @@ class RemoveImport extends ImportListenerBase
 	*/
 	protected function success($step)
 	{
-		$url = admin_url('options-general.php?page=wp_simple_locator&tab=import&success=' . __('Import successfully removed.', 'wpsimplelocator'));
+		$url = admin_url('options-general.php?page=wp_simple_locator&tab=import&success=' . __('Import successfully removed.', 'simple-locator'));
 		return header('Location:' . $url);
 	}
 

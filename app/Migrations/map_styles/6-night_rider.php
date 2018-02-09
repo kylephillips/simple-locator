@@ -4,7 +4,7 @@
 * @link https://snazzymaps.com/style/1706/nightrider
 */
 $map = array(
-	'post_title' => __('Night Rider', 'wpsimplelocator'),
+	'post_title' => __('Night Rider', 'simple-locator'),
 	'post_status' => 'publish',
 	'post_type' => 'wpslmaps',
 	'ping_status' => 'closed',
@@ -13,4 +13,3 @@ $map = array(
 );
 $post = wp_insert_post($map);
 add_post_meta($post, 'wpsl_map_id', $this->file_id);
-?>

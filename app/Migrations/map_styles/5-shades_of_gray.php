@@ -4,7 +4,7 @@
 * @link https://snazzymaps.com/style/38/shades-of-grey
 */
 $map = array(
-	'post_title' => __('Shades of Grey', 'wpsimplelocator'),
+	'post_title' => __('Shades of Grey', 'simple-locator'),
 	'post_status' => 'publish',
 	'post_type' => 'wpslmaps',
 	'ping_status' => 'closed',
@@ -13,4 +13,3 @@ $map = array(
 );
 $post = wp_insert_post($map);
 add_post_meta($post, 'wpsl_map_id', $this->file_id);
-?>

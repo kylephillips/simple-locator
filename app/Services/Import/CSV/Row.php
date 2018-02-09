@@ -20,7 +20,7 @@ class Row
 	private function setFile()
 	{
 		if ( !get_transient('wpsl_import_file') ){
-			throw new \Exception(__('An uploaded file could not be found', 'wpsimplelocator'));
+			throw new \Exception(__('An uploaded file could not be found', 'simple-locator'));
 		}
 		$this->file = get_transient('wpsl_import_file');
 	}
@@ -36,7 +36,7 @@ class Row
 		$res = $csv->fetchOne($row);
 
 		if ( !$res ){
-			throw new \Exception(__('Row not found', 'wpsimplelocator'));
+			throw new \Exception(__('Row not found', 'simple-locator'));
 		}
 		return $res;
 	}

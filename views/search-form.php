@@ -31,7 +31,7 @@ $output .= '>
 		$output .= ' />
 	</div>
 	<div class="distance form-field">
-		<label for="wpsl_distance">' . __('Distance', 'wpsimplelocator'). '</label>
+		<label for="wpsl_distance">' . __('Distance', 'simple-locator'). '</label>
 		<select name="wpsl_distance" class="distanceselect" data-simple-locator-input-distance>' .
 			$this->distanceOptions() . 
 		'</select>

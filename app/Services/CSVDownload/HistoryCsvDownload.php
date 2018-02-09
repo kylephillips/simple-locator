@@ -41,13 +41,13 @@ class HistoryCsvDownload
 		
 		// Header Row
 		$csv->insertOne([
-			__('Time', 'wpsimplelocator'), 
-			__('User IP', 'wpsimplelocator'), 
-			__('Search Latitude', 'wpsimplelocator'), 
-			__('Search Longitude', 'wpsimplelocator'), 
-			__('Search Term', 'wpsimplelocator'), 
-			__('Search Term Formatted', 'wpsimplelocator'), 
-			__('Distance', 'wpsimplelocator')
+			__('Time', 'simple-locator'), 
+			__('User IP', 'simple-locator'), 
+			__('Search Latitude', 'simple-locator'), 
+			__('Search Longitude', 'simple-locator'), 
+			__('Search Term', 'simple-locator'), 
+			__('Search Term Formatted', 'simple-locator'), 
+			__('Distance', 'simple-locator')
 		]);
 
 		foreach ( $this->results as $result ){
@@ -62,7 +62,7 @@ class HistoryCsvDownload
 			]);
 		}
 
-		$filename = __('location-search-history', 'wpsimplelocator') . '.csv';
+		$filename = __('location-search-history', 'simple-locator') . '.csv';
 		$csv->output($filename);
 	}
 }

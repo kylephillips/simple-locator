@@ -8,6 +8,8 @@ SimpleLocator.DefaultMap = function()
 	var self = this;
 	var $ = jQuery;
 
+	self.mapIndex;
+
 	self.selectors = {
 		map : 'data-simple-locator-default-enabled'	
 	}
@@ -29,6 +31,7 @@ SimpleLocator.DefaultMap = function()
 		$.each(maps, function(){
 			var map = $(this);
 			if ( wpsl_locator.default_user_center !== 'true' && !errors ){
+				self.setMapIndex(map);
 				self.loadDefault(map);
 				return;
 			}
@@ -55,6 +58,18 @@ SimpleLocator.DefaultMap = function()
 			// }
 	}
 
+	/**
+	* Set the map index for a map
+	*/
+	self.setMapIndex = function(map)
+	{
+		var wrappers = $('[' + SimpleLocator.selectors.resultsWrapper + ']');
+		self.mapIndex = $(map).parents('[' + SimpleLocator.selectors.resultsWrapper + ']').index(wrappers);
+	}
+
+	/**
+	* Load the default map
+	*/ 
 	self.loadDefault = function(map)
 	{
 		var latitude = wpsl_locator.default_latitude;
@@ -65,14 +80,12 @@ SimpleLocator.DefaultMap = function()
 		var mapOptions = {
 			center: center,
 			zoom: parseInt(wpsl_locator.default_zoom),
-			mapTypeControl: false,
-			streetViewControl: false,
 			styles: wpsl_locator.mapstyles
 		}
 		// Override options if custom options are set
 		if ( wpsl_locator.custom_map_options === '1' )	mapOptions = wpsl_locator.map_options;
 		mapOptions.center = center;
-		var map = new google.maps.Map(map[0],mapOptions);
+		SimpleLocator.maps[self.mapIndex] = new google.maps.Map(map[0],mapOptions);
 	}
 	
 	return self.bindEvents();

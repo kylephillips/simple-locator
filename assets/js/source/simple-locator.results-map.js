@@ -171,6 +171,10 @@ SimpleLocator.ResultsMap = function()
 	*/
 	self.removeMapMarkers = function()
 	{
+		if ( !SimpleLocator.markers[self.mapIndex] ) {
+			SimpleLocator.markers[self.mapIndex] = [];
+			return;	
+		}
 		for (var i = 0; i < SimpleLocator.markers[self.mapIndex].length; i++){
 			SimpleLocator.markers[self.mapIndex][i].setMap(null);
 		}

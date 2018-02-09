@@ -25,6 +25,7 @@ SimpleLocator.Errors = function()
 
 	self.toggleError = function(message)
 	{
+		$(self.formContainer).removeClass('loading');
 		$(self.formContainer).find('[' + SimpleLocator.selectors.formError + ']').text(message).show();
 	}
 

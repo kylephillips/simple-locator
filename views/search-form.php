@@ -25,14 +25,14 @@ $output .= ' data-simple-locator-map-control-position="' . $this->options['mapco
 $output .= '>
 	<div class="wpsl-error alert alert-error" style="display:none;" data-simple-locator-form-error></div>
 	<div class="address-input form-field">
-		<label for="address">' . $this->options['addresslabel'] . '</label>
-		<input type="text" id="address" data-simple-locator-input-address name="address" class="address wpsl-search-form" placeholder="' . $this->options['placeholder'] . '"';
+		<label for="wpsl_address">' . $this->options['addresslabel'] . '</label>
+		<input type="text" id="wpsl_address" data-simple-locator-input-address name="address" class="address wpsl-search-form" placeholder="' . $this->options['placeholder'] . '"';
 		if ( $this->settings_repo->autocomplete() ) $output .= ' data-simple-locator-autocomplete';
 		$output .= ' />
 	</div>
 	<div class="distance form-field">
-		<label for="distance">' . __('Distance', 'wpsimplelocator'). '</label>
-		<select name="distance" class="distanceselect" data-simple-locator-input-distance>' .
+		<label for="wpsl_distance">' . __('Distance', 'wpsimplelocator'). '</label>
+		<select name="wpsl_distance" class="distanceselect" data-simple-locator-input-distance>' .
 			$this->distanceOptions() . 
 		'</select>
 	</div>';
@@ -41,8 +41,8 @@ $output .= '>
 		if ( $this->options['taxonomy_field_type'] == 'select' ) :
 			foreach ( $this->taxonomies as $tax_name => $taxonomy ) :
 				$output .= '<div class="wpsl-taxonomy-filter">
-				<label class="taxonomy-label">' . $taxonomy['label'] . '</label>
-				<select name="taxfilter[' . $tax_name . ']" data-simple-locator-taxonomy-select="' . $tax_name . '">
+				<label for="wpsl_taxonomy_' . $tax_name . '" class="taxonomy-label">' . $taxonomy['label'] . '</label>
+				<select id="wpsl_taxonomy_' . $tax_name . '" name="taxfilter[' . $tax_name . ']" data-simple-locator-taxonomy-select="' . $tax_name . '">
 					<option value="">--</option>';
 					foreach ( $taxonomy['terms'] as $term ){
 						$output .= '<option value="' . $term->term_id . '" />' . $term->name . '</option>';
@@ -55,7 +55,7 @@ $output .= '>
 				$output .= '<div class="wpsl-taxonomy-filter checkboxes">
 				<label class="taxonomy-label">' . $taxonomy['label'] . '</label>';
 				foreach ( $taxonomy['terms'] as $term ){
-					$output .= '<label><input type="checkbox" name="taxfilter[' . $tax_name . '][]" value="' . $term->term_id . '" data-simple-locator-taxonomy-checkbox="' . $tax_name . '" />' .$term->name . '</label>';
+					$output .= '<label for="wpsl_taxonomy_' . $tax_name . '"><input type="checkbox" id="wpsl_taxonomy_' . $tax_name . '" name="taxfilter[' . $tax_name . '][]" value="' . $term->term_id . '" data-simple-locator-taxonomy-checkbox="' . $tax_name . '" />' .$term->name . '</label>';
 				}
 				$output .= '</div><!-- .taxonomy -->';
 			endforeach;

@@ -110,7 +110,27 @@ class LocationSearch
 		$this->request['allow_empty_address'] = ( isset($temp_request['allow_empty_address']) && $temp_request['allow_empty_address'] == 'true' ) ? true : false;
 		$this->request['formmethod'] = ( isset($temp_request['method']) && $temp_request['method'] == 'post' ) ? 'post' : 'get';
 		$this->request['mapheight'] = ( isset($temp_request['mapheight']) ) ? intval($temp_request['mapheight']) : 250;
-		// 'taxonomies' => $taxonomies,
+		$this->request['taxfilter'] = ( isset($temp_request['taxfilter']) && is_array($temp_request['taxfilter']) ) ? $temp_request['taxfilter'] : null;
+		$this->formatTaxonomies();
+	}
+
+	/**
+	* Format Taxonomies
+	*/
+	private function formatTaxonomies()
+	{
+		if ( !$this->request['taxfilter'] ) return;
+		$tax_array = [];
+		foreach ( $this->request['taxfilter'] as $tax => $term_id ){
+			if ( !is_array($term_id) ){
+				$tax_array[$tax] = [$term_id];
+				continue;
+			}
+			foreach ( $term_id as $id ){
+				$tax_array[$tax][] = $id;
+			}
+		}
+		$this->request['taxfilter'] = $tax_array;
 	}
 
 	/**

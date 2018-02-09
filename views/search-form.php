@@ -37,11 +37,12 @@ $output .= '>
 		'</select>
 	</div>';
 	if ( isset($this->taxonomies) ) :
+		$output .= '<div class="wpsl-taxonomy-filters">';
 		if ( $this->options['taxonomy_field_type'] == 'select' ) :
 			foreach ( $this->taxonomies as $tax_name => $taxonomy ) :
 				$output .= '<div class="wpsl-taxonomy-filter">
 				<label class="taxonomy-label">' . $taxonomy['label'] . '</label>
-				<select name="taxonomy[' . $tax_name . ']">
+				<select name="taxfilter[' . $tax_name . ']" data-simple-locator-taxonomy-select="' . $tax_name . '">
 					<option value="">--</option>';
 					foreach ( $taxonomy['terms'] as $term ){
 						$output .= '<option value="' . $term->term_id . '" />' . $term->name . '</option>';
@@ -54,11 +55,12 @@ $output .= '>
 				$output .= '<div class="wpsl-taxonomy-filter checkboxes">
 				<label class="taxonomy-label">' . $taxonomy['label'] . '</label>';
 				foreach ( $taxonomy['terms'] as $term ){
-					$output .= '<label><input type="checkbox" name="taxonomy[' . $tax_name . ']" value="' . $term->term_id . '" />' .$term->name . '</label>';
+					$output .= '<label><input type="checkbox" name="taxfilter[' . $tax_name . '][]" value="' . $term->term_id . '" data-simple-locator-taxonomy-checkbox="' . $tax_name . '" />' .$term->name . '</label>';
 				}
 				$output .= '</div><!-- .taxonomy -->';
 			endforeach;
 		endif;
+		$output .= '</div><!-- .wpsl-taxonomy-filters -->';
 	endif;
 	$output .= '<div class="submit">
 		<input type="hidden" data-simple-locator-input-latitude name="latitude" class="latitude" />

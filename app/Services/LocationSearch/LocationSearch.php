@@ -127,7 +127,7 @@ class LocationSearch
 		if ( isset($this->request['page']) && $this->data['limit']){
 			$this->data['offset'] = intval($this->request['page']) * $this->data['limit'];;
 		}
-		if ( isset($this->request['taxonomies']) ) $this->setTaxonomies();
+		if ( isset($this->request['taxfilter']) ) $this->setTaxonomies();
 	}
 
 	/**
@@ -135,7 +135,7 @@ class LocationSearch
 	*/
 	private function setTaxonomies()
 	{
-		$terms = $this->request['taxonomies'];
+		$terms = $this->request['taxfilter'];
 		$this->data['taxonomies'] = $terms;
 	}
 

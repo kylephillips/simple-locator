@@ -39,8 +39,14 @@
 <tr valign="top">
 	<td colspan="2">
 		<h3><?php _e('Google Map Options', 'simple-locator'); ?></h3>
-		<p style="margin-bottom:20px;"><?php _e('Important: This must be a properly formatted JavaScript object. Changing this value will overwrite any other settings such as map styles or shortcode options. To use the map styles specified above, use the global object <code>wpsl_locator.mapstyles</code>.', 'simple-locator'); ?> <a href="https://developers.google.com/maps/documentation/javascript/reference#MapOptions" target="_blank"> <?php _e('For available properties and more information, visit the Google Maps Javascript API reference.', 'simple-locator'); ?></a></p>
+		<p style="margin-bottom:20px;"><?php _e('Important: Options must be properly formatted JavaScript objects. Changing this value will overwrite any other settings such as map styles or shortcode options. To use the map styles specified above, use the global object <code>wpsl_locator.mapstyles</code>.', 'simple-locator'); ?> <a href="https://developers.google.com/maps/documentation/javascript/reference#MapOptions" target="_blank"> <?php _e('For available properties and more information, visit the Google Maps Javascript API reference.', 'simple-locator'); ?></a></p>
 		<label><input type="checkbox" name="wpsl_custom_map_options" value="1" id="wpsl_custom_map_options" data-simple-locator-custom-map-options-checkbox <?php if ( $this->settings_repo->customMapOptions() ) echo 'checked'; ?>><?php _e('Customize Javscript Map Options', 'simple-locator');?></label>
 		<textarea id="wpsl_map_options" name="wpsl_map_options" data-simple-locator-custom-map-options style="width:100%;height:200px;margin-top:20px;<?php if ( !$this->settings_repo->customMapOptions() ) echo 'display:none;' ?>"><?php echo $this->settings_repo->mapOptions(); ?></textarea>
+		<?php if ( $this->settings_repo->autocomplete() ) : ?>
+		<p>
+			<label><input type="checkbox" name="wpsl_custom_autocomplete_options" value="1" data-simple-locator-custom-autocomplete-option <?php if ( $this->settings_repo->customAutocompleteOptions() ) echo 'checked'; ?> /><?php _e('Customize Google Maps Autocomplete Options', 'simple-locator'); ?> <a href="https://developers.google.com/places/web-service/autocomplete" target="_blank"><?php _e('Documentation', 'simple-locator'); ?></a></label>
+		</p>
+		<textarea id="wpsl_map_options" name="wpsl_autocomplete_options" data-simple-locator-custom-autocomplete style="width:100%;height:200px;margin-top:20px;<?php if ( !$this->settings_repo->customAutocompleteOptions() ) echo 'display:none;' ?>"><?php echo $this->settings_repo->autocompleteOptions(); ?></textarea>
+		<?php endif; ?>
 	</td>
 </tr>

@@ -187,6 +187,26 @@ class SettingsRepository
 	}
 
 	/**
+	* Are custom autocomplete options being used?
+	*/
+	public function customAutocompleteOptions()
+	{
+		$option = get_option('wpsl_custom_autocomplete_options');
+		return ( $option && $option == '1' ) ? true : false;
+	}
+
+	/**
+	* Get JS Map options
+	*/ 
+	public function autocompleteOptions()
+	{
+		$option = get_option('wpsl_autocomplete_options');
+		if ( $option ) return $option;
+		include( dirname(dirname(__FILE__)) . '/Migrations/map_options/autocomplete-options.php' );
+		return $default;
+	}
+
+	/**
 	* Is JS debugging enabled?
 	*/
 	public function jsDebug()

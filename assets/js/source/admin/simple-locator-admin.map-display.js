@@ -15,7 +15,9 @@ SimpleLocatorAdmin.MapDisplay = function()
 		styleSelect : 'data-simple-locator-map-style-select',
 		styleChoiceInput : 'data-simple-locator-map-style-choice-input',
 		customOptionsCheckbox : 'data-simple-locator-custom-map-options-checkbox',
-		customOptions : 'data-simple-locator-custom-map-options'
+		customOptions : 'data-simple-locator-custom-map-options',
+		customAutocompleteCheckbox : 'data-simple-locator-custom-autocomplete-option',
+		customAutocomplete : 'data-simple-locator-custom-autocomplete'
 	}
 
 	self.bindEvents = function()
@@ -39,6 +41,9 @@ SimpleLocatorAdmin.MapDisplay = function()
 				return;
 			}
 			$('[' + self.selectors.customOptions + ']').hide();
+		});
+		$(document).on('change', '[' + self.selectors.customAutocompleteCheckbox + ']', function(){
+			self.toggleAutocompleteOptions();
 		});
 	}
 
@@ -108,6 +113,18 @@ SimpleLocatorAdmin.MapDisplay = function()
 		$('[' + self.selectors.styleChoiceInput + ']').val(style_id);
 		$('[' + self.selectors.styleList + '] li').removeClass('active');
 		$(button).parent('li').addClass('active');
+	}
+
+	/**
+	* Toggle Autocomplete Options
+	*/
+	self.toggleAutocompleteOptions = function()
+	{
+		if ( $('[' + self.selectors.customAutocompleteCheckbox + ']').is(':checked') ){
+			$('[' + self.selectors.customAutocomplete + ']').show();
+			return;
+		}
+		$('[' + self.selectors.customAutocomplete + ']').hide();
 	}
 
 	return self.bindEvents();

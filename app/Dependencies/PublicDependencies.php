@@ -74,11 +74,20 @@ class PublicDependencies extends DependencyBase
 			'default_zoom' 			=> intval($this->settings_repo->defaultMap('zoom')),
 			'default_user_center'	=> $this->settings_repo->defaultMap('user_location'),
 			'custom_map_options'	=> $this->settings_repo->customMapOptions(),
+			'custom_autocomplete'	=> $this->settings_repo->customAutocompleteOptions(),
 			'postfields'			=> apply_filters('simple_locator_post_fields', false),
-			'l10n_print_after' 		=> 'wpsl_locator.map_options = ' . $this->settings_repo->mapOptions(),
 			'jsdebug'				=> $this->settings_repo->jsDebug()
 		];
 		$localized_data['mapstyles'] = $this->styles_repo->getLocalizedStyles();
+		
+		// Localized JS objects
+		$localized_objects = '';
+		if ( $this->settings_repo->customMapOptions() ) 
+			$localized_objects .= 'wpsl_locator.map_options = ' . apply_filters('simple_locator_js_map_options', $this->settings_repo->mapOptions()) . ';';
+		if ( $this->settings_repo->customAutocompleteOptions() ) 
+			$localized_objects .= 'wpsl_locator.autocomplete_options = ' . apply_filters('simple_locator_autocomplete_js_options', $this->settings_repo->autocompleteOptions());
+		$localized_data['l10n_print_after'] = $localized_objects;
+
 		wp_localize_script( 
 			'simple-locator', 
 			'wpsl_locator', 

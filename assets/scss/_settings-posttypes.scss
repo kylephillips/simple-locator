@@ -2,8 +2,7 @@
 // Post Type Settings
 // --------------------------------------------------
 .latlng {
-	background-color: darken($white, 10%);
-	max-width: 500px;
+	background-color: rgba($black, .08);
 	padding: 20px;
 	margin-top: 20px;
 	@include clearfix;
@@ -37,35 +36,25 @@
 	float: right;
 }
 
-.wpsl-block-label {
-	display: block;
-	font-weight: bold;
-	margin-bottom: 5px;
-}
-.wpsl-posttype-fields {
-	background-color: $white;
-	padding: 20px;
-	margin-top: 30px;
-	max-width: 500px;
-	h3 {
-		margin: 0;
+.wpsl-posttype-settings-labels {
+	.post-type-row {
+		display: table;
+		width: 100%;
+		padding: .5em;
+		border-top: 1px solid $border-light;
+		box-sizing: border-box;
+		&:first-child {
+			border: 0;
+		}
 	}
-	table {
-		background-color: darken($white, 10%);
+	label {
+		display: table-cell;
+		width: 30%;
 	}
-	tr td, tr th {
-		padding: 5px 10px;
+	.post-type-field {
+		display: table-cell;
+		width: 70%;
 	}
-	tr th {
-		padding-top: 10px;
-	}
-	table tr:nth-child(even) {
-		background-color: darken($white, 6%);
-	}
-}
-
-.wpsl-reset-posttype.button {
-	
 }
 
 .wpsl-red {

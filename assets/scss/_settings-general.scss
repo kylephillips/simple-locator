@@ -57,6 +57,9 @@
 			&.align-top {
 				vertical-align: top;
 			}
+			&.no-padding {
+				padding: 0;
+			}
 		}
 		input[type="text"]{
 			width: 100%;

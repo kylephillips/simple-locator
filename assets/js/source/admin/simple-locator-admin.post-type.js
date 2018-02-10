@@ -149,7 +149,7 @@ SimpleLocatorAdmin.PostType = function()
 	{
 		var posttype = $('[' + self.selectors.postTypeField + ']').val();
 		var checkbox = $('[' + self.selectors.hidePostTypeCheckbox + ']');
-		var checkboxParent = $(checkbox).parent('label').parent('p');
+		var checkboxParent = $(checkbox).parents('.row');
 		if ( posttype === wpsl_locator.posttype ){
 			$(checkbox).removeAttr('checked');
 			$(checkboxParent).hide();

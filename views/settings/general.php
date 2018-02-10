@@ -1,6 +1,4 @@
-<?php 
-settings_fields( 'wpsimplelocator-general' ); 
-?>
+<?php settings_fields( 'wpsimplelocator-general' ); ?>
 <div class="wpsl-settings">
 	<div class="row">
 		<div class="label"><h4><?php _e('Plugin Version', 'simple-locator'); ?></h4></div>

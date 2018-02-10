@@ -1,57 +1,31 @@
-<?php 
-settings_fields( 'wpsimplelocator-results' ); 
-$post_type_fields = $this->field_repo->getFieldsForPostType($this->post_type);
-$post_type = get_post_type_object($this->post_type);
-$resultoutput = get_option('wpsl_results_fields_formatted');
-$resultoutput = $resultoutput['output'];
-$image_sizes = get_intermediate_image_sizes();
-?>
-<div class="wpsl-results-fields">
-
-	<div class="wpsl-results-fields-selection">
-		<div class="wpsl-results-field-selector">
-			<div class="left">
-				<label for="wpsl-fields"><?php echo $post_type->labels->name; ?> <?php _e('Fields', 'simple-locator'); ?></label>
-				<select id="wpsl-fields">
-					<option value="distance"><?php _e('Distance', 'simple-locator'); ?></option>
-					<option value="show_on_map"><?php _e('Show on Map', 'simple-locator'); ?></option>
-					<?php 
-						foreach($post_type_fields as $field) {
-							echo '<option value="' . $field . '">' . $field . '</option>';
-						}
-					?>
-				</select>
-				<button class="wpsl-field-add button"><?php _e('Add', 'simple-locator');?></button>
-			</div>
-			<div class="right">
-				<label for="wpsl-post-fields"><?php _e('Post Data', 'simple-locator'); ?></label>
-				<select id="wpsl-post-fields">
-					<option value="post_title"><?php _e('Title', 'simple-locator'); ?></option>
-					<option value="post_excerpt"><?php _e('Excerpt', 'simple-locator'); ?></option>
-					<option value="post_permalink"><?php _e('Permalink', 'simple-locator'); ?></option>
-					<?php foreach($image_sizes as $size) : ?>
-					<option value="post_thumbnail_<?php echo $size; ?>"><?php echo __('Thumbnail', 'simple-locator') . ' - ' . $size; ?></option>
-					<?php endforeach; ?>
-				</select>
-				<button class="wpsl-post-field-add button"><?php _e('Add', 'simple-locator');?></button>
-			</div>
+<?php settings_fields( 'wpsimplelocator-results' ); ?>
+<div class="wpsl-settings">
+	<div class="row">
+		<div class="label align-top">
+			<h4><?php _e('Search Result List', 'simple-locator'); ?></h4>
+			<p><?php _e('Customize the display of search result lists. This content is also customizable in a plugin filter.', 'simple-locator'); ?></p>
 		</div>
-		<?php 
-			wp_editor($resultoutput, 'wpsl_results_fields_formatted', 
-				array(
-					'media_buttons' => false,
-					'textarea_name' => 'wpsl_results_fields_formatted[output]',
-					'tabindex' => 1,
-					'teeny' => true,
-					'wpautop' => true
-					)
-				); 
-			?>
-
-		<p class="wpsl-limit-setting">
-			<label for="wpsl_results_fields_formatted"><?php _e('Number of Results to Show (-1 for unlimited results)', 'simple-locator'); ?></label>
+		<div class="field align-top">
+			<?php 
+			include(\SimpleLocator\Helpers::view('settings/result-field-custom-selection'));
+			wp_editor($this->settings_repo->resultsFormatting(), 'wpsl_results_fields_formatted', [
+				'media_buttons' => false,
+				'textarea_name' => 'wpsl_results_fields_formatted[output]',
+				'tabindex' => 1,
+				'textarea_rows' => 12,
+				'teeny' => true,
+				'wpautop' => true
+			]); ?>			
+		</div><!-- .field -->
+	</div><!-- .row -->
+	<div class="row">
+		<div class="label">
+			<h4><?php _e('Result Count', 'simple-locator'); ?></h4>
+			<p><?php _e('Limit the number of results shown. Enter a value of -1 for unlimited results.', 'simple-locator'); ?></p>
+		</div>
+		<div class="field">
+			<label for="wpsl_results_fields_formatted"><?php _e('Number of Results to Show', 'simple-locator'); ?></label>
 			<input type="text" name="wpsl_results_fields_formatted[limit]" id="wpsl_results_fields_formatted" value="<?php echo $this->settings_repo->resultsLimit(); ?>" />
-		</p>
-	</div>
-
-</div><!-- .wpsl-results-fields -->
+		</div>
+	</div><!-- .row -->
+</div><!-- .wpsl-settings -->

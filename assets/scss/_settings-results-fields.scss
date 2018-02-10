@@ -1,40 +1,30 @@
 //
 // Settings - Results Fields
 // --------------------------------------------------
-
-// Outer Container
-.wpsl-results-fields {
-	padding-top: 20px;
-}
-
-.wpsl-results-fields-selection {
-	p {
-		clear: both;
-		padding-top: 8px;
-		color: darken($white, 50%);
-		font-style: oblique;
-	}
-}
-
 .wpsl-results-field-selector {
-	background-color: darken($white, 10%);
+	background-color: rgba($black, .05);
+	border: 1px solid $border-light;
 	padding: 8px;
 	@include clearfix;
 	.left, .right {
+		width: 48%;
+		position: relative;
+		float: left;
+		padding-right: 55px;
+		box-sizing: border-box;
+		@include clearfix;
 		label {
 			display: block;
-			font-weight: bold;
 		}
-		@include clearfix;
-		float: left;
-		width: 45%;
 		select {
 			float: left;
-			width: 60%;
+			width: 100%;
 		}
 		button {
-			float: right;
-			width: 37%;
+			position: absolute;
+			width: 50px;
+			right: 0;
+			bottom: 0;
 		}
 	}
 	.right {

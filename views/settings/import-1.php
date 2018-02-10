@@ -30,7 +30,8 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 	<?php
 		$incomplete = $this->import_repo->incomplete();
 		if ( $incomplete && !isset($_GET['error']) ) :
-			$transient = $this->import_repo->transient();
+		$transient = $this->import_repo->transient();
+		if ( isset($transient['filename']) ) :
 	?>
 	<div class="row wpsl-previous-import-message">
 		<div class="wpsl-alert"><?php _e('You have an incomplete import. Would you like to continue the import?', 'simple-locator'); ?></div>
@@ -52,7 +53,7 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 			<?php _e('Abort and Start New Import', 'simple-locator'); ?>
 		</a>
 	</div><!-- .row -->
-	<?php endif; ?>
+	<?php endif; endif; ?>
 
 	<form action="<?php echo admin_url('admin-post.php'); ?>" method="post" enctype="multipart/form-data" class="wpsl-upload-form row"<?php if ( $incomplete ) echo ' style="display:none;"';?>>
 		<div class="wpsl-error"><strong><?php _e('Important', 'simple-locator'); ?>:</strong> <?php _e('Before running an import, make a complete backup of your database.', 'simple-locator'); ?></div>

@@ -21,6 +21,7 @@ class AllLocationsShortcode
 	{
 		$this->options = shortcode_atts([
 			'limit' => '-1',
+			'mapheight' => ''
 		], $options);
 	}
 
@@ -40,6 +41,9 @@ class AllLocationsShortcode
 	{
 		$this->setOptions($options);
 		$this->enqueueScripts();
-		return '<div data-simple-locator-all-locations-map data-limit="' . $this->options['limit'] . '" class="wpsl-map" style="display:block;"></div>';
+		$output = '<div data-simple-locator-all-locations-map data-limit="' . $this->options['limit'] . '" class="wpsl-map" style="display:block;';
+		if ( $this->options['mapheight'] !== '' ) $output .= 'height:' . intval($this->options['mapheight']) . 'px;';
+		$output .= '"></div>';
+		return $output;
 	}
 }

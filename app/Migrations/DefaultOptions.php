@@ -2,7 +2,7 @@
 namespace SimpleLocator\Migrations;
 
 /**
-* Default Plugin Options
+* Default Plugin Options set during install
 */
 class DefaultOptions 
 {
@@ -13,10 +13,6 @@ class DefaultOptions
 
 	public function setOptions()
 	{
-		if ( !get_option('wpsl_post_type') ) update_option('wpsl_post_type', 'location');
-		if ( !get_option('wpsl_field_type') ) update_option('wpsl_field_type', 'wpsl');
-		if ( !get_option('wpsl_lat_field') ) update_option('wpsl_lat_field', 'wpsl_latitude');
-		if ( !get_option('wpsl_lng_field') ) update_option('wpsl_lng_field', 'wpsl_longitude');
 		if ( !get_option('wpsl_output_css') ) update_option('wpsl_output_css', 'true');
 		if ( !get_option('wpsl_map_pin') ) update_option('wpsl_map_pin', '');
 		if ( !get_option('wpsl_map_styles_type') ) update_option('wpsl_map_styles_type', 'none');
@@ -30,19 +26,6 @@ class DefaultOptions
 			update_option('wpsl_geo_button', array(
 				'enabled' => '',
 				'text'=> __('Use my location', 'simple-locator')
-			));
-		}
-		if ( !get_option('wpsl_posttype_labels') ){
-			update_option('wpsl_posttype_labels', array(
-				'name' => 'location',
-				'label' => __('Locations', 'simple-locator'),
-				'singular'=> __('Location', 'simple-locator'),
-				'add_new_item'=> __('Add Location', 'simple-locator'),
-				'edit_item' => __('Edit Location', 'simple-locator'),
-				'view_item' => __('View Location', 'simple-locator'),
-				'slug' => __('location', 'simple-locator'),
-				'menu_icon' => 'dashicons-post-status',
-				'menu_position' => 6
 			));
 		}
 		if ( !get_option('wpsl_default_map') ){

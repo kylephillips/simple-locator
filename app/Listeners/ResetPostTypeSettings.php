@@ -21,6 +21,7 @@ class ResetPostTypeSettings extends AJAXAdminListenerBase
 		delete_option('wpsl_field_type');
 		delete_option('wpsl_lng_field');
 		delete_option('wpsl_lat_field');
+		update_option('wpsl_hide_default', 'false');
 		flush_rewrite_rules(false);
 		$this->success(__('Post Type successfully reset', 'simple-locator'));
 	}

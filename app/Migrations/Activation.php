@@ -2,6 +2,7 @@
 namespace SimpleLocator\Migrations;
 
 use SimpleLocator\Migrations\DefaultOptions;
+use SimpleLocator\Migrations\RequiredOptions;
 use SimpleLocator\Migrations\CreateTables;
 use SimpleLocator\WPData\PostTypes;
 
@@ -21,6 +22,7 @@ class Activation
 		$this->version = $simple_locator_version;
 		$this->setVersion();
 		$this->migrateTables();
+		new RequiredOptions;
 		register_activation_hook( dirname(dirname( dirname(__FILE__) )) . '/simplelocator.php', [$this, 'install'] );
 	}
 

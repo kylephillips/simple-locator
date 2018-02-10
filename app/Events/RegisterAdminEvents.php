@@ -4,6 +4,7 @@ namespace SimpleLocator\Events;
 use SimpleLocator\Listeners\GetMetaFieldsForPostType;
 use SimpleLocator\Listeners\ResetPostTypeSettings;
 use SimpleLocator\Listeners\HistorySearch;
+use SimpleLocator\Listeners\HistoryClear;
 use SimpleLocator\Services\CSVDownload\HistoryCsvDownload;
 
 /**
@@ -17,6 +18,7 @@ class RegisterAdminEvents
 		add_action( 'wp_ajax_wpslresetposttype', [$this, 'PostTypeResetRequested']);
 		add_action( 'admin_post_wpslhistorysearch', [$this, 'SearchHistoryQueried']);
 		add_action( 'admin_post_wpslhistorycsv', [$this, 'SearchHistoryCSVTriggered']);
+		add_action( 'admin_post_wpslhistoryclear', [$this, 'SearchHistoryCleared']);
 	}
 
 	/**
@@ -41,6 +43,14 @@ class RegisterAdminEvents
 	public function SearchHistoryQueried()
 	{
 		new HistorySearch;
+	}
+
+	/**
+	* Clear the Search History
+	*/
+	public function SearchHistoryCleared()
+	{
+		new HistoryClear;
 	}
 
 	/**

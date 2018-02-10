@@ -18,6 +18,9 @@
 		&:first-child {
 			border: 0;
 		}
+		&.border-top {
+			border-top: 1px solid $border-light;
+		}
 		.label {
 			display: table-cell;
 			width: 40%;

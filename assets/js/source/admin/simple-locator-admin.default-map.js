@@ -11,9 +11,10 @@ SimpleLocatorAdmin.DefaultMap = function()
 	self.selectors = {
 		showDefaultCheckbox : 'data-simple-locator-default-checkbox',
 		defaultMap : 'data-simple-locator-default-map',
-		zoomInput : 'data-simple-locator-zoom-input',
-		latitudeInput : 'data-simple-locator-latitude-input',
-		longitudeInput : 'data-simple-locator-longitude-input',
+		defaultMapContainer : 'data-simple-locator-default-map-container',
+		zoomInput : 'data-simple-locator-default-map-zoom',
+		latitudeInput : 'data-simple-locator-default-map-latitude',
+		longitudeInput : 'data-simple-locator-default-map-longitude',
 		locationSearchButton : 'data-simple-locator-location-search-button',
 		locationSearchInput : 'data-simple-locator-location-search-input',
 		error : 'data-simple-locator-error',
@@ -24,15 +25,11 @@ SimpleLocatorAdmin.DefaultMap = function()
 	{
 		$(document).ready(function(){
 			if ( $('[' + self.selectors.defaultMap + ']').length < 1 ) return;
-			if ( wpsl_locator_defaultmap.enabled ) self.toggleDefaultMap(true);
+			self.toggleDefaultMap();
 			self.toggleHttpsWarning();
 		});
 		$(document).on('change', '[' + self.selectors.showDefaultCheckbox + ']', function(){
-			if ( $(this).is(':checked') ) {
-				self.toggleDefaultMap(true);
-				return;
-			}
-			self.toggleDefaultMap(false);
+			self.toggleDefaultMap();
 		});
 		$(document).on('click', '[' + self.selectors.locationSearchButton + ']', function(e){
 			e.preventDefault();
@@ -43,18 +40,23 @@ SimpleLocatorAdmin.DefaultMap = function()
 		});
 	}
 
-	self.toggleDefaultMap = function(visible)
+	self.toggleDefaultMap = function()
 	{
-		if ( visible ){
-			$('[' + self.selectors.defaultMap + ']').show();
+		var checked = $('[' + self.selectors.showDefaultCheckbox + ']').is(':checked');
+		var row = $('[' + self.selectors.defaultMapContainer + ']');
+		if ( checked ){
+			$(row).show();
 			self.loadDefaultMap();
 			return
 		}
-		$('[' + self.selectors.defaultMap + ']').hide();
+		$(row).hide();
 	}
 
 	self.loadDefaultMap = function(lat, lng)
 	{
+		lat = ( typeof lat === 'undefined' || lat === '' ) ? false : lat;
+		lng = ( typeof lat === 'undefined' || lng === '' ) ? false : lng;
+
 		if ( !lat ) lat = wpsl_locator_defaultmap.latitude;
 		if ( !lng ) lng = wpsl_locator_defaultmap.longitude;
 
@@ -73,6 +75,11 @@ SimpleLocatorAdmin.DefaultMap = function()
 			icon: wpsl_locator_defaultmap.mappin,
 			draggable: true
 		});
+
+		if ( lat && lng ){
+			$('[' + self.selectors.latitudeInput + ']').val(lat);
+			$('[' + self.selectors.longitudeInput + ']').val(lng);
+		}
 
 		// Set the Zoom Level on Change
 		google.maps.event.addListener(map, 'zoom_changed', function(){
@@ -110,8 +117,6 @@ SimpleLocatorAdmin.DefaultMap = function()
 	self.loadSearchResults = function(lat, lng)
 	{
 		self.loadDefaultMap(lat, lng);
-		$('[' + self.selectors.latitudeInput + ']').val(lat);
-		$('[' + self.selectors.longitudeInput + ']').val(lng);
 	}
 
 	self.toggleError = function(visible)

@@ -1,31 +1,28 @@
 //
 // Default Map Settings
 // --------------------------------------------------
-.wpsl-default-map {
-	display: none;
-	background-color: $white;
-	border: 1px solid darken($white, 10%);
-	padding: 8px;
+.wpsl-settings .row .wpsl-default-map {
+	.search-form {
+		@include clearfix;
+		position: relative;
+		padding: 8px 90px 8px 8px;
+		background-color: $gray-lighter;
+		border: 1px solid $border;
+	}
 	input[type="text"]{
 		float: left;
-		width: 80%;
-		margin: 0 0 10px 0;
+		height: 28px;
+		margin: 0;
 	}
 	button {
-		float: right;
-		width: 18%;
-	}
-	p {
-		clear: both;
-		font-size: 13px !important;
-		font-style: oblique;
-		color: darken($white, 60%);
+		position: absolute;
+		width: 77px;
+		right: 8px;
 	}
 }
 
 #wpsl-default {
 	clear: both;
 	height: 250px;
-	background: url('../images/loading.gif') no-repeat;
-	background-position: center;
+	width: 100%;
 }

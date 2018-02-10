@@ -23,6 +23,12 @@ class LocationResultPresenter
 	private $count;
 
 	/**
+	* Optional build options
+	* @var array
+	*/
+	private $options;
+
+	/**
 	* Results Fields from Settings
 	* @var array
 	*/
@@ -55,10 +61,11 @@ class LocationResultPresenter
 	* Primary Presenter Method
 	* @return array
 	*/
-	public function present($result, $count)
+	public function present($result, $count, $options = [])
 	{
 		$this->result = $result;
 		$this->count = $count;
+		$this->options = $options;
 		return $this->setData();
 	}
 
@@ -93,7 +100,6 @@ class LocationResultPresenter
 			$found = $this->result->$field; // WP result object property
 			$output = str_replace('[' . $field . ']', $found, $output);
 		}
-
 		$output = $this->removeEmptyTags($output);
 		$output = Helpers::replaceURLs($output);
 		$output = wpautop($output);
@@ -122,6 +128,7 @@ class LocationResultPresenter
 	private function replacePostFields($output)
 	{
 		if ( isset($this->result->distance) ) $output = str_replace('[distance]', round($this->result->distance, 2) . ' ' . $this->distance_unit, $output);
+
 		$output = str_replace('[post_title]', $this->result->title, $output);
 
 		if ( strpos($output, '[post_permalink]') !== false ){

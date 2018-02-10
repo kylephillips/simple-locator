@@ -2,6 +2,7 @@
 namespace SimpleLocator\Repositories;
 
 use SimpleLocator\Repositories\SettingsRepository;
+use SimpleLocator\Services\LocationSearch\LocationResultPresenter;
 
 class PostRepository 
 {
@@ -10,9 +11,15 @@ class PostRepository
 	*/
 	private $settings_repo;
 
+	/**
+	* Location Result Presenter
+	*/
+	private $location_presenter;
+
 	public function __construct()
 	{
 		$this->settings_repo = new SettingsRepository;
+		$this->location_presenter = new LocationResultPresenter;
 	}
 	
 	/**
@@ -56,13 +63,18 @@ class PostRepository
 			$c = 0;
 			$custom_pin = $this->settings_repo->mapPin();
 			while ( $location_query->have_posts() ) : $location_query->the_post();
-				$locations[$c] = new \stdClass();
-				$locations[$c]->id = get_the_id();
-				$locations[$c]->title = get_the_title();
-				$locations[$c]->permalink = get_the_permalink();
-				$locations[$c]->latitude = get_post_meta(get_the_id(), $this->settings_repo->getGeoField('lat'), true);
-				$locations[$c]->longitude = get_post_meta(get_the_id(), $this->settings_repo->getGeoField('lng'), true);
-				$locations[$c]->mappin = apply_filters('simple_locator_map_pin', $custom_pin, $locations[$c]);
+				$location = new \StdClass;
+				$location->title = get_the_title();
+				$location->id = get_the_id();
+				$location->latitude = get_post_meta(get_the_id(), $this->settings_repo->getGeoField('lat'), true);
+				$location->longitude = get_post_meta(get_the_id(), $this->settings_repo->getGeoField('lng'), true);
+				$location->wpsl_address = get_post_meta(get_the_id(), 'wpsl_address', true);
+				$location->wpsl_city = get_post_meta(get_the_id(), 'wpsl_city', true);
+				$location->wpsl_state = get_post_meta(get_the_id(), 'wpsl_state', true);
+				$location->wpsl_zip = get_post_meta(get_the_id(), 'wpsl_zip', true);
+				$location->wpsl_phone = get_post_meta(get_the_id(), 'wpsl_phone', true);
+				$location->wpsl_website = get_post_meta(get_the_id(), 'wpsl_website', true);
+				$locations[$c] = $this->location_presenter->present($location, $c, ['distance' => false]);
 			$c++;
 			endwhile; 
 		else : return false;

@@ -51,7 +51,7 @@ class PublicDependencies extends DependencyBase
 		);
 		$localized_data = [
 			'rest_url'				=> get_rest_url() . 'simplelocator/v2',
-			'distance' 				=> __( 'Distance', 'simple-locator' ), 
+			'distance' 				=> __('Distance', 'simple-locator'), 
 			'website' 				=> __('Website', 'simple-locator'),
 			'location' 				=> __('location', 'simple-locator'),
 			'locations' 			=> __('locations', 'simple-locator'),
@@ -62,6 +62,7 @@ class PublicDependencies extends DependencyBase
 			'viewlocation' 			=> __('View Location', 'simple-locator'),
 			'notfounderror' 		=> __('Address not found', 'simple-locator'),
 			'nolocationserror' 		=> __('No locations were found near', 'simple-locator'),
+			'alllocations'			=> apply_filters('simple_locator_all_locations_text', __('All Locations', 'simple-locator')),
 			'mapservice'			=> $this->settings_repo->mapService(),
 			'mappinuser' 			=> $this->settings_repo->mapPin('user'),
 			'includeuserpin'		=> $this->settings_repo->includeUserPin(),

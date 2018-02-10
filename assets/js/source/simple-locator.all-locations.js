@@ -9,6 +9,7 @@ SimpleLocator.AllLocations = function()
 
 	self.locations = [];
 	self.mapIndex;
+	self.map;
 
 	self.selectors = {
 		map : 'data-simple-locator-all-locations-map'
@@ -58,6 +59,7 @@ SimpleLocator.AllLocations = function()
 		
 		$.each(maps, function(){
 			self.setMapIndex($(this));
+			self.map = $(this);
 			SimpleLocator.markers[self.mapIndex] = [];
 			var container = $(this);
 			var locations = self.locations;
@@ -111,10 +113,30 @@ SimpleLocator.AllLocations = function()
 			}
 
 			SimpleLocator.maps[self.mapIndex] = map;
+			self.loadList();
 
 			$(document).trigger('simple-locator-all-locations-rendered', [map]);
 			wpsl_all_locations_rendered(map); // Deprecated
 		});
+	}
+
+	self.loadList = function()
+	{
+		var formContainer = $(self.map).parents('[' + SimpleLocator.selectors.formContainer + ']');
+		if ( formContainer.length < 1 ) return;
+
+		var container = $(self.activeForm).attr('data-simple-locator-results-container');
+		if ( typeof container === 'undefined' || container === ''){
+			container = $(formContainer).find('[' + SimpleLocator.selectors.results + ']');
+		}
+
+		var output = '<h3 class="wpsl-results-header">' + wpsl_locator.alllocations + '</h3>';
+		if ( wpsl_locator_options.resultswrapper !== "" ) output += '<' + wpsl_locator_options.resultswrapper + '>';
+		for( i = 0; i < self.locations.length; i++ ) {
+			output = output + self.locations[i].output;
+		}
+		if ( wpsl_locator_options.resultswrapper !== "" ) output += '</' + wpsl_locator_options.resultswrapper + '>';
+		$(container).html(output);
 	}
 
 	return self.bindEvents();

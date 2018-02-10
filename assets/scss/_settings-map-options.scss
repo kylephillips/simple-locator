@@ -1,12 +1,28 @@
 //
 // Map Style Choices
 // --------------------------------------------------
-#map-styles {
-	@include unstyled;
+.wpsl-settings {
+	.map-styles-header {
+		padding: 1em;
+		h3 {
+			margin: 0 0 8px 0;
+		}
+		p {
+			margin: 0;
+		}
+	}
+}
+.wpsl-settings-map-style-choice {
+	ul {
+		@include unstyled;
+		@include clearfix;
+		padding: 1em;
+		border-top: 1px solid $border-light;
+	}
 	li {
 		float: left;
-		width: 30%;
-		margin: 0 0 30px 5%;
+		width: 32%;
+		margin: 0 0 20px 2%;
 		box-sizing: border-box;
 		&.first {
 			clear: both;
@@ -16,7 +32,6 @@
 			display: block;
 			width: 100%;
 			height: 150px;
-			background: url("../images/loading.gif"), #fff;
 			background-repeat: no-repeat;
 			background-size: 40px;
 			background-position: center;
@@ -24,7 +39,16 @@
 			transition: all 200ms ease;
 		}
 		h4 {
-			margin: 0 0 5px 0;
+			margin: 0;
+			background-color: $gray-lighter;
+			border: 1px solid $border-light;
+			border-bottom: 0;
+			padding: 5px;
+			text-align: center;
+			font-weight: normal;
+			text-transform: uppercase;
+			letter-spacing: .05em;
+			font-size: .9em;
 		}
 		.choose-style {
 			display: block;
@@ -35,6 +59,10 @@
 			text-decoration: none;
 			transition: all 200ms ease;
 			box-sizing: border-box;
+			&:focus, &:active {
+				outline: none;
+				box-shadow: none;
+			}
 			&:hover {
 				background-color: #0074a2;
 			}
@@ -53,7 +81,13 @@
 			}
 		}
 	}
-} // #map-styles
-
+} // wpsl-map-style-choices
+.wpsl-settings-map-style-custom {
+	padding: 1em;
+	border-top: 1px solid $border-light;
+	.wpsl-alert {
+		margin: 0;
+	}
+}
 
 

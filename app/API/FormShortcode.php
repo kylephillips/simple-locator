@@ -127,8 +127,15 @@ class FormShortcode
 		$this->options['distances'] = explode(',', $this->options['distances']);
 		$out = "";
 		foreach ( $this->options['distances'] as $distance ){
-			if ( !is_numeric($distance) ) continue;
-			$out .= '<option value="' . $distance . '">' . $distance . ' ' . $this->unit . '</option>';
+			$default = false;
+			if ( !is_numeric($distance) && !strpos($distance, '*') ) continue;
+			if ( strpos($distance, '*') ){
+				$default = true;
+				$distance = intval(str_replace('*', '', $distance));
+			}
+			$out .= '<option value="' . $distance . '"';
+			if ( $default ) $out .= ' selected';
+			$out .= '>' . $distance . ' ' . $this->unit . '</option>';
 		}
 		return $out;
 	}

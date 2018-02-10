@@ -21,13 +21,27 @@ jQuery(function($){
 		$('.wpsl-previous-import-message').hide();
 	});
 
+
 	/**
-	* Toggle Import Instructions
+	* Toggle Non-public post types in the post type select field
 	*/
-	$(document).on('click', '[data-toggle-import-instructions]', function(e){
-		e.preventDefault();
-		$('.wpsl-import-instructions').toggle();
+	$(document).ready(function(){
+		toggle_hidden_post_types();
 	});
+	$(document).on('change', '[data-simple-locator-show-non-public-types]', function(){
+		toggle_hidden_post_types();
+	});
+	function toggle_hidden_post_types()
+	{
+		var checkbox = $('[data-simple-locator-show-non-public-types]');
+		var nonPublic = $('[data-non-public-post-type]');
+		if ( $(checkbox).is(':checked') ){
+			$(nonPublic).show();
+			return;
+		}
+		$(nonPublic).hide();
+	}
+
 
 	/**
 	* ------------------------------------------------------

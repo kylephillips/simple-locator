@@ -10,14 +10,17 @@ class FieldRepository
 	* Get all the post types
 	* @return array
 	*/
-	public function getPostTypes()
+	public function getPostTypes($public = true)
 	{
-		$types = get_post_types(['public' => true, 'publicly_queryable' => true ], 'objects');
+		$args = ['public' => true, 'publicly_queryable' => true ];
+		if ( !$public ) $args = [];
+		$types = get_post_types($args, 'objects');
 		$post_types = [];
 		foreach( $types as $key => $type ){ 
 			if ( $type->name == 'attachment' ) continue;
 			$post_types[$key]['name'] = $type->name;
 			$post_types[$key]['label'] = $type->labels->name;
+			$post_types[$key]['public'] = $type->public;
 		}
 		return $post_types;
 	}

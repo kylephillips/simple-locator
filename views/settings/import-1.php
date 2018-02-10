@@ -59,10 +59,13 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 		<label><?php _e('Import to Post Type', 'simple-locator'); ?></label>
 		<select name="import_post_type" style="">
 		<?php 
-		foreach ( $this->field_repo->getPostTypes() as $type ){
-			echo '<option value="' . $type['name'] . '">' . $type['label'] . '</option>';
+		foreach ( $this->field_repo->getPostTypes(false) as $type ){
+			echo '<option value="' . $type['name'] . '"';
+			if ( !$type['public'] ) echo ' data-non-public-post-type';
+			echo '>' . $type['label'] . '</option>';
 		} ?>
 		</select>
+		<label class="post-type-public"><input type="checkbox" data-simple-locator-show-non-public-types><?php _e('Show non-public post types', 'simple-locator'); ?></label>
 		<input type="hidden" name="action" value="wpslimportupload">
 		<?php wp_nonce_field( 'wpsl-import-nonce', 'nonce' ) ?>
 		

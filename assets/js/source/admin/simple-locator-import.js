@@ -18,7 +18,7 @@ jQuery(function($){
 	$(document).on('click', '.wpsl-new-import', function(e){
 		e.preventDefault();
 		$('.wpsl-upload-form').show();
-		$(this).parents('.wpsl-import-instructions').hide();
+		$('.wpsl-previous-import-message').hide();
 	});
 
 	/**
@@ -130,7 +130,8 @@ jQuery(function($){
 				action: 'wpslposttype',
 				nonce: wpsl_locator.locatorNonce,
 				post_type: $('#wpsl-import-post-type').val(),
-				show_hidden: 'false'
+				show_hidden: 'false',
+				include_wpsl: 'true'
 			},
 			success: function(data){
 				if ( populate_all ){

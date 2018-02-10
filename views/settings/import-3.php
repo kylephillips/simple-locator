@@ -14,12 +14,29 @@ if ( !isset($transient['columns']) || $transient['complete'] ) : ?>
 <div class="error wpsl-import-error" style="display:none;"><p></p></div>
 
 <?php if ( !$transient['last_imported'] ) : // New Import ?>
-<div class="wpsl-import-indicator-intro">
-	<p><strong><?php _e('Total Rows to Import'); ?>:</strong> <?php echo $transient['row_count']; ?> <?php _e('rows from', 'simple-locator'); ?> <?php echo $transient['filename']; ?></p>
-	<p><?php _e('Once the import has begun, do not close or refresh the page until complete.', 'simple-locator'); ?></p>
-	<p><button class="wpsl-start-import button"><?php _e('Start Import', 'simple-locator'); ?></button></p>
-</div>
 
+<div class="wpsl-settings wpsl-import-indicator-intro">
+	<div class="row subhead"><h4><?php _e('Import Ready', 'simple-locator'); ?></h4></div>
+	<div class="row">
+		<div class="label">
+			<h4><?php _e('Row Count', 'simple-locator'); ?></h4>
+		</div>
+		<div class="field">
+			<?php echo $transient['row_count']; ?> <?php _e('rows from', 'simple-locator'); ?> <?php echo $transient['filename']; ?>
+		</div>
+	</div>
+	<div class="row">
+		<div class="label">
+			<h4><?php _e('Start Import', 'simple-locator'); ?></h4>
+			<p><?php _e('Once the import has begun, do not close or refresh the page until complete.', 'simple-locator'); ?></p>
+		</div>
+		<div class="field">
+			<button class="wpsl-start-import button button-primary">
+				<?php _e('Start Import', 'simple-locator'); ?>
+			</button>
+		</div>
+	</div>
+</div><!-- .wpsl-settings -->
 
 <?php else : // Continuing Previous Import ?>
 <div class="wpsl-import-indicator-intro">
@@ -64,7 +81,7 @@ if ( !isset($transient['columns']) || $transient['complete'] ) : ?>
 
 <!-- Progress Indicator -->
 <div class="wpsl-import-indicator">
-	<p><?php _e('Import is in progress. Closing this page will stop the import.', 'simple-locator'); ?></p>
+	<div class="wpsl-alert"><?php _e('Import is in progress. Closing this page will stop the import.', 'simple-locator'); ?></div>
 
 	<div class="wpsl-import-progress">
 		<span class="progress-bar"></span>
@@ -75,7 +92,6 @@ if ( !isset($transient['columns']) || $transient['complete'] ) : ?>
 		</p>
 	</div>
 </div>
-
 
 <!-- Import Complete Alert -->
 <div class="wpsl-import-complete updated" style="display:none;">

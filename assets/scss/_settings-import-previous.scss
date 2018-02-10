@@ -2,16 +2,6 @@
 // Previous Imports on Step One
 // --------------------------------------------------
 .wpsl-previous-imports {
-	margin-top: 30px;
-
-	h3 {
-		background-color: darken($white, 80%);
-		color: $white;
-		margin: 0;
-		padding: 8px;
-		font-size: 15px;
-		font-weight: normal;
-	}
 
 	.import {
 		background-color: $white;
@@ -39,7 +29,7 @@
 	.import-body {
 		display: none;
 		padding: 8px;
-		background-color: darken($white, 12%);
+		background-color: rgba($black, .06);
 	}
 
 	.import-footer {

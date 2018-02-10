@@ -1,0 +1,28 @@
+.wpsl-icon-spinner {
+	position: relative;
+	top: 5px;
+	width: 40px;
+	vertical-align: top;
+	// display: none;
+}
+
+.wpsl-icon-spinner-image {
+	animation: wpslrotate linear 1.5s infinite;
+	position: absolute;
+	line-height: .1;
+}
+
+@keyframes wpslrotate {
+	0% {
+		transform: rotate(0deg);
+		transform-origin: center center;
+	}
+	50% {
+		transform: rotate(180deg);
+		transform-origin: center center;
+	}
+	100% {
+		transform: rotate(360deg);
+		transform-origin: center center;
+	}
+}

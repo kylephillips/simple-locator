@@ -2,27 +2,11 @@
 // Import Styles
 // --------------------------------------------------
 .wpsl-step-title {
-	border-bottom: 1px solid darken($white, 15%);
-	padding: 8px 8px 8px 0;
-}
-
-// Step 1 Instructions
-.wpsl-import-instructions {
+	font-size: 1.1em;
+	padding: 1em;
 	background-color: $white;
-	padding: 10px 10px 2px 10px;
-	margin-bottom: 20px;
-	h4 {
-		margin: 0 0 5px 0;
-		font-size: 15px;
-	}
-	h5 {
-		margin: 0 0 5px 0;
-		font-weight: bold;
-		font-size: 14px;
-	}
-	p {
-		margin: 0 0 15px 0;
-	}
+	border: 1px solid $border;
+	border-left: 4px solid $blue;
 }
 
 // Step 1 Notice
@@ -34,15 +18,43 @@
 
 // File Upload - Step 1
 .wpsl-upload-form {
+	padding: 1em;
 	background-color: $white;
-	padding: 8px;
-	h4 {
+	box-sizing: border-box;
+	label {
+		display: block;
+		font-weight: bold;
 		margin: 0;
+		&.inline {
+			font-weight: normal;
+		}
+	}
+	select {
+		margin: 0 0 1em 0;
+		width: 100%;
+	}
+	input[type="file"]{
+		margin-bottom: 1em;
+	}
+	.file {
+		background-color: rgba($black, .06);
+		padding: 1em;
+		margin-bottom: 1em;
+	}
+}
+
+// Previous Import Message
+.wpsl-previous-import-message {
+	padding: 1em;
+	box-sizing: border-box;
+	.button-primary {
+		margin-left: 1em;
 	}
 }
 
 // Row Selection - Step 2
 .wpsl-row-selection {
+	padding: 1em;
 	button {
 		.dashicons {
 			position: relative;
@@ -58,25 +70,34 @@
 
 .wpsl-required-key {
 	font-style: oblique;
+	p {
+		margin: 0;
+		line-height: 1.3;
+	}
 }
 
 // Select fields for column mapping
 .wpsl-column-selection {
+	padding: 1em;
+	.column-selection-inner {
+		background-color: rgba($black, .06);
+		border: 1px solid $border;
+	}
 	ul {
 		background-color: $white;
+		margin: 0;
 	}
 	li {
 		border-top: 1px solid darken($white, 8%);
-		padding: 10px 0px;
+		padding: 10px;
 		margin: 0;
 		@include clearfix;
 		span {
 			float: left;
 			width: 200px;
-			margin: 5px 15px 0 0;
+			margin: 0 15px 0 0;
 		}
 		&.wpsl-import-header {
-			padding-bottom: 15px;
 			font-weight: bold;
 		}
 	}
@@ -96,12 +117,20 @@
 }
 
 // Indicator Wrapper 
-.wpsl-import-indicator {
+.wpsl-import-indicator,
+.wpsl-loading-settings {
 	display: none;
+	height: 50px;
 }
 
 
 // Progress Indicator - Step 3
+.wpsl-import-indicator {
+	height: auto;
+	background-color: $white;
+	padding: 1em;
+	border: 1px solid $border-light;
+}
 .wpsl-import-progress {
 	position: relative;
 	.progress-bar-bg,
@@ -109,24 +138,33 @@
 		width: 100%;
 		height: 15px;
 		position: absolute;
+		border-radius: 8px;
+		overflow: hidden;
 	}
 	.progress-bar-bg {
-		background-color: darken($white, 15%);
+		background-color: darken($white, 10%);
 		z-index: 1;
 	}
 	.progress-bar {
-		background-color: darken($white, 80%);
+		background-color: $blue;
 		z-index: 2;
 		width: 0;
 		transition: width 200ms ease;
 	}
 	p {
-		padding-top: 30px;
+		padding-top: 20px;
+		margin: 0;
 	}
 }
 
 .wpsl-import-add-field {
-	margin-bottom: 20px;
+	border-top: 1px solid $border-light;
+	padding: 1em;
+}
+
+.wpsl-columns-submit {
+	border-top: 1px solid $border-light;
+	padding: 1em;
 }
 
 // Error Log

@@ -55,7 +55,7 @@ class GetMetaFieldsForPostType
 	private function validateNonce()
 	{
 		if ( ! wp_verify_nonce( $this->data['nonce'], 'wpsl_locator-locator-nonce' ) ){
-			$this->sendResponse(['status'=>'error', 'message'=>'Incorrect Form Field']);
+			$this->sendResponse(['status'=>'error', 'message' => 'Incorrect Form Field']);
 		}
 	}
 

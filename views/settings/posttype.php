@@ -43,6 +43,12 @@
 		<div class="label align-top">
 			<h4><?php _e('Latitude & Longitude Fields', 'simple-locator'); ?></h4>
 			<p><?php _e('Simple Locator includes a custom meta section with fields that automatically store latitude and longitude once a post has been saved with address information. If your database includes other meta fields that store this information, select them.', 'simple-locator'); ?></p>
+			<?php 
+			if ( class_exists('acf_field_google_map') ) : 
+				$map_fields = $this->field_repo->getAcfMapFields();
+				echo '<p><strong>' . __('Advanced Custom Fields Users:', 'simple-locator') . '</strong> ' . __('You may specify an ACF map field to find your locations. If you select a map field, you must add 2 new text fields to store latitude and longitude and select them below. If you do not see your fields, save a post with values for them to appear.', 'simple-locator') . '</p>';
+			endif;
+			?>
 		</div>
 		<div class="field align-top">
 			<p class="no-margin">
@@ -57,6 +63,26 @@
 				<label for="wpsl_hide_default_fields">
 				<input type="checkbox" name="wpsl_hide_default_fields" value="true" id="wpsl_hide_default_fields" <?php if ( get_option('wpsl_hide_default_fields') == 'true') echo 'checked'; ?> data-simple-locator-hide-included-fields /><?php _e('Hide Included Location Fields', 'simple-locator'); ?></label>
 			</p>
+
+			<?php 
+			// ACF Map Fields
+			if ( class_exists('acf_field_google_map') && !empty($map_fields) ) : 
+			?>
+			<div class="wpsl-acf-map-setting" data-simple-locator-acf-map-field>
+				<label><?php _e('Select an optional ACF map field', 'simple-locator'); ?></label>
+				<select name="wpsl_acf_map_field">
+					<option value=""><?php _e('None', 'simple-locator'); ?></option>
+					<?php 
+						foreach ( $map_fields as $key => $label ){
+							$out = '<option value="' . $key . '"';
+							if ( $key == $this->settings_repo->acfMapField() ) $out .= ' selected';
+							$out .= '>' . $label . '</option>';
+							echo $out;
+						}
+					?>
+				</select>
+			</div>
+			<?php endif; ?>
 
 			<div class="latlng" data-simple-locator-lat-lng-options>
 				<label class="wpsl-show-hidden">
@@ -168,35 +194,8 @@
 			<p><?php _e('This will reset the post type and location fields to the defaults included with the plugin.', 'simple-locator'); ?></p>
 		</div>
 		<div class="field">
-			<button class="button-danger wpsl-reset-posttype" data-simple-locator-reset-post-type><?php _e('Reset to Default', 'simple-locator'); ?></button>
+			<p class="no-margin"><label><input type="checkbox" data-simple-locator-resest-post-type-checkbox><?php _e('Reset to Default Post Type Settings', 'simple-locator'); ?></label></p>
+			<button class="button-danger wpsl-reset-posttype" data-simple-locator-reset-post-type style="display:none;"><?php _e('Reset to Default', 'simple-locator'); ?></button>
 		</div>
 	</div>
 </div><!-- .wpsl-settings -->
-
-
-<?php 
-// ACF Map Fields
-if ( class_exists('acf_field_google_map') ) : 
-	$map_fields = $this->field_repo->getAcfMapFields();
-	if ( !empty($map_fields) ) :
-?>
-<div class="wpsl-acf-map-setting">
-	<h3><?php _e('Advanced Custom Fields Map Field', 'simple-locator'); ?></h3>
-	<p><?php _e('To save latitude and longitude values from an Advanced Custom Field Google Map field, choose the field below. The values will be saved to the selected latitude and longitude custom fields.', 'simple-locator'); ?></p>
-	<select name="wpsl_acf_map_field">
-		<option value=""><?php _e('None', 'simple-locator'); ?></option>
-		<?php 
-			foreach ( $map_fields as $key => $label ){
-				$out = '<option value="' . $key . '"';
-				if ( $key == $this->settings_repo->acfMapField() ) $out .= ' selected';
-				$out .= '>' . $label . '</option>';
-				echo $out;
-			}
-		?>
-	</select>
-</div>
-<?php endif; endif; ?>
-
-
-
-

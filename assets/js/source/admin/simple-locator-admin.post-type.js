@@ -21,7 +21,9 @@ SimpleLocatorAdmin.PostType = function()
 		showHiddenCheckbox : 'data-simple-locator-show-hidden',
 		hidePostTypeCheckbox : 'data-simple-locator-hide-post-type',
 		hideIncludedFieldsCheckbox : 'data-simple-locator-hide-included-fields',
-		resetButton : 'data-simple-locator-reset-post-type'
+		resetButton : 'data-simple-locator-reset-post-type',
+		resetButtonCheckbox : 'data-simple-locator-resest-post-type-checkbox',
+		acfMapField : 'data-simple-locator-acf-map-field'
 	}
 
 	self.bindEvents = function()
@@ -32,6 +34,7 @@ SimpleLocatorAdmin.PostType = function()
 			self.toggleHideDefaultCheckbox();
 			self.toggleHideIncludedFieldsCheckbox();
 			self.loadPostTypeFields();
+			self.toggleAcfMapField();
 		});
 		$(document).on('change', '[' + self.selectors.postTypeField + ']', function(){
 			self.togglePostTypeLabels();
@@ -46,6 +49,7 @@ SimpleLocatorAdmin.PostType = function()
 			if ( $('[' + self.selectors.useLocatorFieldsRadio + ']').is(':checked') ){
 				self.selectLocationFields();
 			}
+			self.toggleAcfMapField();
 			self.toggleCustomFieldOptions();
 			self.toggleHideIncludedFieldsCheckbox();
 		});
@@ -56,6 +60,14 @@ SimpleLocatorAdmin.PostType = function()
 			e.preventDefault();
 			if ( !confirm('Are you sure you want to reset to the default post type?') ) return false;
 			self.resetPostType();
+		});
+		$(document).on('change', '[' + self.selectors.resetButtonCheckbox + ']', function(){
+			var button = $('[' + self.selectors.resetButton + ']');
+			if ( $(this).is(':checked') ){
+				$(button).show();
+				return;
+			}
+			$(button).hide();
 		});
 	}
 
@@ -189,6 +201,19 @@ SimpleLocatorAdmin.PostType = function()
 				location.reload();
 			}
 		});
+	}
+
+	/**
+	* Toggle the ACF option
+	*/
+	self.toggleAcfMapField = function()
+	{
+		var checked = $('[' + self.selectors.useLocatorFieldsRadio + ']').is(':checked');
+		if ( checked ){
+			$('[' + self.selectors.acfMapField + ']').hide();
+			return;
+		}
+		$('[' + self.selectors.acfMapField + ']').show();
 	}
 
 	return self.bindEvents();

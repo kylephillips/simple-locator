@@ -3,8 +3,8 @@
 	<div class="row subhead"><h4><?php _e('Map Styles', 'simple-locator'); ?></h4></div>
 
 	<div class="row">
-		<div class="label"><h4><?php _e('Map Style Type', 'simple-locator'); ?></h4></div>
-		<div class="field">
+		<div class="label align-top"><h4><?php _e('Map Style Type', 'simple-locator'); ?></h4></div>
+		<div class="field align-top">
 			<select name="wpsl_map_styles_type" class="full" id="wpsl_map_styles_type" data-simple-locator-map-style-choice>
 				<option value="none" <?php if ( $this->map_options['type'] == 'none' ) echo 'selected'; ?>>
 					<?php _e('None (Default Google Maps)', 'simple-locator'); ?>
@@ -16,20 +16,20 @@
 					<?php _e('Paste my own styles', 'simple-locator'); ?>
 				</option>
 			</select>
+
+			<div class="wpsl-settings-map-style-choice" data-simple-locator-map-style="choice" <?php if ( $this->map_options['type'] !== 'choice' ) echo 'style="display:none;"'; ?>>
+				<ul data-simple-locator-map-style-list></ul>
+				<input type="hidden" id="wpsl_map_styles_choice" name="wpsl_map_styles_choice" data-simple-locator-map-style-choice-input value="<?php echo $this->map_options['choice']; ?>" />
+			</div><!-- .map-style-choice -->
+
+			<div class="wpsl-settings-map-style-custom" data-simple-locator-map-style="custom" <?php if ( $this->map_options['type'] !== 'custom' ) echo 'style="display:none;"'; ?>>
+				<div class="wpsl-alert"><?php _e('Styles must be properly a formatted Javascript array. Visit', 'simple-locator'); ?> <a href="https://mapstyle.withgoogle.com/" target="_blank"><?php _e('the Google Maps Style Wizard', 'simple-locator'); ?></a> <?php _e('for an easy way to generate properly formatted styles','simple-locator'); ?>.</div>
+				<textarea name="wpsl_map_styles" id="wpsl_map_styles" class="widefat" style="height:200px;margin-top:20px;">
+					<?php echo get_option('wpsl_map_styles'); ?>
+				</textarea>
+			</div><!-- .map-style-custom -->
 		</div>
 	</div><!-- .row -->
-
-	<div class="wpsl-settings-map-style-choice" data-simple-locator-map-style="choice" <?php if ( $this->map_options['type'] !== 'choice' ) echo 'style="display:none;"'; ?>>
-		<ul data-simple-locator-map-style-list></ul>
-		<input type="hidden" id="wpsl_map_styles_choice" name="wpsl_map_styles_choice" data-simple-locator-map-style-choice-input value="<?php echo $this->map_options['choice']; ?>" />
-	</div><!-- .map-style-choice -->
-
-	<div class="wpsl-settings-map-style-custom" data-simple-locator-map-style="custom" <?php if ( $this->map_options['type'] !== 'custom' ) echo 'style="display:none;"'; ?>>
-		<div class="wpsl-alert"><?php _e('Styles must be properly a formatted Javascript array. Visit', 'simple-locator'); ?> <a href="https://mapstyle.withgoogle.com/" target="_blank"><?php _e('the Google Maps Style Wizard', 'simple-locator'); ?></a> <?php _e('for an easy way to generate properly formatted styles','simple-locator'); ?>.</div>
-		<textarea name="wpsl_map_styles" id="wpsl_map_styles" class="widefat" style="height:200px;margin-top:20px;">
-			<?php echo get_option('wpsl_map_styles'); ?>
-		</textarea>
-	</div><!-- .map-style-custom -->
 
 	<div class="row subhead"><h4><?php _e('Map Service Options', 'simple-locator'); ?></h4></div>
 

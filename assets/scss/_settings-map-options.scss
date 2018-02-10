@@ -16,17 +16,19 @@
 	ul {
 		@include unstyled;
 		@include clearfix;
-		padding: 1em;
-		border-top: 1px solid $border-light;
+		padding: 1em 1em 1em 0;
+		max-height: 400px;
+		overflow: auto;
 	}
 	li {
 		float: left;
-		width: 32%;
-		margin: 0 0 20px 2%;
+		width: 48%;
+		margin: 0 0 2em 0;
 		box-sizing: border-box;
-		&.first {
-			clear: both;
-			margin-left: 0;
+		clear: both;
+		&:nth-child(even){
+			float: right;
+			clear: none;
 		}
 		.map {
 			display: block;
@@ -83,8 +85,7 @@
 	}
 } // wpsl-map-style-choices
 .wpsl-settings-map-style-custom {
-	padding: 1em;
-	border-top: 1px solid $border-light;
+	padding-top: 1em;
 	.wpsl-alert {
 		margin: 0;
 	}

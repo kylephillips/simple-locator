@@ -23,6 +23,7 @@ if ( $this->options['resultscontainer'] != '') $output .= ' data-simple-locator-
 if ( $ajax ) $output .= ' data-simple-locator-ajax-form="true"';
 $output .= ' data-simple-locator-map-control-position="' . $this->options['mapcontrolsposition'] . '"';
 $output .= '>
+
 	<div class="wpsl-error alert alert-error" style="display:none;" data-simple-locator-form-error></div>
 	<div class="address-input form-field">
 		<label for="wpsl_address">' . $this->options['addresslabel'] . '</label>
@@ -81,9 +82,10 @@ $output .= '>
 		</div>
 	</form>';
 if ( $this->options['mapcontainer'] === '' ){
-	$output .= '<div data-simple-locator-map class="wpsl-map loading"';
+	$output .= '<div data-simple-locator-map class="wpsl-map"';
 	if ( isset($mapheight) && $mapheight !== "" )  $output .= 'style="height:' . $mapheight . 'px;"';
 	if ( $this->settings_repo->showDefaultMap() ) $output .= ' data-simple-locator-default-enabled="true"';
+	if ( $this->options['showall'] == 'true' ) $output .= ' data-simple-locator-all-locations-map';
 	$output .= '></div><!-- .wpsl-map -->';
 }
 

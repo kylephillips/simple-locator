@@ -69,9 +69,9 @@ jQuery(function($){
 	function populate_select_boxes(row)
 	{
 		if ( (rowcount+1) === row.row_count ){
-			$('button[data-direction="next"').attr('disabled', 'disabled');
+			$('button[data-direction="next"]').attr('disabled', 'disabled');
 		} else {
-			$('button[data-direction="next"').attr('disabled', false);
+			$('button[data-direction="next"]').attr('disabled', false);
 		}
 
 		var html = '<option value="">' + wpsl_locator.choose_column + '</option>';

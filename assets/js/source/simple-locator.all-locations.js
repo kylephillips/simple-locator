@@ -8,6 +8,7 @@ SimpleLocator.AllLocations = function()
 	var $ = jQuery;
 
 	self.locations = [];
+	self.mapIndex;
 
 	self.selectors = {
 		map : 'data-simple-locator-all-locations-map'
@@ -19,6 +20,12 @@ SimpleLocator.AllLocations = function()
 		$(document).ready(function(){
 			self.getData();
 		});
+	}
+
+	self.setMapIndex = function(map)
+	{
+		var maps = $('[' + SimpleLocator.selectors.map + ']');
+		self.mapIndex = $(map).index(maps);
 	}
 
 	self.getData = function()
@@ -50,10 +57,11 @@ SimpleLocator.AllLocations = function()
 		var maps = $('[' + self.selectors.map + ']');
 		
 		$.each(maps, function(){
-			
+			self.setMapIndex($(this));
+			SimpleLocator.markers[self.mapIndex] = [];
 			var container = $(this);
 			var locations = self.locations;
-			var mapstyles = wpsl_locator.mapstyles;	
+			var mapstyles = wpsl_locator.mapstyles;
 			var bounds = new google.maps.LatLngBounds();
 			var mapOptions = {
 				mapTypeId: 'roadmap',
@@ -88,6 +96,9 @@ SimpleLocator.AllLocations = function()
 						wpsl_all_locations_marker_clicked(marker, infoWindow); // Deprecated
 					}
 				})(marker, i));
+
+				 // Push the marker to the global 'markers' array
+	        	SimpleLocator.markers[self.mapIndex].push(marker);
 				
 				// Center the Map
 				map.fitBounds(bounds);
@@ -98,6 +109,8 @@ SimpleLocator.AllLocations = function()
 					google.maps.event.removeListener(listener); 
 				});
 			}
+
+			SimpleLocator.maps[self.mapIndex] = map;
 
 			$(document).trigger('simple-locator-all-locations-rendered', [map]);
 			wpsl_all_locations_rendered(map); // Deprecated

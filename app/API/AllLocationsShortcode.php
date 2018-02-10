@@ -40,6 +40,6 @@ class AllLocationsShortcode
 	{
 		$this->setOptions($options);
 		$this->enqueueScripts();
-		return '<div data-simple-locator-all-locations-map data-limit="' . $this->options['limit'] . '" class="wpsl-map loading" style="display:block;"></div>';
+		return '<div data-simple-locator-all-locations-map data-limit="' . $this->options['limit'] . '" class="wpsl-map" style="display:block;"></div>';
 	}
 }

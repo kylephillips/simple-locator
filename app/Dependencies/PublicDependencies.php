@@ -18,7 +18,7 @@ class PublicDependencies extends DependencyBase
 	*/
 	public function styles()
 	{
-		if ( get_option('wpsl_output_css') !== "true" ) return;
+		if ( !$this->settings_repo->includeCss() ) return;
 		wp_enqueue_style(
 			'simple-locator', 
 			$this->plugin_dir . '/assets/css/simple-locator.css', 
@@ -34,7 +34,7 @@ class PublicDependencies extends DependencyBase
 	{
 		$this->addGoogleMaps();
 		$dependencies = ['jquery'];
-		if ( $this->settings_repo->customMapOptions() || $this->settings_repo->outputMapsApi() ) $dependencies[] = 'google-maps';
+		if ( $this->settings_repo->mapService() == 'google' && $this->settings_repo->includeMapLibrary() ) $dependencies[] = 'google-maps';
 		wp_register_script(
 			'simple-locator', 
 			$this->plugin_dir . '/assets/js/simple-locator.min.js', 
@@ -66,8 +66,8 @@ class PublicDependencies extends DependencyBase
 			'mapservice'			=> $this->settings_repo->mapService(),
 			'mappinuser' 			=> $this->settings_repo->mapPin('user'),
 			'includeuserpin'		=> $this->settings_repo->includeUserPin(),
-			'showgeobutton'			=> $this->settings_repo->showGeoButton('enabled'),
-			'geobuttontext'			=> $this->settings_repo->showGeoButton('text'),
+			'showgeobutton'			=> $this->settings_repo->geoButton('enabled'),
+			'geobuttontext'			=> $this->settings_repo->geoButton('text'),
 			'yourlocation' 			=> __('your location', 'simple-locator'),
 			'default_enabled' 		=> $this->settings_repo->showDefaultMap(),
 			'default_latitude' 		=> $this->settings_repo->defaultMap('latitude'),

@@ -5,14 +5,64 @@
 	font-style: oblique;
 }
 
-.wpsl-settings-general-head {
+.wpsl-settings {
 	background-color: $white;
-	padding: 20px;
-	margin-top: 10px;
-	h3{
-		margin: 0;
-	}
-}
+	border: 1px solid $border-light;
+	border-radius: 3px;
+	margin-top: 2em;
+	.row {
+		border-top: 1px solid $border-light;
+		display: table;
+		width: 100%;
+		@include clearfix;
+		&:first-child {
+			border: 0;
+		}
+		.label {
+			display: table-cell;
+			width: 40%;
+			padding: 1em;
+			background-color: $gray-lighter;
+			border-right: 1px solid $border-light;
+			vertical-align: middle;
+			h4 {
+				margin: 0;
+			}
+			p {
+				font-size: .9em;
+				margin-bottom: 0;
+				color: rgba($black, .6);
+			}
+		}
+		.field {
+			display: table-cell;
+			width: 60%;
+			padding: 1em;
+			vertical-align: middle;
+			p {
+				margin-bottom: 0;
+			}
+			p.no-margin {
+				margin: .2em 0;
+			}
+			.wpsl-error {
+				margin-top: 1em;
+			}
+		}
+		input[type="text"]{
+			width: 100%;
+		}
+		&.subhead {
+			box-sizing: border-box;
+			padding: .7em 1em;
+			background-color: darken($white, 70%);
+			h4 {
+				margin: 0;
+				color: $white;
+			}
+		}
+	} // .row
+} // .wpsl-settings
 
 .wpsl-error {
 	display: block;

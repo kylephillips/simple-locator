@@ -58,7 +58,7 @@ SimpleLocatorAdmin.GeneralSettings = function()
 
 	self.removeMapPin = function(button)
 	{
-		var pinContainer = $(button).parent('td');
+		var pinContainer = $(button).parent('.field');
 		var input = $(pinContainer).find('[' + self.selectors.mapPinInput + ']');
 		$(pinContainer).find('[' + self.selectors.mapPinContainer + ']').html('');
 		$(pinContainer).find('[' + self.selectors.mapPinInput + ']').val('');
@@ -69,7 +69,7 @@ SimpleLocatorAdmin.GeneralSettings = function()
 
 	self.addMapPin = function(imageUrl, button)
 	{
-		var pinContainer = $(button).parent('td');
+		var pinContainer = $(button).parent('.field');
 		var imagehtml = '<img src="' + imageUrl + '" id="map-pin-image" ' + self.selectors.mapPinImage + ' />';
 		var buttonhtml = '<input type="button" value="' + wpsl_locator.remove + '" class="button action" style="margin-right:5px;margin-left:10px;" ' + self.selectors.removeMapPinButton + ' />';
 		$(pinContainer).find('[' + self.selectors.mapPinContainer + ']').html(imagehtml);

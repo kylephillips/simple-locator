@@ -101,8 +101,8 @@ class FormShortcode
 			'addresslabel' => __('Zip/Postal Code', 'simple-locator'),
 			'mapcontrols' => 'show', // AJAX Only
 			'mapcontrolsposition' => 'TOP_LEFT', // AJAX Only
-			'showgeobutton' => $this->settings_repo->showGeoButton('enabled'),
-			'geobuttontext' => $this->settings_repo->showGeoButton('text'),
+			'showgeobutton' => $this->settings_repo->geoButton('enabled'),
+			'geobuttontext' => $this->settings_repo->geoButton('text'),
 			'placeholder'=> __('Enter a Location', 'simple-locator'),
 			'ajax' => 'true',
 			'formmethod' => 'post', // Non-AJAX Only

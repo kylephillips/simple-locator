@@ -16,14 +16,36 @@ class SettingsRepository
 	}
 
 	/**
+	* Include the map library?
+	*/
+	public function includeMapLibrary($location = 'public')
+	{
+		if ( $location == 'public' ){
+			$option = get_option('wpsl_gmaps_api');
+			return ( isset($option) && $option == 'true' ) ? true : false;
+		}
+		$option = get_option('wpsl_gmaps_api_admin');
+		return ( isset($option) && $option == 'true' ) ? true : false;
+	}
+
+	/**
+	* Include plugin CSS?
+	*/
+	public function includeCss()
+	{
+		$option = get_option('wpsl_output_css');
+		return ( isset($option) && $option == 'true' ) ? true : false;
+	}
+
+	/**
 	* Get Geo Button Options
 	* @param $return string 
 	*/
-	public function showGeoButton($return = 'enabled')
+	public function geoButton($return = 'enabled')
 	{
 		$option = get_option('wpsl_geo_button');
 		if ( $return == 'enabled' ){
-			return ( !isset($option['enabled']) || $option['enabled'] == "" ) ? 'false' : 'true';
+			return ( !isset($option['enabled']) || $option['enabled'] == "" ) ? false : 'true';
 		}
 		return ( !isset($option['text']) || $option['text'] == "" ) ? __('Use my location', 'simple-locator') : $option['text'];
 	}

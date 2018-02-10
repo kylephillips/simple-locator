@@ -20,17 +20,8 @@ class Activation
 		global $simple_locator_version;
 		$this->version = $simple_locator_version;
 		$this->setVersion();
-		$this->setDefaultOptions();
 		$this->migrateTables();
 		register_activation_hook( dirname(dirname( dirname(__FILE__) )) . '/simplelocator.php', [$this, 'install'] );
-	}
-
-	/**
-	* Default Options
-	*/
-	private function setDefaultOptions()
-	{
-		new DefaultOptions;
 	}
 
 	/**
@@ -39,6 +30,7 @@ class Activation
 	public function install()
 	{
 		$types = new PostTypes;
+		$options = new DefaultOptions;
 		$types->register();
 		flush_rewrite_rules();
 		$this->migrateMaps();

@@ -53,8 +53,8 @@ class FormWidget extends \WP_Widget
 		$this->options['distances'] = (isset($instance['distance_options'])) ? $instance['distance_options'] : '5,10,20,50,100';
 		$this->options['buttontext'] = __('Search', 'simple-locator');
 		$this->options['mapcontrols'] = 'show';
-		$this->options['showgeobutton'] = $this->settings_repo->showGeoButton('enabled');
-		$this->options['geobuttontext'] = $this->settings_repo->showGeoButton('text');
+		$this->options['showgeobutton'] = $this->settings_repo->geoButton('enabled');
+		$this->options['geobuttontext'] = $this->settings_repo->geoButton('text');
 		$this->options['placeholder'] = __('Enter a Location', 'simple-locator');
 		$this->options['noresultstext'] = __('No results found', 'simple-locator');
 		$this->options['addresslabel'] = __('Zip/Postal Code', 'simple-locator');

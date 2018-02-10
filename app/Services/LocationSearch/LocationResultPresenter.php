@@ -84,7 +84,8 @@ class LocationResultPresenter
 			'output' => $this->formatOutput(),
 			'infowindow' => $this->formatInfoWindow(),
 			'mappin' => $this->mapPin(),
-			'result_data' => $this->result
+			'result_data' => $this->result,
+			'output_format' => $this->settings_repo->resultsFormatting()
 		];
 		return $location;
 	}
@@ -127,8 +128,8 @@ class LocationResultPresenter
 	*/
 	private function replacePostFields($output)
 	{
-		if ( isset($this->result->distance) ) $output = str_replace('[distance]', round($this->result->distance, 2) . ' ' . $this->distance_unit, $output);
-
+		if ( isset($this->result->distance) ) $output .= str_replace('[distance]', round($this->result->distance, 2) . ' ' . $this->distance_unit, $output);
+		
 		$output = str_replace('[post_title]', $this->result->title, $output);
 
 		if ( strpos($output, '[post_permalink]') !== false ){

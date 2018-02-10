@@ -16,13 +16,11 @@
 	
 	<?php if ( $tab !== "import" && $tab !== 'search-history' ) : ?>
 	<form method="post" enctype="multipart/form-data" action="options.php">
-		<table class="form-table">
-			<?php
-			$view = $tab . '.php';
-			include($view);
-			?>
-		</table>
-		<?php submit_button(); ?>
+	<?php
+		$view = $tab . '.php';
+		include($view);
+		submit_button(); 
+	?>
 	</form>
 	<?php 
 	elseif ( $tab == 'search-history' ) : 
@@ -31,6 +29,4 @@
 		include('import-0.php'); 
 	endif; 
 	?>
-
-	<p class="wpsl-plugin-version"><?php _e('Simple Locator Version', 'simple-locator'); echo ' ' . get_option('wpsl_version'); ?></p>
 </div>

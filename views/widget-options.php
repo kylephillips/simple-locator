@@ -14,3 +14,7 @@
 	<label for="<?php echo $this->get_field_id( 'placeholder' ); ?>"><?php _e( 'Form Placeholder Text' ); ?></label> 
 	<input class="widefat" id="<?php echo $this->get_field_id( 'placeholder' ); ?>" name="<?php echo $this->get_field_name('placeholder'); ?>" type="text" value="<?php echo esc_attr( $placeholder ); ?>" />
 </p>
+<p>
+	<label for="<?php echo $this->get_field_id( 'perpage' ); ?>"><?php _e( 'Results per Page (leave blank to disable pagination)' ); ?></label> 
+	<input class="widefat" id="<?php echo $this->get_field_id( 'perpage' ); ?>" name="<?php echo $this->get_field_name('perpage'); ?>" type="text" value="<?php echo esc_attr( $perpage ); ?>" />
+</p>

@@ -6,11 +6,7 @@ $output = "";
 // Is this a widget form or a shortcode form
 if ( isset($widget_instance) ) {
 	$output .= '<div class="simple-locator-widget">';
-	$mapheight = ( isset($instance['map_height']) ) ? $instance['map_height'] : 200;
-	$this->options['placeholder'] = ( isset($instance['placeholder']) ) ? $instance['placeholder'] : '';
 	$output .= '<span id="widget"></span>';
-} else {
-	$mapheight = $this->options['mapheight'];
 }
 
 $output .= '
@@ -83,7 +79,9 @@ $output .= '>
 	</form>';
 if ( $this->options['mapcontainer'] === '' ){
 	$output .= '<div data-simple-locator-map class="wpsl-map"';
-	if ( isset($mapheight) && $mapheight !== "" )  $output .= 'style="height:' . $mapheight . 'px;"';
+	if ( isset($this->options['mapheight']) && $this->options['mapheight'] !== "" )  $output .= 'style="height:' . $this->options['mapheight'] . 'px;';
+	if ( !$this->settings_repo->showDefaultMap() ) $output .= 'display:none;';
+	$output .= '"';
 	if ( $this->settings_repo->showDefaultMap() ) $output .= ' data-simple-locator-default-enabled="true"';
 	if ( $this->options['showall'] !== '' ) $output .= ' data-simple-locator-all-locations-map="' . $this->options['showall'] . '" data-include-listing="true"';
 	$output .= '></div><!-- .wpsl-map -->';

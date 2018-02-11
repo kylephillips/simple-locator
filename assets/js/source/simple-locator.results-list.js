@@ -78,13 +78,14 @@ SimpleLocator.ResultsList = function()
 
 		output += header;
 		
-		if ( wpsl_locator_options.resultswrapper !== "" ) output += '<' + wpsl_locator_options.resultswrapper + '>';
+		var options = ( typeof wpsl_locator_options === 'undefined' || wpsl_locator_options === '' ) ? false : true;
+		if ( options && wpsl_locator_options.resultswrapper !== "" ) output += '<' + wpsl_locator_options.resultswrapper + '>';
 
 		for( i = 0; i < self.data.results.length; i++ ) {
 			output = output + self.data.results[i].output;
 		}
 
-		if ( wpsl_locator_options.resultswrapper !== "" ) output += '</' + wpsl_locator_options.resultswrapper + '>';
+		if ( options && wpsl_locator_options.resultswrapper !== "" ) output += '</' + wpsl_locator_options.resultswrapper + '>';
 
 		if ( self.paginated && self.data.total_pages > 1 ){
 			output += '<div class="simple-locator-ajax-pagination">';

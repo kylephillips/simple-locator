@@ -55,7 +55,7 @@ class FormWidget extends \WP_Widget
 		$this->options['mapcontrols'] = 'show';
 		$this->options['showgeobutton'] = $this->settings_repo->geoButton('enabled');
 		$this->options['geobuttontext'] = $this->settings_repo->geoButton('text');
-		$this->options['placeholder'] = __('Enter a Location', 'simple-locator');
+		$this->options['placeholder'] = ( isset($instance['placeholder']) ) ? $instance['placeholder'] :__('Enter a Location', 'simple-locator');
 		$this->options['noresultstext'] = __('No results found', 'simple-locator');
 		$this->options['addresslabel'] = __('Zip/Postal Code', 'simple-locator');
 		$this->options['mapcontainer'] = '';
@@ -64,8 +64,8 @@ class FormWidget extends \WP_Widget
 		$this->options['resultspage'] = '';
 		$this->options['resultscontainer'] = '';
 		$this->options['mapcontrolsposition'] = '';
-		$this->options['perpage'] = '';
-		$this->options['mapheight'] = '';
+		$this->options['perpage'] = ( isset($instance['perpage']) ) ? $instance['perpage'] : '';
+		$this->options['mapheight'] = ( isset($instance['map_height']) ) ? $instance['map_height'] : 200;
 		$this->options['showall'] = '';
 	}
 
@@ -101,6 +101,7 @@ class FormWidget extends \WP_Widget
 		$distance_options = ( isset($instance['distance_options']) ) ? $instance[ 'distance_options' ] : '';
 		$map_height = ( isset($instance['map_height']) ) ? $instance[ 'map_height' ] : '';
 		$placeholder = ( isset($instance['placeholder']) ) ? $instance['placeholder'] : __('Enter a Location', 'simple-locator');
+		$perpage = ( isset($instance['perpage']) ) ? $instance['perpage'] : '';
 		include( \SimpleLocator\Helpers::view('widget-options') );
 	}
 
@@ -113,6 +114,7 @@ class FormWidget extends \WP_Widget
 		$instance['distance_options'] = ( ! empty( $new_instance['distance_options'] ) ) ? strip_tags( $new_instance['distance_options'] ) : '5,10,20,50,100';
 		$instance['map_height'] = ( ! empty( $new_instance['map_height'] ) ) ? strip_tags( intval($new_instance['map_height']) ) : '';
 		$instance['placeholder'] = ( ! empty( $new_instance['placeholder'] ) ) ? strip_tags( $new_instance['placeholder'] ) : '';
+		$instance['perpage'] = ( ! empty( $new_instance['perpage'] ) ) ? strip_tags( intval($new_instance['perpage']) ) : '';
 		return $instance;
 	}
 

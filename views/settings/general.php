@@ -57,11 +57,11 @@
 		<div class="field">
 			<p class="no-margin"><label>
 				<input type="checkbox" value="true" name="wpsl_gmaps_api" <?php if ( $this->settings_repo->includeMapLibrary() ) echo 'checked'; ?> />
-				<?php _e('Include in front end', 'simple-locator'); ?>
+				<?php _e('Include in Front End', 'simple-locator'); ?>
 			</label></p>
 			<p class="no-margin"><label>
 				<input type="checkbox" value="true" name="wpsl_gmaps_api_admin" <?php if ( $this->settings_repo->includeMapLibrary('admin') ) echo 'checked'; ?> />
-				<?php _e('Include in admin', 'simple-locator'); ?>
+				<?php _e('Include in Admin', 'simple-locator'); ?>
 			</label></p>
 		</div>
 	</div><!-- .row -->
@@ -74,7 +74,7 @@
 		<div class="field">
 			<label>
 				<input type="checkbox" value="true" name="wpsl_enable_autocomplete" <?php if ( get_option('wpsl_enable_autocomplete') == 'true') echo 'checked'; ?> />
-				<?php _e('Enable autcomplete in location field', 'simple-locator'); ?>
+				<?php _e('Enable Autcomplete in Location Field', 'simple-locator'); ?>
 			</label>
 		</div>
 	</div><!-- .row -->
@@ -107,7 +107,7 @@
 			<p><?php _e('Displays a pin on the search results map marking the user\'s location.', 'simple-locator'); ?></p>
 		</div>
 		<div class="field">
-			<label><input type="checkbox" data-simple-locator-toggle-user-pin name="wpsl_include_user_pin" value="true" <?php if ( $this->settings_repo->includeUserPin() ) echo 'checked'; ?> /><?php _e('Include user pin in search results', 'maytronics'); ?></label>
+			<label><input type="checkbox" data-simple-locator-toggle-user-pin name="wpsl_include_user_pin" value="true" <?php if ( $this->settings_repo->includeUserPin() ) echo 'checked'; ?> /><?php _e('Include User Pin in Search Results', 'maytronics'); ?></label>
 		</div>
 	</div><!-- .row -->
 
@@ -141,7 +141,7 @@
 		<div class="field">
 			<label>
 				<input type="checkbox" id="wpsl_geo_button_enable" name="wpsl_geo_button[enabled]" value="true" <?php if ( $this->settings_repo->geoButton('enabled') ) echo 'checked'; ?> data-simple-locator-geo-enabled-checkbox />
-				<?php _e('Display location button when available', 'simple-locator');?>
+				<?php _e('Display Geolocation Button when Available', 'simple-locator');?>
 			</label>
 			<div style="display:none;" class="wpsl-error" data-simple-locator-no-https><?php _e('Your website doesn\'t appear to be running under the https protocol. User geolocation may not be available.', 'simple-locator'); ?> <a href="https://developers.google.com/web/updates/2016/04/geolocation-on-secure-contexts-only" target="_blank"><?php _e('Read More', 'simple-locator'); ?></a></div>
 		</div><!-- .field -->
@@ -181,7 +181,7 @@
 		<div class="field">
 			<label>
 				<input type="checkbox" value="true" name="wpsl_output_css" <?php if ( $this->settings_repo->includeCss() ) echo 'checked'; ?> />
-				<?php _e('Include plugin CSS', 'simple-locator'); ?>
+				<?php _e('Include Plugin CSS', 'simple-locator'); ?>
 			</label>
 		</div>
 	</div><!-- .row -->
@@ -192,7 +192,7 @@
 			<p><?php _e('Logs server responses to the browser console for debugging purposes.', 'simple-locator'); ?></p>
 		</div>
 		<div class="field">
-			<label><input type="checkbox" name="wpsl_js_debug" value="true" <?php if ( $this->settings_repo->jsDebug() ) echo 'checked';?> /><?php _e('Enable Javascript console logging', 'simple-locator'); ?></label>
+			<label><input type="checkbox" name="wpsl_js_debug" value="true" <?php if ( $this->settings_repo->jsDebug() ) echo 'checked';?> /><?php _e('Enable Javascript Console Logging', 'simple-locator'); ?></label>
 		</div>
 	</div><!-- .row -->
 
@@ -204,7 +204,7 @@
 		<div class="field">
 			<label>
 				<input type="checkbox" value="true" name="wpsl_save_searches" <?php if ( get_option('wpsl_save_searches') == 'true') echo 'checked'; ?> />
-				<?php _e('Save search history', 'simple-locator'); ?>
+				<?php _e('Save Search History', 'simple-locator'); ?>
 			</label>
 		</div>
 	</div><!-- .row -->
@@ -217,7 +217,7 @@
 		<div class="field">
 			<label>
 				<input type="checkbox" value="true" name="wpsl_results_content_disabled" <?php if ( !$this->settings_repo->resultsInContent() ) echo 'checked'; ?> />
-				<?php _e('Disable the content filter on non-ajax results', 'simple-locator'); ?>
+				<?php _e('Disable the Content Filter on Non-Ajax Results', 'simple-locator'); ?>
 			</label>
 			<p><?php _e('To display results in a custom area of your template, add following action:', 'simple-locator'); ?><br><code>do_action('simple_locator_results')</code></p>
 		</div>

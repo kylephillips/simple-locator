@@ -3,11 +3,11 @@
 	<div class="row subhead"><h4><?php _e('Post Type', 'simple-locator'); ?></h4></div>
 
 	<div class="row">
-		<div class="label">
+		<div class="label align-top">
 			<h4><?php _e('Location Post Type', 'simple-locator'); ?></h4>
 			<p><?php _e('Simple Locator comes with a post type of "Locations" with all the fields you need. If you\'d like to use a custom post type, select that post type. If you have existing fields for latitude and longitude, select those.', 'simple-locator'); ?></p>
 		</div>
-		<div class="field">
+		<div class="field align-top">
 			<label for="wpsl_post_type" class="wpsl-block-label"><?php _e('Select Post Type', 'simple-locator'); ?></label>
 			<select name="wpsl_post_type" id="wpsl_post_type" style="width:100%;max-width:540px;" data-simple-locator-post-type-field>
 			<?php

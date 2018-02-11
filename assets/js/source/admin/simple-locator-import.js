@@ -12,36 +12,6 @@ jQuery(function($){
 	var passed_validation = true;
 	var imports_per_request = 5; // How many imports per request
 
-	/**
-	* Start New Import (cancel previous)
-	*/
-	$(document).on('click', '.wpsl-new-import', function(e){
-		e.preventDefault();
-		$('.wpsl-upload-form').show();
-		$('.wpsl-previous-import-message').hide();
-	});
-
-
-	/**
-	* Toggle Non-public post types in the post type select field
-	*/
-	$(document).ready(function(){
-		toggle_hidden_post_types();
-	});
-	$(document).on('change', '[data-simple-locator-show-non-public-types]', function(){
-		toggle_hidden_post_types();
-	});
-	function toggle_hidden_post_types()
-	{
-		var checkbox = $('[data-simple-locator-show-non-public-types]');
-		var nonPublic = $('[data-non-public-post-type]');
-		if ( $(checkbox).is(':checked') ){
-			$(nonPublic).show();
-			return;
-		}
-		$(nonPublic).hide();
-	}
-
 
 	/**
 	* ------------------------------------------------------
@@ -405,23 +375,6 @@ jQuery(function($){
 	* ------------------------------------------------------
 	*/
 
-	$(document).on('click', '[data-import-toggle-details]', function(e){
-		e.preventDefault();
-		$(this).parents('.import').find('.import-body').toggle();
-	});
-
-	// Undo
-	$(document).on('click', '[data-undo-import]', function(e){
-		e.preventDefault();
-		var id = $(this).attr('data-undo-import');
-		if ( confirm(wpsl_locator.confirm_undo) ) undo_import(id);
-	});
-
-	function undo_import(id)
-	{
-		$('#undo_import_id').val(id);
-		$('[data-undo-import-form]').submit();
-	}
 
 
 	// Redo

@@ -33,7 +33,7 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 		$transient = $this->import_repo->transient();
 		if ( isset($transient['filename']) ) :
 	?>
-	<div class="row wpsl-previous-import-message">
+	<div class="row wpsl-previous-import-message" data-simple-locator-import-previous-message>
 		<div class="wpsl-alert"><?php _e('You have an incomplete import. Would you like to continue the import?', 'simple-locator'); ?></div>
 		<p>
 			<?php 
@@ -49,16 +49,16 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 		<a href="options-general.php?page=wp_simple_locator&amp;tab=import&amp;step=3" class="button">
 			<?php _e('Continue Import', 'simple-locator'); ?>
 		</a>
-		<a href="#" class="wpsl-new-import button button-primary">
+		<a href="#" class="button button-primary" data-simple-locator-import-start-new>
 			<?php _e('Abort and Start New Import', 'simple-locator'); ?>
 		</a>
 	</div><!-- .row -->
 	<?php endif; endif; ?>
 
-	<form action="<?php echo admin_url('admin-post.php'); ?>" method="post" enctype="multipart/form-data" class="wpsl-upload-form row"<?php if ( $incomplete ) echo ' style="display:none;"';?>>
+	<form action="<?php echo admin_url('admin-post.php'); ?>" method="post" enctype="multipart/form-data" class="wpsl-upload-form row"<?php if ( $incomplete ) echo ' style="display:none;"';?> data-simple-locator-import-upload-form>
 		<div class="wpsl-error"><strong><?php _e('Important', 'simple-locator'); ?>:</strong> <?php _e('Before running an import, make a complete backup of your database.', 'simple-locator'); ?></div>
 		<label><?php _e('Import to Post Type', 'simple-locator'); ?></label>
-		<select name="import_post_type" style="">
+		<select name="import_post_type" data-simple-locator-import-post-type-input>
 		<?php 
 		foreach ( $this->field_repo->getPostTypes(false) as $type ){
 			echo '<option value="' . $type['name'] . '"';
@@ -147,7 +147,7 @@ if ( $iq->have_posts() ) : $c = 1;
 				<div class="import-footer">
 					<?php if ( file_exists($data['file']) ) : ?>
 					<p>
-						<a href="#" data-undo-import="<?php echo get_the_id(); ?>" class="button-danger">
+						<a href="#" data-simple-locator-import-undo-button="<?php echo get_the_id(); ?>" class="button-danger">
 							<?php _e('Undo Import', 'simple-locator'); ?>
 						</a>
 						<strong><?php _e('Warning', 'simple-locator'); ?></strong>: <?php _e('Undoing an import will erase all post data created during the import.', 'simple-locator'); ?>

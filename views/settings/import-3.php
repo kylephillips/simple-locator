@@ -50,6 +50,7 @@ if ( !isset($transient['columns']) || $transient['complete'] ) : ?>
 		if ( $transient['skip_first'] ) $header_row = $this->getCsvRow(0);
 		$last_imported = ( isset($header_row) ) ? $transient['last_imported'] - 1 : $transient['last_imported'];
 		$row = $this->getCsvRow($last_imported);
+		if ( isset($header_row) && $transient['last_imported'] == 1 ) $row = false;
 		if ( $row ) : $out = "";
 	?>
 	<div class="wpsl-last-row-imported">

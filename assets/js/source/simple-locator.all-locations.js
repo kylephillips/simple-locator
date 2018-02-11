@@ -52,8 +52,17 @@ SimpleLocator.AllLocations = function()
 	*/
 	self.setLimitArgs = function()
 	{
-		self.formData.limit = $(self.activeMap).attr('data-limit');
-		if ( typeof self.formData.limit === 'undefined' || self.formData.limit === '' ) self.formData.limit = '-1';
+		limit = $(self.activeMap).attr('data-limit');
+		if ( typeof limit !== 'undefined' && limit !== '' ) self.formData.limit = limit;
+	}
+
+	/**
+	* Set the id args, provided through data-post-ids attribute
+	*/
+	self.setIdArgs = function()
+	{
+		var ids = $(self.activeMap).attr('data-post-ids');
+		if ( typeof ids !== 'undefined' && ids !== '' ) self.formData.ids = ids;
 	}
 
 	self.getData = function()
@@ -64,16 +73,14 @@ SimpleLocator.AllLocations = function()
 			self.setMapIndex();
 			self.setTaxonomyArgs();
 			self.setLimitArgs();
+			self.setIdArgs();
 			$.ajax({
 				url : SimpleLocator.endpoints.locations,
 				type: 'GET',
 				datatype: 'json',
 				data : self.formData,
-				beforeSend : function(i, v){
-					console.log(self.formData);
-					console.log(v.url);
-				},
 				success: function(data){
+					if ( !data ) return self.noLocations();
 					self.locations = data;
 					self.loadMap();
 				},
@@ -144,6 +151,18 @@ SimpleLocator.AllLocations = function()
 
 		$(document).trigger('simple-locator-all-locations-rendered', [map]);
 		wpsl_all_locations_rendered(map); // Deprecated
+	}
+
+	/**
+	* No Locations Found
+	*/
+	self.noLocations = function()
+	{
+		var text = $(self.activeMap).attr('data-no-results-text');
+		text = ( typeof text === 'undefined' || text === '' ) ? wpsl_locator.nolocationsfound : text;
+		var message = '<p>' + text + '</p>';
+		$(message).insertAfter(self.activeMap);
+		$(self.activeMap).hide();
 	}
 
 	self.loadList = function()

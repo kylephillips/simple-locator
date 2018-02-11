@@ -29,8 +29,10 @@ class AllLocationsShortcode
 		$this->options = shortcode_atts([
 			'limit' => '-1',
 			'mapheight' => '',
+			'noresultstext' => __('No locations found.', 'simple-locator'),
 			'taxonomies' => '',
-			'terms' => ''
+			'terms' => '',
+			'ids' => ''
 		], $options);
 		$this->setTaxonomyArgs($options);
 	}
@@ -49,6 +51,7 @@ class AllLocationsShortcode
 	*/
 	private function setTaxonomyArgs($options)
 	{
+		if ( !is_array($options) ) return;
 		$tax_args = [];
 		$taxonomies = get_taxonomies();
 		foreach ( $taxonomies as $tax ){
@@ -73,7 +76,9 @@ class AllLocationsShortcode
 			}
 		}
 		
+		if ( $this->options['ids'] !== '' ) $output .= ' data-post-ids="' . $this->options['ids'] . '"';
 		if ( $this->options['mapheight'] !== '' ) $output .= ' style="height:' . intval($this->options['mapheight']) . 'px;"';
+		if ( $this->options['noresultstext'] !== '' ) $output .= ' data-no-results-text="' . $this->options['noresultstext'] . '"';
 
 		$output .= '></div>';
 		return $output;

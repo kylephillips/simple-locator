@@ -62,6 +62,7 @@ class PublicDependencies extends DependencyBase
 			'viewlocation' 			=> __('View Location', 'simple-locator'),
 			'notfounderror' 		=> __('Address not found', 'simple-locator'),
 			'nolocationserror' 		=> __('No locations were found near', 'simple-locator'),
+			'nolocationsfound' 		=> __('No locations found', 'simple-locator'),
 			'alllocations'			=> apply_filters('simple_locator_all_locations_text', __('All Locations', 'simple-locator')),
 			'mapservice'			=> $this->settings_repo->mapService(),
 			'mappinuser' 			=> $this->settings_repo->mapPin('user'),

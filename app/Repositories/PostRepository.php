@@ -54,7 +54,8 @@ class PostRepository
 		$args = [];
 		$args['post_type'] = $this->settings_repo->getLocationPostType();
 		if ( isset($request['limit']) ) $args['posts_per_page'] = $request['limit'];
-		if ( isset($request['taxfilter']) ) $args = $this->addTaxonomyArgs($request, $args);
+		$args = $this->addTaxonomyArgs($request, $args);
+		$args = $this->addIdArgs($request, $args);
 
 		/**
 		* @filter simple_locator_all_locations
@@ -88,6 +89,7 @@ class PostRepository
 	*/
 	private function addTaxonomyArgs($request, $args)
 	{
+		if (!isset($request['taxfilter'])) return $args;
 		foreach ( $request['taxfilter'] as $taxonomy => $terms ){
 			$fields = ( is_numeric($terms[0]) ) ? 'term_id' : 'slug';
 			$args['tax_query'][] = [
@@ -96,6 +98,17 @@ class PostRepository
 				'terms' => $terms
 			];
 		}
+		return $args;
+	}
+
+	/**
+	* Add posts__in args if they exist
+	*/
+	private function addIdArgs($request, $args)
+	{
+		if ( !isset($request['ids']) ) return $args;
+		$ids = explode(',', $request['ids']);
+		$args['post__in'] = $ids;
 		return $args;
 	}
 

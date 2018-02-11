@@ -16,7 +16,9 @@ SimpleLocatorAdmin.ImportUpload = function()
 		toggleHiddenPostTypeCheckbox : 'data-simple-locator-show-non-public-types',
 		nonPublicPostType : 'data-non-public-post-type',
 		toggleImportDetails : 'data-import-toggle-details',
-		undoImportButton : 'data-simple-locator-import-undo-button'
+		undoImportButton : 'data-simple-locator-import-undo-button',
+		redoImportButton : 'data-simple-locator-import-redo-button',
+		removeImportButton : 'data-simple-locator-import-remove-button'
 	}
 
 	self.bindEvents = function()
@@ -39,6 +41,16 @@ SimpleLocatorAdmin.ImportUpload = function()
 			e.preventDefault();
 			var id = $(this).attr(self.selectors.undoImportButton);
 			self.undoImport(id);
+		});
+		$(document).on('click', '[' + self.selectors.redoImportButton + ']', function(e){
+			e.preventDefault();
+			var id = $(this).attr(self.selectors.redoImportButton);
+			self.redoImport(id);
+		});
+		$(document).on('click', '[' + self.selectors.removeImportButton + ']', function(e){
+			e.preventDefault();
+			var id = $(this).attr(self.selectors.removeImportButton);
+			self.removeImport(id);
 		});
 	}
 
@@ -81,6 +93,26 @@ SimpleLocatorAdmin.ImportUpload = function()
 		if ( !confirm(wpsl_locator.confirm_undo) ) return;
 		$('#undo_import_id').val(id);
 		$('[data-undo-import-form]').submit();
+	}
+
+	/**
+	* Redo a previous import
+	*/
+	self.redoImport = function(id)
+	{
+		if ( !confirm(wpsl_locator.confirm_redo) ) return;
+		$('#redo_import_id').val(id);
+		$('[data-redo-import-form]').submit();
+	}
+
+	/**
+	* Remove a previous import's record
+	*/
+	self.removeImport = function(id)
+	{
+		if ( !confirm(wpsl_locator.confirm_remove) ) return;
+		$('#remove_import_id').val(id);
+		$('[data-remove-import-form]').submit();
 	}
 
 	return self.bindEvents();

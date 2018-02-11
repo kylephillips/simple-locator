@@ -108,7 +108,7 @@ if ( $iq->have_posts() ) : $c = 1;
 				</p>
 				<p>
 					<?php if ( file_exists($data['file']) ) : ?>
-					<a href="#" class="button" data-redo-import="<?php echo get_the_id(); ?>">
+					<a href="#" class="button" data-simple-locator-import-redo-button="<?php echo get_the_id(); ?>">
 						<?php _e('Re-Run Import', 'simple-locator'); ?>
 					</a>
 					<?php 
@@ -116,7 +116,7 @@ if ( $iq->have_posts() ) : $c = 1;
 							echo '<p>' . __('The original file has been removed. This import cannot be run again automatically.', 'simple-locator') . '</p>';
 						endif; 
 					?>
-					<a href="#" class="button" data-remove-import="<?php echo get_the_id(); ?>">
+					<a href="#" class="button" data-simple-locator-import-remove-button="<?php echo get_the_id(); ?>">
 						<?php _e('Remove Import Record', 'simple-locator'); ?>
 					</a>
 				</p>

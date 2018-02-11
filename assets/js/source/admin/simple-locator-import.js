@@ -369,40 +369,4 @@ jQuery(function($){
 
 
 
-	/**
-	* ------------------------------------------------------
-	* Undo / Redo / Remove an Import
-	* ------------------------------------------------------
-	*/
-
-
-
-	// Redo
-	$(document).on('click', '[data-redo-import]', function(e){
-		e.preventDefault();
-		var id = $(this).attr('data-redo-import');
-		if ( confirm(wpsl_locator.confirm_redo) ) redo_import(id);
-	});
-
-	function redo_import(id)
-	{
-		$('#redo_import_id').val(id);
-		$('[data-redo-import-form]').submit();
-	}
-
-
-	// Remove
-	$(document).on('click', '[data-remove-import]', function(e){
-		e.preventDefault();
-		var id = $(this).attr('data-remove-import');
-		if ( confirm(wpsl_locator.confirm_remove) ) remove_import(id);
-	});
-
-	function remove_import(id)
-	{
-		$('#remove_import_id').val(id);
-		$('[data-remove-import-form]').submit();
-	}
-
-
 }); // jQuery

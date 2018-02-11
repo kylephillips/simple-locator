@@ -59,6 +59,14 @@ class FormWidget extends \WP_Widget
 		$this->options['noresultstext'] = __('No results found', 'simple-locator');
 		$this->options['addresslabel'] = __('Zip/Postal Code', 'simple-locator');
 		$this->options['mapcontainer'] = '';
+		$this->options['ajax'] = 'true';
+		$this->options['formmethod'] = 'get';
+		$this->options['resultspage'] = '';
+		$this->options['resultscontainer'] = '';
+		$this->options['mapcontrolsposition'] = '';
+		$this->options['perpage'] = '';
+		$this->options['mapheight'] = '';
+		$this->options['showall'] = '';
 	}
 
 	/**
@@ -82,8 +90,7 @@ class FormWidget extends \WP_Widget
 	{
 		wp_enqueue_script('google-maps');
 		if ( wp_script_is('simple-locator', 'enqueued') ) return;
-		wp_enqueue_script('simple-locator');
-		
+		wp_enqueue_script('simple-locator');	
 	}
 
 	/**
@@ -125,7 +132,6 @@ class FormWidget extends \WP_Widget
 		$widget_instance = true;
 		include( \SimpleLocator\Helpers::view('search-form') );
 		echo $output;
-
 		echo $args['after_widget'];
 	}
 }

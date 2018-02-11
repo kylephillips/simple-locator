@@ -33,7 +33,7 @@ SimpleLocator.ResultsMap = function()
 	self.setMapIndex = function()
 	{
 		var wrappers = $('[' + SimpleLocator.selectors.resultsWrapper + ']');
-		self.mapIndex = $(self.activeFormContainer).index(wrappers);
+		self.mapIndex = $(wrappers).index(self.activeFormContainer);
 	}
 
 	/**

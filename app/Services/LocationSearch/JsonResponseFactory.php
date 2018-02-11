@@ -35,7 +35,7 @@ class JsonResponseFactory
 		$search_data = [];
 		$search_data['results'] = $results;
 		$search_data['total_results'] = $total_count;
-		if ( $this->request['per_page'] > 0 ) $search_data['max_num_pages'] = ceil($total_count / $this->request['per_page']);
+		$search_data['max_num_pages'] = ( isset($this->request['per_page']) && $this->request['per_page'] > 0 ) ? ceil($total_count / $this->request['per_page']) : -1;
 
 		$result_info_presenter = new ResultsInfoPresenter($this->request, $search_data);
 		$autoload = ( $this->request['autoload'] ) ? true : false; // for pagination in non-ajax auto location

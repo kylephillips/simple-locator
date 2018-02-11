@@ -117,7 +117,7 @@ SimpleLocator.Form = function()
 	/**
 	* Set the form data for processing
 	*/
-	self.setFormData = function(geocode_results)
+	self.setFormData = function()
 	{
 		var allow_empty_address = $(self.activeForm).attr('data-simple-locator-form-allow-empty');
 		allow_empty_address = ( typeof allow_empty_address === 'undefined' || allow_empty_address === '' ) ? false : true;
@@ -213,6 +213,9 @@ SimpleLocator.Form = function()
 			type: 'GET',
 			datatype: 'jsonp',
 			data: self.formData,
+			beforeSend : function(i, v){
+				// console.log(v.url);
+			},
 			success: function(data){
 				if ( wpsl_locator.jsdebug === '1' ){
 					console.log('Form Response');

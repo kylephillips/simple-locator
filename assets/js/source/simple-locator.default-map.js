@@ -30,9 +30,8 @@ SimpleLocator.DefaultMap = function()
 		var maps = $('[' + self.selectors.map + ']');
 		$.each(maps, function(){
 			var map = $(this);
-				self.setMapIndex(map);
-				self.loadDefault(map);
-				return;
+			self.setMapIndex(map);
+			self.loadDefault(map);
 		});
 	}
 
@@ -42,7 +41,8 @@ SimpleLocator.DefaultMap = function()
 	self.setMapIndex = function(map)
 	{
 		var wrappers = $('[' + SimpleLocator.selectors.resultsWrapper + ']');
-		self.mapIndex = $(map).parents('[' + SimpleLocator.selectors.resultsWrapper + ']').index(wrappers);
+		var currentWrapper = $(map).parents('[' + SimpleLocator.selectors.resultsWrapper + ']');
+		self.mapIndex = $(wrappers).index(currentWrapper);
 	}
 
 	/**
@@ -63,7 +63,7 @@ SimpleLocator.DefaultMap = function()
 		// Override options if custom options are set
 		if ( wpsl_locator.custom_map_options === '1' )	mapOptions = wpsl_locator.map_options;
 		mapOptions.center = center;
-		SimpleLocator.maps[self.mapIndex] = new google.maps.Map(map[0],mapOptions);
+		// SimpleLocator.maps[self.mapIndex] = new google.maps.Map(map[0],mapOptions);
 	}
 	
 	return self.bindEvents();

@@ -34,8 +34,7 @@ class APIAllLocations
 	*/
 	public function getLocations()
 	{
-		$limit = ( isset($this->request['limit']) ) ? intval($this->request['limit']) : -1;
-		$this->locations = $this->post_repo->allLocations($limit);
+		$this->locations = $this->post_repo->allLocations($this->request);
 		return $this->locations;
 	}
 }

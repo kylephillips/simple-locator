@@ -49,12 +49,13 @@ class PostRepository
 	* @param int limit
 	* @return array of object
 	*/
-	public function allLocations($limit = '-1')
+	public function allLocations($request = [])
 	{
-		$args = [
-			'post_type'=> $this->settings_repo->getLocationPostType(),
-			'posts_per_page' => $limit
-		];
+		$args = [];
+		$args['post_type'] = $this->settings_repo->getLocationPostType();
+		if ( isset($request['limit']) ) $args['posts_per_page'] = $request['limit'];
+		if ( isset($request['taxfilter']) ) $args = $this->addTaxonomyArgs($request, $args);
+
 		/**
 		* @filter simple_locator_all_locations
 		*/
@@ -80,6 +81,22 @@ class PostRepository
 		else : return false;
 		endif; wp_reset_postdata();
 		return $locations;
+	}
+
+	/**
+	* Add taxonomy args if they exist
+	*/
+	private function addTaxonomyArgs($request, $args)
+	{
+		foreach ( $request['taxfilter'] as $taxonomy => $terms ){
+			$fields = ( is_numeric($terms[0]) ) ? 'term_id' : 'slug';
+			$args['tax_query'][] = [
+				'taxonomy' => $taxonomy,
+				'fields' => $fields,
+				'terms' => $terms
+			];
+		}
+		return $args;
 	}
 
 	/**

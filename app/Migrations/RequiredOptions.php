@@ -30,5 +30,17 @@ class RequiredOptions
 				'menu_position' => 6
 			));
 		}
+		if ( !get_option('wpsl_results_fields_formatted') ){
+			update_option('wpsl_results_fields_formatted', array(
+				'output' => "<strong><a href='[post_permalink]'>[post_title]</a></strong>\r\n<em>" . __('Distance', 'simple-locator') . ": [distance]</em>\r\n[wpsl_address]\r\n[wpsl_city], [wpsl_state] [wpsl_zip]\r\n[wpsl_phone]\r\n<a href='[wpsl_website]'>[wpsl_website]</a>\r\n[show_on_map]",
+				'limit' => -1
+			));
+		}
+		if ( !get_option('wpsl_results_fields_formatted_default') ){
+			update_option('wpsl_results_fields_formatted_default', array(
+				'output' => "<strong><a href='[post_permalink]'>[post_title]</a></strong>\r\n[wpsl_address]\r\n[wpsl_city], [wpsl_state] [wpsl_zip]\r\n[wpsl_phone]\r\n<a href='[wpsl_website]'>[wpsl_website]</a>\r\n[show_on_map]",
+				'limit' => -1
+			));
+		}
 	}
 }

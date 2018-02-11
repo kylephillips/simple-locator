@@ -19,6 +19,24 @@
 		</div><!-- .field -->
 	</div><!-- .row -->
 	<div class="row">
+		<div class="label align-top">
+			<h4><?php _e('Default Listing', 'simple-locator'); ?></h4>
+			<p><?php _e('Customize the display of locations in non-search listings. This includes the "all locations" shortcode and the default location listing under the search form (if enabled). Distance is not available here since a search has not been performed yet.', 'simple-locator'); ?></p>
+		</div>
+		<div class="field align-top">
+			<?php 
+			include(\SimpleLocator\Helpers::view('settings/result-field-custom-selection'));
+			wp_editor($this->settings_repo->resultsFormatting('default'), 'wpsl_results_fields_formatted_default', [
+				'media_buttons' => false,
+				'textarea_name' => 'wpsl_results_fields_formatted_default[output]',
+				'tabindex' => 1,
+				'textarea_rows' => 12,
+				'teeny' => true,
+				'wpautop' => true
+			]); ?>			
+		</div><!-- .field -->
+	</div><!-- .row -->
+	<div class="row">
 		<div class="label">
 			<h4><?php _e('Result Count', 'simple-locator'); ?></h4>
 			<p><?php _e('Limit the number of results shown. Enter a value of -1 for unlimited results.', 'simple-locator'); ?></p>

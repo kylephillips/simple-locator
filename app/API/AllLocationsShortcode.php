@@ -30,8 +30,7 @@ class AllLocationsShortcode
 			'limit' => '-1',
 			'mapheight' => '',
 			'noresultstext' => __('No locations found.', 'simple-locator'),
-			'taxonomies' => '',
-			'terms' => '',
+			'includelist' => '', // Set to true to display the list beneath the map
 			'ids' => ''
 		], $options);
 		$this->setTaxonomyArgs($options);
@@ -79,6 +78,7 @@ class AllLocationsShortcode
 		if ( $this->options['ids'] !== '' ) $output .= ' data-post-ids="' . $this->options['ids'] . '"';
 		if ( $this->options['mapheight'] !== '' ) $output .= ' style="height:' . intval($this->options['mapheight']) . 'px;"';
 		if ( $this->options['noresultstext'] !== '' ) $output .= ' data-no-results-text="' . $this->options['noresultstext'] . '"';
+		if ( $this->options['includelist'] == 'true' ) $output .= ' data-include-listing="true"';
 
 		$output .= '></div>';
 		return $output;

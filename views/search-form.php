@@ -85,7 +85,7 @@ if ( $this->options['mapcontainer'] === '' ){
 	$output .= '<div data-simple-locator-map class="wpsl-map"';
 	if ( isset($mapheight) && $mapheight !== "" )  $output .= 'style="height:' . $mapheight . 'px;"';
 	if ( $this->settings_repo->showDefaultMap() ) $output .= ' data-simple-locator-default-enabled="true"';
-	if ( $this->options['showall'] == 'true' ) $output .= ' data-simple-locator-all-locations-map';
+	if ( $this->options['showall'] !== '' ) $output .= ' data-simple-locator-all-locations-map="' . $this->options['showall'] . '" data-include-listing="true"';
 	$output .= '></div><!-- .wpsl-map -->';
 }
 

@@ -130,10 +130,11 @@ class SettingsRepository
 	/**
 	* Get results field formatting option
 	*/
-	public function resultsFormatting()
+	public function resultsFormatting($type = 'search')
 	{
-		$resultoutput = get_option('wpsl_results_fields_formatted');
-		return $resultoutput['output'];
+		if ( $type == 'search' ) $option = get_option('wpsl_results_fields_formatted');
+		if ( $type == 'default' ) $option = get_option('wpsl_results_fields_formatted_default');
+		return $option['output'];
 	}
 
 	/**

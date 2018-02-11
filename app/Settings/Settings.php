@@ -162,6 +162,7 @@ class Settings
 		register_setting( 'wpsimplelocator-default', 'wpsl_default_map' );
 		register_setting( 'wpsimplelocator-results', 'wpsl_results_options' );
 		register_setting( 'wpsimplelocator-results', 'wpsl_results_fields_formatted' );
+		register_setting( 'wpsimplelocator-results', 'wpsl_results_fields_formatted_default' );
 	}
 
 	/**

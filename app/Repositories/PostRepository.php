@@ -76,7 +76,7 @@ class PostRepository
 				$location->wpsl_zip = get_post_meta(get_the_id(), 'wpsl_zip', true);
 				$location->wpsl_phone = get_post_meta(get_the_id(), 'wpsl_phone', true);
 				$location->wpsl_website = get_post_meta(get_the_id(), 'wpsl_website', true);
-				$locations[$c] = $this->location_presenter->present($location, $c, ['distance' => false]);
+				$locations[$c] = $this->location_presenter->present($location, $c, ['results' => 'default']);
 			$c++;
 			endwhile; 
 		else : return false;

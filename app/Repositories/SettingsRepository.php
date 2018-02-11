@@ -270,4 +270,13 @@ class SettingsRepository
 		if ( !$pin && $pin == '' ) $pin = \SimpleLocator\Helpers::plugin_url() . '/assets/images/map-marker-blue.svg';
 		return $pin;
 	}
-}
+
+	/**
+	* Are non-ajax results disabled from the content
+	*/
+	public function resultsInContent()
+	{
+		$option = get_option('wpsl_results_content_disabled');
+		return ( isset($option) && $option == 'true' ) ? false : true;
+	}
+} 

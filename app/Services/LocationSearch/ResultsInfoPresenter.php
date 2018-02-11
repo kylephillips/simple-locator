@@ -30,7 +30,7 @@ class ResultsInfoPresenter
 		$total_results = $this->search_data['total_results'];
 		$location = ( $this->request['geolocation'] && $this->request['geolocation'] == 'true' ) 
 			? apply_filters('simple_locator_your_location_text', __('your location', 'simple-locator')) 
-			: $this->request['formatted_address'];
+			: $this->request['address'];
 		$total_results = ( $total_results == 1 ) 
 			? $total_results . ' ' . apply_filters('simple_locator_non_ajax_location_text', __('location', 'simple-locator') )
 			: $total_results . ' ' . apply_filters('simple_locator_non_ajax_locations_text', __('locations', 'simple-locator'));

@@ -142,6 +142,7 @@ class Settings
 		register_setting( 'wpsimplelocator-general', 'wpsl_enable_autocomplete' );
 		register_setting( 'wpsimplelocator-general', 'wpsl_js_debug' );
 		register_setting( 'wpsimplelocator-general', 'wpsl_save_searches' );
+		register_setting( 'wpsimplelocator-general', 'wpsl_results_content_disabled' );
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_post_type' );
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_show_hidden' );
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_hide_default_fields' );

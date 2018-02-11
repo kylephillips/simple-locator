@@ -5,12 +5,18 @@ use SimpleLocator\Services\LocationSearch\LocationSearch as Search;
 use SimpleLocator\Services\LocationSearch\LocationSearchValidator;
 use SimpleLocator\Services\LocationSearch\SaveSearch;
 use SimpleLocator\Services\LocationSearch\ResultsInfoPresenter;
+use SimpleLocator\Repositories\SettingsRepository;
 
 /**
 * Display Search Results for Non-Ajax Forms
 */
 class LocationSearch
 {
+	/**
+	* Settings Repository
+	*/
+	private $settings_repo;
+
 	/**
 	* Request
 	*/ 
@@ -48,12 +54,14 @@ class LocationSearch
 	public function __construct()
 	{
 		if ( !isset($_POST['simple_locator_results']) && !isset($_GET['simple_locator_results']) ) return;
+		$this->settings_repo = new SettingsRepository;
 		$this->location_search = new Search;
 		$this->validator = new LocationSearchValidator;
 		$this->save_search = new SaveSearch;
 		add_action('init', [$this, 'initialize']);
 		add_action('wp_head', [$this, 'addScriptData']);
 		add_filter('the_content', [$this, 'displayResults']);
+		add_action('simple_locator_results', [$this, 'resultsAction'], 10);
 	}
 
 	public function initialize()
@@ -85,8 +93,23 @@ class LocationSearch
 		global $post;
 		if ( $this->request['resultspage'] != $post->ID ) return $content;
 		include(\SimpleLocator\Helpers::view('search-results'));
-		$content .= apply_filters('simple_locator_results_non_ajax', $output, $this->request);
-		return $content;
+		if ( $this->settings_repo->resultsInContent() ){
+			$content .= apply_filters('simple_locator_results_non_ajax', $output, $this->request);
+			return $content;
+		}
+	}
+
+	/**
+	* Results Action
+	* 
+	*/
+	public function resultsAction()
+	{
+		global $post;
+		if ( $this->request['resultspage'] != $post->ID ) return;
+		if ( $this->settings_repo->resultsInContent() ) return;
+		$results_output = include(\SimpleLocator\Helpers::view('search-results'));
+		echo apply_filters('simple_locator_results_non_ajax', $output, $this->request);
 	}
 
 	/**

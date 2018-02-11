@@ -84,8 +84,7 @@ class LocationResultPresenter
 			'output' => $this->formatOutput(),
 			'infowindow' => $this->formatInfoWindow(),
 			'mappin' => $this->mapPin(),
-			'result_data' => $this->result,
-			'output_format' => $this->settings_repo->resultsFormatting()
+			'result_data' => $this->result
 		];
 		return $location;
 	}
@@ -104,9 +103,7 @@ class LocationResultPresenter
 		$output = $this->removeEmptyTags($output);
 		$output = Helpers::replaceURLs($output);
 		$output = wpautop($output);
-
 		$output = apply_filters('simple_locator_result', $output, $this->result, $this->count);
-
 		return $output;
 	}
 
@@ -128,7 +125,7 @@ class LocationResultPresenter
 	*/
 	private function replacePostFields($output)
 	{
-		if ( isset($this->result->distance) ) $output .= str_replace('[distance]', round($this->result->distance, 2) . ' ' . $this->distance_unit, $output);
+		if ( isset($this->result->distance) ) $output = str_replace('[distance]', round($this->result->distance, 2) . ' ' . $this->distance_unit, $output);
 		
 		$output = str_replace('[post_title]', $this->result->title, $output);
 

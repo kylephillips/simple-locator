@@ -57,11 +57,11 @@
 		<div class="field">
 			<p class="no-margin"><label>
 				<input type="checkbox" value="true" name="wpsl_gmaps_api" <?php if ( $this->settings_repo->includeMapLibrary() ) echo 'checked'; ?> />
-				<?php _e('Include in Front End', 'simple-locator'); ?>
+				<?php _e('Include in front end', 'simple-locator'); ?>
 			</label></p>
 			<p class="no-margin"><label>
 				<input type="checkbox" value="true" name="wpsl_gmaps_api_admin" <?php if ( $this->settings_repo->includeMapLibrary('admin') ) echo 'checked'; ?> />
-				<?php _e('Include in Admin', 'simple-locator'); ?>
+				<?php _e('Include in admin', 'simple-locator'); ?>
 			</label></p>
 		</div>
 	</div><!-- .row -->
@@ -74,7 +74,7 @@
 		<div class="field">
 			<label>
 				<input type="checkbox" value="true" name="wpsl_enable_autocomplete" <?php if ( get_option('wpsl_enable_autocomplete') == 'true') echo 'checked'; ?> />
-				<?php _e('Enable Autcomplete in Location Field', 'simple-locator'); ?>
+				<?php _e('Enable autcomplete in location field', 'simple-locator'); ?>
 			</label>
 		</div>
 	</div><!-- .row -->
@@ -192,7 +192,7 @@
 			<p><?php _e('Logs server responses to the browser console for debugging purposes.', 'simple-locator'); ?></p>
 		</div>
 		<div class="field">
-			<label><input type="checkbox" name="wpsl_js_debug" value="true" <?php if ( $this->settings_repo->jsDebug() ) echo 'checked';?> /><?php _e('Enable Javascript Console Logging.', 'simple-locator'); ?></label>
+			<label><input type="checkbox" name="wpsl_js_debug" value="true" <?php if ( $this->settings_repo->jsDebug() ) echo 'checked';?> /><?php _e('Enable Javascript console logging', 'simple-locator'); ?></label>
 		</div>
 	</div><!-- .row -->
 
@@ -204,8 +204,22 @@
 		<div class="field">
 			<label>
 				<input type="checkbox" value="true" name="wpsl_save_searches" <?php if ( get_option('wpsl_save_searches') == 'true') echo 'checked'; ?> />
-				<?php _e('Save Search History', 'simple-locator'); ?>
+				<?php _e('Save search history', 'simple-locator'); ?>
 			</label>
+		</div>
+	</div><!-- .row -->
+
+	<div class="row">
+		<div class="label">
+			<h4><?php _e('Non-AJAX Results', 'simple-locator'); ?></h4>
+			<p><?php _e('By default, non-ajax results display in the post content of the specified page (or the current page if a resultspage option is not provided).', 'simple-locator'); ?></p>
+		</div>
+		<div class="field">
+			<label>
+				<input type="checkbox" value="true" name="wpsl_results_content_disabled" <?php if ( !$this->settings_repo->resultsInContent() ) echo 'checked'; ?> />
+				<?php _e('Disable the content filter on non-ajax results', 'simple-locator'); ?>
+			</label>
+			<p><?php _e('To display results in a custom area of your template, add following action:', 'simple-locator'); ?><br><code>do_action('simple_locator_results')</code></p>
 		</div>
 	</div><!-- .row -->
 </div><!-- .wpsl-settings -->

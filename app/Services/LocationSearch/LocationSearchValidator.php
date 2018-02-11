@@ -7,11 +7,6 @@ class LocationSearchValidator
 	{
 		if ( !$request ) $request = $_POST;
 
-		// Unit
-		if ( (!isset($request['unit'])) || ($request['unit'] !== 'miles') && ($request['unit'] !== 'kilometers') ){
-			throw new \Exception(__('Please provide a radius measurement unit (miles or kilometers).', 'simple-locator'));
-		}
-
 		if ( isset($request['allow_empty_address']) && $request['allow_empty_address'] == 'true' ) return;
 
 		// Latitude & Longitude

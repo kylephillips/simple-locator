@@ -108,7 +108,7 @@ class LocationSearch
 	*/
 	private function setAddress()
 	{
-		$this->address = ( $this->request['latitude'] != "") ? true : false;
+		$this->address = ( isset($this->request['latitude']) && $this->request['latitude'] != "") ? true : false;
 	}
 
 	/**
@@ -117,12 +117,12 @@ class LocationSearch
 	private function setData()
 	{
 		$this->data = [
-			'distance' => sanitize_text_field($this->request['distance']),
-			'latitude' => sanitize_text_field($this->request['latitude']),
-			'longitude' => sanitize_text_field($this->request['longitude']),
-			'unit' => sanitize_text_field($this->request['unit']),
+			'unit' => ( isset($this->request['unit']) ) ?  sanitize_text_field($this->request['unit']) : get_option('wpsl_measurement_unit'),
 			'offset' => null,
-			'limit' => ( isset($this->request['per_page']) ) ? sanitize_text_field(intval($this->request['per_page'])) : null
+			'limit' => ( isset($this->request['per_page']) ) ? sanitize_text_field(intval($this->request['per_page'])) : null,
+			'distance' => ( isset($this->request['distance']) ) ? sanitize_text_field($this->request['distance']) : null,
+			'latitude' => ( isset($this->request['latitude']) ) ? sanitize_text_field($this->request['latitude']) : null,
+			'longitude' => ( isset($this->request['longitude']) ) ? sanitize_text_field($this->request['longitude']) : null,
 		];
 		if ( isset($this->request['page']) && $this->data['limit']){
 			$this->data['offset'] = intval($this->request['page']) * $this->data['limit'];;
@@ -244,10 +244,12 @@ class LocationSearch
 				AND @origlat + (@distance / @dist_unit)
 			AND lng.meta_value
 				BETWEEN @origlng - (@distance / (@dist_unit * cos(radians(@origlat))))
-				AND @origlng + (@distance / (@dist_unit * cos(radians(@origlat))))";
+				AND @origlng + (@distance / (@dist_unit * cos(radians(@origlat)))) AND";
+		} else {
+			$sql .= ' WHERE ';
 		}
 		$sql .= "
-			AND `post_type` = '" . $this->query_data['post_type'] . "'
+			`post_type` = '" . $this->query_data['post_type'] . "'
 			AND `post_status` = 'publish'";
 		return apply_filters('simple_locator_sql_where', $sql);
 	}

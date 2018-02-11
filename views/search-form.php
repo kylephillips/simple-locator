@@ -77,12 +77,11 @@ $output .= '>
 		<div class="wpsl-icon-spinner"><div class="wpsl-icon-spinner-image"><img src="' . apply_filters('simple_locator_results_loading_spinner', \SimpleLocator\Helpers::plugin_url() . '/assets/images/loading-spinner.svg') . '" class="wpsl-spinner-image" /></div></div>
 		</div>
 	</form>';
-if ( $this->options['mapcontainer'] === '' ){
+if ( $this->options['mapcontainer'] == '' ){
 	$output .= '<div data-simple-locator-map class="wpsl-map"';
-	if ( isset($this->options['mapheight']) && $this->options['mapheight'] !== "" )  $output .= 'style="height:' . $this->options['mapheight'] . 'px;';
-	if ( !$this->settings_repo->showDefaultMap() ) $output .= 'display:none;';
-	$output .= '"';
+	if ( isset($this->options['mapheight']) && $this->options['mapheight'] !== "" )  $output .= 'style="height:' . $this->options['mapheight'] . 'px;"';
 	if ( $this->settings_repo->showDefaultMap() ) $output .= ' data-simple-locator-default-enabled="true"';
+	if ( $this->options['perpage'] !== '' ) $output .= ' data-per-page="' . $this->options['perpage'] . '"';
 	if ( $this->options['showall'] !== '' ) $output .= ' data-simple-locator-all-locations-map="' . $this->options['showall'] . '" data-include-listing="true"';
 	$output .= '></div><!-- .wpsl-map -->';
 }

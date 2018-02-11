@@ -81,6 +81,7 @@ class APILocationSearch
 	private function saveSearch()
 	{
 		if ( !get_option('wpsl_save_searches') ) return;
+		if ( isset($this->request['allow_empty_address']) ) return;
 		$this->search_store->save($this->request);
 	}
 }

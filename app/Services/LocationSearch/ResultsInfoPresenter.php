@@ -28,13 +28,20 @@ class ResultsInfoPresenter
 	public function resultsHeader()
 	{
 		$total_results = $this->search_data['total_results'];
-		$location = ( $this->request['geolocation'] && $this->request['geolocation'] == 'true' ) 
-			? apply_filters('simple_locator_your_location_text', __('your location', 'simple-locator')) 
-			: $this->request['address'];
+		$address = ( isset($this->request['address']) ) ? $this->request['address'] : '';
+		$distance = ( isset($this->request['distance']) ) ? $this->request['distance'] : '';
+		$unit = ( isset($this->request['unit']) ) ? $this->request['unit'] : get_option('wpsl_measurement_unit');
+		$geolocation = ( isset($this->request['geolocation']) && $this->request['geolocation'] == 'true' ) ? true : false;
+
+		$location = ( $geolocation ) ? apply_filters('simple_locator_your_location_text', __('your location', 'simple-locator')) : $address;
 		$total_results = ( $total_results == 1 ) 
 			? $total_results . ' ' . apply_filters('simple_locator_non_ajax_location_text', __('location', 'simple-locator') )
 			: $total_results . ' ' . apply_filters('simple_locator_non_ajax_locations_text', __('locations', 'simple-locator'));
-		$output = '<h3 class="wpsl-results-header">' . $total_results . ' ' . __('found within', 'simple-locator') . ' ' . $this->request['distance'] . ' ' . $this->request['unit'] . ' ' . __('of', 'simple-locator') . ' ' . $location . '</h3>';
+
+		$output = ( $address == '' && !$geolocation )
+			? '<h3 class="wpsl-results-header">' . $total_results . '</h3>'
+			: '<h3 class="wpsl-results-header">' . $total_results . ' ' . __('found within', 'simple-locator') . ' ' . $distance . ' ' . $unit . ' ' . __('of', 'simple-locator') . ' ' . $location . '</h3>';
+
 		return apply_filters('simple_locator_non_ajax_results_header', $output, $this->request, $this->search_data);
 	}
 
@@ -43,7 +50,7 @@ class ResultsInfoPresenter
 	*/
 	public function pagination($direction = 'next', $include_hidden_fields = true, $autoload = false)
 	{
-		if ( $this->request['per_page'] == 0 ) return null;
+		if ( !isset($this->request['per_page']) || $this->request['per_page'] == 0 ) return null;
 		if ( $direction == 'back' && $this->request['page'] == 0 ) return null;
 		if ( $direction == 'next' && ( ($this->request['page'] + 1 ) == $this->search_data['max_num_pages']) ) return null;
 
@@ -90,7 +97,7 @@ class ResultsInfoPresenter
 	*/
 	public function currentResultCounts()
 	{
-		if ( $this->request['per_page'] == 0 ) return;
+		if ( !isset($this->request['per_page']) || $this->request['per_page'] == 0 ) return;
 		$current_start = $this->request['page'] * $this->request['per_page'] + 1;
 		$current_end = $current_start + count($this->search_data['results']) - 1;
 		$result_count = $current_start;
@@ -105,7 +112,7 @@ class ResultsInfoPresenter
 	*/
 	public function pagePosition()
 	{
-		if ( $this->request['per_page'] == 0 ) return;
+		if ( !isset($this->request['per_page']) || $this->request['per_page'] == 0 ) return;
 		$output = '<div class="wpsl-form-page-selection">';
 		$output .= '<p>' . __('Page', 'simple-locator') . ' ' . ($this->request['page'] + 1) . ' ' . __('of', 'simple-locator') . ' ' . $this->search_data['max_num_pages'] . '</p>';
 		$output .= '</div>';

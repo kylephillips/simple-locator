@@ -63,7 +63,7 @@ SimpleLocator.DefaultMap = function()
 		// Override options if custom options are set
 		if ( wpsl_locator.custom_map_options === '1' )	mapOptions = wpsl_locator.map_options;
 		mapOptions.center = center;
-		// SimpleLocator.maps[self.mapIndex] = new google.maps.Map(map[0],mapOptions);
+		SimpleLocator.maps[self.mapIndex] = new google.maps.Map(map[0],mapOptions);
 	}
 	
 	return self.bindEvents();

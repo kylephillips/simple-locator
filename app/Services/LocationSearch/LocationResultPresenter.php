@@ -63,11 +63,8 @@ class LocationResultPresenter
 	*/
 	public function present($result, $count, $options = [])
 	{
-		if ( isset($options['results']) && $options['results'] == 'default' ) {
-			// Default listings (not search results)
-			$this->output = $this->settings_repo->resultsFormatting('default');
-		}
 		$this->result = $result;
+		if ( !isset($this->result->distance) ) $this->output = $this->settings_repo->resultsFormatting('default');
 		$this->count = $count;
 		$this->options = $options;
 		return $this->setData();

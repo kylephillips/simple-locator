@@ -27,7 +27,7 @@ class AllLocationsShortcode
 		// Taxonomies may also be passed in to filter:
 		// Ex: category="4,6"
 		$this->options = shortcode_atts([
-			'limit' => '-1',
+			'perpage' => '', // If the list is included pagination is available
 			'mapheight' => '',
 			'noresultstext' => __('No locations found.', 'simple-locator'),
 			'includelist' => '', // Set to true to display the list beneath the map
@@ -66,7 +66,7 @@ class AllLocationsShortcode
 	{
 		$this->setOptions($options);
 		$this->enqueueScripts();
-		$output = '<div data-simple-locator-all-locations-map data-limit="' . $this->options['limit'] . '" class="wpsl-map"';
+		$output = '<div data-simple-locator-all-locations-map class="wpsl-map"';
 
 		// Add data-attributes to handle taxonomy arguments
 		if ( isset($this->args['taxfilter']) ) {
@@ -79,6 +79,7 @@ class AllLocationsShortcode
 		if ( $this->options['mapheight'] !== '' ) $output .= ' style="height:' . intval($this->options['mapheight']) . 'px;"';
 		if ( $this->options['noresultstext'] !== '' ) $output .= ' data-no-results-text="' . $this->options['noresultstext'] . '"';
 		if ( $this->options['includelist'] == 'true' ) $output .= ' data-include-listing="true"';
+		if ( $this->options['perpage'] !== '' ) $output .= ' data-per-page="' . intval($this->options['perpage']) . '"';
 
 		$output .= '></div>';
 		return $output;

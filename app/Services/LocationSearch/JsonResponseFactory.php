@@ -38,15 +38,16 @@ class JsonResponseFactory
 		$search_data['max_num_pages'] = ( isset($this->request['per_page']) && $this->request['per_page'] > 0 ) ? ceil($total_count / $this->request['per_page']) : -1;
 
 		$result_info_presenter = new ResultsInfoPresenter($this->request, $search_data);
-		$autoload = ( $this->request['autoload'] ) ? true : false; // for pagination in non-ajax auto location
+		$autoload = ( isset($this->request['autoload']) && $this->request['autoload'] ) ? true : false; // for pagination in non-ajax auto location
+		$unit = ( isset($this->request['unit']) ) ? sanitize_text_field($this->request['unit']) : get_option('wpsl_measurement_unit');
 
 		$this->data = [
 			'address' => $address,
 			'formatted_address' => $formatted_address,
-			'distance' => sanitize_text_field($this->request['distance']),
-			'latitude' => sanitize_text_field($this->request['latitude']),
-			'longitude' => sanitize_text_field($this->request['longitude']),
-			'unit' => sanitize_text_field($this->request['unit']),
+			'distance' => isset($this->request['distance']) ? sanitize_text_field($this->request['distance']) : null,
+			'latitude' => isset($this->request['latitude']) ? sanitize_text_field($this->request['latitude']) : null,
+			'longitude' => isset($this->request['longitude']) ? sanitize_text_field($this->request['longitude']) : null,
+			'unit' => $unit,
 			'geolocation' => $geolocation,
 			'taxonomies' => $taxonomies,
 			'allow_empty_address' => $allow_empty_address,

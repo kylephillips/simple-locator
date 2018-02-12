@@ -105,7 +105,7 @@ SimpleLocator.AllLocations = function()
 				datatype: 'json',
 				data : self.formData,
 				success: function(data){
-					if ( !data ) return self.noLocations();
+					if ( !data.results ) return self.noLocations();
 					self.data = data;
 					self.loadMap();
 				},

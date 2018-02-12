@@ -7,7 +7,9 @@ $image_sizes = get_intermediate_image_sizes();
 	<div class="left">
 		<label for="wpsl-fields"><?php echo $post_type->labels->name; ?> <?php _e('Fields', 'simple-locator'); ?></label>
 		<select id="wpsl-fields">
+			<?php if ( $distance ) : ?> 
 			<option value="distance"><?php _e('Distance', 'simple-locator'); ?></option>
+			<?php endif; ?>
 			<option value="show_on_map"><?php _e('Show on Map', 'simple-locator'); ?></option>
 			<?php 
 				foreach($post_type_fields as $field) {

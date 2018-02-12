@@ -7,6 +7,7 @@
 		</div>
 		<div class="field align-top">
 			<?php 
+			$distance = true;
 			include(\SimpleLocator\Helpers::view('settings/result-field-custom-selection'));
 			wp_editor($this->settings_repo->resultsFormatting(), 'wpsl_results_fields_formatted', [
 				'media_buttons' => false,
@@ -25,6 +26,7 @@
 		</div>
 		<div class="field align-top">
 			<?php 
+			$distance = false;
 			include(\SimpleLocator\Helpers::view('settings/result-field-custom-selection'));
 			wp_editor($this->settings_repo->resultsFormatting('default'), 'wpsl_results_fields_formatted_default', [
 				'media_buttons' => false,

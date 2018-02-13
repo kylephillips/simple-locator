@@ -113,7 +113,7 @@ class FormShortcode
 			'taxonomy_field_type' => 'select', // or Checkbox
 			'allowemptyaddress' => 'false',
 			'resultswrapper' => '',
-			'showall' => '' // Show all locations on inital load
+			'showall' => '' // Show all locations on inital load, value is used as list header if enabled
 		], $options);
 		$this->options['formmethod'] = ( $this->options['formmethod'] == 'post' ) ? 'post' : 'get';
 		if ( $this->options['ajax'] == 'false' && $this->options['perpage'] == '' ) $this->options['perpage'] = get_option('posts_per_page');

@@ -31,6 +31,7 @@ class AllLocationsShortcode
 			'mapheight' => '',
 			'noresultstext' => __('No locations found.', 'simple-locator'),
 			'includelist' => '', // Set to true to display the list beneath the map
+			'showall' => '', // Text to display in list header
 			'ids' => ''
 		], $options);
 		$this->setTaxonomyArgs($options);
@@ -66,7 +67,9 @@ class AllLocationsShortcode
 	{
 		$this->setOptions($options);
 		$this->enqueueScripts();
-		$output = '<div data-simple-locator-all-locations-map class="wpsl-map"';
+		$output = '<div data-simple-locator-all-locations-map';
+		if ( $this->options['showall'] !== '' ) $output .= '="' . $this->options['showall'] . '"';
+		$output .= ' class="wpsl-map"';
 
 		// Add data-attributes to handle taxonomy arguments
 		if ( isset($this->args['taxfilter']) ) {

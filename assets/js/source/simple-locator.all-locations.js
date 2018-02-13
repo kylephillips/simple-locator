@@ -205,7 +205,13 @@ SimpleLocator.AllLocations = function()
 			var container = $(formContainer).find('[' + SimpleLocator.selectors.results + ']');
 		}
 
-		var output = self.data.results_header + self.data.current_counts;
+		// If a title is passed in the shortcode, use it. Othewise use what is provided by the response
+		var title = $(self.activeMap).attr(self.selectors.map);
+		title = ( typeof title !== 'undefined' && title !== '' && title !== 'true' ) 
+			? '<h3 class="wpsl-results-header">' + title + '</h3>' : false;
+
+		var output = '';
+		output += ( title ) ? title : self.data.results_header + self.data.current_counts;
 		
 		var options = ( typeof wpsl_locator_options === 'undefined' || wpsl_locator_options === '' ) ? false : true;
 		if ( options && wpsl_locator_options.resultswrapper !== "" ) output += '<' + wpsl_locator_options.resultswrapper + '>';

@@ -84,6 +84,27 @@ SimpleLocator.AllLocations = function()
 		if ( typeof ids !== 'undefined' && ids !== '' ) self.formData.ids = ids;
 	}
 
+	/**
+	* Set location args (if default map is enabled, center there )
+	*/
+	self.setLocationArgs = function()
+	{
+		var latitude = wpsl_locator.default_latitude;
+		var longitude = wpsl_locator.default_longitude;
+		var default_enabled = wpsl_locator.default_enabled;
+		if ( typeof default_enabled === 'undefined' || default_enabled === '' ){
+			self.formData.allow_empty_address = 'true';
+			return;
+		}
+		if ( typeof latitude !== 'undefined' && latitude !== '' ){
+			self.formData.latitude = latitude;
+			self.formData.longitude = longitude;
+			self.formData.distance = 5000;
+			return;
+		}
+		self.formData.allow_empty_address = 'true';
+	}
+
 	self.getData = function()
 	{
 		var maps = $('[' + self.selectors.map + ']');
@@ -92,8 +113,8 @@ SimpleLocator.AllLocations = function()
 			self.setMapIndex();
 
 			// Set Query Args
-			self.formData.allow_empty_address = 'true';
 			self.formData.page = self.page;
+			self.setLocationArgs();
 			self.setPerPageArgs();
 			self.setTaxonomyArgs();
 			self.setLimitArgs();

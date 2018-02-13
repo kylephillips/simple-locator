@@ -39,7 +39,7 @@
 		</div>
 		<div class="field align-top">
 			<label>
-			<input type="checkbox" data-simple-locator-user-position-default name="wpsl_default_map[user_location]" value="true" <?php if ( $this->settings_repo->defaultMap('user_location') == 'true' ) echo 'checked'; ?> /><?php _e('Show Results Automatically', 'simple-locator'); ?></label>
+			<input type="checkbox" data-simple-locator-user-position-default name="wpsl_default_map[user_location]" value="true" <?php if ( $this->settings_repo->defaultMap('user_location') == 'true' ) echo 'checked'; ?> /><?php _e('Show Results Automatically Centered to User', 'simple-locator'); ?></label>
 			<div style="display:none;" class="wpsl-error" data-simple-locator-no-https><?php _e('Your website doesn\'t appear to be running under the https protocol. User geolocation may not be available.', 'simple-locator'); ?> <a href="https://developers.google.com/web/updates/2016/04/geolocation-on-secure-contexts-only" target="_blank"><?php _e('Read More', 'simple-locator'); ?></a></div>
 		</div>
 	</div><!-- .row -->

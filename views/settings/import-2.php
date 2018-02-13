@@ -14,26 +14,26 @@ if ( isset($transient['file']) && isset($transient['post_type']) ) :
 if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '</p></div>';
 ?>
 
-<div class="wpsl-loading-settings">
+<div class="wpsl-loading-settings" data-simple-locator-import-loading>
 	<div class="wpsl-icon-spinner"><div class="wpsl-icon-spinner-image"><img src="<?php echo \SimpleLocator\Helpers::plugin_url() . '/assets/images/loading-spinner.svg'; ?>" class="wpsl-spinner-image" /></div></div>
 	</div>
 </div>
 
-<div class="error wpsl-form-error" style="display:none;"></div>
+<div class="error wpsl-form-error" style="display:none;" data-simple-locator-form-error></div>
 
 <div class="wpsl-required-key">
 	<p><?php _e('Two fields are required: a title field and at least one address field. If your address data is saved in one column, choose the "Full Address" field type.', 'simple-locator'); ?></p>
 </div>
 
 <div class="wpsl-settings">
-	<form action="<?php echo admin_url('admin-post.php'); ?>" method="post" enctype="multipart/form-data">
+	<form action="<?php echo admin_url('admin-post.php'); ?>" method="post" enctype="multipart/form-data" data-simple-locator-import-column-form>
 		<input type="hidden" name="action" value="wpslmapcolumns">
-		<div class="wpsl-column-selection" style="display:none;">
+		<div class="wpsl-column-selection" style="display:none;" data-simple-locator-import-column-selection>
 			<div class="column-selection-inner">
 				<div class="wpsl-row-selection">
-					<button data-direction="back" class="button" disabled><span class="dashicons dashicons-arrow-left"></span></button>
-					<button data-direction="next" class="button"><span class="dashicons dashicons-arrow-right"></span></button>
-					<span class="wpsl-current-row"><?php _e('Showing Row', 'simple-locator'); ?> 1</span>
+					<button data-simple-locator-import-row-selection-button="back" class="button" disabled><span class="dashicons dashicons-arrow-left"></span></button>
+					<button data-simple-locator-import-row-selection-button="next" class="button"><span class="dashicons dashicons-arrow-right"></span></button>
+					<span class="wpsl-current-row" data-simple-locator-import-current-row><?php _e('Showing Row', 'simple-locator'); ?> 1</span>
 				</div>
 				<ul class="wpsl-column-fields">
 
@@ -43,18 +43,18 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 						<span><?php _e('Field Type', 'simple-locator'); ?></span>
 					</li>
 					
-					<li class="row-template wpsl-field">
-						<div class="wpsl-column-error"></div>
-						<select name="wpsl_import_field[0][csv_column]" class="wpsl-import-column-selection">
+					<li class="row-template wpsl-field" data-simple-locator-import-field>
+						<div class="wpsl-column-error" data-simple-locator-column-error></div>
+						<select name="wpsl_import_field[0][csv_column]" data-simple-locator-import-column-select>
 							<option value=""><?php _e('Choose Column', 'simple-locator'); ?></option>
 						</select>
-						<select name="wpsl_import_field[0][field]" class="wpsl-import-field-selection">
+						<select name="wpsl_import_field[0][field]" data-simple-locator-import-field-select>
 							<option value=""><?php _e('Choose Field', 'simple-locator'); ?></option>
 						</select>
-						<select name="wpsl_import_field[0][type]" class="wpsl-import-type-selection">
+						<select name="wpsl_import_field[0][type]" data-simple-locator-import-type-select>
 							<option value="other"><?php _e('Other', 'simple-locator'); ?></option>
 							<optgroup label="<?php _e('Address Fields', 'simple-locator'); ?>">
-								<option value="address"><?php _e('Street Address', 'simple-locator'); ?></option>
+								<option value="address"><?php _e('Street Address (Primary)', 'simple-locator'); ?></option>
 								<option value="city"><?php _e('City', 'simple-locator'); ?></option>
 								<option value="state"><?php _e('State/Province', 'simple-locator'); ?></option>
 								<option value="zip"><?php _e('Zip/Postal Code', 'simple-locator'); ?></option>
@@ -64,12 +64,12 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 								<option value="website"><?php _e('Website', 'simple-locator'); ?></option>
 							</optgroup>
 						</select>
-						<button class="wpsl-import-remove-field button" style="display:none;">-</button>
+						<button class="button" style="display:none;" data-simple-locator-import-remove-field>-</button>
 					</li>
 				</ul>
 				
 				<div class="wpsl-import-add-field">
-					<a href="#" class="button"><?php _e('Add Field', 'simple-locator'); ?></a>
+					<a href="#" class="button" data-simple-locator-import-add-field><?php _e('Add Field', 'simple-locator'); ?></a>
 				</div>
 			</div><!-- .column-selection-inner -->
 		</div><!-- .wpsl-column-selection -->
@@ -99,8 +99,8 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 
 		<div class="wpsl-columns-submit">
 			<?php wp_nonce_field( 'wpsl-import-nonce', 'nonce' ) ?>
-			<input type="hidden" id="wpsl-import-post-type" value="<?php echo $post_type; ?>">
-			<input type="submit" class="button button-primary wpsl_save_columns" value="<?php _e('Save Columns', 'simple-locator'); ?>">
+			<input type="hidden" id="wpsl-import-post-type" data-simple-locator-import-post-type value="<?php echo $post_type; ?>">
+			<input type="submit" class="button button-primary" data-simple-locator-import-save value="<?php _e('Save Columns', 'simple-locator'); ?>">
 		</div>
 		
 	</form>

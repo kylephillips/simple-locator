@@ -42,7 +42,7 @@ class FieldRepository
 		}
 		$results = $wpdb->get_results($sql);
 		$fields = ( $results ) ? $this->fieldsArray($results) : array();
-		if ( $include_wpsl ) $fields = $this->addSimpleLocatorMeta($post_type, $fields);
+		if ( $include_wpsl ) $fields = $this->addSimpleLocatorMeta($fields);
 		return $fields;
 	}
 
@@ -51,10 +51,8 @@ class FieldRepository
 	* @param string post type
 	* @param array $fields
 	*/
-	private function addSimpleLocatorMeta($post_type, $fields)
+	private function addSimpleLocatorMeta($fields)
 	{
-		$location_type = get_option('wpsl_post_type');
-		if ( $post_type !== $location_type ) return $fields;
 		$sl_meta = ['wpsl_address', 'wpsl_address_two', 'wpsl_city', 'wpsl_state', 'wpsl_zip', 'wpsl_country', 'wpsl_phone', 'wpsl_website'];
 		return array_unique(array_merge($fields, $sl_meta));
 	}

@@ -65,7 +65,7 @@ class GetMetaFieldsForPostType
 	private function getFields()
 	{
 		$fields = $this->field_repo->displayFieldOptions($this->data['post_type'], $this->data['show_hidden'], $this->data['include_wpsl']);
-		$response = ['status'=>'success', 'fields'=>$fields];
+		$response = ['status' => 'success', 'fields' => $fields];
 		$this->sendResponse($response);
 	}
 

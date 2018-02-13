@@ -51,6 +51,10 @@
 	width: 40px;
 	vertical-align: top;
 	display: none;
+	&.visible {
+		display: inline-block;
+		margin-left: 5px;
+	}
 }
 
 .wpsl-icon-spinner-image {

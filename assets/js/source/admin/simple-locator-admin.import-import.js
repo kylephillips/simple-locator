@@ -71,7 +71,6 @@ SimpleLocatorAdmin.Import = function()
 				imports_per_request: self.imports_per_request
 			},
 			success: function(data){
-				console.log(data);
 				if ( data.status === 'complete' ){
 					self.completeImport();
 					return;
@@ -122,7 +121,6 @@ SimpleLocatorAdmin.Import = function()
 				action: 'wpslfinishimport'
 			},
 			success: function(data){
-				console.log(data);
 				$('[' + self.selectors.totalCount + ']').text(data.import_count);
 				$('[' + self.selectors.errorCount + ']').text(data.error_count);
 				if ( data.errors.length > 0 ){

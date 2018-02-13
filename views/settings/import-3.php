@@ -15,7 +15,7 @@ if ( !isset($transient['columns']) || $transient['complete'] ) : ?>
 
 <?php if ( !$transient['last_imported'] ) : // New Import ?>
 
-<div class="wpsl-settings wpsl-import-indicator-intro">
+<div class="wpsl-settings wpsl-import-indicator-intro" data-simple-locator-import-intro>
 	<div class="row subhead"><h4><?php _e('Import Ready', 'simple-locator'); ?></h4></div>
 	<div class="row">
 		<div class="label">
@@ -31,7 +31,7 @@ if ( !isset($transient['columns']) || $transient['complete'] ) : ?>
 			<p><?php _e('Once the import has begun, do not close or refresh the page until complete.', 'simple-locator'); ?></p>
 		</div>
 		<div class="field">
-			<button class="wpsl-start-import button button-primary">
+			<button class="button-primary" data-simple-locator-import-start-button>
 				<?php _e('Start Import', 'simple-locator'); ?>
 			</button>
 		</div>
@@ -53,7 +53,7 @@ if ( !isset($transient['columns']) || $transient['complete'] ) : ?>
 		if ( isset($header_row) && $transient['last_imported'] == 1 ) $row = false;
 		if ( $row ) : $out = "";
 	?>
-	<div class="wpsl-last-row-imported">
+	<div class="wpsl-last-row-imported" data-simple-locator-import-last-imported>
 		<h4><?php echo __('Last Row Imported', 'simple-locator') . ' (' .  date_i18n( 'Y-m-d H:m:s', $transient['last_imported_time'] ) . ')'; ?></h4>
 		<table class="">
 		<?php 
@@ -80,11 +80,11 @@ if ( !isset($transient['columns']) || $transient['complete'] ) : ?>
 
 <input type="hidden" name="last_imported" value="<?php echo $transient['last_imported']; ?>">
 
-<!-- Progress Indicator -->
-<div class="wpsl-import-indicator">
+<!-- Progress Indicator/Message -->
+<div class="wpsl-import-indicator" data-simple-locator-import-progress-message>
 	<div class="wpsl-alert"><?php _e('Import is in progress. Closing this page will stop the import.', 'simple-locator'); ?></div>
 
-	<div class="wpsl-import-progress">
+	<div class="wpsl-import-progress" data-simple-locator-import-progress-bar>
 		<span class="progress-bar"></span>
 		<span class="progress-bar-bg" data-total="<?php echo $transient['row_count']; ?>"></span>
 		<p><span class="progress-count">0</span> <?php _e('of', 'simple-locator'); echo ' ' . $transient['row_count']; ?> <?php _e('Rows Imported', 'simple-locator'); ?> (<span class="error-count">0</span> <?php _e('Errors', 'simple-locator'); ?>)</p>

@@ -3,7 +3,7 @@
 * @package simple-locator
 */
 var SimpleLocatorAdmin = SimpleLocatorAdmin || {};
-SimpleLocatorAdmin.ColumnMap = function()
+SimpleLocatorAdmin.ImportColumnMap = function()
 {
 	var self = this;
 	var $ = jQuery;

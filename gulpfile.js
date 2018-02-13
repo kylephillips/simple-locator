@@ -40,6 +40,7 @@ var js_admin_source = [
 	'assets/js/source/admin/simple-locator-admin.search-history.js',
 	'assets/js/source/admin/simple-locator-admin.import-upload.js',
 	'assets/js/source/admin/simple-locator-admin.import-column-map.js',
+	'assets/js/source/admin/simple-locator-admin.import-import.js',
 	'assets/js/source/admin/simple-locator-admin.factory.js'
 ];
 

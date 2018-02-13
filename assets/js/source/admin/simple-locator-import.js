@@ -241,7 +241,6 @@ jQuery(function($){
 	* Do the Import
 	* ------------------------------------------------------
 	*/
-
 	$('.wpsl-start-import').on('click', function(e){
 		e.preventDefault();
 		$('.wpsl-import-indicator-intro, .wpsl-last-row-imported').hide();

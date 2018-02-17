@@ -51,8 +51,8 @@ class ResultsInfoPresenter
 	public function pagination($direction = 'next', $include_hidden_fields = true, $autoload = false)
 	{
 		if ( !isset($this->request['per_page']) || $this->request['per_page'] == 0 ) return null;
-		if ( $direction == 'back' && $this->request['page'] == 0 ) return null;
-		if ( $direction == 'next' && ( ($this->request['page'] + 1 ) == $this->search_data['max_num_pages']) ) return null;
+		if ( $direction == 'back' && $this->request['page'] == 1 ) return null;
+		if ( $direction == 'next' && ( $this->request['page'] == $this->search_data['max_num_pages']) ) return null;
 
 		$button_text = ( $direction == 'next' ) ? __('Next', 'simple-locator') : __('Back', 'simple-locator');
 		$button_class = ( $direction == 'next' ) ? 'button-next' : 'button-previous';
@@ -67,29 +67,15 @@ class ResultsInfoPresenter
 		$page = ( $direction == 'next' ) ? $this->request['page'] + 1 : $this->request['page'] - 1;
 		if ( $autoload ) $page = 1;
 		
-		$output .= '
-			<input type="hidden" name="page_num" value="' . $page . '">
-			<input type="hidden" name="per_page" value="' . $this->request['per_page'] . '">
-			<input type="hidden" name="address" value="' . $this->request['address'] . '">
-			<input type="hidden" name="formatted_address" value="' . $this->request['formatted_address'] . '" />
-			<input type="hidden" name="wpsl_distance" value="' . $this->request['distance'] . '" />
-			<input type="hidden" name="latitude" value="' . $this->request['latitude'] . '" />
-			<input type="hidden" name="longitude" value="' . $this->request['longitude'] . '" />
-			<input type="hidden" name="unit" value="' . $this->request['unit'] . '" />
-			<input type="hidden" name="geolocation" value="' . $this->request['geolocation'] . '">
-			<input type="hidden" name="search_page" value="' . $this->request['search_page'] . '" />
-			<input type="hidden" name="results_page" value="' . $this->request['resultspage'] . '" />
-			<input type="hidden" name="allow_empty_address" value="' . $this->request['allow_empty_address'] . '" />
-			<input type="hidden" name="method" value="' . $this->request['formmethod'] . '" />
-			<input type="hidden" name="mapheight" value="' . $this->request['mapheight'] . '" />
-			<input type="hidden" name="simple_locator_results" value="true" />
-		';
+		$output .= '<input type="hidden" name="page_num" value="' . $page . '">';
+		$output .= $this->hiddenFields();
+
 		$output .= ( $direction && !$autoload == 'next' )
 			? '<input type="hidden" name="back" value="true">'
 			: '<input type="hidden" name="next" value="true">';
 		$output .= $button;
 		$output .= '</form>';
-		return $output;
+		return apply_filters('simple_locator_directional_pagination', $output, $direction, $this->request, $this->search_data);
 	}
 
 	/**
@@ -98,12 +84,10 @@ class ResultsInfoPresenter
 	public function currentResultCounts()
 	{
 		if ( !isset($this->request['per_page']) || $this->request['per_page'] == 0 ) return;
-		$current_start = $this->request['page'] * $this->request['per_page'] + 1;
+		$current_start = ($this->request['page'] - 1) * $this->request['per_page'] + 1;
 		$current_end = $current_start + count($this->search_data['results']) - 1;
-		$result_count = $current_start;
-		if ( $current_start != $current_end ) $result_count .= '&ndash;' . $current_end;
-		$result_text = ( $current_start != $current_end ) ? __('Showing results', 'simple-locator') : __('Showing result', 'simple-locator');
-		$output = '<p class="wpsl-results-current-count"><em>' . $result_text . ' ' . $result_count . ' ' . __('of', 'simple-locator') . ' ' . $this->search_data['total_results'] . '</em></p>';
+		if ( $current_start != $current_end ) $current_start .= '&ndash;' . $current_end;
+		$output = '<p class="wpsl-results-current-count"><em>' . __('Showing', 'simple-locator') . ' ' . $current_start . ' ' . __('of', 'simple-locator') . ' ' . $this->search_data['total_results'] . '</em></p>';
 		return apply_filters('simple_locator_non_ajax_current_count', $output, $current_start, $current_end, $this->search_data['total_results']);
 	}
 
@@ -113,10 +97,33 @@ class ResultsInfoPresenter
 	public function pagePosition()
 	{
 		if ( !isset($this->request['per_page']) || $this->request['per_page'] == 0 ) return;
+		if ( $this->search_data['max_num_pages'] < 2 ) return;
 		$output = '<div class="wpsl-form-page-selection">';
-		$output .= '<p>' . __('Page', 'simple-locator') . ' ' . ($this->request['page'] + 1) . ' ' . __('of', 'simple-locator') . ' ' . $this->search_data['max_num_pages'] . '</p>';
+		$output .= '<p>' . __('Page', 'simple-locator') . ' ' . $this->request['page'] . ' ' . __('of', 'simple-locator') . ' ' . $this->search_data['max_num_pages'] . '</p>';
 		$output .= '</div>';
 		return apply_filters('simple_locator_non_ajax_page_position', $output, $this->request, $this->search_data);
+	}
+
+	/**
+	* Go to Page Form
+	*/
+	public function goToPage($include_hidden_fields = true)
+	{
+		if ( $this->search_data['max_num_pages'] < 2 ) return;
+		$method = ( isset($this->request['formmethod']) && $this->request['formmethod'] == 'get' ) ? 'get' : 'post';
+		$resultspage = ( isset($this->request['resultspage']) ) ? get_the_permalink($this->request['resultspage']) : '';
+		$allow_empty = ( isset($this->request['allow_empty_address']) && $this->request['allow_empty_address'] == 'true' ) ? true : false;
+
+		$output = '<form method="' . $method . '" action="' . $resultspage . '" class="wpsl-jump-to-page-form';
+		if ( $allow_empty  ) $output .= ' allow-empty';
+		$output .= '" data-simple-locator-page-jump-form>';
+		$output .= '<p class="current-page">' . __('Page', 'simple-locator') . '</p>';
+		$output .= '<input type="tel" name="page_num" value="' . $this->request['page'] . '" class="wpsl-input input">';
+		$output .= '<p class="total-pages">' . __('of', 'simple-locator') . ' ' . $this->search_data['max_num_pages'] . '</p>';
+		$output .= '<button type="submit" class="button wpsl-pagination-button" style="display:none;">' . __('Go', 'simple-locator') . '</button>';
+		if ( $include_hidden_fields ) $output .= $this->hiddenFields();
+		$output .= '</form>';
+		return apply_filters('simple_locator_go_to_page_form', $output, $this->request, $this->search_data);
 	}
 
 	/**
@@ -142,6 +149,29 @@ class ResultsInfoPresenter
 	public function newSearchLink()
 	{
 		if ( !isset($this->request['search_page']) ) return;
-		return apply_filters('simple_locator_new_search_link', '<a href="' . get_the_permalink($this->request['search_page']) . '" class="wpsl-new-search-link">' . __('New Search', 'simple-locator') . '</a>');
+		$link = '<a href="' . get_the_permalink($this->request['search_page']) . '" class="wpsl-new-search-link">' . __('New Search', 'simple-locator') . '</a>';
+		return apply_filters('simple_locator_new_search_link', $link, $this->request, $this->search_data);
+	}
+
+	/**
+	* Hidden fields
+	*/
+	private function hiddenFields()
+	{
+		$output = '<input type="hidden" name="per_page" value="' . $this->request['per_page'] . '">
+			<input type="hidden" name="address" value="' . $this->request['address'] . '">
+			<input type="hidden" name="formatted_address" value="' . $this->request['formatted_address'] . '" />
+			<input type="hidden" name="wpsl_distance" value="' . $this->request['distance'] . '" />
+			<input type="hidden" name="latitude" value="' . $this->request['latitude'] . '" />
+			<input type="hidden" name="longitude" value="' . $this->request['longitude'] . '" />
+			<input type="hidden" name="unit" value="' . $this->request['unit'] . '" />
+			<input type="hidden" name="geolocation" value="' . $this->request['geolocation'] . '">
+			<input type="hidden" name="search_page" value="' . $this->request['search_page'] . '" />
+			<input type="hidden" name="results_page" value="' . $this->request['resultspage'] . '" />
+			<input type="hidden" name="allow_empty_address" value="' . $this->request['allow_empty_address'] . '" />
+			<input type="hidden" name="method" value="' . $this->request['formmethod'] . '" />
+			<input type="hidden" name="mapheight" value="' . $this->request['mapheight'] . '" />
+			<input type="hidden" name="simple_locator_results" value="true" />';
+		return $output;
 	}
 }

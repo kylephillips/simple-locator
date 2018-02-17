@@ -33,6 +33,7 @@ if ( $has_results ) :
 	$output .= '<div class="simple-locator-non-ajax-pagination">';
 	$output .= $this->results_info->pagination('back');
 	$output .= $this->results_info->pagination('next');
+	$output .= $this->results_info->goToPage();
 	$output .= $this->results_info->pagePosition();
 	$output .= '</div>';
 endif;

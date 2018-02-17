@@ -63,7 +63,7 @@ $output .= '>
 		<input type="hidden" data-simple-locator-input-latitude name="latitude" class="latitude" />
 		<input type="hidden" data-simple-locator-input-longitude name="longitude" class="longitude" />
 		<input type="hidden" data-simple-locator-input-formatted-location name="formatted_location" />
-		<input type="hidden" name="page_num" value="0" />
+		<input type="hidden" name="page_num" value="1" />
 		<input type="hidden" name="search_page" value="' . $post->ID . '" />
 		<input type="hidden" name="results_page" value="' . $this->options['resultspage'] . '" />
 		<input type="hidden" data-simple-locator-input-limit name="per_page" value="' . $this->options['perpage'] . '" />

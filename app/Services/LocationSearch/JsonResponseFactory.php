@@ -59,6 +59,7 @@ class JsonResponseFactory
 			'total_pages' => $search_data['max_num_pages'],
 			'back_button' => $result_info_presenter->pagination('back', false, $autoload),
 			'next_button' => $result_info_presenter->pagination('next', false, $autoload),
+			'page_jump_form' => $result_info_presenter->goToPage(false),
 			'loading_spinner' => $result_info_presenter->loadingSpinner()
 		];
 	}
@@ -92,6 +93,7 @@ class JsonResponseFactory
 			'page_position' => $this->data['page_position'],
 			'back_button' => $this->data['back_button'],
 			'next_button' => $this->data['next_button'],
+			'page_jump_form' => $this->data['page_jump_form'],
 			'loading_spinner' => $this->data['loading_spinner'],
 			'results' => $results
 		];

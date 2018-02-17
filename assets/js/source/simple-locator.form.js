@@ -15,7 +15,7 @@ SimpleLocator.Form = function()
 	self.resultsContainer;
 	self.formData;
 	self.isAjax = false;
-	self.page = 0;
+	self.page = 1;
 
 	self.bindEvents = function()
 	{
@@ -37,7 +37,6 @@ SimpleLocator.Form = function()
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLatitude + ']').val(results.latitude);
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLongitude + ']').val(results.longitude);
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputGeocode + ']').val('1');
-			self.page = 0;
 			self.setAjax();
 			wpsl_before_submit(self.activeForm); // Deprecated
 			$(document).trigger('simple-locator-before-submit', [self.activeForm]);
@@ -71,7 +70,7 @@ SimpleLocator.Form = function()
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLatitude + ']').val(place.geometry.location.lat());
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLongitude + ']').val(place.geometry.location.lng());
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputFormattedLocation + ']').val(place.formatted_address);
-			if ( self.page > 0 ) self.page = 0;
+			if ( self.page > 1 ) self.page = 1;
 			self.setFormData();
 			self.submitForm();
 		});
@@ -144,7 +143,8 @@ SimpleLocator.Form = function()
 			geolocation : geolocation,
 			allow_empty_address : allow_empty_address,
 			ajax : self.isAjax,
-			per_page : limit
+			per_page : limit,
+			page : self.page
 		}
 
 		self.setTaxonomies();
@@ -217,6 +217,7 @@ SimpleLocator.Form = function()
 				// console.log(v.url);
 			},
 			success: function(data){
+				console.log(data);
 				if ( wpsl_locator.jsdebug === '1' ){
 					console.log('Form Response');
 					console.log(data);
@@ -237,6 +238,7 @@ SimpleLocator.Form = function()
 				wpsl_success(data.result_count, data.results, self.activeForm); // Deprecated
 			},
 			error: function(data){
+				console.log(data);
 				if ( wpsl_locator.jsdebug === '1' ){
 					console.log('Form Response Error');
 					console.log(data.responseText);

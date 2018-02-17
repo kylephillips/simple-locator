@@ -119,7 +119,8 @@ class LocationSearch
 	{
 		$temp_request = ( isset($_GET['method']) ) ? $_GET : $_POST;
 		$this->request = [];
-		$this->request['page'] = ( isset($temp_request['page_num']) ) ? intval($temp_request['page_num']) : 0;
+		$this->request['page'] = ( isset($temp_request['page_num']) ) ? intval($temp_request['page_num']) : 1;
+		if ( !is_numeric($this->request['page']) || $this->request['page'] < 1 ) $this->request['page'] = 1;
 		$this->request['per_page'] = ( isset($temp_request['per_page']) ) ? intval($temp_request['per_page']) : get_option('posts_per_page');
 		$this->request['address'] = ( isset($temp_request['address']) ) ? sanitize_text_field($temp_request['address']) : null;
 		$this->request['formatted_address'] = ( isset($temp_request['formatted_location']) ) ? sanitize_text_field($temp_request['formatted_location']) : null;

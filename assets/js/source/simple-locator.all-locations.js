@@ -12,22 +12,27 @@ SimpleLocator.AllLocations = function()
 	self.activeMap;
 	self.formData = {}; // Data to send in request
 	self.paginated = false;
-	self.page = 0;
+	self.page = 1;
 
 	self.selectors = {
 		map : 'data-simple-locator-all-locations-map',
-		pagination : 'data-simple-locator-all-results-pagination'
+		pagination : 'data-simple-locator-all-results-pagination',
+		pageJumpForm : 'data-simple-locator-page-jump-form'
 	}
 
 	self.bindEvents = function()
 	{
-		if ( $('[' + self.selectors.map + ']').length < 1 ) return;
+		if ( $('[' + self.selectors.map + ']').length < 1 ) return;	
 		$(document).ready(function(){
 			self.getData();
 		});
 		$(document).on('click', '[' + self.selectors.pagination + '] [' + SimpleLocator.selectors.paginationButton + ']', function(e){
 			e.preventDefault();
 			self.paginate($(this));
+		});
+		$(document).on('submit', '[' + self.selectors.pageJumpForm + ']', function(e){
+			e.preventDefault();
+			self.jumpToPage($(this));
 		});
 	}
 
@@ -248,6 +253,7 @@ SimpleLocator.AllLocations = function()
 			if ( self.data.back_button ) output += self.data.back_button;
 			if ( self.data.next_button ) output += self.data.next_button;
 			if ( self.data.loading_spinner ) output += self.data.loading_spinner;
+			if ( self.data.page_jump_form ) output += self.data.page_jump_form;
 			if ( self.data.page_position ) output += self.data.page_position;
 			output += '</div>';
 		}
@@ -268,6 +274,17 @@ SimpleLocator.AllLocations = function()
 			return;
 		}
 		self.page = self.page - 1;
+		self.getData();
+	}
+
+	/**
+	* Jump to a page
+	*/
+	self.jumpToPage = function(form)
+	{
+		var page = parseInt($(form).find('input[type="tel"]').val());
+		if ( isNaN(page) ) return;
+		self.page = page;
 		self.getData();
 	}
 

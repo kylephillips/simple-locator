@@ -125,7 +125,7 @@ class LocationSearch
 			'longitude' => ( isset($this->request['longitude']) ) ? sanitize_text_field($this->request['longitude']) : null,
 		];
 		if ( isset($this->request['page']) && $this->data['limit']){
-			$this->data['offset'] = intval($this->request['page']) * $this->data['limit'];;
+			$this->data['offset'] = (intval($this->request['page']) - 1) * $this->data['limit'];;
 		}
 		if ( isset($this->request['taxfilter']) ) $this->setTaxonomies();
 	}

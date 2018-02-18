@@ -23,7 +23,6 @@ SimpleLocator.AllLocations = function()
 	self.bindEvents = function()
 	{
 		if ( $('[' + self.selectors.map + ']').length < 1 ) return;	
-		if ( wpsl_locator.default_enabled !== '1' ) return;
 		$(document).ready(function(){
 			self.getData();
 		});
@@ -119,6 +118,13 @@ SimpleLocator.AllLocations = function()
 		$.each(maps, function(){
 			self.activeMap = $(this);
 			self.setMapIndex();
+
+			// If default maps arent enabled and this is a form, abort
+			var form = $(this).parents('[' + SimpleLocator.selectors.formContainer + ']').find('[' + SimpleLocator.selectors.form + ']');
+			if ( typeof form !== 'undefined' && form !== '' && form.length > 0 ){
+				console.log(form);
+				if ( wpsl_locator.default_enabled !== '1' ) return;
+			}
 
 			// Set Query Args
 			self.formData.page = self.page;

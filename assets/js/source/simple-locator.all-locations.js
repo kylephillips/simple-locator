@@ -30,7 +30,9 @@ SimpleLocator.AllLocations = function()
 			e.preventDefault();
 			self.paginate($(this));
 		});
-		$(document).on('submit', '[' + self.selectors.pageJumpForm + ']', function(e){
+		$(document).on('submit', '[' + SimpleLocator.selectors.pageJumpForm + ']', function(e){
+			var container = $(this).parents('[' + SimpleLocator.selectors.resultsWrapper + ']');
+			if ( $(container).hasClass('non-ajax') ) return;
 			e.preventDefault();
 			self.jumpToPage($(this));
 		});
@@ -132,6 +134,8 @@ SimpleLocator.AllLocations = function()
 				data : self.formData,
 				success: function(data){
 					if ( !data.results ) return self.noLocations();
+					SimpleLocator.formData[self.mapIndex] = data;
+					SimpleLocator.formData[self.mapIndex].allLocations = true;
 					self.data = data;
 					self.loadMap();
 				},
@@ -259,6 +263,7 @@ SimpleLocator.AllLocations = function()
 		}
 
 		$(container).removeClass('loading').html(output);
+		$(container).parents('[' + SimpleLocator.selectors.formContainer + ']').removeClass('loading');
 	}
 
 	/**
@@ -284,6 +289,15 @@ SimpleLocator.AllLocations = function()
 	{
 		var page = parseInt($(form).find('input[type="tel"]').val());
 		if ( isNaN(page) ) return;
+		var totalPages = SimpleLocator.formData[self.mapIndex].total_pages;
+		if ( typeof totalPages !== 'undefined' && page > totalPages ) return;
+
+		var activeContainer = $(form).parents('[' + SimpleLocator.selectors.formContainer + ']');
+		var formIndex = $(activeContainer).index('[' + SimpleLocator.selectors.formContainer + ']');
+		if ( !SimpleLocator.formData[formIndex].allLocations ) return;
+
+		$(activeContainer).addClass('loading');
+
 		self.page = page;
 		self.getData();
 	}

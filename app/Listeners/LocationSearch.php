@@ -168,6 +168,10 @@ class LocationSearch
 		$this->search_data['total_results'] = $this->location_search->getTotalResultCount();
 		if ( $this->request['per_page'] == 0 ) return;
 		$this->search_data['max_num_pages'] = ceil($this->search_data['total_results'] / $this->request['per_page']);
+		if ( $this->request['page'] > $this->search_data['max_num_pages'] ){
+			$this->request['page'] = $this->search_data['max_num_pages'];
+			$this->search();
+		}
 	}
 
 	/**

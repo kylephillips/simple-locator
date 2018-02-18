@@ -16,6 +16,7 @@ SimpleLocator.Form = function()
 	self.formData;
 	self.isAjax = false;
 	self.page = 1;
+	self.formIndex;
 
 	self.bindEvents = function()
 	{
@@ -73,6 +74,12 @@ SimpleLocator.Form = function()
 			if ( self.page > 1 ) self.page = 1;
 			self.setFormData();
 			self.submitForm();
+		});
+		$(document).on('submit', '[' + SimpleLocator.selectors.pageJumpForm + ']', function(e){
+			var container = $(this).parents('[' + SimpleLocator.selectors.resultsWrapper + ']');
+			if ( $(container).hasClass('non-ajax') ) return;
+			e.preventDefault();
+			self.jumpToPage($(this));
 		});
 	}
 
@@ -197,10 +204,20 @@ SimpleLocator.Form = function()
 	}
 
 	/**
+	* Set the form index
+	*/
+	self.setFormIndex = function()
+	{
+		var forms = $('[' + SimpleLocator.selectors.form + ']');
+		self.formIndex = $(self.activeForm).index(forms);
+	}
+
+	/**
 	* Submit the form
 	*/
 	self.submitForm = function()
 	{
+		self.setFormIndex();
 		self.setAutoload();
 
 		if ( !self.formData.ajax && !self.formData.autoload ){
@@ -217,7 +234,8 @@ SimpleLocator.Form = function()
 				// console.log(v.url);
 			},
 			success: function(data){
-				console.log(data);
+				SimpleLocator.formData[self.formIndex] = data;
+				SimpleLocator.formData[self.formIndex].allLocations = false;
 				if ( wpsl_locator.jsdebug === '1' ){
 					console.log('Form Response');
 					console.log(data);
@@ -238,7 +256,6 @@ SimpleLocator.Form = function()
 				wpsl_success(data.result_count, data.results, self.activeForm); // Deprecated
 			},
 			error: function(data){
-				console.log(data);
 				if ( wpsl_locator.jsdebug === '1' ){
 					console.log('Form Response Error');
 					console.log(data.responseText);
@@ -252,6 +269,9 @@ SimpleLocator.Form = function()
 	*/
 	self.paginate = function(button)
 	{
+		var container = $(button).parents('[' + SimpleLocator.selectors.formContainer + ']');
+		var formIndex = $(container).index('[' + SimpleLocator.selectors.formContainer + ']');
+		if ( SimpleLocator.formData[formIndex].allLocations ) return;
 		var direction = $(button).attr(SimpleLocator.selectors.paginationButton);
 		if ( direction === 'next' ){
 			self.page = self.page + 1;
@@ -259,6 +279,30 @@ SimpleLocator.Form = function()
 			return;
 		}
 		self.page = self.page - 1;
+		self.submitForm();
+	}
+
+	/**
+	* Jump to a page
+	*/
+	self.jumpToPage = function(pageForm)
+	{
+		var page = parseInt($(pageForm).find('input[type="tel"]').val());
+		if ( isNaN(page) ) return;
+
+		self.activeFormContainer = $(pageForm).parents('[' + SimpleLocator.selectors.formContainer + ']');
+		self.activeForm = $(self.activeFormContainer).find('[' + SimpleLocator.selectors.form + ']');
+		self.formIndex = $(self.activeFormContainer).index('[' + SimpleLocator.selectors.formContainer + ']');
+
+		var totalPages = SimpleLocator.formData[self.formIndex].total_pages;
+		if ( typeof totalPages !== 'undefined' && page > totalPages ) return;
+
+		if ( typeof SimpleLocator.formData[self.formIndex] === 'undefined' || SimpleLocator.formData[self.formIndex] === '' ) return;
+		if ( SimpleLocator.formData[self.formIndex].allLocations ) return;
+
+		$(self.activeFormContainer).addClass('loading');
+		
+		self.page = page;
 		self.submitForm();
 	}
 

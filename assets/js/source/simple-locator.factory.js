@@ -42,7 +42,8 @@ SimpleLocator.selectors = {
 	infoWindowLink : 'data-simple-locator-open-infowindow',
 	geoButton : 'data-simple-locator-geolocation-button',
 	ajaxForm : 'data-simple-locator-ajax-form',
-	paginationButton : 'data-simple-locator-pagination'
+	paginationButton : 'data-simple-locator-pagination',
+	pageJumpForm : 'data-simple-locator-page-jump-form'
 }
 
 // API Endpoints
@@ -57,6 +58,7 @@ SimpleLocator.maps = [];
 // Map Markers
 SimpleLocator.markers = [];
 SimpleLocator.userPin = [];
+SimpleLocator.formData = [];
 
 SimpleLocator.mapservice = wpsl_locator.mapservice;
 

@@ -94,7 +94,7 @@ class LocationSearch
 		if ( $this->request['resultspage'] != $post->ID ) return $content;
 		include(\SimpleLocator\Helpers::view('search-results'));
 		if ( $this->settings_repo->resultsInContent() ){
-			$content .= apply_filters('simple_locator_results_non_ajax', $output, $this->request);
+			$content .= apply_filters('simple_locator_results_non_ajax', $output, $this->search_data, $this->request);
 			return $content;
 		}
 	}
@@ -109,7 +109,7 @@ class LocationSearch
 		if ( $this->request['resultspage'] != $post->ID ) return;
 		if ( $this->settings_repo->resultsInContent() ) return;
 		$results_output = include(\SimpleLocator\Helpers::view('search-results'));
-		echo apply_filters('simple_locator_results_non_ajax', $output, $this->request);
+		echo apply_filters('simple_locator_results_non_ajax', $output, $this->search_data, $this->request);
 	}
 
 	/**

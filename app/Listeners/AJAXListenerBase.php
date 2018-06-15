@@ -21,7 +21,7 @@ abstract class AJAXListenerBase
 	*/
 	protected function success($message)
 	{
-		$this->respond(array('status' => 'success', 'message' => $message));
+		$this->respond(['status' => 'success', 'message' => $message]);
 	}
 
 	/**
@@ -29,6 +29,6 @@ abstract class AJAXListenerBase
 	*/
 	protected function error($message)
 	{
-		$this->respond(array('status' => 'error', 'message' => $message));
+		$this->respond(['status' => 'error', 'message' => $message]);
 	}
 }

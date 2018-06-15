@@ -13,8 +13,8 @@ class Bootstrap
 		$this->init();
 		$this->registerPublicEvents();
 		$this->registerAdminEvents();
-		add_filter( 'plugin_action_links_' . 'simple-locator/simplelocator.php', array($this, 'settingsLink' ) );
-		add_action( 'plugins_loaded', array($this, 'addLocalization') );
+		add_filter( 'plugin_action_links_' . 'simple-locator/simplelocator.php', [$this, 'settingsLink'] );
+		add_action( 'plugins_loaded', [$this, 'addLocalization'] );
 	}
 
 	/**
@@ -35,7 +35,7 @@ class Bootstrap
 		new \SimpleLocator\Post\Singular;
 		new \SimpleLocator\Listeners\LocationSearch;
 		new \SimpleLocator\Integrations\IntegrationFactory;
-		add_action( 'widgets_init', array($this, 'formWidget'));
+		add_action( 'widgets_init', [$this, 'formWidget']);
 	}
 
 	/**

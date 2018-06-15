@@ -33,7 +33,7 @@ abstract class AJAXAdminListenerBase
 	*/
 	protected function success($message)
 	{
-		return wp_send_json(array('status'=>'success', 'message'=>$message));
+		return wp_send_json(['status'=>'success', 'message'=>$message]);
 		die();
 	}
 
@@ -42,7 +42,7 @@ abstract class AJAXAdminListenerBase
 	*/
 	protected function error($error)
 	{
-		return wp_send_json(array('status'=>'error', 'message'=>$error));
+		return wp_send_json(['status'=>'error', 'message'=>$error]);
 		die();
 	}
 }

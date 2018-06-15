@@ -1,8 +1,9 @@
 === Simple Locator ===
 Contributors: kylephillips
 Donate link: http://locatewp.com/
-Tags: location, store locator, google maps, store map
+Tags: location, store locator, google maps, store map, locator, map
 Requires at least: 4.4
+Requires PHP: 5.4
 Tested up to: 4.9
 Stable tag: 1.5.6
 

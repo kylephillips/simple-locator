@@ -104,6 +104,34 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 
 == Changelog ==
 
+= 2.0.1 =
+* Updates form to use API, with custom endpoints added for search and all locations queries.
+* Adds map pin filter, enabling customization of map pins for each location result.
+* Adds option to include the user’s search location as a pin, with option to customize separately from result pins.
+* Adds a results page parameter to non-ajax forms.
+* Adds a hookable action to display results, allowing for custom placement of results in non-ajax requests.
+* Adds pagination with results-per-page in ajax and non-ajax forms, configurable through a shortcode parameter.
+* Adds form method option in shortcode, allowing for either POST or GET form submissions on non-ajax forms.
+* Adds autocomplete JS options (limit autocomplete suggestions to a specific type like cities, only show in specific countries).
+* Updates text domain to WordPress guidelines.
+* Adds multiple hooks throughout for even more customization flexibility.
+* Replaces JS callback functions with document-level JQuery events.
+* Adds taxonomy field type option in form shortcode, enabling the use of checkbox or select elements.
+* Updates core styles and loading indication.
+* Updates plugin setting styles and layout.
+* Adds taxonomy arguments to "all locations" shortcode. To limit by terms, include the taxonomy name with a comma separated list of term ids (ex: category="4,5").
+* Adds post ids argument to "all locations" shortcode. To limit to specific ids, use a comma separated list (ex: ids="3,4").
+* Adds "no locations found" argument to "all locations" shortcode.
+* Adds "showlist" argument to "all locations" shortcode, which displays the list of locations underneath the map.
+* JS completely rewritten for better extensibility and future enhancements.
+* Adds option to import into non-public post types.
+* Adds option to clear the search log.
+* Adds option to specify a default distance in the form shortcode. Mark the default distance with an asterisk: Ex: distances="5,10,20*,50,100". (The "20" option would be selected by default).
+* Adds option to show all locations by default, below the form (showall="true"). Header text is customized using the showall attribute (showall="Showing all locations"). Map centered to "default map location" if enabled in the plugin setting.
+* Adds "mapheight" shortcode option to "all locations" shortcode.
+* Adds pagination option for widget
+
+
 = 1.5.7 =
 * Bug fix where previously entered location post meta could not be removed.
 

@@ -2,7 +2,7 @@
 /*
 Plugin Name: Simple Locator
 Plugin URI: http://locatewp.com/
-Description: Location search in WordPress, made simple. Can be used for store or any other type of location. Simply add the shortcode [wp_simple_locator] to add the locator.
+Description: Location search in WordPress, made simple. Can be used for store or any other type of location. Simply add the shortcode [simple_locator] to add the locator.
 Version: 2.0.1
 Author: Kyle Phillips
 Author URI: https://github.com/kylephillips

@@ -28,7 +28,7 @@ if ( $has_results ) :
 		$results_output .= $result['output'];
 	endforeach;
 	$results_output .= '</div>';
-	$output .= apply_filters('simple_locator_non_ajax_results_output', $results_output, $this->request);
+	$output .= apply_filters('simple_locator_non_ajax_results_output', $results_output, $this->request, $this->search_data);
 
 	$output .= '<div class="simple-locator-non-ajax-pagination">';
 	$output .= $this->results_info->pagination('back');

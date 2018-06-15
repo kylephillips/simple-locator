@@ -171,8 +171,10 @@ class FormShortcode
 		$this->setTaxonomies();
 		$this->enqueueScripts();
 		$this->localizeOptions();
+		ob_start();
 		include ( \SimpleLocator\Helpers::view('search-form') );
-		$form = $output;
+		$form = ob_get_contents();
+		ob_end_clean();
 		return apply_filters('simple_locator_form', $form, $this->options['distances'], $this->taxonomies, false);
 	}
 }

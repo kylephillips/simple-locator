@@ -132,7 +132,10 @@ class FormWidget extends \WP_Widget
 		
 		$this->enqueueScripts();
 		$widget_instance = true;
+		ob_start();
 		include( \SimpleLocator\Helpers::view('search-form') );
+		$output = ob_get_contents();
+		ob_end_clean();
 		echo $output;
 		echo $args['after_widget'];
 	}

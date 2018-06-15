@@ -172,6 +172,7 @@ class ResultsInfoPresenter
 			<input type="hidden" name="method" value="' . $this->request['formmethod'] . '" />
 			<input type="hidden" name="mapheight" value="' . $this->request['mapheight'] . '" />
 			<input type="hidden" name="simple_locator_results" value="true" />';
+		if ( $this->request['formmethod'] == 'get' ) $output .= '<input type="hidden" name="page_id" value="' . $this->request['resultspage'] . '">';
 		return $output;
 	}
 }

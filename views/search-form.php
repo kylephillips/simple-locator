@@ -10,7 +10,7 @@ if ( isset($widget_instance) ) : ?>
 
 <div class="simple-locator-form" data-simple-locator-form-container data-simple-locator-results-wrapper>
 <form 
-	method="<?php echo $this->options['formmethod']; ?>" 
+	method="<?php echo strtoupper($this->options['formmethod']); ?>" 
 	action="<?php echo get_the_permalink($this->options['resultspage']); ?>" 
 	data-simple-locator-form
 	<?php
@@ -88,6 +88,9 @@ if ( isset($widget_instance) ) : ?>
 		<input type="hidden" name="mapheight" value="<?php echo $this->options['mapheight']; ?>" />
 		<input type="hidden" data-simple-locator-input-geocode name="geolocation" />
 		<input type="hidden" data-simple-locator-input-unit name="unit" value="<?php echo $this->unit_raw; ?>" class="unit" />
+		<?php if ( $this->options['formmethod'] == 'get' ) : // Fixes GET forms on sites without pretty permalinks ?>
+		<input type="hidden" name="page_id" value="<?php echo $this->options['resultspage']; ?>">
+		<?php endif; ?>
 		<button type="submit" data-simple-locator-submit class="wpslsubmit"><?php echo html_entity_decode($this->options['buttontext']); ?></button>
 		<div class="geo_button_cont"></div>
 		<div class="wpsl-icon-spinner"><div class="wpsl-icon-spinner-image"><img src="<?php echo apply_filters('simple_locator_results_loading_spinner', \SimpleLocator\Helpers::plugin_url() . '/assets/images/loading-spinner.svg'); ?>" class="wpsl-spinner-image" /></div></div>

@@ -16,7 +16,7 @@
 		"php": ">=5.3.2",
 		"composer/installers": "v1.0.6",
 		"league/csv": "7.0.*@dev",
-		"guzzlehttp/guzzle": "~5.0"
+		"guzzlehttp/guzzle": "^5.3.3"
 	},
 	"autoload": {
 		"psr-4" : {

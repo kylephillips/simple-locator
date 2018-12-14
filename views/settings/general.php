@@ -32,20 +32,10 @@
 	<div class="row">
 		<div class="label">
 			<h4><?php _e('Google Maps Javascript API Key', 'simple-locator'); ?></h4>
-			<p><?php _e('A V3 API key is required for Simple Locator to function using the Google Maps library.', 'simple-locator'); ?> <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank"><?php _e('How to obtain an API key', 'simple-locator'); ?></a></p>
+			<p><?php _e('A V3 API key is required for Simple Locator to function using the Google Maps library. The Maps library must be enabled along with a billing account in Google. To use the import functionality, the Geocoding library must be added to the key.', 'simple-locator'); ?> <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank"><?php _e('How to obtain an API key', 'simple-locator'); ?></a></p>
 		</div>
 		<div class="field">
 			<input type="text" name="wpsl_google_api_key" id="wpsl_google_api_key" value="<?php echo get_option('wpsl_google_api_key'); ?>" />
-		</div>
-	</div><!-- .row -->
-
-	<div class="row">
-		<div class="label">
-			<h4><?php _e('Google Maps Server API Key', 'simple-locator'); ?></h4>
-			<p><?php _e('Use of the built-in importer requires a server API key with the Geocoding API enabled. This should not be a public key. It should be a server key, with your server\'s IP address whitelisted.', 'simple-locator'); ?></p>
-		</div>
-		<div class="field">
-			<input type="text" name="wpsl_google_geocode_api_key" id="wpsl_google_geocode_api_key" value="<?php echo get_option('wpsl_google_geocode_api_key'); ?>" />
 		</div>
 	</div><!-- .row -->
 

@@ -21,9 +21,9 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 		</div>
 	</div>
 	<div class="row">
-		<div class="label"><h4><?php _e('Import API Limits', 'simple-locator'); ?></h4></div>
+		<div class="label"><h4><?php _e('Geocoding Pricing', 'simple-locator'); ?></h4></div>
 		<div class="field">
-			<p class="no-margin"><?php _e('The Google Maps Geocoding API limits request to 2500 per 24 hour period & 5 requests per second. If your file contains over 2500 records, it may take multiple days to import. If the limit is reached, progress will be saved, and you may continue your import later.', 'simple-locator'); ?></p>
+			<p class="no-margin"><?php _e('Effective June 11, 2018, Google charges for each geocoding request. Please review their pricing for Geocoding services ', 'simple-locator'); ?><a href="https://developers.google.com/maps/billing/understanding-cost-of-use?hl=en_US#geocoding" target="_blank"><?php _e('here', 'simple-locator'); ?></a>.</p>
 		</div>
 	</div>
 

@@ -1,6 +1,6 @@
 <div class="simple-locator-import-tab">
 	<?php 
-	$apikey = get_option('wpsl_google_geocode_api_key');
+	$apikey = get_option('wpsl_google_api_key');
 
 	// Require PHP v5.4+
 	if ( version_compare( PHP_VERSION, '5.4.0', '<' ) ) :

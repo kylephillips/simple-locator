@@ -77,6 +77,7 @@ class PostTypes
 			'capability_type' => 'post',  
 			'hierarchical' => false,  
 			'has_archive' => true,
+			'show_in_rest' => true,
 			'supports' => ['title', 'editor', 'excerpt', 'comments', 'thumbnail'],
 			'rewrite' => ['slug' =>  $this->pt_labels->slug, 'with_front' => false]
 		];

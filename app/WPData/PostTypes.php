@@ -80,7 +80,8 @@ class PostTypes
 			'supports' => ['title', 'editor', 'excerpt', 'comments', 'thumbnail'],
 			'rewrite' => ['slug' =>  $this->pt_labels->slug, 'with_front' => false]
 		];
-		register_post_type(  $this->pt_labels->name , $args );
+
+		register_post_type($this->pt_labels->name, apply_filters('simple_locator_post_type_args', $args));
 	}
 
 	/**

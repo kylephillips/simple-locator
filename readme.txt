@@ -131,6 +131,8 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 * Adds option to show all locations by default, below the form (showall="true"). Header text is customized using the showall attribute (showall="Showing all locations"). Map centered to "default map location" if enabled in the plugin setting.
 * Adds "mapheight" shortcode option to "all locations" shortcode.
 * Adds pagination option for widget
+* Adds argument filter to location post type declaration
+* Updates Google Maps API requirement for new Google Maps Platform
 
 
 = 1.5.7 =

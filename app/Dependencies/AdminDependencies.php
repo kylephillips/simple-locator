@@ -38,6 +38,7 @@ class AdminDependencies extends DependencyBase
 		$screen = get_current_screen();
 		if ( ($screen->post_type == get_option('wpsl_post_type')) || ($screen->id == 'settings_page_wp_simple_locator') ) {
 			$this->addGoogleMaps();
+			$post_type = get_post_type_object(get_option('wpsl_post_type'));
 			wp_enqueue_script('google-maps');
 			wp_enqueue_media();
 			wp_enqueue_script(
@@ -50,18 +51,24 @@ class AdminDependencies extends DependencyBase
 				'locatorNonce' 		=> wp_create_nonce( 'wpsl_locator-locator-nonce' ),
 				'upload' 			=> __('Upload', 'simple-locator'),
 				'remove' 			=> __('Remove', 'simple-locator'),
+				'edit' 				=> $post_type->labels->edit_item,
+				'view'				=> $post_type->labels->view_item,
 				'posttype' 			=> $this->post_type,
 				'posttype_setting'	=> get_option('wpsl_post_type'),
 				'lat_field'			=> $this->settings_repo->getGeoField('lat'),
 				'lng_field'			=> $this->settings_repo->getGeoField('lng'),
 				'map_field'			=> $this->settings_repo->acfMapField(),
 				'location_not_found'	=> __('The address could not be found at this time.', 'simple-locator'),
-				'api_load_error'	=> __('There was an error loading the Google Maps API. This may be due to a missing or invalid API key.', 'simple-locator')
+				'api_load_error'	=> __('There was an error loading the Google Maps API. This may be due to a missing or invalid API key.', 'simple-locator'),
+				'show_listing_map'	=> $this->settings_repo->includeAdminListMap(),
+				'mapstyles' 		=> $this->styles_repo->getLocalizedStyles(),
+				'mappin' 			=> $this->settings_repo->mapPin(),
 			];
 			$data = $this->importVars($data);
 			$data['confirm_undo'] 	= __('Are you sure you want to undo this import? This action cannot be undone.', 'simple-locator');
 			$data['confirm_redo'] 	= __('Are you sure you want to redo this import? This will erase any currently pending imports.', 'simple-locator');
 			$data['confirm_remove']	= __('Are you sure you want to remove this import record? You will no longer be able to redo or undo this import. All imported post data will remain.', 'simple-locator');
+			$data['edit_listing'] = ( $screen->id == 'edit-' . $screen->post_type ) ? '1' : '0';
 			wp_localize_script( 
 				'simple-locator-admin', 
 				'wpsl_locator', 
@@ -102,7 +109,7 @@ class AdminDependencies extends DependencyBase
 					'zoom' 			=> intval($this->settings_repo->defaultMap('zoom')),
 					'searchtext' 	=> __('Search for a location', 'simple-locator'),
 					'styles' 		=> $this->styles_repo->getLocalizedStyles(),
-					'mappin' 		=> get_option('wpsl_map_pin')
+					'mappin' 		=> $this->settings_repo->mapPin()
 				]
 			);
 		}

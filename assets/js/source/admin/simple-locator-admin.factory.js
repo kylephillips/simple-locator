@@ -37,6 +37,7 @@ SimpleLocatorAdmin.Factory = function()
 		new SimpleLocatorAdmin.ImportUpload;
 		new SimpleLocatorAdmin.ImportColumnMap;
 		new SimpleLocatorAdmin.Import;
+		new SimpleLocatorAdmin.ListingMap;
 	}
 
 	return self.init();

@@ -280,4 +280,13 @@ class SettingsRepository
 		$option = get_option('wpsl_results_content_disabled');
 		return ( isset($option) && $option == 'true' ) ? false : true;
 	}
+
+	/**
+	* Include the admin post listing map?
+	*/
+	public function includeAdminListMap()
+	{
+		$option = get_option('wpsl_display_admin_table_map');
+		return ( !$option || $option !== 'true' ) ? false : true;
+	}
 } 

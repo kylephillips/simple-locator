@@ -133,6 +133,7 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 * Adds pagination option for widget
 * Adds argument filter to location post type declaration
 * Updates Google Maps API requirement for new Google Maps Platform
+* Adds option to display a map in the admin listing view (post list table)
 
 
 = 1.5.7 =

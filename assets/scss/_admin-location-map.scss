@@ -1,0 +1,16 @@
+//
+// Map in location listing (post list table)
+// --------------------------------------------------
+
+// Hide the column data is stored in
+th.column-wpsl-coordinates,
+td.column-wpsl-coordinates {
+	// display: none;
+}
+
+// The post listing map
+.wpsl-post-listing-map {
+	background-color: $white;
+	margin: 2em 0;
+	height: 400px;
+}

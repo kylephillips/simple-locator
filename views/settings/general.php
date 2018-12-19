@@ -212,4 +212,17 @@
 			<p><?php _e('To display results in a custom area of your template, add following action:', 'simple-locator'); ?><br><code>do_action('simple_locator_results')</code></p>
 		</div>
 	</div><!-- .row -->
+
+	<div class="row">
+		<div class="label">
+			<h4><?php _e('Admin Table Map', 'simple-locator'); ?></h4>
+			<p><?php _e('Display a map of locations in the admin above the post list table.', 'simple-locator'); ?></p>
+		</div>
+		<div class="field">
+			<label>
+				<input type="checkbox" value="true" name="wpsl_display_admin_table_map" <?php if ( $this->settings_repo->includeAdminListMap() ) echo 'checked'; ?> />
+				<?php _e('Display Admin Map in Post Listing', 'simple-locator'); ?>
+			</label>
+		</div>
+	</div><!-- .row -->
 </div><!-- .wpsl-settings -->

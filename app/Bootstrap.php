@@ -35,6 +35,7 @@ class Bootstrap
 		new \SimpleLocator\Post\Singular;
 		new \SimpleLocator\Listeners\LocationSearch;
 		new \SimpleLocator\Integrations\IntegrationFactory;
+		new \SimpleLocator\Post\AdminMap;
 		add_action( 'widgets_init', [$this, 'formWidget']);
 	}
 

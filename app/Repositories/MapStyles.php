@@ -42,14 +42,18 @@ class MapStyles
 	*/
 	private function getSelectedStyles()
 	{
+		global $post;
+		$original_post = $post;
 		$style_query = new \WP_Query([
 			'post_type' => 'wpslmaps',
 			'p' => get_option('wpsl_map_styles_choice'),
 			'posts_per_page' => 1
 		]);
+		$style_content = null;
 		if ( $style_query->have_posts() ) : while ( $style_query->have_posts() ) : $style_query->the_post();
 			$style_content = json_decode(get_the_content());
 		endwhile; endif;
+		$post = $original_post;
 		wp_reset_postdata();
 		return $style_content;
 	}

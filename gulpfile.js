@@ -82,7 +82,7 @@ gulp.task('scripts', function(callback){
 		gulp.src(js_source),
 		concat('simple-locator.min.js'),
 		gulp.dest(js_compiled),
-		//uglify(),
+		uglify(),
 		gulp.dest(js_compiled)
 	], callback);
 });

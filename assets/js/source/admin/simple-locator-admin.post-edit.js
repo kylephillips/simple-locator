@@ -38,7 +38,7 @@ SimpleLocatorAdmin.PostEdit = function()
 			if ( self.mappinrelocated ) return;
 			e.preventDefault();
 			if ( editScreenGoogleApiError ){
-				$(document).trigger('open-wpsl-modal-manual', ['post-edit-error'])
+				$(document).trigger('open-wpsl-modal-manual', ['post-edit-error']);
 				return;
 			}
 			var address = self.formatAddress();

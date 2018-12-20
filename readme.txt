@@ -4,7 +4,7 @@ Donate link: http://locatewp.com/
 Tags: location, store locator, google maps, store map, locator, map
 Requires at least: 4.4
 Requires PHP: 5.4
-Tested up to: 4.9
+Tested up to: 5.0
 Stable tag: 1.5.6
 
 License: GPLv2 or later

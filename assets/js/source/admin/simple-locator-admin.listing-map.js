@@ -18,7 +18,8 @@ SimpleLocatorAdmin.ListingMap = function()
 		listingId : 'data-wpsl-listing-post-id',
 		listingTitle : 'data-wpsl-post-title',
 		listingEditLink : 'data-wpsl-edit-link',
-		listingViewLink : 'data-wpsl-view-link'
+		listingViewLink : 'data-wpsl-view-link',
+		listingInfoWindow : 'data-wpsl-post-infowindow'
 	}
 
 	self.bindEvents = function()
@@ -62,6 +63,12 @@ SimpleLocatorAdmin.ListingMap = function()
 				latitude : $(link).attr(self.selectors.listingLatitude),
 				longitude : $(link).attr(self.selectors.listingLongitude)
 			};
+			
+			var infoWindow = $(link).siblings('[' + self.selectors.listingInfoWindow + ']').html();
+			infoWindow += '<p>';
+			infoWindow += '<a href="' + listing.editLink + '" class="button">' + wpsl_locator.edit + '</a>';
+			infoWindow += '</p>';
+			listing.infowindow = infoWindow
 			self.listings.push(listing);
 		});
 		self.loadMap();
@@ -99,11 +106,6 @@ SimpleLocatorAdmin.ListingMap = function()
 				icon: mappin
 			});	
 			self.markers.push(marker);
-
-			locations[i].infowindow = '<h4>' + locations[i].title + '</h4>';
-			locations[i].infowindow += '<p>';
-			locations[i].infowindow += '<a href="' + locations[i].editLink + '" class="button">' + wpsl_locator.edit + '</a> <a href="' + locations[i].viewLink + '" class="button button-primary">' + wpsl_locator.view + '</a>';
-			locations[i].infowindow += '</p>';
 
 			// Info window for each marker 
 			google.maps.event.addListener(marker, 'click', (function(marker, i){

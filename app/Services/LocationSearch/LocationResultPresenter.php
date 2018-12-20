@@ -49,6 +49,12 @@ class LocationResultPresenter
 	*/
 	private $distance_unit;
 
+	/**
+	* The Location Post Type
+	* @var obj
+	*/
+	private $post_type;
+
 	public function __construct()
 	{
 		$this->settings_repo = new SettingsRepository;
@@ -113,7 +119,8 @@ class LocationResultPresenter
 	*/
 	private function formatInfoWindow()
 	{
-		$infowindow = '<div data-result="' . $this->count . '"><h4>[post_title]</h4><p><a href="[post_permalink]" data-location-id="'.$this->result->id.'">'.__('View Location', 'simple-locator').'</a></p></div>';
+		$this->post_type = get_post_type_object($this->settings_repo->getLocationPostType());
+		$infowindow = '<div data-result="' . $this->count . '"><h4>[post_title]</h4><p><a href="[post_permalink]" data-location-id="'.$this->result->id.'">' . $this->post_type->labels->view_item . '</a></p></div>';
 		$infowindow = $this->replacePostFields($infowindow);
 
 		$infowindow = apply_filters('simple_locator_infowindow', $infowindow, $this->result, $this->count);

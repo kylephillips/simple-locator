@@ -79,6 +79,45 @@
 				color: $white;
 			}
 		}
+		.checkbox-list {
+			@include unstyled;
+			li {
+				position: relative;
+				margin: 0;
+				padding-left: 22px;
+				padding: 15px 5px 15px 30px;
+				&:nth-child(even){
+					background-color: rgba($black, .05);
+				}
+				&:first-child {
+					margin: 0;
+				}
+				input[type="checkbox"]{
+					position: absolute;
+					left: 5px;
+					top: 20px;
+				}
+			}
+			.column-name {
+				display: none;
+				position: absolute;
+				top: 5px;
+				right: 0;
+				width: 50%;
+				.inner {
+					position: relative;
+					padding: 5px 5px 5px 100px;
+				}
+				label {
+					position: absolute;
+					left: 5px;
+					top: 9px;
+				}
+			}
+			input[type="checkbox"]:checked + .column-name {
+				display: block;
+			}
+		}
 	} // .row
 	label.block {
 		display: block;

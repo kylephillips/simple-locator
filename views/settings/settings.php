@@ -8,13 +8,14 @@
 		<a class="nav-tab <?php if ( $tab == 'defaultmap' ) echo 'nav-tab-active'; ?>" href="options-general.php?page=wp_simple_locator&tab=defaultmap"><?php _e('Default Map', 'simple-locator'); ?></a>
 		<a class="nav-tab <?php if ( $tab == 'resultsfields' ) echo 'nav-tab-active'; ?>" href="options-general.php?page=wp_simple_locator&tab=resultsfields"><?php _e('Results Display', 'simple-locator'); ?></a>
 		<a class="nav-tab <?php if ( $tab == 'import' ) echo 'nav-tab-active'; ?>" href="options-general.php?page=wp_simple_locator&tab=import"><?php _e('Import', 'simple-locator'); ?></a>
+		<a class="nav-tab <?php if ( $tab == 'export-posts' ) echo 'nav-tab-active'; ?>" href="options-general.php?page=wp_simple_locator&tab=export-posts"><?php _e('Export', 'simple-locator'); ?></a>
 		<?php 
 		if ( get_option('wpsl_save_searches') == 'true' ) : ?>
 		<a class="nav-tab <?php if ( $tab == 'search-history' ) echo 'nav-tab-active'; ?>" href="options-general.php?page=wp_simple_locator&tab=search-history"><?php _e('Search Log', 'simple-locator'); ?></a>
 		<?php endif; ?>
 	</h2>
 	
-	<?php if ( $tab !== "import" && $tab !== 'search-history' ) : ?>
+	<?php if ( $tab !== "import" && $tab !== 'search-history' && $tab !== 'export-posts' ) : ?>
 	<form method="post" enctype="multipart/form-data" action="options.php">
 	<?php
 		$view = $tab . '.php';
@@ -25,6 +26,8 @@
 	<?php 
 	elseif ( $tab == 'search-history' ) : 
 		include('search-history.php');
+	elseif ( $tab == 'export-posts' ) : 
+		include('export-posts.php');
 	else : 
 		include('import-0.php'); 
 	endif; 

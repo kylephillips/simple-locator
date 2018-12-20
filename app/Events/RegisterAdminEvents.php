@@ -6,6 +6,7 @@ use SimpleLocator\Listeners\ResetPostTypeSettings;
 use SimpleLocator\Listeners\HistorySearch;
 use SimpleLocator\Listeners\HistoryClear;
 use SimpleLocator\Services\CSVDownload\HistoryCsvDownload;
+use SimpleLocator\Services\CSVDownload\ExportCsvDownload;
 
 /**
 * Register Admin Events
@@ -19,6 +20,7 @@ class RegisterAdminEvents
 		add_action( 'admin_post_wpslhistorysearch', [$this, 'SearchHistoryQueried']);
 		add_action( 'admin_post_wpslhistorycsv', [$this, 'SearchHistoryCSVTriggered']);
 		add_action( 'admin_post_wpslhistoryclear', [$this, 'SearchHistoryCleared']);
+		add_action( 'admin_post_wpslexport', [$this, 'DataExportTriggered']);
 	}
 
 	/**
@@ -59,5 +61,13 @@ class RegisterAdminEvents
 	public function SearchHistoryCSVTriggered()
 	{
 		new HistoryCsvDownload;
+	}
+
+	/**
+	* Generate an Export CSV
+	*/
+	public function DataExportTriggered()
+	{
+		new ExportCsvDownload;
 	}
 }

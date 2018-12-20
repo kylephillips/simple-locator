@@ -119,6 +119,9 @@ class FieldRepository
 		return $this->getAcfFieldsForPostType($post_type, 'tab');
 	}
 
+	/**
+	* Get all the ACF fields for a post type (optionally specify a field type (ex: tab))
+	*/
 	public function getAcfFieldsForPostType( $post_type, $field_type = null )
   	{
   		$return_fields = [];
@@ -131,5 +134,30 @@ class FieldRepository
   			}
   		}
   		return $return_fields;
+  	}
+
+  	/**
+  	* Get an array of standard post fields/columns
+  	*/
+  	public function getStandardPostColumns()
+  	{
+  		$standard_fields = [
+			'ID' => ['name' => __('ID', 'simple-locator'), 'default' => true],
+			'post_title' => ['name' => __('Title', 'simple-locator'), 'default' => true],
+			'post_name' => ['name' => __('Slug', 'simple-locator'), 'default' => true],
+			'post_content' => ['name' => __('Content', 'simple-locator'), 'default' => true],
+			'post_date' => ['name' => __('Date', 'simple-locator'), 'default' => true],
+			'post_date_gmt' => ['name' => __('Date (GMT)', 'simple-locator'), 'default' => true],
+			'post_modified' => ['name' => __('Modified Date', 'simple-locator'), 'default' => true],
+			'post_modified_gmt' => ['name' => __('Modified Date (GMT)', 'simple-locator'), 'default' => true],
+			'post_excerpt' => ['name' => __('Excerpt', 'simple-locator'), 'default' => true],
+			'post_status' => ['name' => __('Status', 'simple-locator'), 'default' => true],
+			'comment_status' => ['name' => __('Comment Status', 'simple-locator'), 'default' => false],
+			'post_password' => ['name' => __('Password', 'simple-locator'), 'default' => false],
+			'post_password' => ['name' => __('Password', 'simple-locator'), 'default' => false],
+			'post_type'	=> ['name' => __('Post Type', 'simple-locator'), 'default' => false],
+			'comment_count'	=> ['name' => __('Comment Count', 'simple-locator'), 'default' => false]
+		];
+		return $standard_fields;
   	}
 }

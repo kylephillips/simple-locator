@@ -34,7 +34,7 @@ class Settings
 	private $map_options;
 
 	/**
-	* Field Respository
+	* Field Repository
 	*/
 	private $field_repo;
 
@@ -153,6 +153,7 @@ class Settings
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_acf_map_field' );
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_posttype_labels');
 		register_setting( 'wpsimplelocator-posttype', 'wpsl_hide_default');
+		register_setting( 'wpsimplelocator-posttype', 'wpsl_acf_tab');
 		register_setting( 'wpsimplelocator-map', 'wpsl_map_styles_type' );
 		register_setting( 'wpsimplelocator-map', 'wpsl_map_styles' );
 		register_setting( 'wpsimplelocator-map', 'wpsl_map_styles_choice' );

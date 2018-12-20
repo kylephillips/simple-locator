@@ -27,6 +27,7 @@ SimpleLocatorAdmin.PostEdit = function()
 		$(window).on('load', function(){
 			self.setMapPinStatus();
 			self.checkMapStatus();
+			self.groupIntoAcfTab();
 			if ( $('#wpsl_custom_geo').val() === 'true' ) mappinrelocated = true;
 		});
 		$(document).on('click', '.acf-tab-button', function(){
@@ -48,6 +49,25 @@ SimpleLocatorAdmin.PostEdit = function()
 			e.preventDefault();
 			self.saveWithoutLocation();
 		});
+	}
+
+	/**
+	* Group the meta into an ACF tab if required
+	*/
+	self.groupIntoAcfTab = function()
+	{
+		if ( wpsl_locator.acf_tab && wpsl_locator.acf_tab !== '' ){
+			var tab = wpsl_locator.acf_tab.replace('_', '-');
+			var parentEl = '.acf-' + tab;
+			if ( $(parentEl).length < 1 ) {
+				$('#wpsl-meta-box').show();
+				return;
+			}
+			var meta = $('.wpsl-meta').detach().addClass('acf-field acf-field-text').insertAfter(parentEl).first();
+			var tab = $('.acf-tab-button[data-key=' + wpsl_locator.acf_tab + ']').parent('li');
+			if ( !$(tab).hasClass('active') ) $(meta).addClass('acf-hidden');
+			return;
+		}
 	}
 
 	/**

@@ -15,6 +15,7 @@ class AdminDependencies extends DependencyBase
 		add_action( 'admin_enqueue_scripts', [$this, 'mapSettings']);
 		add_action( 'admin_enqueue_scripts', [$this, 'defaultMapSettings']);
 		add_action( 'admin_enqueue_scripts', [$this, 'searchHistory']);
+		add_action( 'admin_head', [$this, 'acfTabs']);
 	}
 
 	/**
@@ -63,6 +64,7 @@ class AdminDependencies extends DependencyBase
 				'show_listing_map'	=> $this->settings_repo->includeAdminListMap(),
 				'mapstyles' 		=> $this->styles_repo->getLocalizedStyles(),
 				'mappin' 			=> $this->settings_repo->mapPin(),
+				'acf_tab'			=> $this->settings_repo->acfTab()
 			];
 			$data = $this->importVars($data);
 			$data['confirm_undo'] 	= __('Are you sure you want to undo this import? This action cannot be undone.', 'simple-locator');
@@ -166,5 +168,18 @@ class AdminDependencies extends DependencyBase
 		$data['complete_count'] 	= ( isset($transient['complete_rows']) ) ? $transient['complete_rows'] : 0;
 		$data['error_count'] 		= ( isset($transient['error_rows']) ) ? count($transient['error_rows']) : 0;
 		return $data;
+	}
+
+	/**
+	* Hide the meta box if acf tab functionality is enabled
+	*/
+	public function acfTabs()
+	{
+		$screen = get_current_screen();
+		if ( ($screen->post_type == get_option('wpsl_post_type')) ) {
+			$tab = $this->settings_repo->acfTab();
+			if ( !$tab || $tab == '' ) return;
+			echo '<style>#wpsl-meta-box {display:none;}</style>';
+		}
 	}
 }

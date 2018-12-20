@@ -289,4 +289,14 @@ class SettingsRepository
 		$option = get_option('wpsl_display_admin_table_map');
 		return ( !$option || $option !== 'true' ) ? false : true;
 	}
+
+	/**
+	* Get the ACF tab to place location meta in
+	*/ 
+	public function acfTab()
+	{
+		if ( !function_exists('get_fields') ) return '';
+		$option = get_option('wpsl_acf_tab');
+		return ( !$option || $option == '' ) ? '' : $option;
+	}
 } 

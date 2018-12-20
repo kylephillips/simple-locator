@@ -188,6 +188,38 @@
 
 	</div><!-- .post type labels -->
 
+	<?php 
+	if ( class_exists('acf_field_tab') ) : 
+	$tab_fields = $this->field_repo->getAcfTabFields();
+	if ( $tab_fields && is_array($tab_fields) && !empty($tab_fields) ) :
+	?>
+	<div class="row subhead"><h4><?php _e('ACF Location Fields Placement', 'simple-locator'); ?></h4></div>
+	<div class="row">
+		<div class="label">
+			<h4><?php _e('Organize Fields Into ACF Tab', 'simple-locator'); ?></h4>
+			<?php
+				echo '<p><strong>' . __('Advanced Custom Fields Users:', 'simple-locator') . '</strong> ' . __('You may select a tab to place the included location fields under if any tabs are available.', 'simple-locator') . '</p>';
+			?>
+		</div>
+		<div class="field">
+			<p><label for="wpsl_acf_tab"><?php _e('Select a tab to place location fields in.', 'simple-locator'); ?></label></p>
+			<select name="wpsl_acf_tab" id="wpsl_acf_tab" style="width:100%;max-width:540px;" >
+				<option value=""><?php _e('None', 'simple-locator'); ?></option>
+				<?php 
+				$selected = $this->settings_repo->acfTab();
+				foreach ( $tab_fields as $key => $field ) {
+					$out = '<option value="' . $key . '"';
+					if ( $key == $selected ) $out .= ' selected';
+					$out .= '>' . $field . '</option>';
+					echo $out;
+				}
+				?>
+			</select>
+		</div>
+	</div><!-- .row -->
+	<?php endif; endif; ?>
+
+	<div class="row subhead"><h4><?php _e('Reset Settings', 'simple-locator'); ?></h4></div>
 	<div class="row">
 		<div class="label">
 			<h4><?php _e('Reset Post Type Settings', 'simple-locator'); ?></h4>

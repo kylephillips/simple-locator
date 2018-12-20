@@ -29,7 +29,7 @@ class GoogleMapGeocode
 	*/
 	public function geocode($address)
 	{
-		$apikey = get_option('wpsl_google_geocode_api_key');
+		$apikey = get_option('wpsl_google_api_key');
 		$client = new Client();		
 		$response = $client->get('https://maps.googleapis.com/maps/api/geocode/json', [
 			'query' => [
@@ -37,8 +37,7 @@ class GoogleMapGeocode
 				'key' => $apikey
 			]
 		]);
-		$json = $response->json();
-		$response_status = $json['status'];
+		$response_status = $response->getReasonPhrase();
 
 		//if ( $address == '5395 Sugarloaf Pkwy Lawrenceville GA 30043' ) $response_status = 'OVER_QUERY_LIMIT';
 
@@ -55,9 +54,12 @@ class GoogleMapGeocode
 			return false;
 		}
 
+		$results = $response->getBody()->getContents();
+		$results = json_decode($results, true);
+		
 		$this->coordinates = [
-			'lat' => $json['results'][0]['geometry']['location']['lat'],
-			'lng' => $json['results'][0]['geometry']['location']['lng']
+			'lat' => $results['results'][0]['geometry']['location']['lat'],
+			'lng' => $results['results'][0]['geometry']['location']['lng']
 		];
 		return true;
 	}

@@ -12,7 +12,10 @@ class LocationResultPresenter
 	/**
 	* Result
 	* @var object - WP SQL result
-	* Contains array of: 
+	*
+	* Available Properties include: 
+	* title, id, wpsl_address, wpsl_city, wpsl_state, wpsl_zip, wpsl_phone, wpsl_website, latitude, longitude, distance 
+	* 
 	*/
 	private $result;
 
@@ -116,15 +119,14 @@ class LocationResultPresenter
 
 	/**
 	* Render the info window output
+	* @return str html
 	*/
 	private function formatInfoWindow()
 	{
 		$this->post_type = get_post_type_object($this->settings_repo->getLocationPostType());
 		$infowindow = '<div data-result="' . $this->count . '"><h4>[post_title]</h4><p><a href="[post_permalink]" data-location-id="'.$this->result->id.'">' . $this->post_type->labels->view_item . '</a></p></div>';
 		$infowindow = $this->replacePostFields($infowindow);
-
 		$infowindow = apply_filters('simple_locator_infowindow', $infowindow, $this->result, $this->count);
-
 		return $infowindow;
 	}
 

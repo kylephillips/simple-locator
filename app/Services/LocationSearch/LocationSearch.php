@@ -195,7 +195,7 @@ class LocationSearch
 		$sql = "";
 		foreach ( $this->data['taxonomies'] as $taxonomy_name => $ids ){
 			if ( is_array($ids) ){
-				$sql .= "\nJOIN " . $this->query_data['term_relationship_table'] . " AS $taxonomy_name ON $taxonomy_name.object_id = p.ID AND $taxonomy_name.term_taxonomy_id IN (" . implode(',', $ids) . ")\n";
+				$sql .= "\nJOIN " . $this->query_data['term_relationship_table'] . " AS `$taxonomy_name` ON `$taxonomy_name`.object_id = p.ID AND `$taxonomy_name`.term_taxonomy_id IN (" . implode(',', $ids) . ")\n";
 			}
 		}
 		return $sql;

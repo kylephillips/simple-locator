@@ -28,7 +28,9 @@ SimpleLocatorAdmin.ImportColumnMap = function()
 		formError : 'data-simple-locator-form-error',
 		columnError : 'data-simple-locator-column-error',
 		fieldRow : 'data-simple-locator-import-field',
-		form : 'data-simple-locator-import-column-form'
+		form : 'data-simple-locator-import-column-form',
+		status : 'data-import-post-status',
+		taxonomySeparator : 'data-import-taxonomy-separator'
 	}
 
 	self.bindEvents = function()
@@ -45,6 +47,8 @@ SimpleLocatorAdmin.ImportColumnMap = function()
 		});
 		$(document).on('change', '[' + self.selectors.selectField + ']', function(){
 			self.autoSelectFieldType($(this));
+			self.toggleStatusSelection();
+			self.toggleTaxonomySelector();
 		});
 		$(document).on('click', '[' + self.selectors.addFieldButton + ']', function(e){
 			e.preventDefault();
@@ -146,13 +150,40 @@ SimpleLocatorAdmin.ImportColumnMap = function()
 	/**
 	* Populate WordPress Field Selects
 	*/
-	self.populateWordPressFieldSelects = function(fields)
+	self.populateWordPressFieldSelects = function(data)
 	{
 		var selects = $('[' + self.selectors.selectField + ']');
+		
+		var wordpress_fields = '<optgroup label="' + wpsl_locator.wordpress_fields + '">';
+		wordpress_fields += '<option value="title">' + wpsl_locator.title + '</option>';
+		wordpress_fields += '<option value="content">' + wpsl_locator.content + '</option>';
+		wordpress_fields += '<option value="excerpt">' + wpsl_locator.excerpt + '</option>';
+		wordpress_fields += '<option value="publish_date">' + wpsl_locator.publish_date + '</option>';
+		wordpress_fields += '<option value="publish_date_gmt">' + wpsl_locator.publish_date_gmt + '</option>';
+		wordpress_fields += '<option value="modified_date">' + wpsl_locator.modified_date + '</option>';
+		wordpress_fields += '<option value="modified_date_gmt">' + wpsl_locator.modified_date_gmt + '</option>';
+		wordpress_fields += '<option value="slug">' + wpsl_locator.slug + '</option>';
+		wordpress_fields += '<option value="status">' + wpsl_locator.status + '</option>';
+		wordpress_fields += '</optgroup>';
+
+		var custom_fields = '<optgroup label="' + wpsl_locator.custom_fields + '">';
+		custom_fields += data.fields;
+		custom_fields += '</optgroup';
+
+		var taxonomies = data.taxonomies;
+		taxonomy_fields = null;
+		if ( typeof taxonomies !== 'undefined' && taxonomies !== '' ){
+			taxonomy_fields = '<optgroup label="' + wpsl_locator.taxonomies + '">';
+			$.each(taxonomies, function(){
+				taxonomy_fields += '<option value="taxonomy_' + this.name + '">' + this.label + '</option>';
+			});
+			taxonomy_fields += '<optgroup>';
+		}
+
 		$.each(selects, function(i, v){
-			$(this).append('<option value="title">' + wpsl_locator.title + '</option>');
-			$(this).append('<option value="content">' + wpsl_locator.content + '</option>');
-			$(this).append(fields.fields);
+			$(this).append(wordpress_fields);
+			$(this).append(custom_fields);
+			if ( taxonomy_fields ) $(this).append(taxonomy_fields);
 		});
 	}
 
@@ -232,6 +263,41 @@ SimpleLocatorAdmin.ImportColumnMap = function()
 			passes = false;
 		}
 		return passes;
+	}
+
+	/**
+	* Toggle the status selection
+	*/
+	self.toggleStatusSelection = function()
+	{
+		var selected = false;
+		var all_selects = $('[' + self.selectors.selectField + ']');
+		$.each(all_selects, function(){
+			if ( $(this).val() === 'status' ) selected = true;
+		});
+		if ( selected ){
+			$('[' + self.selectors.status + ']').hide();
+			return;
+		}
+		$('[' + self.selectors.status + ']').show();
+	}
+
+	/**
+	* Toggle the taxonomy separator
+	*/
+	self.toggleTaxonomySelector = function()
+	{
+		var selected = false;
+		var all_selects = $('[' + self.selectors.selectField + ']');
+		$.each(all_selects, function(){
+			var value = $(this).val();
+			if ( value.includes('taxonomy_') ) selected = true;
+		});
+		if ( selected ){
+			$('[' + self.selectors.taxonomySeparator + ']').show();
+			return;
+		}
+		$('[' + self.selectors.taxonomySeparator + ']').hide();
 	}
 
 	/**

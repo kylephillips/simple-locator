@@ -65,7 +65,8 @@ class GetMetaFieldsForPostType
 	private function getFields()
 	{
 		$fields = $this->field_repo->displayFieldOptions($this->data['post_type'], $this->data['show_hidden'], $this->data['include_wpsl']);
-		$response = ['status' => 'success', 'fields' => $fields];
+		$taxonomies = get_object_taxonomies($this->data['post_type'], 'objects');
+		$response = ['status' => 'success', 'fields' => $fields, 'taxonomies' => $taxonomies];
 		$this->sendResponse($response);
 	}
 

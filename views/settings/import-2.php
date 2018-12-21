@@ -12,6 +12,11 @@ if ( isset($transient['file']) && isset($transient['post_type']) ) :
 <?php 
 // Form Errors
 if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '</p></div>';
+
+$string = 'taxonomy_dealer-categories]';
+$string_two = 'test';
+var_dump(strpos($string, 'taxonomy_'));
+var_dump(strpos($string, 'test'));
 ?>
 
 <div class="wpsl-loading-settings" data-simple-locator-import-loading>
@@ -84,7 +89,7 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 			</div>
 		</div>
 
-		<div class="row">
+		<div class="row" data-import-post-status>
 			<div class="label">
 				<h4><?php _e('Post Status', 'simple-locator'); ?></h4>
 				<p><?php _e('Set the post status to draft or published.', 'simple-locator'); ?></p>
@@ -93,6 +98,19 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 				<select name="wpsl_import_status" style="clear:both;float:none;">
 					<option value="draft"><?php _e('Draft', 'simple-locator'); ?></option>
 					<option value="publish"><?php _e('Published', 'simple-locator'); ?></option>
+				</select>
+			</div>
+		</div>
+
+		<div class="row" style="display:none;" data-import-taxonomy-separator>
+			<div class="label">
+				<h4><?php _e('Taxonomy Separator', 'simple-locator'); ?></h4>
+				<p><?php _e('If a column(s) containing taxonomies are being imported, what separates the terms within the column?.', 'simple-locator'); ?></p>
+			</div>
+			<div class="field">
+				<select name="wpsl_import_taxonomy_separator" style="clear:both;float:none;">
+					<option value="comma"><?php _e('Comma', 'simple-locator'); ?></option>
+					<option value="pipe"><?php _e('Pipe', 'simple-locator'); ?></option>
 				</select>
 			</div>
 		</div>

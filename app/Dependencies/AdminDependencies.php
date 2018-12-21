@@ -161,6 +161,16 @@ class AdminDependencies extends DependencyBase
 		$data['required_title'] 	= __('A post title field is required for import.', 'simple-locator');
 		$data['title'] 				= __('Post Title', 'simple-locator');
 		$data['content'] 			= __('Post Content', 'simple-locator');
+		$data['publish_date']		= __('Publish Date', 'simple-locator');
+		$data['publish_date_gmt']	= __('Publish Date (GMT)', 'simple-locator');
+		$data['modified_date']		= __('Modified Date', 'simple-locator');
+		$data['modified_date_gmt']	= __('Modified Date (GMT)', 'simple-locator');
+		$data['slug']				= __('Post Slug/Name', 'simple-locator');
+		$data['status']				= __('Post Status', 'simple-locator');
+		$data['excerpt']			= __('Post Excerpt', 'simple-locator');
+		$data['taxonomies']			= __('Taxonomies', 'simple-locator');
+		$data['wordpress_fields']	= __('WordPress Fields', 'simple-locator');
+		$data['custom_fields']		= __('Custom Fields', 'simple-locator');
 		$data['importoffset'] 		= ( isset($transient['last_imported']) ) ? $transient['last_imported'] : 0;
 		if ( isset($transient['skip_first']) 
 			&& $transient['skip_first'] 

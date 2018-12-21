@@ -117,6 +117,13 @@ class PostImporter
 			$column_value = ( isset($this->post_data[$field->csv_column]) ) ? $this->post_data[$field->csv_column] : "";
 			if ( $field->field == 'title' && $column_value !== "" ) $post['post_title'] = sanitize_text_field($column_value);
 			if ( $field->field == 'content' && $column_value !== "" ) $post['post_content'] = sanitize_text_field($column_value);
+			if ( $field->field == 'excerpt' && $column_value !== "" ) $post['post_excerpt'] = sanitize_text_field($column_value);
+			if ( $field->field == 'status' && $column_value !== "" ) $post['post_status'] = sanitize_text_field($column_value);
+			if ( $field->field == 'publish_date' && $column_value !== "") $post['post_date'] = $this->date($column_value);
+			if ( $field->field == 'publish_date_gmt' && $column_value !== "" ) $post['publish_date_gmt'] = $this->date($column_value);
+			if ( $field->field == 'modified_date' && $column_value !== "" ) $post['post_modified'] = $this->date($column_value);
+			if ( $field->field == 'modified_date_gmt' && $column_value !== "" ) $post['post_modified_gmt'] = $this->date($column_value);
+			if ( $field->field == 'slug' && $column_value !== "" ) $post['post_name'] = sanitize_text_field($column_value);
 		}
 		if ( !isset($post['post_title']) ){
 			$this->failedRow(__('Missing Title', 'simple-locator'));
@@ -132,7 +139,16 @@ class PostImporter
 			return false;
 		}
 		$this->addMeta();
+		$this->addTerms();
 		$this->addGeocodeField();
+	}
+
+	/**
+	* Format a time for inserting date
+	*/
+	private function date($value)
+	{
+		return date('Y-m-d H:i:s', strtotime($value));
 	}
 
 	/**
@@ -140,12 +156,31 @@ class PostImporter
 	*/
 	private function addMeta()
 	{
-		$exclude_fields = ['title', 'content'];
+		$exclude_fields = ['title', 'content', 'excerpt', 'status', 'publish_date', 'publish_date_gmt', 'modified_date', 'modified_date_gmt', 'slug'];
 		foreach ( $this->transient['columns'] as $field ){
 			if ( in_array($field->field, $exclude_fields) ) continue;
+			if ( strpos($field->field, 'taxonomy[') !== false ) continue;
 			$column_value = ( isset($this->post_data[$field->csv_column]) ) ? sanitize_text_field($this->post_data[$field->csv_column]) : "";
 			if ( $field->type == 'website' ) $column_value = esc_url($column_value);
 			if ( $column_value !== "" ) add_post_meta($this->post_id, $field->field, $column_value);
+		}
+	}
+
+	/**
+	* Add Taxonomy Terms
+	*/
+	private function addTerms()
+	{
+		$separator = $this->transient['taxonomy_separator'];
+		$separator = ( $separator == 'comma' ) ? ',' : '|';
+		foreach ( $this->transient['columns'] as $field ){ 
+			if ( strpos($field->field, 'taxonomy_' ) !== false ){
+				$terms = ( isset($this->post_data[$field->csv_column]) ) ? explode($separator, $this->post_data[$field->csv_column]) : [];
+				$taxonomy = str_replace('taxonomy_', '', $field->field);
+				foreach ( $terms as $term ){
+					wp_set_object_terms($this->post_id, $term, $taxonomy, true);
+				}
+			}
 		}
 	}
 

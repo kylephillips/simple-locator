@@ -3,6 +3,7 @@ namespace SimpleLocator\Services\CSVDownload;
 
 use SimpleLocator\Repositories\SettingsRepository;
 use League\Csv\Writer;
+use SimpleLocator\Services\ExportTemplates\TemplateCreator;
 
 /**
 * Generate a CSV Export of Locations and trigger a download
@@ -13,6 +14,11 @@ class ExportCsvDownload
 	* Settings Repository
 	*/
 	private $settings;
+
+	/**
+	* Template Creator
+	*/
+	private $template_creator;
 
 	/**
 	* The Posts to Export
@@ -27,8 +33,10 @@ class ExportCsvDownload
 	public function __construct()
 	{
 		$this->settings = new SettingsRepository;
+		$this->template_creator = new TemplateCreator;
 		$this->getPosts();
 		$this->buildCsvArray();
+		$this->createTemplate();
 		$this->generateCsv();
 	}
 
@@ -59,8 +67,8 @@ class ExportCsvDownload
 	*/
 	private function buildCsvArray()
 	{
-		$standard_columns = $_POST['standard_columns'];
-		$custom_columns = $_POST['custom_columns'];
+		$standard_columns = ( isset($_POST['standard_columns']) ) ? $_POST['standard_columns'] : [];
+		$custom_columns = ( isset($_POST['custom_columns']) ) ? $_POST['custom_columns'] : [];
 
 		foreach ( $this->posts as $k => $post ) :
 			$this->formatted_posts[$k] = [];
@@ -83,8 +91,8 @@ class ExportCsvDownload
 		// Header Row
 		$include_header = ( isset($_POST['include_header_row']) && $_POST['include_header_row'] == 'true' ) ? true : false;
 		if ( $include_header ) :
-			$standard_columns = $_POST['standard_columns'];
-			$custom_columns = $_POST['custom_columns'];
+			$standard_columns = ( isset($_POST['standard_columns']) ) ? $_POST['standard_columns'] : [];
+			$custom_columns = ( isset($_POST['custom_columns']) ) ? $_POST['custom_columns'] : [];
 			$header = [];
 			foreach ( $standard_columns as $column ) :
 				$header[] = ( isset($_POST['column_name'][$column]) && $_POST['column_name'][$column] !== '' ) 
@@ -101,6 +109,16 @@ class ExportCsvDownload
 
 		$csv->insertAll($this->formatted_posts);
 		$filename = __('location-export', 'simple-locator') . '.csv';
+		if ( isset($_POST['file_name']) && $_POST['file_name'] !== '' ) $filename = sanitize_text_field($_POST['file_name']) . '.csv';
 		$csv->output($filename);
+	}
+
+	/**
+	* Create the template
+	*/
+	private function createTemplate()
+	{
+		if ( !isset($_POST['save_template']) || $_POST['save_template'] !== 'true' ) return;
+		$this->template_creator->create($_POST);
 	}
 }

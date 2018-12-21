@@ -7,6 +7,8 @@ use SimpleLocator\Listeners\HistorySearch;
 use SimpleLocator\Listeners\HistoryClear;
 use SimpleLocator\Services\CSVDownload\HistoryCsvDownload;
 use SimpleLocator\Services\CSVDownload\ExportCsvDownload;
+use SimpleLocator\Services\ExportTemplates\TemplateRequest;
+use SimpleLocator\Services\ExportTemplates\TemplateDestroyer;
 
 /**
 * Register Admin Events
@@ -21,6 +23,8 @@ class RegisterAdminEvents
 		add_action( 'admin_post_wpslhistorycsv', [$this, 'SearchHistoryCSVTriggered']);
 		add_action( 'admin_post_wpslhistoryclear', [$this, 'SearchHistoryCleared']);
 		add_action( 'admin_post_wpslexport', [$this, 'DataExportTriggered']);
+		add_action( 'wp_ajax_wpslexporttemplates', [$this, 'ExportTemplatesRequested']);
+		add_action( 'wp_ajax_wpslexporttemplatedelete', [$this, 'ExportTemplateDeleted']);
 	}
 
 	/**
@@ -69,5 +73,21 @@ class RegisterAdminEvents
 	public function DataExportTriggered()
 	{
 		new ExportCsvDownload;
+	}
+
+	/**
+	* Export Templates Requested
+	*/
+	public function ExportTemplatesRequested()
+	{
+		new TemplateRequest;
+	}
+
+	/**
+	* Export Template Deleted
+	*/
+	public function ExportTemplateDeleted()
+	{
+		new TemplateDestroyer;
 	}
 }

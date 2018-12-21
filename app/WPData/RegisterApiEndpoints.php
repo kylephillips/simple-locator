@@ -29,6 +29,10 @@ class RegisterApiEndpoints
 			'methods'  => 'GET',
 			'callback' => [$this, 'getStates'],
 		]);
+		register_rest_route( 'simplelocator/v2', '/export-templates/', [
+			'methods'  => 'GET',
+			'callback' => [$this, 'getExportTemplates'],
+		]);
 	}
 
 	/**

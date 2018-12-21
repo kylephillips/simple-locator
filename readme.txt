@@ -109,15 +109,15 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 * Updates form to use API, with custom endpoints added for search and all locations queries.
 * Adds map pin filter, enabling customization of map pins for each location result.
 * Adds option to include the user’s search location as a pin, with option to customize separately from result pins.
-* Adds a results page parameter to non-ajax forms.
-* Adds a hookable action to display results, allowing for custom placement of results in non-ajax requests.
-* Adds pagination with results-per-page in ajax and non-ajax forms, configurable through a shortcode parameter.
+* Adds a results page parameter to non-ajax forms, allowing the redirection of form results to a custom page.
+* Adds a hookable action to display results, allowing for custom template placement of results in non-ajax requests.
+* Adds pagination with results-per-page in ajax and non-ajax forms, configurable through shortcode parameters.
 * Adds form method option in shortcode, allowing for either POST or GET form submissions on non-ajax forms.
-* Adds autocomplete JS options (limit autocomplete suggestions to a specific type like cities, only show in specific countries).
-* Updates text domain to WordPress guidelines.
+* Adds Google places API autocomplete JS options (limit autocomplete suggestions to a specific type like cities, only show in specific countries).
+* Updates text domain to follow WordPress guidelines (updated to match the plugin name).
 * Adds multiple hooks throughout for even more customization flexibility.
-* Replaces JS callback functions with document-level JQuery events.
-* Adds taxonomy field type option in form shortcode, enabling the use of checkbox or select elements.
+* Replaces JS callback functions with document-level JQuery events. Previous callback functions have been deprecated and will be removed in a future version.
+* Adds taxonomy field type option in form shortcode, enabling the use of checkbox or select elements in search forms.
 * Updates core styles and loading indication.
 * Updates plugin setting styles and layout.
 * Adds taxonomy arguments to "all locations" shortcode. To limit by terms, include the taxonomy name with a comma separated list of term ids (ex: category="4,5").
@@ -130,13 +130,13 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 * Adds option to specify a default distance in the form shortcode. Mark the default distance with an asterisk: Ex: distances="5,10,20*,50,100". (The "20" option would be selected by default).
 * Adds option to show all locations by default, below the form (showall="true"). Header text is customized using the showall attribute (showall="Showing all locations"). Map centered to "default map location" if enabled in the plugin setting.
 * Adds "mapheight" shortcode option to "all locations" shortcode.
-* Adds pagination option for widget
-* Adds argument filter to location post type declaration
-* Updates Google Maps API requirement for new Google Maps Platform
-* Adds option to display a map in the admin listing view (post list table)
-* Adds option to place built in location fields in Advanced Custom Fields tab if ACF is enabled and tabs are assigned to the post type
-* Updates included Guzzle dependency to version 6 (resolves php 7.2 error)
-* Adds CSV export option to export locations to CSV files, with the ability to save and load export templates
+* Adds pagination option for widget.
+* Adds argument filter to location post type declaration.
+* Updates Google Maps API requirement for new Google Maps Platform.
+* Adds option to display a map in the admin listing view (post list table).
+* Adds option to place built in location fields in Advanced Custom Fields tab if ACF is enabled and tabs are assigned to the post type.
+* Updates included Guzzle dependency to version 6 (resolves php 7.2 error).
+* Adds CSV export option to export locations to CSV files, with the ability to save and load export templates.
 
 
 = 1.5.7 =

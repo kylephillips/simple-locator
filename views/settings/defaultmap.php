@@ -4,7 +4,7 @@
 
 	<div class="row">
 		<div class="label">
-			<h4><?php _e('Display map on page load.', 'simple-locator'); ?></h4>
+			<h4><?php _e('Display Map on Page Load.', 'simple-locator'); ?></h4>
 			<p><?php _e('Include a map below the form on page load.', 'simple-locator'); ?></p>
 		</div>
 		<div class="field">
@@ -14,7 +14,7 @@
 
 	<div class="row" data-simple-locator-default-map-container style="display:none;">
 		<div class="label align-top">
-			<h4><?php _e('Default map location', 'simple-locator'); ?></h4>
+			<h4><?php _e('Default Map Location', 'simple-locator'); ?></h4>
 			<p><?php _e('Set the location where the default map should load to. Zoom level will be saved as well. Drag and drop the marker for precise location.', 'simple-locator'); ?></p>
 		</div>
 		<div class="field align-top">

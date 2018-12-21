@@ -49,6 +49,8 @@ SimpleLocatorAdmin.ExportTemplates = function()
 		var include_header = template.include_header;
 		var template_name = template.name;
 		var column_names = template.column_names;
+		var taxonomies = template.taxonomies;
+		var taxonomy_separator = template.taxonomy_separator;
 
 		$('input[name="standard_columns[]"]').removeAttr('checked');
 		for ( var i = 0; i < standard_fields.length; i++ ){
@@ -66,11 +68,21 @@ SimpleLocatorAdmin.ExportTemplates = function()
 			$('input[name="column_name[' + index + ']').val(column_names[index]);
 		}
 
+		$('input[name="taxonomies[]"').removeAttr('checked');
+		if ( typeof taxonomies !== 'undefined' && taxonomies !== '' ){
+			for ( var i = 0; i < taxonomies.length; i++ ){
+				var checkbox = ( $('input[name="taxonomies[]"][value="' + taxonomies[i] + '"]') );
+				$(checkbox).attr('checked', true);
+			}
+		}
+
 		if ( include_header ){
 			$('input[name="include_header_row"]').attr('checked', true);
 		} else {
 			$('input[name="include_header_row"]').removeAttr('checked');
 		}
+
+		$('select[name="taxonomy_separator"]').val(taxonomy_separator);
 
 		var filename = template.filename.replace('.csv', '');
 		$('input[name="file_name"]').val(filename);

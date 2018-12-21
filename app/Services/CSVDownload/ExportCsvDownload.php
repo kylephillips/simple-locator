@@ -69,6 +69,10 @@ class ExportCsvDownload
 	{
 		$standard_columns = ( isset($_POST['standard_columns']) ) ? $_POST['standard_columns'] : [];
 		$custom_columns = ( isset($_POST['custom_columns']) ) ? $_POST['custom_columns'] : [];
+		$taxonomies = ( isset($_POST['taxonomies']) ) ? $_POST['taxonomies'] : [];
+
+		$taxonomy_separator = ( isset($_POST['taxonomy_separator']) ) ? $_POST['taxonomy_separator'] : 'comma';
+		$separator = ( $taxonomy_separator == 'comma' ) ? ',' : '|';
 
 		foreach ( $this->posts as $k => $post ) :
 			$this->formatted_posts[$k] = [];
@@ -77,6 +81,19 @@ class ExportCsvDownload
 			endforeach;
 			foreach ( $custom_columns as $column ) :
 				$this->formatted_posts[$k][$column] = ( isset($post->$column) ) ? $post->$column : null;
+			endforeach;
+			foreach ( $taxonomies as $tax ) :
+				$terms = wp_get_post_terms($post->ID, $tax);
+				$term_value = '';
+				if ( $terms ) :
+					$c = 0;
+					foreach ( $terms as $term ){
+						$term_value .= $term->slug;
+						$c++;
+						if ( $c < count($terms) ) $term_value .= $separator;
+					}
+				endif;
+				$this->formatted_posts[$k][$tax] = $term_value;
 			endforeach;
 		endforeach;
 	}
@@ -93,6 +110,7 @@ class ExportCsvDownload
 		if ( $include_header ) :
 			$standard_columns = ( isset($_POST['standard_columns']) ) ? $_POST['standard_columns'] : [];
 			$custom_columns = ( isset($_POST['custom_columns']) ) ? $_POST['custom_columns'] : [];
+			$taxonomies = ( isset($_POST['taxonomies']) ) ? $_POST['taxonomies'] : [];
 			$header = [];
 			foreach ( $standard_columns as $column ) :
 				$header[] = ( isset($_POST['column_name'][$column]) && $_POST['column_name'][$column] !== '' ) 
@@ -103,6 +121,11 @@ class ExportCsvDownload
 				$header[] = ( isset($_POST['column_name'][$column]) && $_POST['column_name'][$column] !== '' ) 
 					? sanitize_text_field($_POST['column_name'][$column])
 					: $column;
+			endforeach;
+			foreach ( $taxonomies as $tax ) :
+				$header[] = ( isset($POST['column_name'][$tax]) && $_POST['column_name'][$tax] !== '' ) 
+					? sanitize_text_field($_POST['column_name'][$tax])
+					: $tax;
 			endforeach;
 			$csv->insertOne($header);
 		endif;

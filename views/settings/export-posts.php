@@ -56,6 +56,29 @@ if ( $templates ) : ?>
 			</ul>
 		</div>
 	</div>
+
+	<?php
+	$taxonomies = get_object_taxonomies($this->post_type, 'object9s');
+	if ( $taxonomies ) :
+	?>
+	<div class="row">
+		<div class="label"><h4><?php _e('Select Taxonomies', 'simple-locator'); ?></h4></div>
+		<div class="field">
+			<ul class="checkbox-list min-height">
+				<?php 
+				foreach ( $taxonomies as $taxonomy ) :
+					$out = '<li><label class="block">' . $taxonomy->label . '</label><input type="checkbox" name="taxonomies[]" value="' . $taxonomy->name . '" />';
+					$out .= '<div class="column-name"><div class="inner"><label>' . __('Column Name', 'simple-locator') . '</label>';
+					$out .= '<input type="text" name="column_name[' . $taxonomy->name . ']" value="' . $taxonomy->label . '" placeholder="' . $taxonomy->label . '" /></div></div>';
+					$out .= '</li>';
+					echo $out;
+				endforeach;
+				?>
+			</ul>
+		</div>
+	</div>
+	<?php endif; ?>
+
 	<div class="row">
 		<div class="label"><h4><?php _e('Additional Options', 'simple-locator'); ?></h4></div>
 		<div class="field">
@@ -64,6 +87,15 @@ if ( $templates ) : ?>
 				<label class="block"><?php _e('File Name', 'simple-locator'); ?></label>
 				<input type="text" name="file_name" value="<?php _e('location-export', 'simple-locator'); ?>" placeholder="<?php _e('location-export', 'simple-locator'); ?>" />
 			</p>
+			<?php if ( $taxonomies ) : ?>
+			<p>
+				<label class="block"><?php _e('Taxonomy Term Separator', 'simple-locator'); ?></label>
+				<select name="taxonomy_separator" style="width: 100%;"> 
+					<option value="comma"><?php _e('Comma', 'simple-locator'); ?></option>
+					<option value="pipe"><?php _e('Pipe', 'simple-locator'); ?></option>
+				</select>
+			</p>
+			<?php endif; ?>
 		</div>
 	</div>
 	<div class="row">

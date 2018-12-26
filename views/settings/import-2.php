@@ -12,11 +12,6 @@ if ( isset($transient['file']) && isset($transient['post_type']) ) :
 <?php 
 // Form Errors
 if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '</p></div>';
-
-$string = 'taxonomy_dealer-categories]';
-$string_two = 'test';
-var_dump(strpos($string, 'taxonomy_'));
-var_dump(strpos($string, 'test'));
 ?>
 
 <div class="wpsl-loading-settings" data-simple-locator-import-loading>

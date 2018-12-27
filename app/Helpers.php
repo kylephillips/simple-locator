@@ -24,9 +24,19 @@ class Helpers
 	*/
 	public static function template($file, $template_variables = null)
 	{
-		$template = locate_template('simple-locator/' . $file);
+		if ( $template_variables && is_array($template_variables) ){
+			foreach ( $template_variables as $var => $value ){
+				${$var} = $value;
+			}
+		}
+		$template = locate_template('simple-locator/' . $file . '.php');
 		$template = ( $template == '' ) ? dirname(dirname(__FILE__)) . '/templates/' . $file . '.php' : $template;
-		return $template;
+		ob_start();
+		include ( $template );
+		$output = ob_get_contents();
+		ob_end_clean();
+
+		return $output;
 	}
 
 	/**

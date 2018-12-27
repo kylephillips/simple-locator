@@ -7,16 +7,6 @@ use \SimpleLocator\Repositories\SettingsRepository;
 class FormShortcode 
 {
 	/**
-	* Unit of Measurement
-	*/
-	private $unit;
-
-	/**
-	* Untranslated Unit
-	*/
-	private $unit_raw;
-
-	/**
 	* Taxonomies to filter
 	* @var array
 	*/
@@ -37,26 +27,8 @@ class FormShortcode
 	{
 		$this->styles_repo = new MapStyles;
 		$this->settings_repo = new SettingsRepository();
-		add_action('init', [$this, 'init']);
 		add_shortcode('wp_simple_locator', [$this, 'renderView']);
 		add_shortcode('simple_locator', [$this, 'renderView']);
-	}
-
-	/**
-	* Init
-	*/
-	public function init()
-	{
-		$this->setUnit();
-	}
-
-	/**
-	* Set the unit of measurement
-	*/
-	private function setUnit()
-	{
-		$this->unit_raw = $this->settings_repo->getDistanceUnit();
-		$this->unit = $this->settings_repo->getDistanceUnitLocalized();
 	}
 
 	/**
@@ -121,8 +93,15 @@ class FormShortcode
 		$this->options['ajax'] = ( $this->options['ajax'] == 'true' ) ? true : false;
 		$this->options['widget'] = false;
 		$this->options['autocomplete'] = $this->settings_repo->autocomplete();
+		$this->options['unit_raw'] = $this->settings_repo->getDistanceUnit();
+		$this->options['unit'] = $this->settings_repo->getDistanceUnitLocalized();
 		$this->options['distance_options'] = $this->distanceOptions();
 		$this->options['taxonomies'] = $this->taxonomies();
+		$this->options['show_default_map'] = $this->settings_repo->showDefaultMap();
+		$this->options['allowemptyaddress'] = ( $this->options['allowemptyaddress'] == 'true' ) ? true : false;
+		$this->options['mapcontrols'] = ( $this->options['mapcontrols'] == 'show' ) ? true : false;
+		$this->options['mapcontainer'] = ( $this->options['mapcontainer'] == '' ) ? null : $this->options['mapcontainer'];
+		$this->options['resultscontainer'] = ( $this->options['resultscontainer'] == '' ) ? null : $this->options['resultscontainer'];
 		if ( $this->options['ajax'] == 'false' && $this->options['perpage'] == '' ) $this->options['perpage'] = get_option('posts_per_page');
 	}
 
@@ -142,7 +121,7 @@ class FormShortcode
 			}
 			$out .= '<option value="' . $distance . '"';
 			if ( $default ) $out .= ' selected';
-			$out .= '>' . $distance . ' ' . $this->unit . '</option>';
+			$out .= '>' . $distance . ' ' . $this->options['unit'] . '</option>';
 		}
 		return $out;
 	}
@@ -177,10 +156,7 @@ class FormShortcode
 		$this->setOptions($options);
 		$this->enqueueScripts();
 		$this->localizeOptions();
-		ob_start();
-		include ( \SimpleLocator\Helpers::template('search-form') );
-		$form = ob_get_contents();
-		ob_end_clean();
-		return apply_filters('simple_locator_form', $form, $this->options['distances'], $this->taxonomies, false);
+		$form = \SimpleLocator\Helpers::template('search-form', $this->options);
+		return apply_filters('simple_locator_form', $form, $this->options);
 	}
 }

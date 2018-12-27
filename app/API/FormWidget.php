@@ -5,15 +5,6 @@ use \SimpleLocator\Repositories\SettingsRepository;
 
 class FormWidget extends \WP_Widget 
 {
-	/**
-	* Unit of Measurement
-	*/
-	private $unit;
-
-	/**
-	* Untranslated Unit
-	*/
-	private $unit_raw;
 
 	/**
 	* Widget Options
@@ -28,21 +19,11 @@ class FormWidget extends \WP_Widget
 	public function __construct()
 	{
 		$this->settings_repo = new SettingsRepository();
-		$this->setUnit();
 		parent::__construct(
 			'simple_locator',
 			__('Simple Locator', 'simple-locator'),
 			['description' => __( 'Display the Simple Locator Form', 'simple-locator' )]
 		);
-	}
-
-	/**
-	* Set the unit of measurement
-	*/
-	private function setUnit()
-	{
-		$this->unit_raw = $this->settings_repo->getDistanceUnit();
-		$this->unit = $this->settings_repo->getDistanceUnitLocalized();
 	}
 
 	/**
@@ -52,25 +33,29 @@ class FormWidget extends \WP_Widget
 	{
 		$this->options['distances'] = (isset($instance['distance_options'])) ? $instance['distance_options'] : '5,10,20,50,100';
 		$this->options['buttontext'] = __('Search', 'simple-locator');
-		$this->options['mapcontrols'] = 'show';
+		$this->options['mapcontrols'] = true;
 		$this->options['showgeobutton'] = $this->settings_repo->geoButton('enabled');
 		$this->options['geobuttontext'] = $this->settings_repo->geoButton('text');
 		$this->options['placeholder'] = ( isset($instance['placeholder']) ) ? $instance['placeholder'] :__('Enter a Location', 'simple-locator');
 		$this->options['noresultstext'] = __('No results found', 'simple-locator');
 		$this->options['addresslabel'] = __('Zip/Postal Code', 'simple-locator');
-		$this->options['mapcontainer'] = '';
+		$this->options['mapcontainer'] = null;
 		$this->options['ajax'] = true;
 		$this->options['formmethod'] = 'get';
 		$this->options['resultspage'] = '';
-		$this->options['resultscontainer'] = '';
+		$this->options['resultscontainer'] = null;
 		$this->options['mapcontrolsposition'] = '';
 		$this->options['perpage'] = ( isset($instance['perpage']) ) ? $instance['perpage'] : '';
 		$this->options['mapheight'] = ( isset($instance['map_height']) ) ? $instance['map_height'] : 200;
 		$this->options['showall'] = '';
 		$this->options['widget'] = true;
 		$this->options['autocomplete'] = $this->settings_repo->autocomplete();
+		$this->options['unit_raw'] = $this->settings_repo->getDistanceUnit();
+		$this->options['unit'] = $this->settings_repo->getDistanceUnitLocalized();
 		$this->options['distance_options'] = $this->distanceOptions();
 		$this->options['taxonomies'] = false;
+		$this->options['show_default_map'] = $this->settings_repo->showDefaultMap();
+		$this->options['allowemptyaddress'] = false;
 	}
 
 	/**
@@ -82,7 +67,7 @@ class FormWidget extends \WP_Widget
 		$out = "";
 		foreach ( $this->options['distances'] as $distance ){
 			if ( !is_numeric($distance) ) continue;
-			$out .= '<option value="' . $distance . '">' . $distance . ' ' . $this->unit . '</option>';
+			$out .= '<option value="' . $distance . '">' . $distance . ' ' . $this->options['unit'] . '</option>';
 		}
 		return $out;
 	}
@@ -135,12 +120,8 @@ class FormWidget extends \WP_Widget
 		}
 		
 		$this->enqueueScripts();
-
-		ob_start();
-		include( \SimpleLocator\Helpers::template('search-form') );
-		$output = ob_get_contents();
-		ob_end_clean();
-		echo $output;
+		$form = \SimpleLocator\Helpers::template('search-form', $this->options);
+		echo $form;
 		echo $args['after_widget'];
 	}
 }

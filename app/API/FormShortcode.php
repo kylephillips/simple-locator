@@ -3,6 +3,7 @@ namespace SimpleLocator\API;
 
 use \SimpleLocator\Repositories\MapStyles;
 use \SimpleLocator\Repositories\SettingsRepository;
+use \SimpleLocator\Form\SearchForm;
 
 class FormShortcode 
 {
@@ -156,7 +157,8 @@ class FormShortcode
 		$this->setOptions($options);
 		$this->enqueueScripts();
 		$this->localizeOptions();
-		$form = \SimpleLocator\Helpers::template('search-form', $this->options);
-		return apply_filters('simple_locator_form', $form, $this->options);
+		$form = new SearchForm($this->options);
+		$output = \SimpleLocator\Helpers::template('search-form', $this->options);
+		return apply_filters('simple_locator_form', $output, $this->options);
 	}
 }

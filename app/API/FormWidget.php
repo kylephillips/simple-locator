@@ -59,7 +59,7 @@ class FormWidget extends \WP_Widget
 		$this->options['noresultstext'] = __('No results found', 'simple-locator');
 		$this->options['addresslabel'] = __('Zip/Postal Code', 'simple-locator');
 		$this->options['mapcontainer'] = '';
-		$this->options['ajax'] = 'true';
+		$this->options['ajax'] = true;
 		$this->options['formmethod'] = 'get';
 		$this->options['resultspage'] = '';
 		$this->options['resultscontainer'] = '';
@@ -67,6 +67,10 @@ class FormWidget extends \WP_Widget
 		$this->options['perpage'] = ( isset($instance['perpage']) ) ? $instance['perpage'] : '';
 		$this->options['mapheight'] = ( isset($instance['map_height']) ) ? $instance['map_height'] : 200;
 		$this->options['showall'] = '';
+		$this->options['widget'] = true;
+		$this->options['autocomplete'] = $this->settings_repo->autocomplete();
+		$this->options['distance_options'] = $this->distanceOptions();
+		$this->options['taxonomies'] = false;
 	}
 
 	/**
@@ -131,9 +135,9 @@ class FormWidget extends \WP_Widget
 		}
 		
 		$this->enqueueScripts();
-		$widget_instance = true;
+
 		ob_start();
-		include( \SimpleLocator\Helpers::view('search-form') );
+		include( \SimpleLocator\Helpers::template('search-form') );
 		$output = ob_get_contents();
 		ob_end_clean();
 		echo $output;

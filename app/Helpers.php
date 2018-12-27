@@ -20,6 +20,16 @@ class Helpers
 	}
 
 	/**
+	* Template
+	*/
+	public static function template($file, $template_variables = null)
+	{
+		$template = locate_template('simple-locator/' . $file);
+		$template = ( $template == '' ) ? dirname(dirname(__FILE__)) . '/templates/' . $file . '.php' : $template;
+		return $template;
+	}
+
+	/**
 	* Check URL Format
 	*/
 	public static function checkURL($url)

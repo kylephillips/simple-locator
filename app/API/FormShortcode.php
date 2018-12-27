@@ -62,19 +62,21 @@ class FormShortcode
 	/**
 	* Set the taxonomy filters
 	*/
-	private function setTaxonomies()
+	private function taxonomies()
 	{
-		if ( $this->options['taxonomies'] == "" ) return;
+		if ( $this->options['taxonomies'] == "" ) return false;
 		$tax_array = explode(',', $this->options['taxonomies']);
+		$taxonomies = [];
 		foreach ( $tax_array as $key => $tax ){
 			$taxonomy = get_taxonomy($tax);
 			if ( !$taxonomy ) continue;
 			$tax_label = $taxonomy->labels->name; // Get the label
 			$terms = get_terms($tax); // Get the terms
 			if ( !$terms ) continue;
-			$this->taxonomies[$tax]['label'] = $tax_label;
-			$this->taxonomies[$tax]['terms'] = $terms;
+			$taxonomies[$tax]['label'] = $tax_label;
+			$taxonomies[$tax]['terms'] = $terms;
 		}
+		return $taxonomies;
 	}
 
 	/**
@@ -116,6 +118,11 @@ class FormShortcode
 			'showall' => '' // Show all locations on inital load, value is used as list header if enabled
 		], $options);
 		$this->options['formmethod'] = ( $this->options['formmethod'] == 'post' ) ? 'post' : 'get';
+		$this->options['ajax'] = ( $this->options['ajax'] == 'true' ) ? true : false;
+		$this->options['widget'] = false;
+		$this->options['autocomplete'] = $this->settings_repo->autocomplete();
+		$this->options['distance_options'] = $this->distanceOptions();
+		$this->options['taxonomies'] = $this->taxonomies();
 		if ( $this->options['ajax'] == 'false' && $this->options['perpage'] == '' ) $this->options['perpage'] = get_option('posts_per_page');
 	}
 
@@ -168,11 +175,10 @@ class FormShortcode
 	{	
 		if ( isset($_POST['simple_locator_results']) || isset($_GET['simple_locator_results']) ) return;
 		$this->setOptions($options);
-		$this->setTaxonomies();
 		$this->enqueueScripts();
 		$this->localizeOptions();
 		ob_start();
-		include ( \SimpleLocator\Helpers::view('search-form') );
+		include ( \SimpleLocator\Helpers::template('search-form') );
 		$form = ob_get_contents();
 		ob_end_clean();
 		return apply_filters('simple_locator_form', $form, $this->options['distances'], $this->taxonomies, false);

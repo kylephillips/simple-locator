@@ -1,9 +1,8 @@
 <?php
 global $post;
-$ajax = ( $this->options['ajax'] == 'false' ) ? false : true;
 
 // Is this a widget form or a shortcode form
-if ( isset($widget_instance) ) : ?>
+if ( $this->options['widget'] ) : ?>
 	<div class="simple-locator-widget">
 	<span id="widget"></span>
 <?php endif; ?>
@@ -26,7 +25,7 @@ if ( isset($widget_instance) ) : ?>
 	if ( $this->options['resultscontainer'] != '') :
 		echo ' data-simple-locator-results-container="' . $this->options['resultscontainer'] . '"';
 	endif;
-	if ( $ajax ) : 
+	if ( $this->options['ajax'] ) : 
 		echo ' data-simple-locator-ajax-form="true"';
 	endif;
 	?>
@@ -35,19 +34,19 @@ if ( isset($widget_instance) ) : ?>
 	<div class="wpsl-error alert alert-error" style="display:none;" data-simple-locator-form-error></div>
 	<div class="address-input form-field">
 		<label for="wpsl_address"><?php echo $this->options['addresslabel']; ?></label>
-		<input type="text" id="wpsl_address" data-simple-locator-input-address name="address" class="address wpsl-search-form" placeholder="<?php echo $this->options['placeholder']; ?>" <?php if ( $this->settings_repo->autocomplete() ) echo ' data-simple-locator-autocomplete'; ?> />
+		<input type="text" id="wpsl_address" data-simple-locator-input-address name="address" class="address wpsl-search-form" placeholder="<?php echo $this->options['placeholder']; ?>" <?php if ( $this->options['autocomplete'] ) echo ' data-simple-locator-autocomplete'; ?> />
 	</div>
 	<div class="distance form-field">
 		<label for="wpsl_distance"><?php _e('Distance', 'simple-locator'); ?></label>
 		<select name="wpsl_distance" class="distanceselect" data-simple-locator-input-distance>
-			<?php echo $this->distanceOptions(); ?>
+			<?php echo $this->options['distance_options']; ?>
 		</select>
 	</div>
-	<?php if ( isset($this->taxonomies) ) : ?>
+	<?php if ( $this->options['taxonomies'] ) : ?>
 	<div class="wpsl-taxonomy-filters">
 		<?php
 		if ( $this->options['taxonomy_field_type'] == 'select' ) :
-			foreach ( $this->taxonomies as $tax_name => $taxonomy ) : ?>
+			foreach ( $this->options['taxonomies'] as $tax_name => $taxonomy ) : ?>
 				<div class="wpsl-taxonomy-filter">
 				<label for="wpsl_taxonomy_<?php echo $tax_name; ?>" class="taxonomy-label"><?php echo $taxonomy['label']; ?></label>
 				<select id="wpsl_taxonomy_<?php echo $tax_name; ?>" name="taxfilter[<?php echo $tax_name; ?>]" data-simple-locator-taxonomy-select="<?php echo $tax_name; ?>">
@@ -61,7 +60,7 @@ if ( isset($widget_instance) ) : ?>
 			<?php
 			endforeach;
 		else :
-			foreach ( $this->taxonomies as $tax_name => $taxonomy ) : ?>
+			foreach ( $this->options['taxonomies'] as $tax_name => $taxonomy ) : ?>
 				<div class="wpsl-taxonomy-filter checkboxes">
 				<label class="taxonomy-label"><?php echo $taxonomy['label']; ?></label>
 				<?php
@@ -116,4 +115,4 @@ if ( isset($widget_instance) ) : ?>
 </div><!-- .simple-locator-form -->
 
 <?php
-if ( isset($widget_instance) ) echo '</div><!-- .simple-locator-widget -->';
+if ( $this->options['widget'] ) echo '</div><!-- .simple-locator-widget -->';

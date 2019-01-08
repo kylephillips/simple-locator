@@ -54,6 +54,8 @@ class AdminDependencies extends DependencyBase
 				'remove' 			=> __('Remove', 'simple-locator'),
 				'edit' 				=> $post_type->labels->edit_item,
 				'view'				=> $post_type->labels->view_item,
+				'save'				=> __('Save', 'simple-locator'),
+				'cancel'			=> __('Cancel', 'simple-locator'),
 				'posttype' 			=> $this->post_type,
 				'posttype_setting'	=> get_option('wpsl_post_type'),
 				'lat_field'			=> $this->settings_repo->getGeoField('lat'),
@@ -64,7 +66,9 @@ class AdminDependencies extends DependencyBase
 				'show_listing_map'	=> $this->settings_repo->includeAdminListMap(),
 				'mapstyles' 		=> $this->styles_repo->getLocalizedStyles(),
 				'mappin' 			=> $this->settings_repo->mapPin(),
-				'acf_tab'			=> $this->settings_repo->acfTab()
+				'acf_tab'			=> $this->settings_repo->acfTab(),
+				'quickedit_geocode_error' => __('The location was successfully saved, but could not be geocoded.', 'simple-locator'),
+				'loading_spinner'	=> \SimpleLocator\Helpers::plugin_url() . '/assets/images/loading-spinner.svg'
 			];
 			$data = $this->importVars($data);
 			$data['confirm_undo'] 	= __('Are you sure you want to undo this import? This action cannot be undone.', 'simple-locator');

@@ -42,6 +42,7 @@ var js_admin_source = [
 	'assets/js/source/admin/simple-locator-admin.import-import.js',
 	'assets/js/source/admin/simple-locator-admin.listing-map.js',
 	'assets/js/source/admin/simple-locator-admin.export-templates.js',
+	'assets/js/source/admin/simple-locator-admin.quick-edit.js',
 	'assets/js/source/admin/simple-locator-admin.factory.js'
 ];
 

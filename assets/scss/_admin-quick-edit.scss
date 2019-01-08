@@ -1,0 +1,57 @@
+//
+// Location Quick Edit
+// --------------------------------------------------
+.simple-locator-quick-edit-alert {
+	background-color: $red;
+	color: $white;
+	padding: .5em;
+	margin-bottom: .5em;
+	display: none;
+}
+
+.simple-locator-quick-edit-spinner {
+	display: none;
+	float: right;
+	width: 30px;
+	height: 30px;
+	margin-right: 5px;
+	position: relative;
+	top: 2px;
+	img {
+		width: 24px;
+		height: 24px;
+	}
+}
+
+.simple-locator-quick-edit {
+	h3 {
+		color: #555;
+		font-size: 12px;
+		text-transform: uppercase;
+		margin: 0 0 1em 0;
+	}
+	.fields {
+		@include clearfix;
+		.field {
+			position: relative;
+			padding: 5px 0 5px 100px;
+			label {
+				position: absolute;
+				left: 0;
+				top: 5px;
+			}
+			input {
+				width: 100%;
+			}
+		}
+	}
+	.buttons {
+		@include clearfix;
+		button {
+			float: right;
+			&:first-child {
+				float: left;
+			}
+		}
+	} // .buttons
+} // .dealer-quick-edit

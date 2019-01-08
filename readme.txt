@@ -138,6 +138,7 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 * Adds option to place built in location fields in Advanced Custom Fields tab if ACF is enabled and tabs are assigned to the post type.
 * Updates included Guzzle dependency to version 6 (resolves php 7.2 error).
 * Adds CSV export option to export locations to CSV files, with the ability to save and load export templates.
+* Adds location quick edit in admin post_row_actions, enabling quick location edit capabilities with geocoding. Displays if using the included Simple Locator address fields.
 
 
 = 1.5.7 =

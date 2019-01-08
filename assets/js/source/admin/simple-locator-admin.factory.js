@@ -39,6 +39,7 @@ SimpleLocatorAdmin.Factory = function()
 		new SimpleLocatorAdmin.Import;
 		new SimpleLocatorAdmin.ListingMap;
 		new SimpleLocatorAdmin.ExportTemplates;
+		new SimpleLocatorAdmin.QuickEdit;
 	}
 
 	return self.init();

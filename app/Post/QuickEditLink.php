@@ -25,6 +25,11 @@ class QuickEditLink
 	*/
 	private $hide_locator_fields = false;
 
+	/**
+	* Lat/Lng Fields
+	*/
+	private $geocode_fields = [];
+
 	public function __construct()
 	{
 		$this->settings = new SettingsRepository;
@@ -40,6 +45,8 @@ class QuickEditLink
 		$this->post_type = $this->settings->getLocationPostType();
 		$hide_locator_fields = get_option('wpsl_hide_default_fields');
 		if ( $hide_locator_fields == 'true' ) $this->hide_locator_fields = true;
+		$this->geocode_fields['lat'] = $this->settings->getGeoField('lat');
+		$this->geocode_fields['lng'] = $this->settings->getGeoField('lng');
 	}
 
 	/**
@@ -59,8 +66,10 @@ class QuickEditLink
 		$country = ( isset($meta['wpsl_country']) && $meta['wpsl_country'] !== '' ) ? $meta['wpsl_country'][0] : '';
 		$zip = ( isset($meta['wpsl_zip']) && $meta['wpsl_zip'] !== '' ) ? $meta['wpsl_zip'][0] : '';
 		$phone = ( isset($meta['wpsl_phone']) && $meta['wpsl_phone'] !== '' ) ? $meta['wpsl_phone'][0] : '';
+		$latitude = ( isset($meta[$this->geocode_fields['lat']]) && $meta[$this->geocode_fields['lat']] !== '' )  ? $meta[$this->geocode_fields['lat']][0] : '';
+		$longitude = ( isset($meta[$this->geocode_fields['lng']]) && $meta[$this->geocode_fields['lng']] !== '' )  ? $meta[$this->geocode_fields['lng']][0] : '';
 
-		$link = '<a href="#" class="simple-locator-quick-edit-link" data-simple-locator-quick-edit="' . $post->ID . '" data-address="' . $address . '" data-address_two="' . $address_two . '" data-city="' . $city . '" data-state="' . $state . '" data-zip="' . $zip . '" data-country="' . $country . '" data-phone="' . $phone . '" data-title="' . $post->post_title . '">';
+		$link = '<a href="#" class="simple-locator-quick-edit-link" data-simple-locator-quick-edit="' . $post->ID . '" data-address="' . $address . '" data-address_two="' . $address_two . '" data-city="' . $city . '" data-state="' . $state . '" data-zip="' . $zip . '" data-country="' . $country . '" data-phone="' . $phone . '" data-longitude="' . $longitude . '" data-latitude="' . $latitude . '" data-title="' . $post->post_title . '">';
 		$title = apply_filters('simple_locator_quick_edit_title', __('Edit Location', 'simple-locator'), $post);
 		$actions['location-quick-edit'] = $link . $title  . '</a>';
 		return $actions;

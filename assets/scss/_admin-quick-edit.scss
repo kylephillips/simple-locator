@@ -30,7 +30,17 @@
 		text-transform: uppercase;
 		margin: 0 0 1em 0;
 	}
+	.inner {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 1em;
+	}
+	.map {
+		width: 49%;
+		background-color: rgba($black, .03);
+	}
 	.fields {
+		width: 49%;
 		@include clearfix;
 		.field {
 			position: relative;
@@ -52,6 +62,9 @@
 			&:first-child {
 				float: left;
 			}
+		}
+		.button-primary {
+			margin-left: 5px;
 		}
 	} // .buttons
 } // .dealer-quick-edit

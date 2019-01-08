@@ -55,6 +55,7 @@ class AdminDependencies extends DependencyBase
 				'edit' 				=> $post_type->labels->edit_item,
 				'view'				=> $post_type->labels->view_item,
 				'save'				=> __('Save', 'simple-locator'),
+				'preview'			=> __('Preview', 'simple-locator'),
 				'cancel'			=> __('Cancel', 'simple-locator'),
 				'posttype' 			=> $this->post_type,
 				'posttype_setting'	=> get_option('wpsl_post_type'),

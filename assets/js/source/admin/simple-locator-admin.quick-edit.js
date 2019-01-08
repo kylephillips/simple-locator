@@ -8,6 +8,9 @@ SimpleLocatorAdmin.QuickEdit = function()
 	var self = this;
 	var $ = jQuery;
 
+	self.map = false;
+	self.mapMarker = false;
+
 	self.fields = [
 		['address', 'Address'],
 		['address_two', 'Address Line 2'],
@@ -27,35 +30,40 @@ SimpleLocatorAdmin.QuickEdit = function()
 		editLink : 'data-simple-locator-quick-edit',
 		submitButton : 'data-simple-locator-quick-edit-submit',
 		cancelButton : 'data-simple-locator-quick-edit-cancel',
+		previewButton : 'data-simple-locator-quick-edit-preview',
 		error : 'data-simple-locator-quick-edit-error',
-		loading : '.simple-locator-quick-edit-spinner'
+		loading : '.simple-locator-quick-edit-spinner',
+		map : 'data-simple-locator-quick-edit-map'
 	}
 
 	self.bindEvents = function()
 	{
 		$(document).on('click', '[' + self.selectors.editLink + ']', function(e){
 			e.preventDefault();
+			self.clearQuickEdit();
 			self.activeItem = $(this);
 			self.openForm();
 		});
 		$(document).on('click', '[' + self.selectors.cancelButton + ']', function(e){
 			e.preventDefault();
-			$(self.selectors.quickEditContainer).remove();
-			$('tr').show();
+			self.clearQuickEdit();
 		});
 		$(document).on('click', '[' + self.selectors.submitButton + ']', function(e){
 			e.preventDefault();
 			self.loading(true);
-			self.prepareFormData();
+			self.prepareFormData(false);
 		});
 		$(document).on('simple-locator-quick-edit-complete', function(e, formdata, link, geocoded){
 			self.completed(formdata, link, geocoded);
 		});
 		$(document).on('keyup', function(e){
 			if ( e.key === 'Escape' && $(self.selectors.quickEditContainer).length > 0 ){
-				$(self.selectors.quickEditContainer).remove();
-				$('tr').show();
+				self.clearQuickEdit();
 			}
+		});
+		$(document).on('click', '[' + self.selectors.previewButton + ']', function(e){
+			e.preventDefault();
+			self.preview();
 		});
 	}
 
@@ -64,14 +72,12 @@ SimpleLocatorAdmin.QuickEdit = function()
 	*/
 	self.openForm = function()
 	{
-		$(self.selectors.quickEditContainer).remove();
-		$('tr').show();
-
 		var column_count = $(self.activeItem).parents('tr').find('td').length + $(self.activeItem).parents('tr').find('th').length;
 		var title = $(self.activeItem).attr('data-title');
 		var html = '<tr class="simple-locator-quick-edit"><td colspan="' + column_count + '">';
 		html += '<h3>' + title + '</h3>';
 		html += '<div class="simple-locator-quick-edit-alert" ' + self.selectors.error + '></div>';
+		html += '<div class="inner">';
 		html += '<div class="fields">';
 		for ( var i = 0; i < self.fields.length; i++ ){
 			var key = self.fields[i][0];
@@ -79,20 +85,66 @@ SimpleLocatorAdmin.QuickEdit = function()
 			html += '<div class="field"><label>' + self.fields[i][1] + '</label><input type="text" data-quickedit-' + key + ' value="' + value + '" /></div>';
 		}
 		html += '</div><!-- .fields -->';
+		html += '<div class="map" data-simple-locator-quick-edit-map></div>';
+		html += '</div><!-- .inner -->';
 		html += '<div class="buttons">';
 		html += '<button class="button" ' + self.selectors.cancelButton + '>' + wpsl_locator.cancel + '</button>';
 		html += '<button class="button button-primary" ' + self.selectors.submitButton + '>' + wpsl_locator.save + '</button>';
+		html += '<button class="button" ' + self.selectors.previewButton + '>' + wpsl_locator.preview + '</button>';
 		html += '<div class="simple-locator-quick-edit-spinner"><div class="wpsl-icon-spinner-image"><img src="' + wpsl_locator.loading_spinner + '" class="wpsl-spinner-image" /></div></div>';
 		html += '</div><!-- .buttons -->';
 		html += '</td></tr><!-- .dealer-quick-edit -->';
 		$(self.activeItem).parents('tr').hide();
 		$(html).insertAfter($(self.activeItem).parents('tr'));
+		self.loadMap(true);
+	}
+
+	/**
+	* Load Map
+	*/
+	self.loadMap = function(initialLoad)
+	{
+		if ( initialLoad ){
+			var latitude = $(self.activeItem).attr('data-latitude');
+			var longitude = $(self.activeItem).attr('data-longitude');
+		}
+		if ( !initialLoad ){
+			var latitude = self.formData.latitude;
+			var longitude = self.formData.longitude;
+		}
+
+		var container = $('[' + self.selectors.map + ']');
+		var mapstyles = wpsl_locator.mapstyles;	
+		var mappin = ( wpsl_locator.mappin ) ? wpsl_locator.mappin : '';
+		var position = new google.maps.LatLng(latitude, longitude);
+
+		if ( !self.map ) {
+			var mapOptions = {
+				mapTypeId: 'roadmap',
+				mapTypeControl: false,
+				zoom: 12,
+				styles: mapstyles,
+				scrollwheel: false,
+				panControl : false,
+				center : position
+			}
+			self.map = new google.maps.Map( container[0], mapOptions );
+		} else {
+			self.marker.setMap(null);
+			self.map.setCenter(position)
+		}
+		
+		self.marker = new google.maps.Marker({
+			position: position,
+			map: self.map,
+			icon: mappin
+		});	
 	}
 
 	/**
 	* Prepare the form data for submission
 	*/
-	self.prepareFormData = function()
+	self.prepareFormData = function(preview)
 	{
 		$('[' + self.selectors.error + ']').hide();
 		self.formData = {
@@ -103,13 +155,22 @@ SimpleLocatorAdmin.QuickEdit = function()
 			var key = self.fields[i][0];
 			self.formData[key] = $('[data-quickedit-' + key + ']').val();
 		}
-		self.geocodeAddress();	
+		self.geocodeAddress(preview);	
+	}
+
+	/**
+	* Preview the address before saving
+	*/
+	self.preview = function()
+	{
+		self.initialLoad = false;
+		self.prepareFormData(true);
 	}
 
 	/**
 	* Geocode Address
 	*/
-	self.geocodeAddress = function()
+	self.geocodeAddress = function(preview)
 	{
 		var address = '';
 		for ( var i = 0; i < self.fields.length; i++ ){
@@ -128,6 +189,10 @@ SimpleLocatorAdmin.QuickEdit = function()
 				self.geocoded = true;
 			} else {
 				self.geocoded = false;
+			}
+			if ( preview ) {
+				self.loadMap(false);
+				return;
 			}
 			self.submitForm();
 		});
@@ -168,7 +233,19 @@ SimpleLocatorAdmin.QuickEdit = function()
 			$('[' + self.selectors.error + ']').text(wpsl_locator.quickedit_geocode_error).show();
 			return;
 		}
+		
 		var row = $(link).parents('tr').show();
+		self.clearQuickEdit();
+	}
+
+	/**
+	* Clear out of quick edit
+	*/
+	self.clearQuickEdit = function()
+	{
+		self.map = false;
+		self.mapMarker = false;
+		$('tr').show();
 		$(self.selectors.quickEditContainer).remove();
 	}
 

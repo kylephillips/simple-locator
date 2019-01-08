@@ -51,6 +51,12 @@ SimpleLocatorAdmin.QuickEdit = function()
 		$(document).on('simple-locator-quick-edit-complete', function(e, formdata, link, geocoded){
 			self.completed(formdata, link, geocoded);
 		});
+		$(document).on('keyup', function(e){
+			if ( e.key === 'Escape' && $(self.selectors.quickEditContainer).length > 0 ){
+				$(self.selectors.quickEditContainer).remove();
+				$('tr').show();
+			}
+		});
 	}
 
 	/**

@@ -67,8 +67,9 @@ SimpleLocatorAdmin.QuickEdit = function()
 		$(self.selectors.quickEditContainer).remove();
 		$('tr').show();
 
+		var column_count = $(self.activeItem).parents('tr').find('td').length + $(self.activeItem).parents('tr').find('th').length;
 		var title = $(self.activeItem).attr('data-title');
-		var html = '<tr class="simple-locator-quick-edit"><td colspan="4">';
+		var html = '<tr class="simple-locator-quick-edit"><td colspan="' + column_count + '">';
 		html += '<h3>' + title + '</h3>';
 		html += '<div class="simple-locator-quick-edit-alert" ' + self.selectors.error + '></div>';
 		html += '<div class="fields">';

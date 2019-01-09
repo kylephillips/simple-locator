@@ -42,7 +42,7 @@ class AdminMap
 	*/
 	public function addColumn($columns)
 	{
-		$columns['wpsl-coordinates'] = 'Location';
+		$columns['wpsl-coordinates'] = apply_filters('simple_locator_admin_map_column_title', __('Location', 'simple-locator'));
 		return $columns;
 	}
 
@@ -62,7 +62,8 @@ class AdminMap
 		$infowindow = $this->getInfowindow($post_id, $latitude, $longitude);
 
 		echo '<div data-wpsl-post-infowindow style="display:none;">' . $infowindow . '</div>';
-		echo '<a href="#" data-wpsl-listing-post-id="' . $post_id . '" data-wpsl-post-title="' . get_the_title($post_id) . '" data-wpsl-edit-link="' . $edit_link . '" data-wpsl-view-link="' . $view_link . '" data-wpsl-listing-map-link="" data-wpsl-post-latitude="' . $latitude . '" data-wpsl-post-longitude="' . $longitude . '">' . __('View on Map', 'simple-locator') . '</a>';
+		$link = '<a href="#" data-wpsl-listing-post-id="' . $post_id . '" data-wpsl-post-title="' . get_the_title($post_id) . '" data-wpsl-edit-link="' . $edit_link . '" data-wpsl-view-link="' . $view_link . '" data-wpsl-listing-map-link="" data-wpsl-post-latitude="' . $latitude . '" data-wpsl-post-longitude="' . $longitude . '">';
+		echo $link . apply_filters('simple_locator_admin_map_column_content', __('View on Map', 'simple-locator')) . '</a>';
 	}
 
 	/**

@@ -1,6 +1,8 @@
 <?php 
 namespace SimpleLocator\WPData;
 
+use SimpleLocator\WPData\Fields\FormFields;
+
 /**
 * Custom Meta Fields for Location Post Type
 */
@@ -16,8 +18,14 @@ class MetaFields
 	*/
 	public $fields;
 
+	/**
+	* Form Fields Output
+	*/
+	private $form_fields;
+
 	function __construct()
 	{
+		$this->form_fields = new FormFields;
 		$this->setFields();
 		add_action( 'add_meta_boxes', [$this, 'metaBox']);
 		add_action( 'save_post', [$this, 'savePost']);

@@ -10,6 +10,7 @@ SimpleLocatorAdmin.QuickEdit = function()
 
 	self.map = false;
 	self.mapMarker = false;
+	self.customMarkerPosition = {custom : false};
 
 	self.fields = [
 		['address', 'Address'],
@@ -137,8 +138,16 @@ SimpleLocatorAdmin.QuickEdit = function()
 		self.marker = new google.maps.Marker({
 			position: position,
 			map: self.map,
-			icon: mappin
-		});	
+			icon: mappin,
+			draggable: true
+		});
+
+		// Make Marker Draggable and update on change
+		google.maps.event.addListener(self.marker, 'drag', function(){
+			self.customMarkerPosition.latitude = self.marker.position.lat();
+			self.customMarkerPosition.longitude = self.marker.position.lng();
+			self.customMarkerPosition.custom = true;
+		});
 	}
 
 	/**
@@ -203,17 +212,26 @@ SimpleLocatorAdmin.QuickEdit = function()
 	*/
 	self.submitForm = function()
 	{
+		if ( self.customMarkerPosition.custom ){
+			self.formData.latitude = self.customMarkerPosition.latitude;
+			self.formData.longitude = self.customMarkerPosition.longitude;
+		}
+		self.formData.custom_geo = self.customMarkerPosition.custom;
 		$.ajax({
 			type: 'GET',
 			url: ajaxurl,
 			data: self.formData,
 			success: function(data){
+				console.log(data);
 				self.loading(false);
 				if ( data.status === 'error' ){
 					$('[' + self.selectors.error + ']').text(data.message).show();
 					return;
 				}
 				$(document).trigger('simple-locator-quick-edit-complete', [self.formData, self.activeItem, self.geocoded]);
+			},
+			error : function(data){
+				console.log(data);
 			}
 		});
 	}
@@ -245,6 +263,7 @@ SimpleLocatorAdmin.QuickEdit = function()
 	{
 		self.map = false;
 		self.mapMarker = false;
+		self.customMarkerPosition.custom = false;
 		$('tr').show();
 		$(self.selectors.quickEditContainer).remove();
 	}

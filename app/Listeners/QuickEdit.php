@@ -34,9 +34,11 @@ class QuickEdit extends AJAXListenerBase
 		$longitude_field = $this->settings->getGeoField('lng');
 		$fields = $_GET;
 		$post_id = intval($_GET['id']);
-		$allowed_fields = ['wpsl_address', 'wpsl_address_two', 'wpsl_city', 'wpsl_state', 'wpsl_zip', 'wpsl_country', 'wpsl_phone', $latitude_field, $longitude_field];
+		$allowed_fields = ['wpsl_address', 'wpsl_address_two', 'wpsl_city', 'wpsl_state', 'wpsl_zip', 'wpsl_country', 'wpsl_phone', 'wpsl_custom_geo', $latitude_field, $longitude_field];
 		foreach ( $fields as $key => $value ){
 			if ( $key == 'action' || $key == 'id' ) continue;
+			if ( $key == 'custom_geo' && $value == 'false' ) $value = 'false';
+			if ( $key == 'custom_geo' && $value == 'true' ) $value = 'true';
 			$meta_key = 'wpsl_' . $key;
 			if ( !in_array($meta_key, $allowed_fields) ) continue;
 			$meta_value = sanitize_text_field($value);

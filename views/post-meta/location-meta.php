@@ -33,7 +33,7 @@ $fields_ordered = $this->form_fields->order();
 		foreach ( $field['css-class'] as $class ){
 			$html .= $class . ' ';
 		}
-		$html .= '>' . $this->form_fields->output($field, $value) . '</p>';
+		$html .= '">' . $this->form_fields->output($field, $value) . '</p>';
 	}
 	echo $html;
 	?>

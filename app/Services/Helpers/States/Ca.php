@@ -11,7 +11,7 @@ class Ca implements StateInterface
 		return [
 			'ab' => [
 				'code' => 'ab', 
-				'name' => 'Alabama',
+				'name' => 'Alberta',
 				'territory' => false,
 			],
 			'bc' => [

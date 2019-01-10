@@ -39,11 +39,14 @@ class FormFields extends FieldBase
 			'type' => 'text',
 			'name' => 'wpsl_address',
 			'id' => 'wpsl_address',
-			'attributes' => ['data-quickedit-address', 'data-value' => $value],
+			'attributes' => [
+				'data-quickedit-address', 
+				['attr' => 'data-value', 'value' => $value]
+			],
 			'choices' => [],
 			'css-class' => ['full', 'wpsl-address-field']
 		];
-		return apply_filters('simple_locator_fields_address', $field);
+		return apply_filters('simple_locator_fields_address', $field, $post_id);
 	}
 
 	/**
@@ -57,11 +60,14 @@ class FormFields extends FieldBase
 			'type' => 'text',
 			'name' => 'wpsl_address_two',
 			'id' => 'wpsl_address_two',
-			'attributes' => ['data-quickedit-address_two', 'data-value' => $value],
+			'attributes' => [
+				'data-quickedit-address_two', 
+				['attr' => 'data-value', 'value' => $value]
+			],
 			'choices' => [],
 			'css-class' => ['full', 'wpsl-address-two-field']
 		];
-		return apply_filters('simple_locator_fields_address_two', $field);
+		return apply_filters('simple_locator_fields_address_two', $field, $post_id);
 	}
 
 	/**
@@ -75,11 +81,14 @@ class FormFields extends FieldBase
 			'type' => 'text',
 			'name' => 'wpsl_city',
 			'id' => 'wpsl_city',
-			'attributes' => ['data-quickedit-city', 'data-value' => $value],
+			'attributes' => [
+				'data-quickedit-city', 
+				['attr' => 'data-value', 'value' => $value]
+			],
 			'choices' => [],
 			'css-class' => ['city', 'wpsl-city-field']
 		];
-		return apply_filters('simple_locator_fields_city', $field);
+		return apply_filters('simple_locator_fields_city', $field, $post_id);
 	}
 
 	/**
@@ -93,11 +102,14 @@ class FormFields extends FieldBase
 			'type' => 'text',
 			'name' => 'wpsl_state',
 			'id' => 'wpsl_state',
-			'attributes' => ['data-quickedit-state', 'data-value' => $value],
+			'attributes' => [
+				'data-quickedit-state', 
+				['attr' => 'data-value', 'value' => $value]
+			],
 			'choices' => [],
 			'css-class' => ['state', 'wpsl-state-field']
 		];
-		return apply_filters('simple_locator_fields_state', $field);
+		return apply_filters('simple_locator_fields_state', $field, $post_id);
 	}
 
 	/**
@@ -111,11 +123,14 @@ class FormFields extends FieldBase
 			'type' => 'text',
 			'name' => 'wpsl_zip',
 			'id' => 'wpsl_zip',
-			'attributes' => ['data-quickedit-zip', 'data-value' => $value],
+			'attributes' => [
+				'data-quickedit-zip', 
+				['attr' => 'data-value', 'value' => $value]
+			],
 			'choices' => [],
 			'css-class' => ['zip', 'wpsl-zip-field']
 		];
-		return apply_filters('simple_locator_fields_postal_code', $field);
+		return apply_filters('simple_locator_fields_postal_code', $field, $post_id);
 	}
 
 	/**
@@ -129,11 +144,14 @@ class FormFields extends FieldBase
 			'type' => 'text',
 			'name' => 'wpsl_country',
 			'id' => 'wpsl_country',
-			'attributes' => ['data-quickedit-country', 'data-value' => $value],
+			'attributes' => [
+				'data-quickedit-country', 
+				['attr' => 'data-value', 'value' => $value]
+			],
 			'choices' => [],
 			'css-class' => ['full', 'wpsl-country-field']
 		];
-		return apply_filters('simple_locator_fields_country', $field);
+		return apply_filters('simple_locator_fields_country', $field, $post_id);
 	}
 
 	/**
@@ -147,11 +165,14 @@ class FormFields extends FieldBase
 			'type' => 'text',
 			'name' => 'wpsl_website',
 			'id' => 'wpsl_website',
-			'attributes' => ['data-quickedit-website', 'data-value' => $value],
+			'attributes' => [
+				'data-quickedit-website', 
+				['attr' => 'data-value', 'value' => $value]
+			],
 			'choices' => [],
 			'css-class' => ['half', 'right', 'wpsl-website-field']
 		];
-		return apply_filters('simple_locator_fields_website', $field);
+		return apply_filters('simple_locator_fields_website', $field, $post_id);
 	}
 
 	/**
@@ -165,11 +186,14 @@ class FormFields extends FieldBase
 			'type' => 'text',
 			'name' => 'wpsl_phone',
 			'id' => 'wpsl_phone',
-			'attributes' => ['data-quickedit-phone', 'data-value' => $value],
+			'attributes' => [
+				'data-quickedit-phone', 
+				['attr' => 'data-value', 'value' => $value]
+			],
 			'choices' => [],
 			'css-class' => ['half', 'wpsl-phone-field']
 		];
-		return apply_filters('simple_locator_fields_phone', $field);
+		return apply_filters('simple_locator_fields_phone', $field, $post_id);
 	}
 
 	/**
@@ -183,11 +207,14 @@ class FormFields extends FieldBase
 			'type' => 'textarea',
 			'name' => 'wpsl_additionalinfo',
 			'id' => 'wpsl_additionalinfo',
-			'attributes' => ['data-quickedit-additionalinfo', 'data-value' => $value],
+			'attributes' => [
+				'data-quickedit-additionalinfo', 
+				['attr' => 'data-value', 'value' => $value]
+			],
 			'choices' => [],
 			'css-class' => ['full', 'wpsl-additional-field']
 		];
-		return apply_filters('simple_locator_fields_additional_info', $field);
+		return apply_filters('simple_locator_fields_additional_info', $field, $post_id);
 	}
 
 	/**

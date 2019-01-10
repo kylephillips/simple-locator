@@ -42,7 +42,7 @@ abstract class FieldBase
 	{
 		$out = '';
 		foreach ( $field['attributes'] as $attr ){
-			if ( is_array($attr) ) $out .= ' ' . $attr[0] . '="' . $attr[1] . '"';
+			if ( is_array($attr) ) $out .= ' ' . $attr['attr'] . '="' . $attr['value'] . '"';
 			if ( !is_array($attr) ) $out .= ' ' . $attr;
 		}
 		return $out;

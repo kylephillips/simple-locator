@@ -8,7 +8,7 @@ class Ca implements StateInterface
 {
 	public function states()
 	{
-		$states [
+		$states = [
 			'ab' => [
 				'code' => 'ab', 
 				'name' => 'Alberta',

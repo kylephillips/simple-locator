@@ -1,49 +1,42 @@
-<?php wp_nonce_field( 'my_wpsl_meta_box_nonce', 'wpsl_meta_box_nonce' ); ?>
+<?php 
+wp_nonce_field( 'my_wpsl_meta_box_nonce', 'wpsl_meta_box_nonce' ); 
+$fields_ordered = $this->form_fields->order();
+?>
 <div class="wpsl-meta">
-	<p class="full wpsl-address-field">
-		<?php echo $this->form_fields->address($this->meta['address'], $post->ID); ?>
-	</p>
-	<p class="full wpsl-address-two-field">
-		<?php echo $this->form_fields->address_two($this->meta['address_two'], $post->ID); ?>
-	</p>
-	<p class="city wpsl-city-field">
-		<?php echo $this->form_fields->city($this->meta['city'], $post->ID); ?>
-	</p>
-	<p class="state wpsl-state-field">
-		<?php echo $this->form_fields->city($this->meta['state'], $post->ID); ?>
-	</p>
-	<p class="zip wpsl-zip-field">
-		<?php echo $this->form_fields->postalCode($this->meta['zip'], $post->ID); ?>
-	</p>
-	<p class="full wpsl-country-field">
-		<?php echo $this->form_fields->country($this->meta['country'], $post->ID); ?>
-	</p>
-	<div id="wpslmap"></div>
-	<hr />
-	<div class="latlng">
-		<span><?php _e('Geocode values will update on save. Fields are for display purpose only.', 'simple-locator'); ?></span>
-		<p class="wpsl-latitude-field">
-			<label for="wpsl_latitude"><?php _e('Latitude', 'simple-locator'); ?></label>
-			<input type="text" name="wpsl_latitude" id="wpsl_latitude" value="<?php echo $this->meta['latitude']; ?>" readonly />
-		</p>
-		<p class="lat wpsl-longitude-field">
-			<label for="wpsl_longitude"><?php _e('Longitude', 'simple-locator'); ?></label>
-			<input type="text" name="wpsl_longitude" id="wpsl_longitude" value="<?php echo $this->meta['longitude']; ?>" readonly />
-		</p>
-	</div>
-	<div class="wpsl-extra-meta-fields">
-		<hr />
-		<p class="half wpsl-phone-field">
-			<?php echo $this->form_fields->phone($this->meta['phone'], $post->ID); ?>
-		</p>
-		<p class="half right wpsl-website-field">
-			<?php echo $this->form_fields->website($this->meta['website'], $post->ID); ?>
-		</p>
-		<hr />
-		<p class="full wpsl-additional-field">
-			<?php echo $this->form_fields->additionalInfo($this->meta['additionalinfo'], $post->ID); ?>
-		</p>
-	</div>
+	<?php
+	$html = '';
+	foreach ( $fields_ordered as $method ){
+		$value = ( isset($this->meta[$method]) ) ? $this->meta[$method] : null;
+		$field = $this->form_fields->$method($value, $post->ID);
+		
+		if ( $method == 'map' ) :
+			$html .= '<div id="wpslmap"></div>';
+			continue;
+		endif;
+		
+		if ( $method == 'latlng' ) :
+			$html .= '<div class="latlng">';
+			$html .= '<span>' . __('Geocode values will update on save. Fields are for display purpose only.', 'simple-locator') . '</span>';
+			$html .= '<p class="wpsl-latitude-field">';
+			$html .= '<label for="wpsl_latitude">' . __('Latitude', 'simple-locator') . '</label>';
+			$html .= '<input type="text" name="wpsl_latitude" id="wpsl_latitude" value="' . $this->meta['latitude'] . '" readonly />';
+			$html .= '</p>';
+			$html .= '<p class="lat wpsl-longitude-field">';
+			$html .= '<label for="wpsl_longitude">' . __('Longitude', 'simple-locator') . '</label>';
+			$html .= '<input type="text" name="wpsl_longitude" id="wpsl_longitude" value="' . $this->meta['longitude'] . '" readonly />';
+			$html .= '</p>';
+			$html .= '</div>';
+			continue;
+		endif;
+		
+		$html .= '<p class="';
+		foreach ( $field['css-class'] as $class ){
+			$html .= $class . ' ';
+		}
+		$html .= '>' . $this->form_fields->output($field, $value) . '</p>';
+	}
+	echo $html;
+	?>
 	<input type="hidden" name="wpsl_custom_geo" id="wpsl_custom_geo" value="<?php echo $this->meta['mappinrelocated']; ?>">
 </div>
 <?php include('error-modal.php');?>

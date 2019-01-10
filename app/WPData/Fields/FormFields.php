@@ -4,22 +4,46 @@ namespace SimpleLocator\WPData\Fields;
 /**
 * Output the location form fields and apply filters
 */
-class FormFields
+class FormFields extends FieldBase
 {
+	/**
+	* Get the order of the fields
+	* Allows reordering through filter. References method names for fields
+	*/
+	public function order()
+	{
+		$order = [
+			'address', 
+			'address_two',
+			'city',
+			'state',
+			'zip',
+			'country',
+			'map',
+			'latlng',
+			'phone',
+			'website',
+			'additionalInfo'
+		];
+		return apply_filters('simple_locator_fields_ordering', $order);
+	}
+
 	/**
 	* Address Field (Line 1)
 	*/
 	public function address($value = '', $post_id = null)
 	{
 		$field = [
+			'key' => 'address',
 			'label' => __('Street Address', 'simple-locator'),
 			'type' => 'text',
 			'name' => 'wpsl_address',
 			'id' => 'wpsl_address',
 			'attributes' => ['data-quickedit-address'],
-			'choices' => []
+			'choices' => [],
+			'css-class' => ['full', 'wpsl-address-field']
 		];
-		return $this->output(apply_filters('simple_locator_fields_address', $field), $value, $post_id);
+		return apply_filters('simple_locator_fields_address', $field);
 	}
 
 	/**
@@ -28,14 +52,16 @@ class FormFields
 	public function address_two($value = '', $post_id = null)
 	{
 		$field = [
+			'key' => 'address_two',
 			'label' => __('Street Address Line 2', 'simple-locator'),
 			'type' => 'text',
 			'name' => 'wpsl_address_two',
 			'id' => 'wpsl_address_two',
 			'attributes' => ['data-quickedit-address_two'],
-			'choices' => []
+			'choices' => [],
+			'css-class' => ['full', 'wpsl-address-two-field']
 		];
-		return $this->output(apply_filters('simple_locator_fields_address_two', $field), $value, $post_id);
+		return apply_filters('simple_locator_fields_address_two', $field);
 	}
 
 	/**
@@ -44,14 +70,16 @@ class FormFields
 	public function city($value = '', $post_id = null)
 	{
 		$field = [
+			'key' => 'city',
 			'label' => __('City', 'simple-locator'),
 			'type' => 'text',
 			'name' => 'wpsl_city',
 			'id' => 'wpsl_city',
 			'attributes' => ['data-quickedit-city'],
-			'choices' => []
+			'choices' => [],
+			'css-class' => ['city', 'wpsl-city-field']
 		];
-		return $this->output(apply_filters('simple_locator_fields_city', $field), $value, $post_id);
+		return apply_filters('simple_locator_fields_city', $field);
 	}
 
 	/**
@@ -60,30 +88,34 @@ class FormFields
 	public function state($value = '', $post_id = null)
 	{
 		$field = [
+			'key' => 'state',
 			'label' => __('State', 'simple-locator'),
 			'type' => 'text',
 			'name' => 'wpsl_state',
 			'id' => 'wpsl_state',
 			'attributes' => ['data-quickedit-state'],
-			'choices' => []
+			'choices' => [],
+			'css-class' => ['state', 'wpsl-state-field']
 		];
-		return $this->output(apply_filters('simple_locator_fields_state', $field), $value, $post_id);
+		return apply_filters('simple_locator_fields_state', $field);
 	}
 
 	/**
 	* Postal/Zip Code Field
 	*/
-	public function postalCode($value = '', $post_id = null)
+	public function zip($value = '', $post_id = null)
 	{
 		$field = [
+			'key' => 'zip',
 			'label' => __('Zip/Postal Code', 'simple-locator'),
 			'type' => 'text',
 			'name' => 'wpsl_zip',
 			'id' => 'wpsl_zip',
 			'attributes' => ['data-quickedit-zip'],
-			'choices' => []
+			'choices' => [],
+			'css-class' => ['zip', 'wpsl-zip-field']
 		];
-		return $this->output(apply_filters('simple_locator_fields_postal_code', $field), $value, $post_id);
+		return apply_filters('simple_locator_fields_postal_code', $field);
 	}
 
 	/**
@@ -92,14 +124,16 @@ class FormFields
 	public function country($value = '', $post_id = null)
 	{
 		$field = [
+			'key' => 'country',
 			'label' => __('Country', 'simple-locator'),
 			'type' => 'text',
 			'name' => 'wpsl_country',
 			'id' => 'wpsl_country',
 			'attributes' => ['data-quickedit-country'],
-			'choices' => []
+			'choices' => [],
+			'css-class' => ['full', 'wpsl-country-field']
 		];
-		return $this->output(apply_filters('simple_locator_fields_country', $field), $value, $post_id);
+		return apply_filters('simple_locator_fields_country', $field);
 	}
 
 	/**
@@ -108,14 +142,16 @@ class FormFields
 	public function website($value = '', $post_id = null)
 	{
 		$field = [
+			'key' => 'website',
 			'label' => __('Website', 'simple-locator'),
 			'type' => 'text',
 			'name' => 'wpsl_website',
 			'id' => 'wpsl_website',
 			'attributes' => ['data-quickedit-website'],
-			'choices' => []
+			'choices' => [],
+			'css-class' => ['half', 'right', 'wpsl-website-field']
 		];
-		return $this->output(apply_filters('simple_locator_fields_website', $field), $value, $post_id);
+		return apply_filters('simple_locator_fields_website', $field);
 	}
 
 	/**
@@ -124,14 +160,16 @@ class FormFields
 	public function phone($value = '', $post_id = null)
 	{
 		$field = [
+			'key' => 'phone',
 			'label' => __('Phone Number', 'simple-locator'),
 			'type' => 'text',
 			'name' => 'wpsl_phone',
 			'id' => 'wpsl_phone',
 			'attributes' => ['data-quickedit-phone'],
-			'choices' => []
+			'choices' => [],
+			'css-class' => ['half', 'wpsl-phone-field']
 		];
-		return $this->output(apply_filters('simple_locator_fields_phone', $field), $value, $post_id);
+		return apply_filters('simple_locator_fields_phone', $field);
 	}
 
 	/**
@@ -140,58 +178,31 @@ class FormFields
 	public function additionalInfo($value = '', $post_id = null)
 	{
 		$field = [
+			'key' => 'additionalInfo',
 			'label' => __('Additional Info', 'simple-locator'),
 			'type' => 'textarea',
 			'name' => 'wpsl_additionalinfo',
 			'id' => 'wpsl_additionalinfo',
 			'attributes' => ['data-quickedit-additionalinfo'],
-			'choices' => []
+			'choices' => [],
+			'css-class' => ['full', 'wpsl-additional-field']
 		];
-		return $this->output(apply_filters('simple_locator_fields_phone', $field), $value, $post_id);
+		return apply_filters('simple_locator_fields_additional_info', $field);
 	}
 
 	/**
-	* Output the Field
+	* Map
 	*/
-	private function output($field, $value)
+	public function map()
 	{
-		$out = '';
-		if ( $field['type'] == 'text' ){
-			$out .= '<label for="' . $field['id'] . '">' . $field['label'] . '</label>';
-			$out .= '<input type="text" id="' . $field['id'] . '" name="' . $field['name'] . '" value="' . $value . '"';
-			$out .= $this->attributes($field);
-			$out .= ' />';
-		}
-		if ( $field['type'] == 'select' ){
-			$out .= '<label for="' . $field['id'] . '">' . $field['label'] . '</label>';
-			$out .= '<select id="' . $field['id'] . '" name="' . $field['name'] . '"';
-			$out .= $this->attributes($field) . '>';
-			foreach ( $field['choices'] as $choice => $label ){
-				$out .= '<option value="' . $choice . '"';
-				if ( $choice == $value ) $out .= ' selected';
-				$out .= '>' . $label . '</option>';
-			}
-			$out .= '</select>';
-		}
-		if ( $field['type'] == 'textarea' ){
-			$out .= '<label for="' . $field['id'] . '">' . $field['label'] . '</label>';
-			$out .= '<textarea id="' . $field['id'] . '" name="' . $field['name'] . '"';
-			$out .= $this->attributes($field);
-			$out .= '>' . $value . '</textarea>';
-		}
-		return $out;
+
 	}
 
 	/**
-	* Add Attributes to the Output
+	* Lat/Lng
 	*/
-	private function attributes($field)
+	public function latlng()
 	{
-		$out = '';
-		foreach ( $field['attributes'] as $attr ){
-			if ( is_array($attr) ) $out .= ' ' . $attr[0] . '="' . $attr[1] . '"';
-			if ( !is_array($attr) ) $out .= ' ' . $attr;
-		}
-		return $out;
+
 	}
 }

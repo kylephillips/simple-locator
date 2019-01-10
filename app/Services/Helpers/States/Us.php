@@ -8,7 +8,7 @@ class Us implements StateInterface
 {
 	public function states()
 	{
-		return [
+		$states = [
 			'al' => [
 				'code' => 'al', 
 				'name' => 'Alabama',
@@ -305,5 +305,6 @@ class Us implements StateInterface
 				'territory' => false
 			],
 		];
+		return apply_filters('simple_locator_state_listing_us', $states);
 	}
 }

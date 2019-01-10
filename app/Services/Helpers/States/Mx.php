@@ -8,7 +8,7 @@ class Mx implements StateInterface
 {
 	public function states()
 	{
-		return [
+		$states = [
 			'ag' => [
 				'code' => 'ag', 
 				'name' => 'Aguascalientes',
@@ -175,5 +175,6 @@ class Mx implements StateInterface
 				'territory' => false,
 			],
 		];
+		return apply_filters('simple_locator_state_listing_mx', $states);
 	}
 }

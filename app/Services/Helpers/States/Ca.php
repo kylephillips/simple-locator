@@ -8,7 +8,7 @@ class Ca implements StateInterface
 {
 	public function states()
 	{
-		return [
+		$states [
 			'ab' => [
 				'code' => 'ab', 
 				'name' => 'Alberta',
@@ -75,5 +75,6 @@ class Ca implements StateInterface
 				'territory' => false,
 			]
 		];
+		return apply_filters('simple_locator_state_listing_ca', $states);
 	}
 }

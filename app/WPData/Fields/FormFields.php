@@ -39,7 +39,7 @@ class FormFields extends FieldBase
 			'type' => 'text',
 			'name' => 'wpsl_address',
 			'id' => 'wpsl_address',
-			'attributes' => ['data-quickedit-address'],
+			'attributes' => ['data-quickedit-address', 'data-value' => $value],
 			'choices' => [],
 			'css-class' => ['full', 'wpsl-address-field']
 		];
@@ -57,7 +57,7 @@ class FormFields extends FieldBase
 			'type' => 'text',
 			'name' => 'wpsl_address_two',
 			'id' => 'wpsl_address_two',
-			'attributes' => ['data-quickedit-address_two'],
+			'attributes' => ['data-quickedit-address_two', 'data-value' => $value],
 			'choices' => [],
 			'css-class' => ['full', 'wpsl-address-two-field']
 		];
@@ -75,7 +75,7 @@ class FormFields extends FieldBase
 			'type' => 'text',
 			'name' => 'wpsl_city',
 			'id' => 'wpsl_city',
-			'attributes' => ['data-quickedit-city'],
+			'attributes' => ['data-quickedit-city', 'data-value' => $value],
 			'choices' => [],
 			'css-class' => ['city', 'wpsl-city-field']
 		];
@@ -93,7 +93,7 @@ class FormFields extends FieldBase
 			'type' => 'text',
 			'name' => 'wpsl_state',
 			'id' => 'wpsl_state',
-			'attributes' => ['data-quickedit-state'],
+			'attributes' => ['data-quickedit-state', 'data-value' => $value],
 			'choices' => [],
 			'css-class' => ['state', 'wpsl-state-field']
 		];
@@ -111,7 +111,7 @@ class FormFields extends FieldBase
 			'type' => 'text',
 			'name' => 'wpsl_zip',
 			'id' => 'wpsl_zip',
-			'attributes' => ['data-quickedit-zip'],
+			'attributes' => ['data-quickedit-zip', 'data-value' => $value],
 			'choices' => [],
 			'css-class' => ['zip', 'wpsl-zip-field']
 		];
@@ -129,7 +129,7 @@ class FormFields extends FieldBase
 			'type' => 'text',
 			'name' => 'wpsl_country',
 			'id' => 'wpsl_country',
-			'attributes' => ['data-quickedit-country'],
+			'attributes' => ['data-quickedit-country', 'data-value' => $value],
 			'choices' => [],
 			'css-class' => ['full', 'wpsl-country-field']
 		];
@@ -147,7 +147,7 @@ class FormFields extends FieldBase
 			'type' => 'text',
 			'name' => 'wpsl_website',
 			'id' => 'wpsl_website',
-			'attributes' => ['data-quickedit-website'],
+			'attributes' => ['data-quickedit-website', 'data-value' => $value],
 			'choices' => [],
 			'css-class' => ['half', 'right', 'wpsl-website-field']
 		];
@@ -165,7 +165,7 @@ class FormFields extends FieldBase
 			'type' => 'text',
 			'name' => 'wpsl_phone',
 			'id' => 'wpsl_phone',
-			'attributes' => ['data-quickedit-phone'],
+			'attributes' => ['data-quickedit-phone', 'data-value' => $value],
 			'choices' => [],
 			'css-class' => ['half', 'wpsl-phone-field']
 		];
@@ -183,7 +183,7 @@ class FormFields extends FieldBase
 			'type' => 'textarea',
 			'name' => 'wpsl_additionalinfo',
 			'id' => 'wpsl_additionalinfo',
-			'attributes' => ['data-quickedit-additionalinfo'],
+			'attributes' => ['data-quickedit-additionalinfo', 'data-value' => $value],
 			'choices' => [],
 			'css-class' => ['full', 'wpsl-additional-field']
 		];

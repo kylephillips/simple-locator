@@ -72,7 +72,7 @@ SimpleLocatorAdmin.QuickEdit = function()
 	* Create the form and open it
 	*/
 	self.openForm = function()
-	{
+	{		
 		var column_count = $(self.activeItem).parents('tr').find('td').length + $(self.activeItem).parents('tr').find('th').length;
 		var title = $(self.activeItem).attr('data-title');
 		var html = '<tr class="simple-locator-quick-edit"><td colspan="' + column_count + '">';
@@ -80,11 +80,41 @@ SimpleLocatorAdmin.QuickEdit = function()
 		html += '<div class="simple-locator-quick-edit-alert" ' + self.selectors.error + '></div>';
 		html += '<div class="inner">';
 		html += '<div class="fields">';
-		for ( var i = 0; i < self.fields.length; i++ ){
-			var key = self.fields[i][0];
+
+		// Loop through the localized form field data and create form fields
+		// Enables PHP filtering 
+		for ( var i = 0; i < wpsl_locator.form_fields_order.length; i++ ){
+			var key = wpsl_locator.form_fields_order[i];
+			if ( key == 'map' || key == 'latlng' || key == 'additionalInfo' || key == 'website' ) continue;
+			var field = wpsl_locator.form_fields[key];
 			var value = $(self.activeItem).attr('data-' + key);
-			html += '<div class="field"><label>' + self.fields[i][1] + '</label><input type="text" data-quickedit-' + key + ' value="' + value + '" /></div>';
+
+			html += '<div class="field"><label>' + field.label + '</label>';
+
+			// Text Fields
+			if ( field.type === 'text' ) {
+				html += '<input type="text" ';
+				html += self.attributes(field);
+				html += 'value="' + value + '" />';
+			}
+
+			// Select Fields
+			if ( field.type === 'select' ){
+				html += '<select';
+				html += self.attributes(field);
+				html += '>';
+				for ( var key in field.choices ){
+					var choice_value = field.choices[key];
+					html += '<option value="' + key + '"'
+					if ( key === value ) html += ' selected';
+					html += '>' + choice_value + '</option>';
+				}
+				html += '</select>';
+			}
+
+			html += '</div>';
 		}
+
 		html += '</div><!-- .fields -->';
 		html += '<div class="map" data-simple-locator-quick-edit-map></div>';
 		html += '</div><!-- .inner -->';
@@ -222,7 +252,6 @@ SimpleLocatorAdmin.QuickEdit = function()
 			url: ajaxurl,
 			data: self.formData,
 			success: function(data){
-				console.log(data);
 				self.loading(false);
 				if ( data.status === 'error' ){
 					$('[' + self.selectors.error + ']').text(data.message).show();
@@ -251,6 +280,9 @@ SimpleLocatorAdmin.QuickEdit = function()
 			$('[' + self.selectors.error + ']').text(wpsl_locator.quickedit_geocode_error).show();
 			return;
 		}
+
+		$(link).attr('data-latitude', self.formData.latitude);
+		$(link).attr('data-longitude', self.formData.longitude);
 		
 		var row = $(link).parents('tr').show();
 		self.clearQuickEdit();
@@ -266,6 +298,24 @@ SimpleLocatorAdmin.QuickEdit = function()
 		self.customMarkerPosition.custom = false;
 		$('tr').show();
 		$(self.selectors.quickEditContainer).remove();
+	}
+
+	/**
+	* Add attributes to fields
+	*/
+	self.attributes = function(field)
+	{
+		html = '';
+		if ( field.attributes.length < 1 ) return;
+		for ( var i = 0; i < field.attributes.length; i++ ){
+			var attr = field.attributes[i];
+			if ( typeof attr === 'string'){
+				html += ' ' + attr;
+				continue;
+			}
+			html += ' ' + attr.attr + '="' + attr.value + '"';
+		}
+		return html;
 	}
 
 	/**

@@ -7,6 +7,20 @@ namespace SimpleLocator\WPData\Fields;
 class FormFields extends FieldBase
 {
 	/**
+	* Get all fields, in order
+	*/
+	public function allFields()
+	{
+		$fields_ordered = $this->order();
+		$fields = [];
+		foreach ( $fields_ordered as $method )
+		{
+			$fields[$method] = $this->$method();
+		}
+		return $fields;
+	}
+
+	/**
 	* Get the order of the fields
 	* Allows reordering through filter. References method names for fields
 	*/

@@ -1,6 +1,8 @@
 <?php 
 namespace SimpleLocator\Dependencies;
 
+use SimpleLocator\WPData\Fields\FormFields;
+
 /**
 * Register & Enqueue Admin Styles & Scripts
 */
@@ -71,6 +73,8 @@ class AdminDependencies extends DependencyBase
 				'quickedit_geocode_error' => __('The location was successfully saved, but could not be geocoded.', 'simple-locator'),
 				'loading_spinner'	=> \SimpleLocator\Helpers::plugin_url() . '/assets/images/loading-spinner.svg'
 			];
+			$data['form_fields_order'] = ( new FormFields )->order();
+			$data['form_fields'] = ( new FormFields )->allFields();
 			$data = $this->importVars($data);
 			$data['confirm_undo'] 	= __('Are you sure you want to undo this import? This action cannot be undone.', 'simple-locator');
 			$data['confirm_redo'] 	= __('Are you sure you want to redo this import? This will erase any currently pending imports.', 'simple-locator');

@@ -55,6 +55,7 @@ SimpleLocator.ResultsMapNonAjax = function()
 		if ( wpsl_locator.custom_map_options === '1' ) mapOptions = wpsl_locator.map_options;
 		var locations = [];
 		var infoWindow = new google.maps.InfoWindow(), marker, i;
+		SimpleLocator.infoWindow = infoWindow;
 		
 		SimpleLocator.maps[self.mapIndex] = new google.maps.Map( self.activeMap[0], mapOptions );
 		self.addUserPin();

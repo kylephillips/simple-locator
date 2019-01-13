@@ -54,6 +54,7 @@ SimpleLocator.ResultsMap = function()
 		self.removeMapMarkers();
 		var bounds = new google.maps.LatLngBounds();
 		var infoWindow = new google.maps.InfoWindow();
+		SimpleLocator.infoWindow = infoWindow;
 
 		if ( !SimpleLocator.maps[self.mapIndex] ){
 			// Map Controls

@@ -171,6 +171,7 @@ SimpleLocator.AllLocations = function()
 		if ( wpsl_locator.custom_map_options === '1' )	mapOptions = wpsl_locator.map_options;
 			
 		var infoWindow = new google.maps.InfoWindow(), marker, i;
+		SimpleLocator.infoWindow = infoWindow;
 		var map = new google.maps.Map( $(self.activeMap)[0], mapOptions );
 		
 		// Loop through array of markers & place each one on the map  

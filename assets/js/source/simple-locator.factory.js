@@ -59,6 +59,7 @@ SimpleLocator.maps = [];
 SimpleLocator.markers = [];
 SimpleLocator.userPin = [];
 SimpleLocator.formData = [];
+SimpleLocator.infoWindow;
 
 SimpleLocator.mapservice = wpsl_locator.mapservice;
 

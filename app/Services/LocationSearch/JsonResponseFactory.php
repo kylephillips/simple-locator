@@ -72,7 +72,7 @@ class JsonResponseFactory
 	{
 		$this->request = ( $request ) ? $request : $_POST;
 		$this->setData($results, $total_count);
-		return [
+		$data = [
 			'status' => 'success', 
 			'distance'=> $this->data['distance'],
 			'latitude' => $this->data['latitude'],
@@ -97,5 +97,6 @@ class JsonResponseFactory
 			'loading_spinner' => $this->data['loading_spinner'],
 			'results' => $results
 		];
+		return $this->data = apply_filters('simple_locator_results_data', $data);
 	}
 }

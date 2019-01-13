@@ -96,7 +96,7 @@ class LocationResultPresenter
 			'mappin' => $this->mapPin(),
 			'result_data' => $this->result
 		];
-		return $location;
+		return apply_filters('simple_locator_result_location_data', $location);
 	}
 
 	/**

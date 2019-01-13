@@ -170,7 +170,7 @@ class LocationSearch
 			$fieldname = $field;
 			$sql .= ",$fieldname.meta_value AS $fieldname\n";
 		}
-		return apply_filters('simple_locator_sql_select', $sql);
+		return apply_filters('simple_locator_sql_select', $sql, $this->request);
 	}
 
 	/**
@@ -184,7 +184,7 @@ class LocationSearch
 			$sql .= "\nLEFT JOIN " . $this->query_data['meta_table'] . " AS $fieldname
 			ON p.ID = $fieldname.post_id AND $fieldname.meta_key = " . "'" . $fieldname . "'" . "\n";
 		}
-		return apply_filters('simple_locator_sql_join', $sql);
+		return apply_filters('simple_locator_sql_join', $sql, $this->request);
 	}
 
 	/**
@@ -252,7 +252,7 @@ class LocationSearch
 		$sql .= "
 			`post_type` = '" . $this->query_data['post_type'] . "'
 			AND `post_status` = 'publish'";
-		return apply_filters('simple_locator_sql_where', $sql);
+		return apply_filters('simple_locator_sql_where', $sql, $this->request);
 	}
 
 	/**

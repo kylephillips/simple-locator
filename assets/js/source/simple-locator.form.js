@@ -316,6 +316,7 @@ SimpleLocator.Form = function()
 	*/
 	self.toggleLoading = function(loading, clearvalues)
 	{
+		$(document).trigger('simple-locator-form-loading', [loading]);
 		var results = $(self.activeFormContainer).find('[' + SimpleLocator.selectors.results + ']');
 		if ( loading ){
 			if ( clearvalues ){
@@ -330,7 +331,6 @@ SimpleLocator.Form = function()
 			return;
 		}
 		$(self.activeFormContainer).removeClass('loading');
-		$(document).trigger('simple-locator-form-loading', [loading]);
 	}
 
 	return self.bindEvents();

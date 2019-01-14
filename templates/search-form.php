@@ -46,7 +46,7 @@ if ( $widget ) :
 		if ( isset($mapheight) && $mapheight !== "" ) $out .= 'style="height:' . $mapheight . 'px;"';
 		if ( $show_default_map ) $out .= ' data-simple-locator-default-enabled="true"';
 		if ( $perpage !== '' ) $out .= ' data-per-page="' . $perpage . '"';
-		if ( $showall !== '' ) $out .= ' data-simple-locator-all-locations-map="' . $showall . '" data-include-listing="true"';
+		if ( $showall ) $out .= ' data-simple-locator-all-locations-map="' . $showall . '" data-include-listing="true"';
 		$out .= '></div><!-- .wpsl-map -->';
 		echo $out;
 	endif;

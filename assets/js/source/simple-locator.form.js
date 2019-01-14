@@ -31,6 +31,18 @@ SimpleLocator.Form = function()
 			$(document).trigger('simple-locator-before-submit', [self.activeForm]);
 			self.processForm();
 		});
+		// Programmatic submit form
+		$(document).on('simple-locator-submit-form', function(e, form){
+			console.log(form);
+			self.activeForm = form;
+			self.activeFormContainer = $(form).parents('[' + SimpleLocator.selectors.formContainer + ']');
+			$(self.activeForm).find('[' + SimpleLocator.selectors.inputGeocode + ']').val('');
+			self.setAjax()
+			active_form = self.activeForm; // Deprecated
+			wpsl_before_submit(self.activeForm); // Deprecated
+			$(document).trigger('simple-locator-before-submit', [self.activeForm]);
+			self.processForm();
+		});
 		// Runs on geolocation success, whether by clicking button or auto-load
 		$(document).on('simple-locator-geolocation-success', function(e, form, results){
 			self.activeForm = $(form);

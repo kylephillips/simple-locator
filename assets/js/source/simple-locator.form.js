@@ -160,7 +160,7 @@ SimpleLocator.Form = function()
 		if ( wpsl_locator.postfields.length == 0 ) return
 		for ( var i = 0; i < wpsl_locator.postfields.length; i++ ){
 			var field = wpsl_locator.postfields[i];
-			self.formData[field] = $('input[name=' + field + ']').val();
+			self.formData[field] = $('*[name=' + field + ']').val();
 		}
 	}
 

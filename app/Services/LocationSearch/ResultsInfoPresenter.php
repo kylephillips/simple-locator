@@ -158,12 +158,18 @@ class ResultsInfoPresenter
 	*/
 	private function hiddenFields()
 	{
-		$output = '<input type="hidden" name="per_page" value="' . $this->request['per_page'] . '">
-			<input type="hidden" name="address" value="' . $this->request['address'] . '">
-			<input type="hidden" name="formatted_address" value="' . $this->request['formatted_address'] . '" />
-			<input type="hidden" name="wpsl_distance" value="' . $this->request['distance'] . '" />
-			<input type="hidden" name="latitude" value="' . $this->request['latitude'] . '" />
-			<input type="hidden" name="longitude" value="' . $this->request['longitude'] . '" />
+		$output = '<input type="hidden" name="per_page" value="' . $this->request['per_page'] . '">';
+		if ( isset($this->request['address']) ) $output .= 
+			'<input type="hidden" name="address" value="' . $this->request['address'] . '">';
+		if ( isset($this->request['formatted_address']) ) $output .= 
+			'<input type="hidden" name="formatted_address" value="' . $this->request['formatted_address'] . '" />';
+		if ( isset($this->request['distance']) ) $output .= 
+			'<input type="hidden" name="wpsl_distance" value="' . $this->request['distance'] . '" />';
+		if ( isset($this->request['latitude']) ) $output .= 
+			'<input type="hidden" name="latitude" value="' . $this->request['latitude'] . '" />';
+		if ( isset($this->request['longitude']) ) $output .= 
+			'<input type="hidden" name="longitude" value="' . $this->request['longitude'] . '" />';
+		$output .= '
 			<input type="hidden" name="unit" value="' . $this->request['unit'] . '" />
 			<input type="hidden" name="geolocation" value="' . $this->request['geolocation'] . '">
 			<input type="hidden" name="search_page" value="' . $this->request['search_page'] . '" />

@@ -18,6 +18,7 @@ SimpleLocator.Errors = function()
 			self.form = form;
 			self.formContainer = $(form).parents('[' + SimpleLocator.selectors.formContainer + ']');
 			self.toggleError(message);
+			$(document).trigger('simple-locator-error-message', [form, message]);
 			self.clearMap();
 			wpsl_error(message, self.form);
 		});

@@ -22,6 +22,13 @@ SimpleLocator.Geocoder = function()
 	{
 		self.form = form;
 		self.searchTerm = $(self.form).find('[' + SimpleLocator.selectors.inputAddress + ']').val();
+		var allowempty = $(self.form).attr('data-simple-locator-form-allow-empty');
+		if ( typeof allowempty !== 'undefined' && allowempty == 'true' ){
+			if ( typeof self.searchTerm == 'undefined' || self.searchTerm == '' ){
+				$(document).trigger('simple-locator-address-geocoded', [self.results, self.form]);
+				return;
+			}
+		}
 		if ( SimpleLocator.mapservice === 'google' ) self.queryGoogleMaps();
 	}
 

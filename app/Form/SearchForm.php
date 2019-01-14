@@ -12,14 +12,14 @@ class SearchForm
 
 	public function formOpening($options)
 	{
-		$out = '<form method="' . strtoupper($options['formmethod']) . '" action="' . get_the_permalink($options['resultspage']) . '"	data-simple-locator-form';
-		if ( $options['allowemptyaddress'] ) $out .= 'class="allow-empty" data-simple-locator-form-allow-empty';
+		$out = '<form method="' . strtoupper($options['formmethod']) . '" action="' . get_the_permalink($options['resultspage']) . '" data-simple-locator-form';
 		if ( !$options['mapcontrols'] ) $out .= ' data-simple-locator-hide-map-controls="true"';
-		if ( $options['allowemptyaddress'] ) $out .= 'class="allow-empty" data-simple-locator-form-allow-empty';
 		if ( $options['mapcontainer'] ) $out .= ' data-simple-locator-map-container="' . $options['mapcontainer'] . '"';
 		if ( $options['resultscontainer'] ) $out .= ' data-simple-locator-results-container="' . $options['resultscontainer'] . '"';
 		if ( $options['ajax'] ) $out .= ' data-simple-locator-ajax-form="true"';
-	 	$out .= 'data-simple-locator-map-control-position="' . $options['mapcontrolsposition'] . '">';
+	 	$out .= 'data-simple-locator-map-control-position="' . $options['mapcontrolsposition'] . '"';
+	 	if ( $options['allowemptyaddress'] ) $out .= ' class="allow-empty" data-simple-locator-form-allow-empty="true"';
+	 	$out .= '>';
 	 	echo $out;
 	}
 

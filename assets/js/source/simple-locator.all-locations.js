@@ -122,7 +122,6 @@ SimpleLocator.AllLocations = function()
 			// If default maps arent enabled and this is a form, abort
 			var form = $(this).parents('[' + SimpleLocator.selectors.formContainer + ']').find('[' + SimpleLocator.selectors.form + ']');
 			if ( typeof form !== 'undefined' && form !== '' && form.length > 0 ){
-				console.log(form);
 				if ( wpsl_locator.default_enabled !== '1' ) return;
 			}
 

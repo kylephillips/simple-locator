@@ -231,7 +231,12 @@ SimpleLocator.Form = function()
 			datatype: 'jsonp',
 			data: self.formData,
 			beforeSend : function(i, v){
-				// console.log(v.url);
+				if ( wpsl_locator.jsdebug === '1' ){
+					console.log('Form Data');
+					console.log(self.formData);
+					console.log('URL');
+					console.log(v.url);
+				}
 			},
 			success: function(data){
 				SimpleLocator.formData[self.formIndex] = data;

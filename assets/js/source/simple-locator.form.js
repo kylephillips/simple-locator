@@ -330,6 +330,7 @@ SimpleLocator.Form = function()
 			return;
 		}
 		$(self.activeFormContainer).removeClass('loading');
+		$(document).trigger('simple-locator-form-loading', [loading]);
 	}
 
 	return self.bindEvents();

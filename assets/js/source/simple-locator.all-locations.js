@@ -190,7 +190,7 @@ SimpleLocator.AllLocations = function()
 				return function() {
 					infoWindow.setContent(locations[i].infowindow);
 					infoWindow.open(map, marker);
-					$(document).trigger('simple-locator-all-locations-marker-clicked', [marker, infoWindow]);
+					$(document).trigger('simple-locator-all-locations-marker-clicked', [marker, infoWindow, index]);
 					wpsl_all_locations_marker_clicked(marker, infoWindow); // Deprecated
 				}
 			})(marker, i));

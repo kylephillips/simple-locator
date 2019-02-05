@@ -33,7 +33,6 @@ SimpleLocator.Form = function()
 		});
 		// Programmatic submit form
 		$(document).on('simple-locator-submit-form', function(e, form){
-			console.log(form);
 			self.activeForm = form;
 			self.activeFormContainer = $(form).parents('[' + SimpleLocator.selectors.formContainer + ']');
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputGeocode + ']').val('');
@@ -52,6 +51,7 @@ SimpleLocator.Form = function()
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputGeocode + ']').val('1');
 			self.setAjax();
 			wpsl_before_submit(self.activeForm); // Deprecated
+			$(self.activeFormContainer).removeClass('has-error');
 			$(document).trigger('simple-locator-before-submit', [self.activeForm]);
 			self.setResultsContainers();
 			self.setFormData();
@@ -109,6 +109,7 @@ SimpleLocator.Form = function()
 	*/
 	self.processForm = function(geocode)
 	{
+		$(self.activeFormContainer).removeClass('has-error');
 		self.toggleLoading(true, true);
 		self.setResultsContainers();
 		var geocoder = new SimpleLocator.Geocoder();

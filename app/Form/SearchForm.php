@@ -12,7 +12,7 @@ class SearchForm
 
 	public function formOpening($options)
 	{
-		$out = '<form method="' . strtoupper($options['formmethod']) . '" action="' . get_the_permalink($options['resultspage']) . '" data-simple-locator-form';
+		$out = '<form method="' . strtoupper($options['formmethod']) . '" action="' . get_the_permalink($options['resultspage']) . '" data-simple-locator-form ';
 		if ( !$options['mapcontrols'] ) $out .= ' data-simple-locator-hide-map-controls="true"';
 		if ( $options['mapcontainer'] ) $out .= ' data-simple-locator-map-container="' . $options['mapcontainer'] . '"';
 		if ( $options['resultscontainer'] ) $out .= ' data-simple-locator-results-container="' . $options['resultscontainer'] . '"';

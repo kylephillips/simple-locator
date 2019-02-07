@@ -231,7 +231,7 @@ SimpleLocator.AllLocations = function()
 	{
 		var includeListing = $(self.activeMap).attr('data-include-listing');
 		if ( typeof includeListing === 'undefined' || includeListing !== 'true' ) return;
-
+		var customResults = $('[data-simple-locator-all-locations-results]');
 		var formContainer = $(self.activeMap).parents('[' + SimpleLocator.selectors.formContainer + ']');
 		if ( formContainer.length < 1 ){
 			var container = $(self.activeMap).siblings('[data-simple-locator-results-container]');
@@ -241,6 +241,7 @@ SimpleLocator.AllLocations = function()
 		} else {
 			var container = $(formContainer).find('[' + SimpleLocator.selectors.results + ']');
 		}
+		if ( customResults.length > 0 ) container = $(customResults);
 
 		// If a title is passed in the shortcode, use it. Othewise use what is provided by the response
 		var title = $(self.activeMap).attr(self.selectors.map);

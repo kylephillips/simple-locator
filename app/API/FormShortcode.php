@@ -154,7 +154,9 @@ class FormShortcode
 	*/
 	public function renderView($options)
 	{	
-		if ( isset($_POST['simple_locator_results']) || isset($_GET['simple_locator_results']) ) return;
+		$display_form = ( isset($_POST['simple_locator_results']) || isset($_GET['simple_locator_results']) ) ? false : true;
+		$display_form = apply_filters('simple_locator_form_in_results', $display_form);
+		if ( !$display_form ) return;
 		$this->setOptions($options);
 		$this->enqueueScripts();
 		$this->localizeOptions();

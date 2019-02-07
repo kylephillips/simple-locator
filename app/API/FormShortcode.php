@@ -104,7 +104,7 @@ class FormShortcode
 		$this->options['mapcontainer'] = ( $this->options['mapcontainer'] == '' ) ? null : $this->options['mapcontainer'];
 		$this->options['resultscontainer'] = ( $this->options['resultscontainer'] == '' ) ? null : $this->options['resultscontainer'];
 		if ( $this->options['ajax'] == 'false' && $this->options['perpage'] == '' ) $this->options['perpage'] = get_option('posts_per_page');
-		$this->options['showall'] = ( $this->options['showall'] == 'true' ) ? true : false;
+		$this->options['showall'] = ( $this->options['showall'] !== '' ) ? true : false;
 	}
 
 	/**

@@ -269,7 +269,7 @@ class SettingsRepository
 		}
 		$pin = get_option('wpsl_map_pin_user');
 		if ( !$pin && $pin == '' ) $pin = \SimpleLocator\Helpers::plugin_url() . '/assets/images/map-marker-blue.svg';
-		return $pin;
+		return apply_filters('simple_locator_map_pin_user', $pin);
 	}
 
 	/**

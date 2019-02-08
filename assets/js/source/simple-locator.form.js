@@ -60,6 +60,11 @@ SimpleLocator.Form = function()
 		// Runs after a form has been manually submitted and geocoded
 		$(document).on('simple-locator-address-geocoded', function(e, results, form){
 			self.toggleLoading(true, true);
+			if ( typeof self.activeForm === 'undefined' ) {
+				self.activeForm = form;
+				self.activeFormContainer = $(form).parents('[' + SimpleLocator.selectors.formContainer + ']');
+				self.setAjax();
+			}
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputGeocode + ']').val('');
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLatitude + ']').val(results.latitude);
 			$(self.activeForm).find('[' + SimpleLocator.selectors.inputLongitude + ']').val(results.longitude);
@@ -232,7 +237,6 @@ SimpleLocator.Form = function()
 	{
 		self.setFormIndex();
 		self.setAutoload();
-
 		if ( !self.formData.ajax && !self.formData.autoload ){
 			$(self.activeForm).submit();
 			return;

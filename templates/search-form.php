@@ -15,7 +15,7 @@ if ( $widget ) :
 <span id="widget"></span>
 <?php endif; ?>
 
-<div class="simple-locator-form" data-simple-locator-form-container data-simple-locator-results-wrapper>
+<div class="simple-locator-form" data-simple-locator-form-container <?php if ( !$template_variables['resultscontainer'] ) echo 'data-simple-locator-results-wrapper'; ?>>
 
 	<?php do_action('simple_locator_form_opening', $template_variables); ?>
 

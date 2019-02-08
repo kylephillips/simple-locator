@@ -249,7 +249,11 @@ SimpleLocator.AllLocations = function()
 			? '<h3 class="wpsl-results-header">' + title + '</h3>' : false;
 
 		var output = '';
-		output += ( title ) ? title : self.data.results_header + self.data.current_counts;
+		if ( title ) output += title;
+		if ( !title ) {
+			output += self.data.results_header;
+			if ( self.data.current_counts ) output += self.data.current_counts;
+		}
 		
 		var options = ( typeof wpsl_locator_options === 'undefined' || wpsl_locator_options === '' ) ? false : true;
 		if ( options && wpsl_locator_options.resultswrapper !== "" ) output += '<' + wpsl_locator_options.resultswrapper + '>';

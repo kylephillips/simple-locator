@@ -29,9 +29,6 @@ SimpleLocator.InfoWindowOpen = function()
 		var lists = $('[' + SimpleLocator.selectors.resultsWrapper + ']');
 		self.mapIndex = $(activeList).index(lists);
 		self.markerIndex = parseInt($(link).attr(SimpleLocator.selectors.infoWindowLink));
-		console.log(self.mapIndex);
-		console.log(self.markerIndex);
-		console.log(SimpleLocator.markers);
 	}
 
 	/**

@@ -36,6 +36,7 @@ SimpleLocator.ResultsMapNonAjax = function()
 		var wrappers = $('[' + SimpleLocator.selectors.resultsWrapper + ']');
 		self.activeWrapper = $(self.activeMap).parents('[' + SimpleLocator.selectors.resultsWrapper + ']');
 		self.mapIndex = $(self.activeWrapper).index(wrappers);
+		if ( self.mapIndex === -1 ) self.mapIndex = 0;
 	}
 
 	self.loadMap = function()

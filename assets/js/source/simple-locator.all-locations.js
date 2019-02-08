@@ -42,6 +42,7 @@ SimpleLocator.AllLocations = function()
 	{
 		var maps = $('[' + SimpleLocator.selectors.map + ']');
 		self.mapIndex = $(self.activeMap).index(maps);
+		if ( self.mapIndex === -1 ) self.mapIndex = 0;
 	}
 
 	/**

@@ -69,6 +69,7 @@ class LocationSearch
 		$this->setRequest();
 		$this->search();
 		$this->saveSearch();
+		do_action('simple_locator_results_loaded', $this->search_data, $this->request);
 		$this->results_info = new ResultsInfoPresenter($this->request, $this->search_data);	
 	}
 

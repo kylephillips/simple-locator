@@ -57,6 +57,7 @@ SimpleLocator.SingleLocation = function()
 			title: title
 		});
 		$(container).removeClass('loading');
+		$(document).trigger('simple-locator-single-map-rendered', [map, marker, container]);
 	}
 
 	return self.bindEvents();

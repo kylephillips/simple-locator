@@ -65,6 +65,7 @@ class PublicDependencies extends DependencyBase
 			'nolocationsfound' 		=> __('No locations found', 'simple-locator'),
 			'alllocations'			=> apply_filters('simple_locator_all_locations_text', __('All Locations', 'simple-locator')),
 			'mapservice'			=> $this->settings_repo->mapService(),
+			'mappin' 				=> $this->settings_repo->mapPin(),
 			'mappinuser' 			=> $this->settings_repo->mapPin('user'),
 			'includeuserpin'		=> $this->settings_repo->includeUserPin(),
 			'showgeobutton'			=> $this->settings_repo->geoButton('enabled'),

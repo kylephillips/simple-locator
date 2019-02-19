@@ -38,7 +38,7 @@ SimpleLocator.SingleLocation = function()
 		var latitude = parseFloat($(container).attr(self.selectors.latitude));
 		var longitude = parseFloat($(container).attr(self.selectors.longitude));
 		var title = $(container).attr(self.selectors.title);
-		var mappin = ( wpsl_locator.mappin ) ? wpsl_locator.mappin : '';
+		var mappin = ( wpsl_locator.mappinsingle ) ? wpsl_locator.mappinsingle : '';
 		var position = new google.maps.LatLng( latitude, longitude );
 		var options = {
 			zoom: 12,

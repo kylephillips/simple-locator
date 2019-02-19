@@ -68,8 +68,9 @@ class QuickEditLink
 		$phone = ( isset($meta['wpsl_phone']) && $meta['wpsl_phone'] !== '' ) ? $meta['wpsl_phone'][0] : '';
 		$latitude = ( isset($meta[$this->geocode_fields['lat']]) && $meta[$this->geocode_fields['lat']] !== '' )  ? $meta[$this->geocode_fields['lat']][0] : '';
 		$longitude = ( isset($meta[$this->geocode_fields['lng']]) && $meta[$this->geocode_fields['lng']] !== '' )  ? $meta[$this->geocode_fields['lng']][0] : '';
+		$website = ( isset($meta['wpsl_website']) && $meta['wpsl_website'] !== '' ) ? $meta['wpsl_website'][0] : '';
 
-		$link = '<a href="#" class="simple-locator-quick-edit-link" data-simple-locator-quick-edit="' . $post->ID . '" data-address="' . $address . '" data-address_two="' . $address_two . '" data-city="' . $city . '" data-state="' . $state . '" data-zip="' . $zip . '" data-country="' . $country . '" data-phone="' . $phone . '" data-longitude="' . $longitude . '" data-latitude="' . $latitude . '" data-title="' . $post->post_title . '">';
+		$link = '<a href="#" class="simple-locator-quick-edit-link" data-simple-locator-quick-edit="' . $post->ID . '" data-address="' . $address . '" data-address_two="' . $address_two . '" data-city="' . $city . '" data-state="' . $state . '" data-zip="' . $zip . '" data-country="' . $country . '" data-phone="' . $phone . '" data-longitude="' . $longitude . '" data-latitude="' . $latitude . '" data-title="' . $post->post_title . '" data-website="' . $website . '">';
 		$title = apply_filters('simple_locator_quick_edit_title', __('Edit Location', 'simple-locator'), $post);
 		$actions['location-quick-edit'] = $link . $title  . '</a>';
 		return $actions;

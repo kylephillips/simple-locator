@@ -19,7 +19,8 @@ SimpleLocatorAdmin.QuickEdit = function()
 		['state', 'State'],
 		['zip', 'Zip'],
 		['country', 'Country'],
-		['phone', 'Phone']
+		['phone', 'Phone'],
+		['website', 'Website']
 	];
 
 	self.activeItem;
@@ -85,9 +86,10 @@ SimpleLocatorAdmin.QuickEdit = function()
 		// Enables PHP filtering 
 		for ( var i = 0; i < wpsl_locator.form_fields_order.length; i++ ){
 			var key = wpsl_locator.form_fields_order[i];
-			if ( key == 'map' || key == 'latlng' || key == 'additionalInfo' || key == 'website' ) continue;
+			if ( key == 'map' || key == 'latlng' || key == 'additionalInfo') continue;
 			var field = wpsl_locator.form_fields[key];
 			var value = $(self.activeItem).attr('data-' + key);
+			if ( typeof value === 'undefined' ) value = '';
 
 			html += '<div class="field"><label>' + field.label + '</label>';
 

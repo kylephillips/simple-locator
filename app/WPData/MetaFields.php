@@ -26,7 +26,7 @@ class MetaFields
 	function __construct()
 	{
 		$this->form_fields = new FormFields;
-		$this->setFields();
+		add_action( 'admin_init', [$this, 'setFields']);
 		add_action( 'add_meta_boxes', [$this, 'metaBox']);
 		add_action( 'save_post', [$this, 'savePost']);
 	}
@@ -34,22 +34,13 @@ class MetaFields
 	/**
 	* Set the Fields for use in custom meta
 	*/
-	private function setFields()
+	public function setFields()
 	{
-		$this->fields = [
-			'latitude' => 'wpsl_latitude',
-			'longitude' => 'wpsl_longitude',
-			'address' => 'wpsl_address',
-			'address_two' => 'wpsl_address_two',
-			'city' => 'wpsl_city',
-			'state' => 'wpsl_state',
-			'zip' => 'wpsl_zip',
-			'country' => 'wpsl_country',
-			'phone' => 'wpsl_phone',
-			'website' => 'wpsl_website',
-			'additionalinfo' => 'wpsl_additionalinfo',
-			'mappinrelocated' => 'wpsl_custom_geo'
-		];
+		$this->fields = $this->form_fields->order();
+		$this->fields[] = 'custom_geo';
+		$this->fields[] = 'latitude';
+		$this->fields[] = 'longitude';
+		$this->fields[] = 'custom_geo';
 	}
 
 	/**
@@ -81,9 +72,9 @@ class MetaFields
 	*/
 	private function setData($post)
 	{
-		foreach ( $this->fields as $key=>$field )
+		foreach ( $this->fields as $key => $field )
 		{
-			$this->meta[$key] = get_post_meta( $post->ID, $field, true );
+			$this->meta[$field] = get_post_meta( $post->ID, 'wpsl_' . $field, true );
 		}
 	}
 
@@ -95,14 +86,15 @@ class MetaFields
 		if ( get_post_type($post_id) == $this->getPostType() ) :
 			if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return $post_id;
 			if( !isset( $_POST['wpsl_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['wpsl_meta_box_nonce'], 'my_wpsl_meta_box_nonce' ) ) return $post_id;
-
+			
 			// Save Custom Fields
 			foreach ( $this->fields as $key => $field )
 			{
-				if ( isset($_POST[$field]) && $_POST[$field] !== "" ) 
-					update_post_meta( $post_id, $field, esc_attr( $_POST[$field] ) );
-				if ( isset($_POST[$field]) && $_POST[$field] == "" )
-					delete_post_meta( $post_id, $field );
+				$fieldName = 'wpsl_' . $field;
+				if ( isset($_POST[$fieldName]) && $_POST[$fieldName] !== "" ) 
+					update_post_meta( $post_id, $fieldName, esc_attr( $_POST[$fieldName] ) );
+				if ( isset($_POST[$fieldName]) && $_POST[$fieldName] == "" )
+					delete_post_meta( $post_id, $fieldName );
 			}
 		endif;
 	} 

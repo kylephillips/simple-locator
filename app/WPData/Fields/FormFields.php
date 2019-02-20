@@ -7,7 +7,7 @@ namespace SimpleLocator\WPData\Fields;
 class FormFields extends FieldBase
 {
 	/**
-	* Get all fields, in order
+	* Get all fields, in order (used in JS Quick Edit)
 	*/
 	public function allFields()
 	{
@@ -15,6 +15,7 @@ class FormFields extends FieldBase
 		$fields = [];
 		foreach ( $fields_ordered as $method )
 		{
+			if ( !method_exists($this, $method) ) continue;
 			$fields[$method] = $this->$method();
 		}
 		return $fields;
@@ -37,7 +38,7 @@ class FormFields extends FieldBase
 			'latlng',
 			'phone',
 			'website',
-			'additionalInfo'
+			'additionalinfo'
 		];
 		return apply_filters('simple_locator_fields_ordering', $order);
 	}
@@ -60,7 +61,7 @@ class FormFields extends FieldBase
 			'choices' => [],
 			'css-class' => ['full', 'wpsl-address-field']
 		];
-		return apply_filters('simple_locator_fields_address', $field, $post_id);
+		return apply_filters('simple_locator_fields_address', $field, $post_id, $value);
 	}
 
 	/**
@@ -81,7 +82,7 @@ class FormFields extends FieldBase
 			'choices' => [],
 			'css-class' => ['full', 'wpsl-address-two-field']
 		];
-		return apply_filters('simple_locator_fields_address_two', $field, $post_id);
+		return apply_filters('simple_locator_fields_address_two', $field, $post_id, $value);
 	}
 
 	/**
@@ -102,7 +103,7 @@ class FormFields extends FieldBase
 			'choices' => [],
 			'css-class' => ['city', 'wpsl-city-field']
 		];
-		return apply_filters('simple_locator_fields_city', $field, $post_id);
+		return apply_filters('simple_locator_fields_city', $field, $post_id, $value);
 	}
 
 	/**
@@ -123,7 +124,7 @@ class FormFields extends FieldBase
 			'choices' => [],
 			'css-class' => ['state', 'wpsl-state-field']
 		];
-		return apply_filters('simple_locator_fields_state', $field, $post_id);
+		return apply_filters('simple_locator_fields_state', $field, $post_id, $value);
 	}
 
 	/**
@@ -144,7 +145,7 @@ class FormFields extends FieldBase
 			'choices' => [],
 			'css-class' => ['zip', 'wpsl-zip-field']
 		];
-		return apply_filters('simple_locator_fields_postal_code', $field, $post_id);
+		return apply_filters('simple_locator_fields_postal_code', $field, $post_id, $value);
 	}
 
 	/**
@@ -165,7 +166,7 @@ class FormFields extends FieldBase
 			'choices' => [],
 			'css-class' => ['full', 'wpsl-country-field']
 		];
-		return apply_filters('simple_locator_fields_country', $field, $post_id);
+		return apply_filters('simple_locator_fields_country', $field, $post_id, $value);
 	}
 
 	/**
@@ -186,7 +187,7 @@ class FormFields extends FieldBase
 			'choices' => [],
 			'css-class' => ['half', 'right', 'wpsl-website-field']
 		];
-		return apply_filters('simple_locator_fields_website', $field, $post_id);
+		return apply_filters('simple_locator_fields_website', $field, $post_id, $value);
 	}
 
 	/**
@@ -207,16 +208,16 @@ class FormFields extends FieldBase
 			'choices' => [],
 			'css-class' => ['half', 'wpsl-phone-field']
 		];
-		return apply_filters('simple_locator_fields_phone', $field, $post_id);
+		return apply_filters('simple_locator_fields_phone', $field, $post_id, $value);
 	}
 
 	/**
 	* Additional Info
 	*/
-	public function additionalInfo($value = '', $post_id = null)
+	public function additionalinfo($value = '', $post_id = null)
 	{
 		$field = [
-			'key' => 'additionalInfo',
+			'key' => 'additionalinfo',
 			'label' => __('Additional Info', 'simple-locator'),
 			'type' => 'textarea',
 			'name' => 'wpsl_additionalinfo',
@@ -228,7 +229,16 @@ class FormFields extends FieldBase
 			'choices' => [],
 			'css-class' => ['full', 'wpsl-additional-field']
 		];
-		return apply_filters('simple_locator_fields_additional_info', $field, $post_id);
+		return apply_filters('simple_locator_fields_additional_info', $field, $post_id, $value);
+	}
+
+	/**
+	* Custom Fields
+	* Allows developers to add a custom field to the simple locator meta
+	*/
+	public function customField($key = '', $value = '', $post_id = null)
+	{
+		return apply_filters("simple_locator_fields_custom_{$key}", $post_id, $value);
 	}
 
 	/**

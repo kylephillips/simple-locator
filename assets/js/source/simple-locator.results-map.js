@@ -21,6 +21,7 @@ SimpleLocator.ResultsMap = function()
 			self.activeForm = $(form);
 			self.activeFormContainer = $(form).parents('[' + SimpleLocator.selectors.formContainer + ']');
 			self.data = data;
+			console.log(self.data);
 			self.setMapContainer();
 			self.setMapIndex();
 			self.loadMap();
@@ -127,7 +128,7 @@ SimpleLocator.ResultsMap = function()
 
 		if ( wpsl_locator.includeuserpin !== '' ){
 			var userposition = self.addUserPin();
-			bounds.extend(userposition);
+			if ( userposition ) bounds.extend(userposition);
 		}
 
 		SimpleLocator.maps[self.mapIndex].fitBounds(bounds);
@@ -151,6 +152,9 @@ SimpleLocator.ResultsMap = function()
 		if ( SimpleLocator.userPin[self.mapIndex] ) {
 			SimpleLocator.userPin[self.mapIndex].setMap(null);
 			SimpleLocator.userPin[self.mapIndex] = null;
+		}
+		if ( self.data.allow_empty_address && self.data.address === '') {
+			return false;
 		}
 		var mappin = ( wpsl_locator.mappinuser ) ? wpsl_locator.mappinuser : '';
 		var position = new google.maps.LatLng(self.data.latitude, self.data.longitude);

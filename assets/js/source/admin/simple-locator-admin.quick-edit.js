@@ -85,9 +85,11 @@ SimpleLocatorAdmin.QuickEdit = function()
 		// Loop through the localized form field data and create form fields
 		// Enables PHP filtering 
 		for ( var i = 0; i < wpsl_locator.form_fields_order.length; i++ ){
+
 			var key = wpsl_locator.form_fields_order[i];
 			if ( key == 'map' || key == 'latlng' || key == 'additionalInfo') continue;
 			var field = wpsl_locator.form_fields[key];
+			if ( typeof field === 'undefined' ) continue;
 			var value = $(self.activeItem).attr('data-' + key);
 			if ( typeof value === 'undefined' ) value = '';
 

@@ -27,36 +27,67 @@ class SearchForm
 	{
 		$taxonomies = apply_filters('simple_locator_form_taxonomies', $options['taxonomies'], $options);
 		if ( !$taxonomies ) return;
-		$out = '<div class="wpsl-taxonomy-filters">';
 		
-		if ( $options['taxonomy_field_type'] == 'select' ) :
-			foreach ( $taxonomies as $tax_name => $taxonomy ) :
-				$tax_obj = get_taxonomy($tax_name);
-				$out .= '<div class="wpsl-taxonomy-filter">';
-				$out .= '<label for="wpsl_taxonomy_' . $tax_name . '" class="taxonomy-label">' . $taxonomy['label'] . '</label>';
-				$out .= '<select id="wpsl_taxonomy_' . $tax_name . '" name="taxfilter[' . $tax_name . ']" data-simple-locator-taxonomy-select="' . $tax_name . '">';
-				$out .= '<option value="">' . sprintf(esc_html__('--Select %s--', 'simple-locator'), $tax_obj->labels->singular_name) . '</option>';
-				foreach ( $taxonomy['terms'] as $term ){
-					$out .= '<option value="' . $term->term_id . '" />' . $term->name . '</option>';
-				}
-				$out .= '</select></div><!-- .taxonomy -->';
-				$out .= '</div><!-- .wpsl-taxonomy-filters -->';
-			endforeach;
-			echo $out;
-			return;
-		endif;
+		$taxonomy_fields = [];
+		foreach ( $taxonomies as $tax_name => $taxonomy ){
+			$taxonomy_fields[] = $this->taxonomyField($tax_name, $taxonomy, $options);
+		}
 
-		// Checkboxes
-		foreach ( $taxonomies as $tax_name => $taxonomy ) :
-			$out .= '<div class="wpsl-taxonomy-filter checkboxes">';
-			$out .= '<label class="taxonomy-label">' . $taxonomy['label'] . '</label>';
-			foreach ( $taxonomy['terms'] as $term ){
-				$out .= '<label for="wpsl_taxonomy_' . $tax_name . '"><input type="checkbox" id="wpsl_taxonomy_' . $tax_name . '" name="taxfilter[' . $tax_name . '][]" value="' . $term->term_id . '" data-simple-locator-taxonomy-checkbox="' . $tax_name . '" />' .$term->name . '</label>';
-			}
-			$out .= '</div><!-- .taxonomy -->';
+		$out = '<div class="wpsl-taxonomy-filters">';
+
+		foreach ( $taxonomy_fields as $field ) :
+
+			if ( $field->type == 'select' ) :
+				$out .= '<div class="wpsl-taxonomy-filter taxonomy-' . $field->taxonomy . '">';
+				$out .= '<label for="wpsl_taxonomy_' . $field->taxonomy . '" class="taxonomy-label">' . $field->label . '</label>';
+				$out .= '<select id="wpsl_taxonomy_' . $field->taxonomy . '" name="taxfilter[' . $field->taxonomy . ']" data-simple-locator-taxonomy-select="' . $field->taxonomy . '">';
+				if ( $field->select_default && $field->select_default !== '' ) $out .= '<option value="">' . $field->select_default . '</option>';
+				foreach ( $field->options as $option ) :
+					$out .= '<option value="' . $option['value'] . '"';
+					if ( $option['selected'] ) $out .= ' selected';
+					$out .= '>' . $option['label'] . '</option>';
+				endforeach;
+				$out .= '</select></div><!-- .taxonomy -->';
+			endif; // select
+
+			if ( $field->type == 'checkbox' ) :
+				$out .= '<div class="wpsl-taxonomy-filter checkboxes">';
+				$out .= '<label class="taxonomy-label">' . $field->label . '</label>';
+				foreach ( $field->options as $option ) :
+					$out .= '<label for="wpsl_taxonomy_' . $field->taxonomy . '"><input type="checkbox" id="wpsl_taxonomy_' . $field->taxonomy . '" name="taxfilter[' . $field->taxonomy . '][]" value="' . $option['value'] . '" data-simple-locator-taxonomy-checkbox="' . $field->taxonomy . '"';
+					if ( $option['selected'] ) $out .= ' checked';
+					$out .= ' />' .$option['label'] . '</label>';
+				endforeach;
+				$out .= '</div><!-- .wpsl-taxonomy-filter -->';
+			endif; // checkbox
+
 		endforeach;
+
 		$out .= '</div><!-- .wpsl-taxonomy-filters -->';
 		echo $out;
+	}
+
+	/**
+	* Setup the taxonomy field object
+	* Enables filtering on the field output
+	*/
+	private function taxonomyField($tax_name, $taxonomy, $options)
+	{
+		$tax_obj = get_taxonomy($tax_name);
+		$tax_field = new \stdClass;
+		$tax_field->label = $taxonomy['label'];
+		$tax_field->taxonomy = $tax_name;
+		$tax_field->select_default = sprintf(esc_html__('--Select %s--', 'simple-locator'), $tax_obj->labels->singular_name);
+		$tax_field->type = ( $options['taxonomy_field_type'] == 'select' ) ? 'select' : 'checkbox';
+		$tax_field->options = [];
+		$c = 1;
+		foreach ( $taxonomy['terms'] as $term ){
+			$tax_field->options[$c]['value'] = $term->term_id;
+			$tax_field->options[$c]['label'] = $term->name;
+			$tax_field->options[$c]['selected'] = false;
+			$c++;
+		}
+		return apply_filters("simple_locator_taxonomy_field_{$tax_name}", $tax_field);
 	}
 
 	public function fieldsHidden($options)

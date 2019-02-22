@@ -61,7 +61,7 @@ class RegisterImportEvents
 	}
 
 	/**
-	* Import Request Was Makde
+	* Import Request Was Made
 	*/
 	public function ImportRequestMade()
 	{

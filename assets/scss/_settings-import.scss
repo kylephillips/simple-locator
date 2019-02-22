@@ -105,10 +105,15 @@
 			font-weight: bold;
 		}
 	}
-	select {
+	select,
+	.unique-field {
 		margin: 0 15px 0 0;
 		float: left;
 		width: 200px;
+	}
+	.unique-field {
+		position: relative;
+		top: 4px;
 	}
 }
 

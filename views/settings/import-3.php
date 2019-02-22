@@ -1,5 +1,8 @@
 <?php
 $transient = $this->import_repo->transient();
+// echo '<pre>';
+// var_dump($transient);
+// echo '</pre>';
 
 // Check that the columns have been mapped
 if ( !isset($transient['columns']) || $transient['complete'] ) : ?>

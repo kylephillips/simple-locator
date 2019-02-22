@@ -30,7 +30,9 @@ SimpleLocatorAdmin.ImportColumnMap = function()
 		fieldRow : 'data-simple-locator-import-field',
 		form : 'data-simple-locator-import-column-form',
 		status : 'data-import-post-status',
-		taxonomySeparator : 'data-import-taxonomy-separator'
+		taxonomySeparator : 'data-import-taxonomy-separator',
+		uniqueIdCheckbox : 'data-simple-locator-import-unique-identifier',
+		uniqueIdAction : 'data-import-unique-action'
 	}
 
 	self.bindEvents = function()
@@ -53,6 +55,9 @@ SimpleLocatorAdmin.ImportColumnMap = function()
 		$(document).on('click', '[' + self.selectors.addFieldButton + ']', function(e){
 			e.preventDefault();
 			self.addField();
+		});
+		$(document).on('change', '[' + self.selectors.uniqueIdCheckbox + ']', function(e){
+			self.toggleUniqueIdCheckbox($(this));
 		});
 		$(document).on('click', '[' + self.selectors.removeFieldButton + ']', function(e){
 			e.preventDefault();
@@ -85,9 +90,21 @@ SimpleLocatorAdmin.ImportColumnMap = function()
 			success: function(data){
 				self.totalrows = data.row_count;
 				self.updateCurrentRowText();
+				self.addColumnRows(data)
 				self.populateColumnSelects(data);
+				self.selectColumns();
 			}
 		});
+	}
+
+	/**
+	* Select the columns
+	*/
+	self.addColumnRows = function(data)
+	{
+		for ( var i = 0; i < (data.columns.length - 1); i++ ){
+			self.addField();
+		}
 	}
 
 	/**
@@ -104,6 +121,19 @@ SimpleLocatorAdmin.ImportColumnMap = function()
 		}
 		$('[' + self.selectors.selectColumn + ']').html(html);
 		self.toggleLoading(false);
+	}
+
+	/**
+	* Loop through the rows and select the appropriate column
+	*/
+	self.selectColumns = function()
+	{
+		var rows = $('[' + self.selectors.fieldRow + ']');
+		$.each(rows, function(i){
+			var select = $(this).find('[' + self.selectors.selectColumn + ']');
+			var value = String(i);
+			$(select).val(value);
+		});
 	}
 
 	/**
@@ -214,8 +244,9 @@ SimpleLocatorAdmin.ImportColumnMap = function()
 		
 		// Set the name indexes
 		$(newrow).find('[' + self.selectors.selectField + ']').attr('name', 'wpsl_import_field[' + fieldcount + '][field]');
-		$(newrow).find('[' + self.selectors.selectColumn + ']').attr('name', 'wpsl_import_field[' + fieldcount + '][csv_column]');
+		var csv_column = $(newrow).find('[' + self.selectors.selectColumn + ']').attr('name', 'wpsl_import_field[' + fieldcount + '][csv_column]');
 		$(newrow).find('[' + self.selectors.selectType + ']').attr('name', 'wpsl_import_field[' + fieldcount + '][type]');
+		$(newrow).find('[' + self.selectors.uniqueIdCheckbox + ']').attr('name', 'wpsl_import_field[' + fieldcount + '][unique]').removeAttr('checked');
 	}
 
 	/**
@@ -263,6 +294,23 @@ SimpleLocatorAdmin.ImportColumnMap = function()
 			passes = false;
 		}
 		return passes;
+	}
+
+	/**
+	* Toggle Unique identifier checkboxes 
+	* (only 1 may be checked)
+	*/
+	self.toggleUniqueIdCheckbox = function(checked_box)
+	{
+		var checked = $(checked_box).is(':checked');
+		var action = $('[' + self.selectors.uniqueIdAction + ']');
+		if ( !checked ) {
+			$(action).hide();
+			return;
+		}
+		$('[' + self.selectors.uniqueIdCheckbox + ']').removeAttr('checked');
+		$(checked_box).attr('checked', true);
+		$(action).show();
 	}
 
 	/**

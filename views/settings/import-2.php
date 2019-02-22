@@ -64,6 +64,10 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 								<option value="website"><?php _e('Website', 'simple-locator'); ?></option>
 							</optgroup>
 						</select>
+						<div class="unique-field">
+							<label><input type="checkbox" name="wpsl_import_field[0][unique]" value="1" data-simple-locator-import-unique-identifier />
+								<?php _e('Unique Identifier', 'simple-locator'); ?></label>
+						</div>
 						<button class="button" style="display:none;" data-simple-locator-import-remove-field>-</button>
 					</li>
 				</ul>
@@ -106,6 +110,19 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 				<select name="wpsl_import_taxonomy_separator" style="clear:both;float:none;">
 					<option value="comma"><?php _e('Comma', 'simple-locator'); ?></option>
 					<option value="pipe"><?php _e('Pipe', 'simple-locator'); ?></option>
+				</select>
+			</div>
+		</div>
+
+		<div class="row" style="display:none;" data-import-unique-action>
+			<div class="label">
+				<h4><?php _e('Duplicate Handling', 'simple-locator'); ?></h4>
+				<p><?php _e('If a row with a matching unique identifier is found, how should it be handled?.', 'simple-locator'); ?></p>
+			</div>
+			<div class="field">
+				<select name="wpsl_import_duplicate_handling" style="clear:both;float:none;">
+					<option value="skip"><?php _e('Skip', 'simple-locator'); ?></option>
+					<option value="update"><?php _e('Update Post', 'simple-locator'); ?></option>
 				</select>
 			</div>
 		</div>

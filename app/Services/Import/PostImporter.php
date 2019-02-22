@@ -31,6 +31,11 @@ class PostImporter
 	private $import_status = true;
 
 	/**
+	* Do the Geocode?
+	*/
+	private $do_geocode = true;
+
+	/**
 	* Geocoder Class
 	*/
 	public $geocoder;
@@ -60,6 +65,7 @@ class PostImporter
 		$this->post_data = $post_data;
 		$this->transient = $transient;
 		$this->setAddress();
+		$this->importPost();
 		$this->geocode();
 		if ( $this->post_id ) return $this->post_id;
 		return false;
@@ -86,12 +92,13 @@ class PostImporter
 	*/
 	private function geocode()
 	{
+		if ( !$this->do_geocode ) return;
 		try {
 			$this->geocoder->geocode($this->address);
 			$coordinates = $this->geocoder->getCoordinates();
 			$this->coordinates['latitude'] = $coordinates['lat'];
 			$this->coordinates['longitude'] = $coordinates['lng'];
-			$this->importPost();
+			$this->addGeocodeField();
 		} catch ( \SimpleLocator\Services\Import\Exceptions\GoogleQueryLimitException $e ) {
 			$this->updateLastRowImported();
 			throw new \Exception($e->getMessage());
@@ -110,7 +117,19 @@ class PostImporter
 	private function importPost()
 	{
 		$this->import_status = true;
+		
+		$duplicate_handling = $this->transient['duplicate_handling'];
+		$existing_id = $this->post_repo->postExists($this->post_data, $this->transient);
 		$post = [];
+		if ( $existing_id && $duplicate_handling == 'skip' ){
+			$this->failedRow(__('Location Exists, Skipping Import', 'simple-locator'));
+			return false;
+		}
+		if ( $existing_id && $duplicate_handling == 'update' ){
+			$this->checkExistingAddress($existing_id[0]->ID);
+			$post['ID'] = $existing_id[0]->ID;
+		}
+
 		$post['post_type'] = $this->transient['post_type'];
 		$post['post_status'] = $this->transient['import_status'];
 		foreach ( $this->transient['columns'] as $field ){
@@ -129,10 +148,6 @@ class PostImporter
 			$this->failedRow(__('Missing Title', 'simple-locator'));
 			return false;
 		}
-		if ( $this->post_repo->postExists($post['post_title']) ){
-			$this->failedRow(__('Location Exists', 'simple-locator'));
-			return false;
-		}
 		$this->post_id = wp_insert_post($post);
 		if ( !$this->post_id ) {
 			$this->failedRow(__('WordPress Import Error', 'simple-locator'));
@@ -140,7 +155,13 @@ class PostImporter
 		}
 		$this->addMeta();
 		$this->addTerms();
-		$this->addGeocodeField();
+		// return wp_send_json([
+		// 	'status' => 'testing',
+		// 	'new_id' => $this->post_id,
+		// 	'geocode' => $this->do_geocode,
+		// 	'meta' => get_post_meta($this->post_id)
+		// ]);
+		// die();
 	}
 
 	/**
@@ -152,17 +173,32 @@ class PostImporter
 	}
 
 	/**
+	* Do we need to geocode the updated post?
+	*/
+	private function checkExistingAddress($post_id)
+	{
+		// Do we need to re-geocode?
+		$meta = get_post_meta($post_id);
+		$address = '';
+		if ( isset($meta['wpsl_address'][0]) ) $address .= $meta['wpsl_address'][0] . ' ';
+		if ( isset($meta['wpsl_city'][0]) ) $address .= $meta['wpsl_city'][0] . ' ';
+		if ( isset($meta['wpsl_state'][0]) ) $address .= $meta['wpsl_state'][0] . ' ';
+		if ( isset($meta['wpsl_zip'][0]) ) $address .= $meta['wpsl_zip'][0];
+		if ( $address == $this->address ) $this->do_geocode = false;
+
+	}
+
+	/**
 	* Add Custom Meta Fields
 	*/
 	private function addMeta()
 	{
-		$exclude_fields = ['title', 'content', 'excerpt', 'status', 'publish_date', 'publish_date_gmt', 'modified_date', 'modified_date_gmt', 'slug'];
 		foreach ( $this->transient['columns'] as $field ){
-			if ( in_array($field->field, $exclude_fields) ) continue;
-			if ( strpos($field->field, 'taxonomy[') !== false ) continue;
+			if ( $field->field_type == 'post_field' || $field->field_type == 'taxonomy' ) continue;
 			$column_value = ( isset($this->post_data[$field->csv_column]) ) ? sanitize_text_field($this->post_data[$field->csv_column]) : "";
 			if ( $field->type == 'website' ) $column_value = esc_url($column_value);
-			if ( $column_value !== "" ) add_post_meta($this->post_id, $field->field, $column_value);
+			$column_value = apply_filters('simple_locator_import_custom_field', $column_value, $field->field);
+			if ( $column_value !== "" ) update_post_meta($this->post_id, $field->field, $column_value);
 		}
 	}
 
@@ -174,12 +210,11 @@ class PostImporter
 		$separator = $this->transient['taxonomy_separator'];
 		$separator = ( $separator == 'comma' ) ? ',' : '|';
 		foreach ( $this->transient['columns'] as $field ){ 
-			if ( strpos($field->field, 'taxonomy_' ) !== false ){
-				$terms = ( isset($this->post_data[$field->csv_column]) ) ? explode($separator, $this->post_data[$field->csv_column]) : [];
-				$taxonomy = str_replace('taxonomy_', '', $field->field);
-				foreach ( $terms as $term ){
-					wp_set_object_terms($this->post_id, $term, $taxonomy, true);
-				}
+			if ( $field->field_type !== 'taxonomy' ) continue;
+			$terms = ( isset($this->post_data[$field->csv_column]) ) ? explode($separator, $this->post_data[$field->csv_column]) : [];
+			$taxonomy = str_replace('taxonomy_', '', $field->field);
+			foreach ( $terms as $term ){
+				wp_set_object_terms($this->post_id, $term, $taxonomy, true);
 			}
 		}
 	}
@@ -189,8 +224,8 @@ class PostImporter
 	*/
 	private function addGeocodeField()
 	{
-		if ( isset($this->coordinates['latitude']) ) add_post_meta($this->post_id, $this->transient['lat'], $this->coordinates['latitude']);
-		if ( isset($this->coordinates['longitude']) ) add_post_meta($this->post_id, $this->transient['lng'], $this->coordinates['longitude']);
+		if ( isset($this->coordinates['latitude']) ) update_post_meta($this->post_id, $this->transient['lat'], $this->coordinates['latitude']);
+		if ( isset($this->coordinates['longitude']) ) update_post_meta($this->post_id, $this->transient['lng'], $this->coordinates['longitude']);
 	}
 
 	/**

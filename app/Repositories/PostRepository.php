@@ -114,16 +114,43 @@ class PostRepository
 
 	/**
 	* Check if a post exists
-	* @param string $post_title
+	* @param array $post_data
+	* @param array $transient
 	* @since 1.5.3
 	* @return boolean
+	* @todo add getByWordpressField
 	*/
-	public function postExists($post_title)
+	public function postExists($post_data, $transient)
 	{
-		if ( !$post_title ) return false;
-		$post_type = $this->settings_repo->getLocationPostType();
-		$post = get_page_by_title($post_title, OBJECT, $post_type);
-		if ( !$post ) return false;
-		return true;
+		$columns = $transient['columns'];
+		$unique_field = false;
+		foreach ( $columns as $column ){
+			if ( $column->unique ){
+				$unique_field = $column->field;
+				$unique_value = $post_data[$column->csv_column];
+				$unique_type = $column->field_type;
+			}
+		}
+		if ( !$unique_field ) return false;
+		if ( $unique_type == 'post_meta' ) return $this->getByMeta($unique_field, $unique_value, $transient['post_type']);
 	}
+
+	/**
+	* Get field by post meta
+	*/
+	public function getByMeta($meta_key, $meta_value, $post_type)
+	{
+		$posts = false;
+		$q = new \WP_Query([
+			'post_type' => $post_type,
+			'posts_per_page' => -1,
+			'meta_key' => $meta_key,
+			'meta_value' => $meta_value
+		]);
+		if ( $q->have_posts() ) $posts = $q->posts;
+		wp_reset_postdata();
+		return $posts;
+	}
+
+	
 }

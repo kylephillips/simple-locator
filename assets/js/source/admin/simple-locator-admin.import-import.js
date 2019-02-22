@@ -71,6 +71,10 @@ SimpleLocatorAdmin.Import = function()
 				imports_per_request: self.imports_per_request
 			},
 			success: function(data){
+				if ( data.status === 'testing' ){
+					console.log(data);
+					return;
+				}
 				if ( data.status === 'complete' ){
 					self.completeImport();
 					return;

@@ -155,13 +155,6 @@ class PostImporter
 		}
 		$this->addMeta();
 		$this->addTerms();
-		// return wp_send_json([
-		// 	'status' => 'testing',
-		// 	'new_id' => $this->post_id,
-		// 	'geocode' => $this->do_geocode,
-		// 	'meta' => get_post_meta($this->post_id)
-		// ]);
-		// die();
 	}
 
 	/**
@@ -198,7 +191,7 @@ class PostImporter
 	{
 		foreach ( $this->transient['columns'] as $field ){
 			if ( $field->field_type == 'post_field' || $field->field_type == 'taxonomy' ) continue;
-			$column_value = ( isset($this->post_data[$field->csv_column]) ) ? sanitize_text_field($this->post_data[$field->csv_column]) : "";
+			$column_value = ( isset($this->post_data[$field->csv_column]) ) ? $this->post_data[$field->csv_column] : "";
 			if ( $field->type == 'website' ) $column_value = esc_url($column_value);
 			$column_value = apply_filters('simple_locator_import_custom_field', $column_value, $field->field);
 			if ( $column_value !== "" ) update_post_meta($this->post_id, $field->field, $column_value);

@@ -20,7 +20,8 @@ SimpleLocatorAdmin.ImportUpload = function()
 		redoImportButton : 'data-simple-locator-import-redo-button',
 		removeImportButton : 'data-simple-locator-import-remove-button',
 		toggleTemplateDetails : 'data-import-template-toggle-details',
-		removeTemplateButton : 'data-simple-locator-remove-import-template'
+		removeTemplateButton : 'data-simple-locator-remove-import-template',
+		typeRadio : 'data-simple-locator-import-type-radio'
 	}
 
 	self.bindEvents = function()
@@ -63,6 +64,9 @@ SimpleLocatorAdmin.ImportUpload = function()
 			var id = $(this).attr(self.selectors.removeTemplateButton);
 			self.removeTemplate(id);
 		});
+		$(document).on('change', '[' + self.selectors.typeRadio + ']', function(){
+			self.toggleImportType();
+		});
 	}
 
 	/**
@@ -102,6 +106,19 @@ SimpleLocatorAdmin.ImportUpload = function()
 	self.toggleTemplateDetails = function(button)
 	{
 		$(button).parents('.import-template ').find('.details').toggle();
+	}
+
+	/**
+	* Toggle the import type
+	* (new vs template)
+	*/
+	self.toggleImportType = function()
+	{
+		var selectedType = $('[' + self.selectors.typeRadio + ']:checked').val();
+		var fields = $('[data-import-type]');
+		console.log(selectedType);
+		$(fields).hide();
+		$('[data-import-type="' + selectedType + '"]').show();
 	}
 
 	/**

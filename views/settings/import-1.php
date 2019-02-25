@@ -56,16 +56,38 @@ $all_templates = $this->import_repo->getAllTemplates();
 	<?php endif; endif; ?>
 
 	<form action="<?php echo admin_url('admin-post.php'); ?>" method="post" enctype="multipart/form-data" class="wpsl-upload-form row"<?php if ( $incomplete ) echo ' style="display:none;"';?> data-simple-locator-import-upload-form>
-		<label><?php _e('Import to Post Type', 'simple-locator'); ?></label>
-		<select name="import_post_type" data-simple-locator-import-post-type-input>
-		<?php 
-		foreach ( $this->field_repo->getPostTypes(false) as $type ){
-			echo '<option value="' . $type['name'] . '"';
-			if ( !$type['public'] ) echo ' data-non-public-post-type';
-			echo '>' . $type['label'] . '</option>';
-		} ?>
-		</select>
-		<label class="post-type-public"><input type="checkbox" data-simple-locator-show-non-public-types><?php _e('Show non-public post types', 'simple-locator'); ?></label>
+		<?php if ( $all_templates ) : ?>
+		<div class="import-type-selection">
+			<div class="type-radios">
+				<div class="choice">
+					<input type="radio" name="import_type" data-simple-locator-import-type-radio value="new" id="import_type_new" checked /><label for="import_type_new"><?php _e('New Import', 'simple-locator'); ?></label>
+				</div>
+				<div class="choice">
+					<input type="radio" name="import_type" data-simple-locator-import-type-radio value="template" id="import_type_template" /><label for="import_type_template"><?php _e('Use Template', 'simple-locator'); ?></label>
+				</div>
+			</div>
+		</div><!-- .import-type-selection -->
+		<?php endif; ?>
+		<div data-import-type="new">
+			<label><?php _e('Import to Post Type', 'simple-locator'); ?></label>
+			<select name="import_post_type" data-simple-locator-import-post-type-input>
+			<?php 
+			foreach ( $this->field_repo->getPostTypes(false) as $type ){
+				echo '<option value="' . $type['name'] . '"';
+				if ( !$type['public'] ) echo ' data-non-public-post-type';
+				echo '>' . $type['label'] . '</option>';
+			} ?>
+			</select>
+			<label class="post-type-public"><input type="checkbox" data-simple-locator-show-non-public-types><?php _e('Show non-public post types', 'simple-locator'); ?></label>
+		</div><!-- .import_type_new -->
+		<?php if ( $all_templates ) : ?>
+		<div data-import-type="template" style="display:none;">
+			<label><?php _e('Import Template', 'simple-locator'); ?></label>
+			<select name="import_template">
+				<?php foreach ( $all_templates as $template ) echo '<option value="' . $template->ID . '">' . $template->title . '</option>'; ?>
+			</select>
+		</div>
+		<?php endif; ?>
 		<input type="hidden" name="action" value="wpslimportupload">
 		<?php wp_nonce_field( 'wpsl-import-nonce', 'nonce' ) ?>
 		

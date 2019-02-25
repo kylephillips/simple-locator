@@ -53,10 +53,44 @@
 	padding: 1em;
 	background-color: $white;
 	box-sizing: border-box;
+	.import-type-selection {
+		margin-bottom: 1em;
+		padding-bottom: 1em;
+		h5 {
+			font-size: 1em;
+			margin: 0;
+		}
+		.type-radios {
+			@include clearfix;
+			padding: 5px;
+			background-color: darken($white, 6%);
+			max-width: 300px;
+		}
+		input[type="radio"]{
+			display: none;
+			&:checked + label {
+				background-color: $blue;
+				color: $white;
+				font-weight: bold;
+				border-radius: 2px;
+			}
+		}
+		label {
+			background-color: darken($white, 6%);
+			padding: 1em;
+			font-weight: normal;
+			text-align: center;
+			color: darken($white, 55%);
+		}
+		.choice {
+			float: left;
+			width: 50%;
+		}
+	} // .import-type-selection
 	label {
 		display: block;
 		font-weight: bold;
-		margin: 0;
+		margin: 0 0 5px 0;
 		&.inline {
 			font-weight: normal;
 		}

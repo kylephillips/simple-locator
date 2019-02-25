@@ -384,7 +384,8 @@ SimpleLocatorAdmin.ImportColumnMap = function()
 		var not_unique = ['content', 'excerpt', 'publish_date', 'publish_date_gmt', 'modified_date', 'modified_date_gmt'];
 		$.each(all_selects, function(){
 			var unique_checkbox = $(this).parents('[' + self.selectors.fieldRow + ']').find('.unique-field');
-			if ( not_unique.includes($(this).val()) ){
+			var value = $(this).val();
+			if ( not_unique.includes(value) || value.includes('taxonomy_') ){
 				$(unique_checkbox).css('visibility', 'hidden').find('input').removeAttr('checked');
 			} else {
 				$(unique_checkbox).removeAttr('style');

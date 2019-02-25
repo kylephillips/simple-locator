@@ -37,6 +37,7 @@
 	border: 1px solid $border-light;
 	border-radius: 2px;
 	padding: 1em;
+	margin-top: 2em;
 	.wpsl-info {
 		margin-bottom: .5em;
 	}
@@ -51,8 +52,8 @@
 		li {
 			margin: 1em 0 0 0;
 			float: left;
-			width: 30%;
-			padding-right: 3.3333333333333335%;
+			width: 100%;
+			// padding-right: 3.3333333333333335%;
 		}
 	}
 	h5 {

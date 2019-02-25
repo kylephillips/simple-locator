@@ -1,5 +1,3 @@
-<h3 class="wpsl-step-title"><?php _e('Step 1: Upload CSV File', 'simple-locator'); ?></h3>
-
 <?php 
 // Form Notifications
 if ( isset($_GET['success']) ) echo '<div class="updated"><p>' . $_GET['success'] . '</p></div>';
@@ -8,19 +6,9 @@ $all_templates = $this->import_repo->getAllTemplates();
 ?>
 
 <div class="wpsl-import-general-information">
-	<h4><?php _e('Important: File Details and Import Limitations', 'simple-locator'); ?></h4>
 	<div class="wpsl-info"><?php _e('Before running an import, make a complete backup of your database.', 'simple-locator'); ?></div>
 	<ul>
 		<li>
-			<h5><?php _e('File Format', 'simple-locator'); ?></h5>
-			<p><?php _e('File must be properly formatted CSV', 'simple-locator'); ?>. <a href="<?php echo plugins_url(); ?>/simple-locator/assets/csv_template.csv"><?php _e('View an Example Template', 'simple-locator'); ?></a></p>
-		</li>
-		<li>
-			<h5><?php _e('Required Columns', 'simple-locator'); ?></h5>
-			<p><?php _e('2 columns are required: a title and at least one address column. Addresses may be saved across multiple columns (street address, city, etc…), or in one column. You may specify a column as a unique ID to prevent duplicates.'); ?></a></p>
-		</li>
-		<li>
-			<h5><?php _e('Geocoding Pricing', 'simple-locator'); ?></h5>
 			<p><?php _e('Effective June 11, 2018, Google charges for each geocoding request. Please review their pricing for Geocoding services ', 'simple-locator'); ?><a href="https://developers.google.com/maps/billing/understanding-cost-of-use?hl=en_US#geocoding" target="_blank"><?php _e('here', 'simple-locator'); ?></a>.</p>
 		</li>
 	</ul>
@@ -95,7 +83,7 @@ $all_templates = $this->import_repo->getAllTemplates();
 		<div class="file">
 			<label><?php _e('Choose CSV File', 'simple-locator'); ?></label>
 			<input type="file" name="file">
-			<label class="inline"><input type="checkbox" name="mac_formatted" value="true"><?php _e('CSV file created on Mac', 'simple-locator'); ?></label>
+			<label class="inline"><input type="checkbox" name="mac_formatted" value="true"><?php _e('CSV file created on Mac', 'simple-locator'); ?>  <a href="<?php echo plugins_url(); ?>/simple-locator/assets/csv_template.csv"><?php _e('View an Example', 'simple-locator'); ?></a></label>
 		</div>
 		<input type="submit" class="button" value="<?php _e('Start New Import', 'simple-locator'); ?>">
 	</form>

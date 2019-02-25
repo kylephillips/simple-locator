@@ -50,6 +50,7 @@ SimpleLocatorAdmin.ImportColumnMap = function()
 		$(document).on('change', '[' + self.selectors.selectField + ']', function(){
 			self.autoSelectFieldType($(this));
 			self.toggleStatusSelection();
+			self.toggleFieldOptions();
 			self.toggleTaxonomySelector();
 		});
 		$(document).on('click', '[' + self.selectors.addFieldButton + ']', function(e){
@@ -346,6 +347,31 @@ SimpleLocatorAdmin.ImportColumnMap = function()
 			return;
 		}
 		$('[' + self.selectors.taxonomySeparator + ']').hide();
+	}
+
+	/**
+	* Toggle wordpress field select option disable
+	*/
+	self.toggleFieldOptions = function()
+	{
+		var chosen = [];
+		var all_selects = $('[' + self.selectors.selectField + ']');
+		$.each(all_selects, function(){
+			if ( $(this).val() !== '' ) chosen.push($(this).val());
+		});
+		$.each(all_selects, function(){
+			var options = $(this).find('option');
+			var parentVal = $(this).val();
+			$.each(options, function(){
+				var optionVal = $(this).val();
+				if ( optionVal === parentVal ) return;
+				if ( chosen.includes(optionVal)) {
+					$(this).attr('disabled', true);
+				} else {
+					$(this).removeAttr('disabled');
+				}
+			});
+		});
 	}
 
 	/**

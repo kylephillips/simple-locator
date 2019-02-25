@@ -153,7 +153,7 @@ class LocationSearch
 		$this->query_data['distance'] = $this->data['distance'];
 		$this->query_data['userlat'] = $this->data['latitude'];
 		$this->query_data['userlong'] = $this->data['longitude'];
-		$this->query_data['post_type'] = get_option('wpsl_post_type');
+		$this->query_data['post_type'] = $this->settings_repo->getPostType();
 		$this->query_data['lat_field'] = get_option('wpsl_lat_field');
 		$this->query_data['lng_field'] = get_option('wpsl_lng_field');
 		$this->query_data['diameter'] = ( $this->data['unit'] == "miles" ) ? 3959 : 6371;

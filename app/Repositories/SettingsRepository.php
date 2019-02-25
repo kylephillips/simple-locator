@@ -7,6 +7,15 @@ namespace SimpleLocator\Repositories;
 class SettingsRepository 
 {
 	/**
+	* Get the Post Type for Locations
+	*/
+	public function getPostType()
+	{
+		$option = get_option('wpsl_post_type');
+		return ( !isset($option) || $option == '' ) ? 'locations' : $option;
+	}
+
+	/**
 	* Get the map service
 	*/
 	public function mapService()

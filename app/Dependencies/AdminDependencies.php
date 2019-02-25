@@ -39,9 +39,10 @@ class AdminDependencies extends DependencyBase
 	public function scripts()
 	{
 		$screen = get_current_screen();
-		if ( ($screen->post_type == get_option('wpsl_post_type')) || ($screen->id == 'settings_page_wp_simple_locator') ) {
+		$location_post_type = $this->settings_repo->getPostType();
+		if ( ($screen->post_type == $location_post_type) || ($screen->id == 'settings_page_wp_simple_locator') ) {
 			$this->addGoogleMaps();
-			$post_type = get_post_type_object(get_option('wpsl_post_type'));
+			$post_type = get_post_type_object($location_post_type);
 			wp_enqueue_script('google-maps');
 			wp_enqueue_media();
 			wp_enqueue_script(
@@ -60,7 +61,7 @@ class AdminDependencies extends DependencyBase
 				'preview'			=> __('Preview', 'simple-locator'),
 				'cancel'			=> __('Cancel', 'simple-locator'),
 				'posttype' 			=> $this->post_type,
-				'posttype_setting'	=> get_option('wpsl_post_type'),
+				'posttype_setting'	=> $location_post_type,
 				'lat_field'			=> $this->settings_repo->getGeoField('lat'),
 				'lng_field'			=> $this->settings_repo->getGeoField('lng'),
 				'map_field'			=> $this->settings_repo->acfMapField(),
@@ -164,7 +165,7 @@ class AdminDependencies extends DependencyBase
 		$data['Row'] 				= 'Showing Row';
 		$data['pause'] 				= __('Pause Import', 'simple-locator');
 		$data['pause_continue'] 	= __('Continue Import', 'simple-locator');
-		$data['post_type'] 			= get_option('wpsl_post_type');
+		$data['post_type'] 			= $this->settings_repo->getPostType();
 		$data['choose_column'] 		= 'Choose Column';
 		$data['required'] 			= __('Column and field selections required for import.', 'simple-locator');
 		$data['required_address'] 	= __('An address field is required for import.', 'simple-locator');
@@ -196,7 +197,7 @@ class AdminDependencies extends DependencyBase
 	public function acfTabs()
 	{
 		$screen = get_current_screen();
-		if ( ($screen->post_type == get_option('wpsl_post_type')) ) {
+		if ( $screen->post_type == $this->settings_repo->getPostType() ) {
 			$tab = $this->settings_repo->acfTab();
 			if ( !$tab || $tab == '' ) return;
 			echo '<style>#wpsl-meta-box {display:none;}</style>';

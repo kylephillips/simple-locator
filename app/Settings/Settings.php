@@ -96,7 +96,7 @@ class Settings
 	*/
 	private function setPostType()
 	{
-		$this->post_type = get_option('wpsl_post_type');
+		$this->post_type = $this->settings_repo->getPostType();
 	}
 
 	/**

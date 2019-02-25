@@ -64,6 +64,7 @@ $all_templates = $this->import_repo->getImportTemplates();
 				<?php 
 				foreach ( $this->field_repo->getPostTypes(false) as $type ){
 					echo '<option value="' . $type['name'] . '"';
+					if ( $type['name'] == $this->settings_repo->getPostType() ) echo ' selected';
 					if ( !$type['public'] ) echo ' data-non-public-post-type';
 					echo '>' . $type['label'] . '</option>';
 				} ?>

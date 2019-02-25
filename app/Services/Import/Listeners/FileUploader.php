@@ -2,15 +2,28 @@
 namespace SimpleLocator\Services\Import\Listeners;
 
 use League\Csv\Reader;
+use SimpleLocator\Repositories\ImportRepository;
 
 /**
 * Upload a File
 */
 class FileUploader extends ImportListenerBase 
 {
+	/**
+	* Import Repo
+	* @var obj
+	*/
+	private $import_repo;
+
+	/**
+	* Import Template
+	* @var post obj
+	*/
+	private $template = null;
 
 	public function __construct()
 	{
+		$this->import_repo = new ImportRepository;
 		parent::__construct();
 		$this->copyFile();
 	}
@@ -29,6 +42,7 @@ class FileUploader extends ImportListenerBase
 		if ( isset($movefile['error']) ) return $this->error($movefile['error']);
 		
 		$this->setTransient($movefile['file']);
+		if ( $this->template ) return $this->success('3');
 		$this->success('2');
 	}
 
@@ -40,11 +54,17 @@ class FileUploader extends ImportListenerBase
 	{
 		$mac = ( isset($_POST['mac_formatted']) ) ? true : false;
 		$rowcount = $this->rowCount($file, $mac);
+		$template = false;
+		if ( isset($_POST['import_type']) && $_POST['import_type'] == 'template' ){
+			$this->getImportTemplate();
+			$template = $this->template;
+		}
+		$post_type = ( $this->template ) ? $this->template->import_post_type : $this->setPostType();
 		$transient = [
 			'file' => $file, // full path to file
 			'mac' => $mac, // is mac formatted?
 			'row_count' => $rowcount, // total rows in CSV file
-			'post_type' => $this->setPostType(), // post type to import to
+			'post_type' => $post_type, // post type to import to
 			'filename' => $_FILES['file']['name'], // filename for display purposes
 			'complete_rows' => '0',
 			'error_rows' => array(), // Rows with import or geocoding errors,
@@ -53,8 +73,10 @@ class FileUploader extends ImportListenerBase
 			'lng' => get_option('wpsl_lng_field'), // Field to save longitude to
 			'import_type' => $_FILES['file']['type'],
 			'post_ids' => array(),
-			'complete' => false
+			'complete' => false,
+			'using_template' => intval($_POST['import_template'])
 		];
+		if ( $template ) $transient = $this->saveTemplateData($transient);
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 	}
 
@@ -103,4 +125,27 @@ class FileUploader extends ImportListenerBase
 		}
 		return false;
 	}
+
+	/**
+	* Get the import template
+	*/
+	private function getImportTemplate()
+	{
+		$this->template = $this->import_repo->getImportTemplates($_POST['import_template']);
+	}
+
+	/**
+	* Save the template data to the transient for the current import
+	*/
+	private function saveTemplateData($data)
+	{
+		$data['columns'] = $this->template->import_columns;
+		$data['import_status'] = $this->template->import_status;
+		$data['skip_first'] = $this->template->import_skip_first;
+		$data['skip_geocode'] = $this->template->import_skip_geocode;
+		$data['duplicate_handling'] = $this->template->import_duplicate_handling;
+		$data['taxonomy_separator'] = $this->template->import_taxonomy_separator;
+		return $data;
+	}
+
 }

@@ -2,7 +2,7 @@
 // Form Notifications
 if ( isset($_GET['success']) ) echo '<div class="updated"><p>' . $_GET['success'] . '</p></div>';
 if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '</p></div>';
-$all_templates = $this->import_repo->getAllTemplates();
+$all_templates = $this->import_repo->getImportTemplates();
 ?>
 
 <div class="wpsl-import-general-information">
@@ -108,7 +108,9 @@ if ( $iq->have_posts() ) : $c = 1;
 	<div class="row subhead"><h4><?php _e('Complete Imports', 'simple-locator'); ?></h4></div>
 	<?php 
 	while ( $iq->have_posts() ) : $iq->the_post(); 
-		$data = get_post_meta(get_the_id(), 'wpsl_import_data', true); ?>
+		$data = get_post_meta(get_the_id(), 'wpsl_import_data', true); 
+		$import_history_template = ( isset($data['using_template']) && $data['using_template'] ) ? get_the_title($data['using_template']) : false
+		?>
 		<div class="import<?php if ( $c == 1) echo ' first';?>">
 			<div class="import-title">
 				<a href="#" class="button" data-import-toggle-details><?php _e('Details', 'simple-locator'); ?></a>
@@ -120,7 +122,10 @@ if ( $iq->have_posts() ) : $c = 1;
 						<strong><?php _e('File', 'simple-locator'); ?>:</strong> <?php echo $data['filename']; ?><br>
 						<strong><?php _e('Total Posts Imported', 'simple-locator'); ?>:</strong> <?php echo $data['complete_rows']; ?><br>
 						<strong><?php _e('Post Type', 'simple-locator'); ?>:</strong> <?php echo $data['post_type']; ?><br>
-						<strong><?php _e('Errors', 'simple-locator'); ?>:</strong> <?php echo count($data['error_rows']); ?>
+						<strong><?php _e('Errors', 'simple-locator'); ?>:</strong> <?php echo count($data['error_rows']); ?><br>
+						<?php if ( $import_history_template ) : ?>
+						<strong><?php _e('Template', 'simple-locator'); ?>:</strong> <?php echo $import_history_template; ?>
+						<?php endif; ?>
 					</p>
 					<p>
 						<?php if ( file_exists($data['file']) ) : ?>

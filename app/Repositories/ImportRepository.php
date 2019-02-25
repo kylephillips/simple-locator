@@ -54,15 +54,14 @@ class ImportRepository
 	}
 
 	/**
-	* Get all import templates
+	* Get import templates
 	*/
-	public function getAllTemplates()
+	public function getImportTemplates($id = null)
 	{
 		$posts = null;
-		$q = new \WP_Query([
-			'post_type' => 'wpslimporttemplate',
-			'posts_per_page' => -1
-		]);
+		$args = ['post_type' => 'wpslimporttemplate', 'posts_per_page' => -1];
+		if ( $id ) $args['p'] = $id;
+		$q = new \WP_Query($args);
 		if ( $q->have_posts() ) : $c = 0; while ( $q->have_posts() ) : $q->the_post();
 			$posts[$c] = new \stdClass;
 			$posts[$c]->ID = get_the_id();
@@ -77,6 +76,6 @@ class ImportRepository
 			$posts[$c]->import_taxonomy_separator = $import_data['taxonomy_separator'];
 		$c++; endwhile; endif;
 		wp_reset_postdata();
-		return $posts;
+		return ( $id && is_array($posts) ) ? $posts[0] : $posts;
 	}
 }

@@ -127,7 +127,7 @@ class FieldRepository
   		$return_fields = [];
   		$groups = acf_get_field_groups(['post_type' => $post_type]);
   		foreach ( $groups as $group ){
-  			$fields = acf_get_fields_by_id($group['ID']);
+  			$fields = acf_get_fields($group['ID']);
   			if ( !$fields ) continue;
   			foreach ($fields as $field){
   				if ( isset($field_type) && $field_type == $field['type'] )	 $return_fields[$field['key']] = $field['label'];

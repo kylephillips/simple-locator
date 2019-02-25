@@ -26,6 +26,7 @@ $all_templates = $this->import_repo->getAllTemplates();
 	</ul>
 </div><!-- .wpsl-import-general-information -->
 
+<h2 class="wpsl-begin-import-header"><?php _e('Begin Import', 'simple-locator'); ?></h2>
 <div class="wpsl-settings margin-bottom">
 	<?php
 		$incomplete = $this->import_repo->incomplete();
@@ -110,6 +111,7 @@ $iq = new WP_Query([
 ]);
 if ( $iq->have_posts() ) : $c = 1;
 ?>
+<h2 class="wpsl-previous-imports-header"><?php _e('Previous Imports and Templates', 'simple-locator'); ?></h2>
 <div class="wpsl-settings wpsl-previous-imports">
 	<div class="row subhead"><h4><?php _e('Complete Imports', 'simple-locator'); ?></h4></div>
 	<?php 

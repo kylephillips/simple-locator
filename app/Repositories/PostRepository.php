@@ -133,10 +133,11 @@ class PostRepository
 		}
 		if ( !$unique_field ) return false;
 		if ( $unique_type == 'post_meta' ) return $this->getByMeta($unique_field, $unique_value, $transient['post_type']);
+		if ( $unique_type == 'post_field' ) return $this->getByWordpressField($unique_field, $unique_value, $transient['post_type']);
 	}
 
 	/**
-	* Get field by post meta
+	* Get by post meta
 	*/
 	public function getByMeta($meta_key, $meta_value, $post_type)
 	{
@@ -152,5 +153,20 @@ class PostRepository
 		return $posts;
 	}
 
-	
+	/**
+	* Get by WP Field
+	*/
+	public function getByWordpressField($field, $value, $post_type)
+	{
+		$args = ['posts_per_page' => -1, 'post_type' => $post_type];
+		if ( $field == 'title' ) $args['title'] = $value;
+		if ( $field == 'status' ) $args['post_status'] = $value;
+		if ( $field == 'id' ) $args['p'] = $value;
+		if ( $field == 'slug' ) $args['name'] = $value;
+		$posts = false;
+		$q = new \WP_Query($args);
+		if ( $q->have_posts() ) $posts = $q->posts;
+		wp_reset_postdata();
+		return $posts;
+	}	
 }

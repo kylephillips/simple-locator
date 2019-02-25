@@ -52,6 +52,7 @@ SimpleLocatorAdmin.ImportColumnMap = function()
 			self.toggleStatusSelection();
 			self.toggleFieldOptions();
 			self.toggleTaxonomySelector();
+			self.toggleUniqueIdCheckboxInRow();
 		});
 		$(document).on('click', '[' + self.selectors.addFieldButton + ']', function(e){
 			e.preventDefault();
@@ -371,6 +372,23 @@ SimpleLocatorAdmin.ImportColumnMap = function()
 					$(this).removeAttr('disabled');
 				}
 			});
+		});
+	}
+
+	/**
+	* Toggle the Unique ID option (not available for all fields)
+	*/
+	self.toggleUniqueIdCheckboxInRow = function()
+	{
+		var all_selects = $('[' + self.selectors.selectField + ']');
+		var not_unique = ['content', 'excerpt', 'publish_date', 'publish_date_gmt', 'modified_date', 'modified_date_gmt'];
+		$.each(all_selects, function(){
+			var unique_checkbox = $(this).parents('[' + self.selectors.fieldRow + ']').find('.unique-field');
+			if ( not_unique.includes($(this).val()) ){
+				$(unique_checkbox).css('visibility', 'hidden').find('input').removeAttr('checked');
+			} else {
+				$(unique_checkbox).removeAttr('style');
+			}
 		});
 	}
 

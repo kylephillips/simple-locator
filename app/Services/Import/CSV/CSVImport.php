@@ -129,6 +129,7 @@ class CSVImport
 				$this->failed_count = $this->failed_count + 1;
 			}
 		}
+		if ( $this->transient['skip_geocode'] ) return;
 		sleep(1); // for Google Map API rate limit - 5 requests per second
 	}
 

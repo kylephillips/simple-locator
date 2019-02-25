@@ -49,6 +49,7 @@ class ColumnMapper extends ImportListenerBase
 		$transient['columns'] = $this->fields;
 		$transient['import_status'] = ( isset($_POST['wpsl_import_status']) && $_POST['wpsl_import_status'] == 'draft' ) ? 'draft' : 'publish';
 		$transient['skip_first'] = false;
+		$transient['skip_geocode'] = ( isset($_POST['wpsl_skip_geocoding']) && $_POST['wpsl_skip_geocoding'] == '1' ) ? true : false;
 		if ( isset($_POST['wpsl_first_row_header']) ){
 			$transient['skip_first'] = true;
 			$transient['row_count'] = $transient['row_count'] - 1;

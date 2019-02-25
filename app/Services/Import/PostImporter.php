@@ -92,7 +92,7 @@ class PostImporter
 	*/
 	private function geocode()
 	{
-		if ( !$this->do_geocode ) return;
+		if ( !$this->do_geocode || $this->transient['skip_geocode'] ) return;
 		try {
 			$this->geocoder->geocode($this->address);
 			$coordinates = $this->geocoder->getCoordinates();
@@ -177,7 +177,10 @@ class PostImporter
 	*/
 	private function checkExistingAddress($post_id)
 	{
-		// Do we need to re-geocode?
+		if ( $this->transient['skip_geocode'] ){
+			$this->do_geocode = false;
+			return;
+		}
 		$meta = get_post_meta($post_id);
 		$address = '';
 		if ( isset($meta['wpsl_address'][0]) ) $address .= $meta['wpsl_address'][0] . ' ';

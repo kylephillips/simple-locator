@@ -88,6 +88,16 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 			</div>
 		</div>
 
+		<div class="row">
+			<div class="label">
+				<h4><?php _e('Skip Geocoding', 'simple-locator'); ?></h4>
+				<p><?php _e('If your CSV already contains latitude and longitude columns, avoid unnecessary calls to the Google geocoding service.', 'simple-locator'); ?></p>
+			</div>
+			<div class="field">
+				<label><input type="checkbox" name="wpsl_skip_geocoding" value="1" /><?php _e('Skip Geocoding', 'simple-locator'); ?></label>
+			</div>
+		</div>
+
 		<div class="row" data-import-post-status>
 			<div class="label">
 				<h4><?php _e('Post Status', 'simple-locator'); ?></h4>

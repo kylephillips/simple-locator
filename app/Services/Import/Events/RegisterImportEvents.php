@@ -9,6 +9,8 @@ use SimpleLocator\Services\Import\Listeners\FinishImport;
 use SimpleLocator\Services\Import\Listeners\UndoImport;
 use SimpleLocator\Services\Import\Listeners\RedoImport;
 use SimpleLocator\Services\Import\Listeners\RemoveImport;
+use SimpleLocator\Services\Import\Listeners\ImportTemplateSave;
+use SimpleLocator\Services\Import\Listeners\ImportTemplateRemove;
 
 /**
 * Register Events Related to Imports
@@ -34,6 +36,12 @@ class RegisterImportEvents
 
 		// Remove an Import
 		add_action( 'admin_post_wpslremoveimport', [$this, 'removeImportRequested']);
+
+		// Save an Import Template
+		add_action( 'admin_post_wpslsaveimporttemplate', [$this, 'importTemplateSaved']);
+
+		// Remove a Template
+		add_action( 'admin_post_wpslremoveimporttemplate', [$this, 'importTemplateRemoved']);
 	}
 
 	/**
@@ -98,6 +106,22 @@ class RegisterImportEvents
 	public function removeImportRequested()
 	{
 		new RemoveImport;
+	}
+
+	/**
+	* Import Template was Saved
+	*/
+	public function importTemplateSaved()
+	{
+		new ImportTemplateSave;
+	}
+
+	/**
+	* Import Template was Removed
+	*/
+	public function importTemplateRemoved()
+	{
+		new ImportTemplateRemove;
 	}
 
 }

@@ -18,7 +18,9 @@ SimpleLocatorAdmin.ImportUpload = function()
 		toggleImportDetails : 'data-import-toggle-details',
 		undoImportButton : 'data-simple-locator-import-undo-button',
 		redoImportButton : 'data-simple-locator-import-redo-button',
-		removeImportButton : 'data-simple-locator-import-remove-button'
+		removeImportButton : 'data-simple-locator-import-remove-button',
+		toggleTemplateDetails : 'data-import-template-toggle-details',
+		removeTemplateButton : 'data-simple-locator-remove-import-template'
 	}
 
 	self.bindEvents = function()
@@ -51,6 +53,15 @@ SimpleLocatorAdmin.ImportUpload = function()
 			e.preventDefault();
 			var id = $(this).attr(self.selectors.removeImportButton);
 			self.removeImport(id);
+		});
+		$(document).on('click', '[' + self.selectors.toggleTemplateDetails + ']', function(e){
+			e.preventDefault();
+			self.toggleTemplateDetails($(this));
+		});
+		$(document).on('click', '[' + self.selectors.removeTemplateButton + ']', function(e){
+			e.preventDefault();
+			var id = $(this).attr(self.selectors.removeTemplateButton);
+			self.removeTemplate(id);
 		});
 	}
 
@@ -86,6 +97,14 @@ SimpleLocatorAdmin.ImportUpload = function()
 	}
 
 	/**
+	* Toggle Template Details
+	*/
+	self.toggleTemplateDetails = function(button)
+	{
+		$(button).parents('.import-template ').find('.details').toggle();
+	}
+
+	/**
 	* Undo a previous import
 	*/
 	self.undoImport = function(id)
@@ -113,6 +132,16 @@ SimpleLocatorAdmin.ImportUpload = function()
 		if ( !confirm(wpsl_locator.confirm_remove) ) return;
 		$('#remove_import_id').val(id);
 		$('[data-remove-import-form]').submit();
+	}
+
+	/**
+	* Remove a previous import's record
+	*/
+	self.removeTemplate = function(id)
+	{
+		if ( !confirm(wpsl_locator.confirm_remove_template) ) return;
+		$('#template_remove_id').val(id);
+		$('[data-remove-import-template]').submit();
 	}
 
 	return self.bindEvents();

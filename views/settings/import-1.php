@@ -4,6 +4,7 @@
 // Form Notifications
 if ( isset($_GET['success']) ) echo '<div class="updated"><p>' . $_GET['success'] . '</p></div>';
 if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '</p></div>';
+$all_templates = $this->import_repo->getAllTemplates();
 ?>
 
 <div class="wpsl-settings margin-bottom">
@@ -100,26 +101,38 @@ if ( $iq->have_posts() ) : $c = 1;
 				<h4><?php echo get_the_title(get_the_id()) . ' ' . __('from', 'simple-locator') . ' ' . $data['filename']; ?></h4>
 			</div><!-- .import-title -->
 			<div class="import-body">
-				<p>
-					<strong><?php _e('File', 'simple-locator'); ?>:</strong> <?php echo $data['filename']; ?><br>
-					<strong><?php _e('Total Posts Imported', 'simple-locator'); ?>:</strong> <?php echo $data['complete_rows']; ?><br>
-					<strong><?php _e('Post Type', 'simple-locator'); ?>:</strong> <?php echo $data['post_type']; ?><br>
-					<strong><?php _e('Errors', 'simple-locator'); ?>:</strong> <?php echo count($data['error_rows']); ?>
-				</p>
-				<p>
-					<?php if ( file_exists($data['file']) ) : ?>
-					<a href="#" class="button" data-simple-locator-import-redo-button="<?php echo get_the_id(); ?>">
-						<?php _e('Re-Run Import', 'simple-locator'); ?>
-					</a>
-					<?php 
-						else : 
-							echo '<p>' . __('The original file has been removed. This import cannot be run again automatically.', 'simple-locator') . '</p>';
-						endif; 
-					?>
-					<a href="#" class="button" data-simple-locator-import-remove-button="<?php echo get_the_id(); ?>">
-						<?php _e('Remove Import Record', 'simple-locator'); ?>
-					</a>
-				</p>
+				<div class="import-meta">
+					<p>
+						<strong><?php _e('File', 'simple-locator'); ?>:</strong> <?php echo $data['filename']; ?><br>
+						<strong><?php _e('Total Posts Imported', 'simple-locator'); ?>:</strong> <?php echo $data['complete_rows']; ?><br>
+						<strong><?php _e('Post Type', 'simple-locator'); ?>:</strong> <?php echo $data['post_type']; ?><br>
+						<strong><?php _e('Errors', 'simple-locator'); ?>:</strong> <?php echo count($data['error_rows']); ?>
+					</p>
+					<p>
+						<?php if ( file_exists($data['file']) ) : ?>
+						<a href="#" class="button" data-simple-locator-import-redo-button="<?php echo get_the_id(); ?>">
+							<?php _e('Re-Run Import', 'simple-locator'); ?>
+						</a>
+						<?php 
+							else : 
+								echo '<p>' . __('The original file has been removed. This import cannot be run again automatically.', 'simple-locator') . '</p>';
+							endif; 
+						?>
+						<a href="#" class="button" data-simple-locator-import-remove-button="<?php echo get_the_id(); ?>">
+							<?php _e('Remove Import Record', 'simple-locator'); ?>
+						</a>
+					</p>
+				</div>
+				<div class="wpsl-import-save-template">
+					<form action="<?php echo admin_url('admin-post.php'); ?>" method="post" data-save-import-template>
+						<input type="hidden" name="action" value="wpslsaveimporttemplate">
+						<input type="hidden" name="template_id" value="<?php echo get_the_id(); ?>">
+						<label for="template_name"><?php _e('Template Name', 'simple-locator'); ?></label>
+						<input type="text" name="template_name" id="template_name" value="<?php echo get_the_title(get_the_id()) . ' ' . __('from', 'simple-locator') . ' ' . $data['filename']; ?>" />
+						<button class="button" type="submit"><?php _e('Save Import Template', 'simple-locator'); ?></button>
+						<?php wp_nonce_field( 'wpsl-import-nonce', 'nonce' ) ?>
+					</form>
+				</div><!-- .wpsl-import-save-template -->
 				<?php if ( count($data['error_rows']) > 0 ) : ?>
 				<div class="wpsl-import-details">
 				<h4><?php _e('Error Log', 'simple-locator'); ?></h4>
@@ -176,5 +189,72 @@ if ( $iq->have_posts() ) : $c = 1;
 		<?php wp_nonce_field( 'wpsl-import-nonce', 'nonce' ) ?>
 	</form>
 
+	<form action="<?php echo admin_url('admin-post.php'); ?>" method="post" data-remove-import-template style="display:none;">
+		<input type="hidden" name="action" value="wpslremoveimporttemplate">
+		<input type="hidden" name="template_remove_id" id="template_remove_id">
+		<?php wp_nonce_field( 'wpsl-import-nonce', 'nonce' ) ?>
+	</form>
+
 </div><!-- .wpsl-previous-imports -->
+
+
+<?php if ( $all_templates ) : ?>
+<div class="wpsl-import-template-list wpsl-settings">
+	<div class="row subhead"><h4><?php _e('Import Templates', 'simple-locator'); ?></h4></div>
+	<?php foreach ( $all_templates as $c => $template ) : ?>
+	<div class="row import-template <?php if ( $c == 0 ) echo 'first'; ?>">
+		<div class="title"><p><strong><?php echo $template->title; ?></strong> <a href="#" class="button" data-import-template-toggle-details><?php _e('Details', 'simple-locator'); ?></a></p></div>
+		<div class="details">
+			<p class="remove"><a href="#" data-simple-locator-remove-import-template="<?php echo $template->ID; ?>" class="button-danger"><?php _e('Remove Template', 'simple-locator'); ?></a></p>
+			<table class="columns">
+				<thead>
+					<tr>
+						<th><?php _e('CSV Column Number', 'simple-locator'); ?></th>
+						<th><?php _e('Import To', 'simple-locator'); ?></th>
+						<th><?php _e('Type', 'simple-locator'); ?></th>
+						<th><?php _e('Unique ID', 'simple-locator'); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php 
+					$has_taxonomy = false;
+					$has_unique = false;
+					foreach ( $template->import_columns as $column ) : 
+					if ( $column->unique ) $has_unique = true;
+					if ( $column->field_type == 'taxonomy' ) $has_taxonomy = true;
+					?>
+					<tr>
+						<td><?php echo $column->csv_column + 1; ?></td>
+						<td><?php echo $column->field; ?></td>
+						<td>
+							<?php 
+							$type = $column->field_type;
+							if ( $type == 'post_meta' ) $type = __('Custom Field', 'simple-locator');
+							if ( $type == 'post_field' ) $type = __('Post Field', 'simple-locator');
+							if ( $type == 'taxonomy' ) $type = __('Taxonomy ', 'simple-locator');
+							echo $type; ?>
+						</td>
+						<td><?php echo ( $column->unique ) ? '<span class="dashicons dashicons-yes"></span>' : ''; ?></td>
+					</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+			<ul class="summary">
+				<li><strong><?php _e('Post Type: ', 'simple-locator'); ?></strong><?php echo $template->import_post_type; ?></li>
+				<li><strong><?php _e('Status: ', 'simple-locator'); ?></strong><?php echo $template->import_status; ?></li>
+				<li><strong><?php _e('Skip First? ', 'simple-locator'); ?></strong><?php echo ( $template->import_skip_first ) ? __('Yes', 'simple-locator') : __('No', 'simple-locator'); ?></li>
+				<li><strong><?php _e('Skip Geocoding? ', 'simple-locator'); ?></strong><?php echo ( $template->import_skip_geocode ) ? __('Yes', 'simple-locator') : __('No', 'simple-locator'); ?></li>
+				<?php if ( $has_unique ) : ?>
+				<li><strong><?php _e('Duplicate Handling: ', 'simple-locator'); ?></strong><?php echo ucfirst($template->import_duplicate_handling); ?></li>
+				<?php endif; ?>
+				<?php if ( $has_taxonomy ) : ?>
+				<li><strong><?php _e('Taxonomy Separator: ', 'simple-locator'); ?></strong><?php echo ucfirst($template->import_taxonomy_separator); ?></li>
+				<?php endif; ?>
+			</ul>
+		</div><!-- .details -->
+	</div><!-- .import-template -->
+	<?php endforeach; ?>
+</div><!-- .wpsl-import-template-list -->
+<?php endif; // templates ?>
+
 <?php endif; wp_reset_postdata(); // Previous Import

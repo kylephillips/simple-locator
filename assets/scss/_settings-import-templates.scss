@@ -1,0 +1,55 @@
+//
+// Import Templates on Step One
+// --------------------------------------------------
+.wpsl-import-template-list {
+	.row.import-template {
+		
+		.title {
+			@include clearfix;
+			padding: 8px;
+			// border-top: 1px solid darken($white, 12%);
+			.button {
+				float: right;
+				position: relative;
+				top: -5px;
+			}
+			p {
+				margin: 0;
+				padding-top: 5px;
+			}
+		}
+		&.first .title {
+			border-top: 0;
+		}
+	} // .row
+	h4 {
+		margin: 0;
+	}
+	.details {
+		padding: 5px;
+		display: none;
+		.columns {
+			width: 100%;
+			border-collapse: collapse;
+		}
+		th, td {
+			text-align: left;
+			padding: 5px;
+		}
+		th {
+			background-color: darken($white, 50%);
+			font-weight: normal;
+			color: $white;
+		}
+		tbody tr:nth-child(even){
+			background-color: darken($white, 6%);
+		}
+	}
+	.summary {
+		background-color: darken($white, 6%);
+		padding: 5px;
+		li {
+			@include clearfix;
+		}
+	}
+} // .wpsl-import-template-list

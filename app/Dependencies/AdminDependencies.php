@@ -79,6 +79,7 @@ class AdminDependencies extends DependencyBase
 			$data['confirm_undo'] 	= __('Are you sure you want to undo this import? This action cannot be undone.', 'simple-locator');
 			$data['confirm_redo'] 	= __('Are you sure you want to redo this import? This will erase any currently pending imports.', 'simple-locator');
 			$data['confirm_remove']	= __('Are you sure you want to remove this import record? You will no longer be able to redo or undo this import. All imported post data will remain.', 'simple-locator');
+			$data['confirm_remove_template'] 	= __('Are you sure you want to redo this template?', 'simple-locator');
 			$data['edit_listing'] = ( $screen->id == 'edit-' . $screen->post_type ) ? '1' : '0';
 			wp_localize_script( 
 				'simple-locator-admin', 

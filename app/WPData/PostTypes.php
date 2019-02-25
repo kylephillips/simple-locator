@@ -18,6 +18,7 @@ class PostTypes
 		add_action( 'init', [$this, 'registerLocation']);
 		add_action( 'init', [$this, 'registerMaps']);
 		add_action( 'init', [$this, 'registerImports']);
+		add_action( 'init', [$this, 'registerImportTemplate']);
 		add_filter( 'manage_location_posts_columns', [$this,'locations_table_head']);
 		add_action( 'manage_location_posts_custom_column', [$this, 'locations_table_columns'], 10, 2);
 	}
@@ -124,9 +125,31 @@ class PostTypes
 			'capability_type' => 'post',  
 			'hierarchical' => false,  
 			'has_archive' => false,
-			'supports' => ['title','editor'],
+			'supports' => ['title', 'editor'],
 		];
 		register_post_type( 'wpslimport' , $args );
+	}
+
+	/**
+	* Register the Import Templates Post Type
+	* (for saving import as a template)
+	*/
+	public function registerImportTemplate()
+	{
+		$labels = [
+			'name' => __('Simple Locator Import Templates'),  
+			'singular_name' => __('Simple Locator Import Template')
+		];
+		$args = [
+			'labels' => $labels,
+			'public' => false,  
+			'show_ui' => false,
+			'capability_type' => 'post',  
+			'hierarchical' => false,  
+			'has_archive' => false,
+			'supports' => ['title', 'editor'],
+		];
+		register_post_type( 'wpslimporttemplate' , $args );
 	}
 
 	/**

@@ -29,11 +29,33 @@
 	.import-body {
 		display: none;
 		padding: 8px;
-		background-color: rgba($black, .06);
+		border-top: 1px solid darken($white, 12%);
+		@include clearfix;
+	}
+
+	.import-meta {
+		float: left;
+		width: 45%;
+	}
+
+	.wpsl-import-save-template {
+		float: right;
+		margin-top: 1em;
+		width: 45%;
+		background-color: darken($white, 6%);
+		padding: 1em;
+		button {
+			display: block;
+		}
+		input[type="text"]{
+			width: 100%;
+			margin-bottom: 10px;
+		}
 	}
 
 	.import-footer {
 		padding: 8px 0;
+		clear: both;
 		.button-danger {
 			margin-right: 10px;
 		}

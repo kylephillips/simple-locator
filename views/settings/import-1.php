@@ -57,17 +57,21 @@ $all_templates = $this->import_repo->getAllTemplates();
 			</div>
 		</div><!-- .import-type-selection -->
 		<?php endif; ?>
-		<div data-import-type="new">
-			<label><?php _e('Import to Post Type', 'simple-locator'); ?></label>
-			<select name="import_post_type" data-simple-locator-import-post-type-input>
-			<?php 
-			foreach ( $this->field_repo->getPostTypes(false) as $type ){
-				echo '<option value="' . $type['name'] . '"';
-				if ( !$type['public'] ) echo ' data-non-public-post-type';
-				echo '>' . $type['label'] . '</option>';
-			} ?>
-			</select>
-			<label class="post-type-public"><input type="checkbox" data-simple-locator-show-non-public-types><?php _e('Show non-public post types', 'simple-locator'); ?></label>
+		<div data-import-type="new" class="import-post-type">
+			<div class="type-select">
+				<label><?php _e('Import to Post Type', 'simple-locator'); ?></label>
+				<select name="import_post_type" data-simple-locator-import-post-type-input>
+				<?php 
+				foreach ( $this->field_repo->getPostTypes(false) as $type ){
+					echo '<option value="' . $type['name'] . '"';
+					if ( !$type['public'] ) echo ' data-non-public-post-type';
+					echo '>' . $type['label'] . '</option>';
+				} ?>
+				</select>
+			</div>
+			<div class="non-public-select">
+				<label class="post-type-public"><input type="checkbox" data-simple-locator-show-non-public-types><?php _e('Show non-public post types', 'simple-locator'); ?></label>
+			</div>
 		</div><!-- .import_type_new -->
 		<?php if ( $all_templates ) : ?>
 		<div data-import-type="template" style="display:none;">
@@ -85,7 +89,7 @@ $all_templates = $this->import_repo->getAllTemplates();
 			<input type="file" name="file">
 			<label class="inline"><input type="checkbox" name="mac_formatted" value="true"><?php _e('CSV file created on Mac', 'simple-locator'); ?>  <a href="<?php echo plugins_url(); ?>/simple-locator/assets/csv_template.csv"><?php _e('View an Example', 'simple-locator'); ?></a></label>
 		</div>
-		<input type="submit" class="button button-primary" value="<?php _e('Start Import', 'simple-locator'); ?>">
+		<input type="submit" class="button" value="<?php _e('Start Import', 'simple-locator'); ?>">
 	</form>
 
 </div><!-- .wpsl-settings -->

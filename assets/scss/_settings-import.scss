@@ -71,6 +71,7 @@
 	padding: 1em;
 	background-color: $white;
 	box-sizing: border-box;
+	margin-bottom: 1em;
 	.import-type-selection {
 		margin-bottom: 1em;
 		padding-bottom: 1em;
@@ -106,6 +107,20 @@
 			width: 50%;
 		}
 	} // .import-type-selection
+	.import-post-type {
+		@include clearfix;
+		margin-bottom: 1em;
+		.type-select {
+			float: left;
+			width: 50%;
+		}
+		.non-public-select {
+			float: right;
+			width: 45%;
+			position: relative;
+			top: 2em;
+		}
+	}
 	label {
 		display: block;
 		font-weight: bold;
@@ -128,7 +143,7 @@
 	.file {
 		background-color: rgba($black, .06);
 		padding: 1em;
-		margin-bottom: 1em;
+		margin-bottom: 2em;
 	}
 }
 

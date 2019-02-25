@@ -85,7 +85,7 @@ $all_templates = $this->import_repo->getAllTemplates();
 			<input type="file" name="file">
 			<label class="inline"><input type="checkbox" name="mac_formatted" value="true"><?php _e('CSV file created on Mac', 'simple-locator'); ?>  <a href="<?php echo plugins_url(); ?>/simple-locator/assets/csv_template.csv"><?php _e('View an Example', 'simple-locator'); ?></a></label>
 		</div>
-		<input type="submit" class="button" value="<?php _e('Start New Import', 'simple-locator'); ?>">
+		<input type="submit" class="button button-primary" value="<?php _e('Start Import', 'simple-locator'); ?>">
 	</form>
 
 </div><!-- .wpsl-settings -->

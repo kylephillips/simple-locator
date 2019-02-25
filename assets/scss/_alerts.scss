@@ -1,7 +1,8 @@
 //
 // Alerts
 // --------------------------------------------------
-.wpsl-error {
+.wpsl-error,
+.wpsl-info {
 	display: block;
 	padding: .75rem 1.25rem;
 	border-radius: 3px;
@@ -10,4 +11,11 @@
 	background-color: #f2dede;
 	color: #a94442;
 	border: 1px solid #ebcccc;
+}
+
+.wpsl-info {
+	background-color: rgba($blue, .2);
+	border-color: rgba($blue, .15);
+	color: $black;
+	padding: .75em;
 }

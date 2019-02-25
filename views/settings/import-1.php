@@ -7,27 +7,26 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 $all_templates = $this->import_repo->getAllTemplates();
 ?>
 
-<div class="wpsl-settings margin-bottom">
-	<div class="row subhead"><h4><?php _e('Important: File Details and Import Limitations', 'simple-locator'); ?></h4></div>
-	<div class="row">
-		<div class="label"><h4><?php _e('File Format', 'simple-locator'); ?></h4></div>
-		<div class="field">
-			<p class="no-margin"><?php _e('File must be properly formatted CSV', 'simple-locator'); ?>. <a href="<?php echo plugins_url(); ?>/simple-locator/assets/csv_template.csv"><?php _e('View an Example Template', 'simple-locator'); ?></a></p>
-		</div>
-	</div>
-	<div class="row">
-		<div class="label"><h4><?php _e('Required Columns', 'simple-locator'); ?></h4></div>
-		<div class="field">
-			<p class="no-margin"><?php _e('2 columns are required: a title and at least one address column. Addresses may be saved across multiple columns (street address, city, etc…), or in one column.'); ?></p>
-		</div>
-	</div>
-	<div class="row">
-		<div class="label"><h4><?php _e('Geocoding Pricing', 'simple-locator'); ?></h4></div>
-		<div class="field">
-			<p class="no-margin"><?php _e('Effective June 11, 2018, Google charges for each geocoding request. Please review their pricing for Geocoding services ', 'simple-locator'); ?><a href="https://developers.google.com/maps/billing/understanding-cost-of-use?hl=en_US#geocoding" target="_blank"><?php _e('here', 'simple-locator'); ?></a>.</p>
-		</div>
-	</div>
+<div class="wpsl-import-general-information">
+	<h4><?php _e('Important: File Details and Import Limitations', 'simple-locator'); ?></h4>
+	<div class="wpsl-info"><?php _e('Before running an import, make a complete backup of your database.', 'simple-locator'); ?></div>
+	<ul>
+		<li>
+			<h5><?php _e('File Format', 'simple-locator'); ?></h5>
+			<p><?php _e('File must be properly formatted CSV', 'simple-locator'); ?>. <a href="<?php echo plugins_url(); ?>/simple-locator/assets/csv_template.csv"><?php _e('View an Example Template', 'simple-locator'); ?></a></p>
+		</li>
+		<li>
+			<h5><?php _e('Required Columns', 'simple-locator'); ?></h5>
+			<p><?php _e('2 columns are required: a title and at least one address column. Addresses may be saved across multiple columns (street address, city, etc…), or in one column. You may specify a column as a unique ID to prevent duplicates.'); ?></a></p>
+		</li>
+		<li>
+			<h5><?php _e('Geocoding Pricing', 'simple-locator'); ?></h5>
+			<p><?php _e('Effective June 11, 2018, Google charges for each geocoding request. Please review their pricing for Geocoding services ', 'simple-locator'); ?><a href="https://developers.google.com/maps/billing/understanding-cost-of-use?hl=en_US#geocoding" target="_blank"><?php _e('here', 'simple-locator'); ?></a>.</p>
+		</li>
+	</ul>
+</div><!-- .wpsl-import-general-information -->
 
+<div class="wpsl-settings margin-bottom">
 	<?php
 		$incomplete = $this->import_repo->incomplete();
 		if ( $incomplete && !isset($_GET['error']) ) :
@@ -57,7 +56,6 @@ $all_templates = $this->import_repo->getAllTemplates();
 	<?php endif; endif; ?>
 
 	<form action="<?php echo admin_url('admin-post.php'); ?>" method="post" enctype="multipart/form-data" class="wpsl-upload-form row"<?php if ( $incomplete ) echo ' style="display:none;"';?> data-simple-locator-import-upload-form>
-		<div class="wpsl-error"><strong><?php _e('Important', 'simple-locator'); ?>:</strong> <?php _e('Before running an import, make a complete backup of your database.', 'simple-locator'); ?></div>
 		<label><?php _e('Import to Post Type', 'simple-locator'); ?></label>
 		<select name="import_post_type" data-simple-locator-import-post-type-input>
 		<?php 

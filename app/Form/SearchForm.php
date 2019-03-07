@@ -37,20 +37,9 @@ class SearchForm
 
 		foreach ( $taxonomy_fields as $field ) :
 
-			$field_wrapper_attributes = '';
-			foreach ( $field->wrapper_attributes as $key => $attr ){
-				$field_wrapper_attributes .= ' ' . $key . '="';
-				if ( is_array($attr) ){
-					foreach ( $attr as $val ){
-						$field_wrapper_attributes .= ' ' . $val;
-					}
-				}
-				$field_wrapper_attributes .= '"';
-			}
-
 			if ( $field->type == 'select' ) :
-				$out .= '<div' . $field_wrapper_attributes . '>';
-				$out .= '<label for="wpsl_taxonomy_' . $field->taxonomy . '" class="taxonomy-label">' . $field->label . '</label>';
+				$out .= '<div' . $this->attributeOutput($field->wrapper_attributes) . '>';
+				$out .= '<label for="wpsl_taxonomy_' . $field->taxonomy . '" ' . $this->attributeOutput($field->tax_label_attributes) . '>' . $field->label . '</label>';
 				$out .= '<select id="wpsl_taxonomy_' . $field->taxonomy . '" name="taxfilter[' . $field->taxonomy . ']" data-simple-locator-taxonomy-select="' . $field->taxonomy . '">';
 				if ( $field->select_default && $field->select_default !== '' ) $out .= '<option value="">' . $field->select_default . '</option>';
 				foreach ( $field->options as $option ) :
@@ -63,20 +52,9 @@ class SearchForm
 
 			if ( $field->type == 'checkbox' ) :
 
-				$checkbox_wrapper_attributes = '';
-				foreach ( $field->checkbox_wrapper_attributes as $key => $attr ){
-					$checkbox_wrapper_attributes .= ' ' . $key . '="';
-					if ( is_array($attr) ){
-						foreach ( $attr as $val ){
-							$checkbox_wrapper_attributes .= ' ' . $val;
-						}
-					}
-					$checkbox_wrapper_attributes .= '"';
-				}
-
-				$out .= '<div' . $field_wrapper_attributes . '>';
-				$out .= '<label class="taxonomy-label">' . $field->label . '</label>';
-				$out .= '<ul ' . $checkbox_wrapper_attributes . '>';
+				$out .= '<div' . $this->attributeOutput($field->wrapper_attributes) . '>';
+				$out .= '<label ' . $this->attributeOutput($field->tax_label_attributes) . '>' . $field->label . '</label>';
+				$out .= '<ul ' . $this->attributeOutput($field->checkbox_wrapper_attributes) . '>';
 				foreach ( $field->options as $key => $option ) :
 					$out .= '<li class="simple-locator-checkbox"><label for="wpsl_taxonomy_' . $field->taxonomy . '_' . $key . '"><input type="checkbox" id="wpsl_taxonomy_' . $field->taxonomy . '" name="taxfilter[' . $field->taxonomy . '][]" value="' . $option['value'] . '" data-simple-locator-taxonomy-checkbox="' . $field->taxonomy . '"';
 					if ( $option['selected'] ) $out .= ' checked';
@@ -106,6 +84,9 @@ class SearchForm
 		$tax_field->type = ( $options['taxonomy_field_type'] == 'select' ) ? 'select' : 'checkbox';
 		$tax_field->wrapper_attributes = [
 			'class' => ['wpsl-taxonomy-filter', 'taxonomy-' . $tax_name]
+		];
+		$tax_field->tax_label_attributes = [
+			'class' => ['taxonomy-label']
 		];
 		if ( $tax_field->type == 'checkbox' ) {
 			$tax_field->checkbox_wrapper_attributes = [
@@ -142,5 +123,20 @@ class SearchForm
 		// Fixes GET forms on sites without pretty permalinks
 		if ( $options['formmethod'] == 'get' ) $out .= '<input type="hidden" name="page_id" value="' . $options['resultspage'] . '">';
 		echo $out;
+	}
+
+	private function attributeOutput($attributes)
+	{
+		$out = '';
+		foreach ( $attributes as $key => $attr ){
+			$out .= ' ' . $key . '="';
+			if ( is_array($attr) ){
+				foreach ( $attr as $val ){
+					$out .= ' ' . $val;
+				}
+			}
+			$out .= '"';
+		}
+		return $out;
 	}
 }

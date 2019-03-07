@@ -53,11 +53,13 @@ class SearchForm
 			if ( $field->type == 'checkbox' ) :
 				$out .= '<div class="wpsl-taxonomy-filter checkboxes">';
 				$out .= '<label class="taxonomy-label">' . $field->label . '</label>';
-				foreach ( $field->options as $option ) :
-					$out .= '<label for="wpsl_taxonomy_' . $field->taxonomy . '"><input type="checkbox" id="wpsl_taxonomy_' . $field->taxonomy . '" name="taxfilter[' . $field->taxonomy . '][]" value="' . $option['value'] . '" data-simple-locator-taxonomy-checkbox="' . $field->taxonomy . '"';
+				$out .= '<ul class="simple-locator-taxonomy-checkboxes">';
+				foreach ( $field->options as $key => $option ) :
+					$out .= '<li class="simple-locator-checkbox"><label for="wpsl_taxonomy_' . $field->taxonomy . '_' . $key . '"><input type="checkbox" id="wpsl_taxonomy_' . $field->taxonomy . '" name="taxfilter[' . $field->taxonomy . '][]" value="' . $option['value'] . '" data-simple-locator-taxonomy-checkbox="' . $field->taxonomy . '"';
 					if ( $option['selected'] ) $out .= ' checked';
-					$out .= ' />' .$option['label'] . '</label>';
+					$out .= ' />' .$option['label'] . '</label></li>';
 				endforeach;
+				$out .= '</ul>';
 				$out .= '</div><!-- .wpsl-taxonomy-filter -->';
 			endif; // checkbox
 

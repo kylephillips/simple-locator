@@ -37,8 +37,19 @@ class SearchForm
 
 		foreach ( $taxonomy_fields as $field ) :
 
+			$field_wrapper_attributes = '';
+			foreach ( $field->wrapper_attributes as $key => $attr ){
+				$field_wrapper_attributes .= ' ' . $key . '="';
+				if ( is_array($attr) ){
+					foreach ( $attr as $val ){
+						$field_wrapper_attributes .= ' ' . $val;
+					}
+				}
+				$field_wrapper_attributes .= '"';
+			}
+
 			if ( $field->type == 'select' ) :
-				$out .= '<div class="wpsl-taxonomy-filter taxonomy-' . $field->taxonomy . '">';
+				$out .= '<div' . $field_wrapper_attributes . '>';
 				$out .= '<label for="wpsl_taxonomy_' . $field->taxonomy . '" class="taxonomy-label">' . $field->label . '</label>';
 				$out .= '<select id="wpsl_taxonomy_' . $field->taxonomy . '" name="taxfilter[' . $field->taxonomy . ']" data-simple-locator-taxonomy-select="' . $field->taxonomy . '">';
 				if ( $field->select_default && $field->select_default !== '' ) $out .= '<option value="">' . $field->select_default . '</option>';
@@ -51,9 +62,21 @@ class SearchForm
 			endif; // select
 
 			if ( $field->type == 'checkbox' ) :
-				$out .= '<div class="wpsl-taxonomy-filter checkboxes">';
+
+				$checkbox_wrapper_attributes = '';
+				foreach ( $field->checkbox_wrapper_attributes as $key => $attr ){
+					$checkbox_wrapper_attributes .= ' ' . $key . '="';
+					if ( is_array($attr) ){
+						foreach ( $attr as $val ){
+							$checkbox_wrapper_attributes .= ' ' . $val;
+						}
+					}
+					$checkbox_wrapper_attributes .= '"';
+				}
+
+				$out .= '<div' . $field_wrapper_attributes . '>';
 				$out .= '<label class="taxonomy-label">' . $field->label . '</label>';
-				$out .= '<ul class="simple-locator-taxonomy-checkboxes">';
+				$out .= '<ul ' . $checkbox_wrapper_attributes . '>';
 				foreach ( $field->options as $key => $option ) :
 					$out .= '<li class="simple-locator-checkbox"><label for="wpsl_taxonomy_' . $field->taxonomy . '_' . $key . '"><input type="checkbox" id="wpsl_taxonomy_' . $field->taxonomy . '" name="taxfilter[' . $field->taxonomy . '][]" value="' . $option['value'] . '" data-simple-locator-taxonomy-checkbox="' . $field->taxonomy . '"';
 					if ( $option['selected'] ) $out .= ' checked';
@@ -81,6 +104,15 @@ class SearchForm
 		$tax_field->taxonomy = $tax_name;
 		$tax_field->select_default = sprintf(esc_html__('--Select %s--', 'simple-locator'), $tax_obj->labels->singular_name);
 		$tax_field->type = ( $options['taxonomy_field_type'] == 'select' ) ? 'select' : 'checkbox';
+		$tax_field->wrapper_attributes = [
+			'class' => ['wpsl-taxonomy-filter', 'taxonomy-' . $tax_name]
+		];
+		if ( $tax_field->type == 'checkbox' ) {
+			$tax_field->checkbox_wrapper_attributes = [
+				'class' => ['wpsl-taxonomy-checkboxes']
+			];
+			$tax_field->wrapper_attributes['class'][] = 'checkboxes';
+		}
 		$tax_field->options = [];
 		$c = 1;
 		foreach ( $taxonomy['terms'] as $term ){

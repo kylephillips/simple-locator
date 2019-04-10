@@ -9,13 +9,13 @@ if ( isset($transient['file']) && isset($transient['post_type']) ) :
 	<?php _e('Step 2: Map Columns', 'simple-locator'); ?> (<?php echo $transient['filename']; ?>)
 </h3>
 
-<?php 
-// Form Errors
-if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '</p></div>';
-?>
+<?php if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '</p></div>'; ?>
 
 <div class="wpsl-loading-settings" data-simple-locator-import-loading>
-	<div class="wpsl-icon-spinner"><div class="wpsl-icon-spinner-image"><img src="<?php echo \SimpleLocator\Helpers::plugin_url() . '/assets/images/loading-spinner.svg'; ?>" class="wpsl-spinner-image" /></div></div>
+	<div class="wpsl-icon-spinner">
+		<div class="wpsl-icon-spinner-image">
+			<img src="<?php echo \SimpleLocator\Helpers::plugin_url() . '/assets/images/loading-spinner.svg'; ?>" class="wpsl-spinner-image" />
+		</div>
 	</div>
 </div>
 
@@ -133,6 +133,21 @@ if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '<
 				<select name="wpsl_import_duplicate_handling" style="clear:both;float:none;">
 					<option value="skip"><?php _e('Skip', 'simple-locator'); ?></option>
 					<option value="update"><?php _e('Update Post', 'simple-locator'); ?></option>
+				</select>
+			</div>
+		</div>
+
+		<div class="row" style="display:none;" data-import-unique-action>
+			<div class="label">
+				<h4><?php _e('Missing Record Handling', 'simple-locator'); ?></h4>
+				<p><?php _e('If an existing row does not exist in the import file, how should the post be handled?', 'simple-locator'); ?></p>
+			</div>
+			<div class="field">
+				<select name="wpsl_import_missing_handling" style="clear:both;float:none;">
+					<option value="skip"><?php _e('Skip', 'simple-locator'); ?></option>
+					<option value="draft"><?php _e('Change Status to Draft', 'simple-locator'); ?></option>
+					<option value="trash"><?php _e('Move Post to Trash', 'simple-locator'); ?></option>
+					<option value="delete"><?php _e('Delete Post Completely', 'simple-locator'); ?></option>
 				</select>
 			</div>
 		</div>

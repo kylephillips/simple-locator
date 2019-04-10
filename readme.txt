@@ -126,7 +126,7 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 * Adds "showlist" argument to "all locations" shortcode, which displays the list of locations underneath the map.
 * JS completely rewritten for better extensibility and future enhancements.
 * Adds option to import into non-public post types.
-* Adds additional import options (expanded post data mapping, taxonomies and more).
+* Adds additional import options (expanded post data mapping, taxonomies, duplicate/missing record handling and more).
 * Adds option to clear the search log.
 * Adds option to specify a default distance in the form shortcode. Mark the default distance with an asterisk: Ex: distances="5,10,20*,50,100". (The "20" option would be selected by default).
 * Adds option to show all locations by default, below the form (showall="true"). Header text is customized using the showall attribute (showall="Showing all locations"). Map centered to "default map location" if enabled in the plugin setting.

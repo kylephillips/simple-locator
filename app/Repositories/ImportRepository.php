@@ -73,7 +73,13 @@ class ImportRepository
 			$posts[$c]->import_skip_first = $import_data['skip_first'];
 			$posts[$c]->import_skip_geocode = $import_data['skip_geocode'];
 			$posts[$c]->import_duplicate_handling = $import_data['duplicate_handling'];
+			$posts[$c]->import_missing_handling = $import_data['missing_handling'];
+			$posts[$c]->import_missing_handling_label = __('Skip', 'simple-locator');
 			$posts[$c]->import_taxonomy_separator = $import_data['taxonomy_separator'];
+			
+			if ( $import_data['missing_handling'] == 'draft' ) $posts[$c]->import_missing_handling_label = __('Change Status to Draft', 'simple-locator');
+			if ( $import_data['missing_handling'] == 'trash' ) $posts[$c]->import_missing_handling_label = __('Move Post to Trash', 'simple-locator');
+			if ( $import_data['missing_handling'] == 'delete' ) $posts[$c]->import_missing_handling_label = __('Delete Post Completely', 'simple-locator');
 		$c++; endwhile; endif;
 		wp_reset_postdata();
 		return ( $id && is_array($posts) ) ? $posts[0] : $posts;

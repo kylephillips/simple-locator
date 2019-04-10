@@ -154,6 +154,37 @@ class PostRepository
 	}
 
 	/**
+	* Reconcile post ids for existing posts
+	* @param array $import_ids - array of post ids from an import
+	* @param string $post_type
+	* @return array - array of ids that exist, but not in the import
+	*/
+	public function getMissingPostsFromImport($import_ids = [], $post_type = 'location')
+	{
+		$q = new \WP_Query([
+			'posts_per_page' => -1,
+			'post_type' => $post_type,
+			'fields' => 'ids'
+		]);
+		$posts = ( $q->have_posts() ) ? $q->posts : [];
+		wp_reset_postdata();
+		return array_diff($posts,$import_ids);
+	}
+
+	/**
+	* Update missing posts after an import has finished (setting saved in import step 2)
+	*/
+	public function updateMissingPostsFromImport($missing_ids = [], $action = 'skip')
+	{
+		if ( $action == 'skip' ) return;
+		foreach ( $missing_ids as $post_id ) :
+			if ( $action == 'draft' ) wp_update_post(['ID' => $post_id, 'post_status' => 'draft']);
+			if ( $action == 'trash' ) wp_trash_post($post_id);
+			if ( $action == 'delete' ) wp_delete_post($post_id, true);
+		endforeach;
+	}
+
+	/**
 	* Get by WP Field
 	*/
 	public function getByWordpressField($field, $value, $post_type)

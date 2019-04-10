@@ -1,6 +1,8 @@
 <?php 
 namespace SimpleLocator\Services\Import\Listeners;
 
+use SimpleLocator\Repositories\PostRepository;
+
 class FinishImport 
 {
 	/**
@@ -8,10 +10,17 @@ class FinishImport
 	*/
 	private $transient;
 
+	/**
+	* Post Repository
+	*/
+	private $post_repo;
+
 	public function __construct()
 	{
+		$this->post_repo = new PostRepository;
 		$this->getTransient();
 		$this->saveImport();
+		$this->handleMissing();
 		$this->response();
 	}
 
@@ -38,6 +47,24 @@ class FinishImport
 		];
 		$post_id = wp_insert_post($importpost);
 		add_post_meta($post_id, 'wpsl_import_data', $this->transient);
+	}
+
+	/**
+	* Handle Missing Rows
+	*/
+	private function handleMissing()
+	{
+		$action = $this->transient['missing_handling'];
+		if ( $action == 'skip' ) return;
+		$has_unique = false;
+		foreach ( $this->transient['columns'] as $column ){
+			if ( $column->unique ) $has_unique = true;
+		}
+		if ( !$has_unique ) return;
+		$import_ids = $this->transient['post_ids'];
+		$import_post_type = $this->transient['post_type'];
+		$missing_ids = $this->post_repo->getMissingPostsFromImport($import_ids, $import_post_type);
+		$this->post_repo->updateMissingPostsFromImport($missing_ids, $action);
 	}
 
 	/**

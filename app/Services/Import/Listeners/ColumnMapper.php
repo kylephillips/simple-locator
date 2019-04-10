@@ -56,6 +56,7 @@ class ColumnMapper extends ImportListenerBase
 		}
 		$transient['taxonomy_separator'] = sanitize_text_field($_POST['wpsl_import_taxonomy_separator']);
 		$transient['duplicate_handling'] = sanitize_text_field($_POST['wpsl_import_duplicate_handling']);
+		$transient['missing_handling'] = sanitize_text_field($_POST['wpsl_import_missing_handling']);
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 		$this->success('3');
 	}

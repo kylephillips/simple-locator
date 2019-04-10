@@ -110,7 +110,7 @@ if ( $iq->have_posts() ) : $c = 1;
 	<?php 
 	while ( $iq->have_posts() ) : $iq->the_post(); 
 		$data = get_post_meta(get_the_id(), 'wpsl_import_data', true); 
-		$import_history_template = ( isset($data['using_template']) && $data['using_template'] ) ? get_the_title($data['using_template']) : false
+		$import_history_template = ( isset($data['using_template']) && $data['using_template'] ) ? get_the_title($data['using_template']) : false;
 		?>
 		<div class="import<?php if ( $c == 1) echo ' first';?>">
 			<div class="import-title">
@@ -266,6 +266,7 @@ if ( $iq->have_posts() ) : $c = 1;
 				<li><strong><?php _e('Skip Geocoding? ', 'simple-locator'); ?></strong><?php echo ( $template->import_skip_geocode ) ? __('Yes', 'simple-locator') : __('No', 'simple-locator'); ?></li>
 				<?php if ( $has_unique ) : ?>
 				<li><strong><?php _e('Duplicate Handling: ', 'simple-locator'); ?></strong><?php echo ucfirst($template->import_duplicate_handling); ?></li>
+				<li><strong><?php _e('Missing Record Handling: ', 'simple-locator'); ?></strong><?php echo ucfirst($template->import_missing_handling_label); ?></li>
 				<?php endif; ?>
 				<?php if ( $has_taxonomy ) : ?>
 				<li><strong><?php _e('Taxonomy Separator: ', 'simple-locator'); ?></strong><?php echo ucfirst($template->import_taxonomy_separator); ?></li>

@@ -97,23 +97,25 @@ SimpleLocatorAdmin.QuickEdit = function()
 
 			// Text Fields
 			if ( field.type === 'text' ) {
-				html += '<input type="text" ';
-				html += self.attributes(field);
-				html += 'value="' + value + '" />';
+				var text = '<input type="text" ';
+				text += self.attributes(field);
+				text += 'value="' + value + '" />';
+				html += text;
 			}
 
 			// Select Fields
 			if ( field.type === 'select' ){
-				html += '<select';
-				html += self.attributes(field);
-				html += '>';
+				var select = '<select';
+				select += self.attributes(field);
+				select += '>';
 				for ( var key in field.choices ){
 					var choice_value = field.choices[key];
-					html += '<option value="' + key + '"'
-					if ( key === value ) html += ' selected';
-					html += '>' + choice_value + '</option>';
+					select += '<option value="' + key + '"'
+					if ( key === value ) select += ' selected';
+					select += '>' + choice_value + '</option>';
 				}
-				html += '</select>';
+				select += '</select>';
+				html += select;
 			}
 
 			html += '</div>';
@@ -131,6 +133,7 @@ SimpleLocatorAdmin.QuickEdit = function()
 		html += '</td></tr><!-- .dealer-quick-edit -->';
 		$(self.activeItem).parents('tr').hide();
 		$(html).insertAfter($(self.activeItem).parents('tr'));
+		$(document).trigger('simple-locator-quick-edit-opened', [self.activeItem]);
 		self.loadMap(true);
 	}
 

@@ -14,19 +14,19 @@ class StateListing
 	*/
 	public function getStates($request)
 	{
-		if ( !isset($request['country']) || $request['country'] == '' ) return (new Us)->states();
+		if ( !isset($request['country']) || $request['country'] == '' || $request['country'] == 'us' ) return (new Us)->states();
 		
 		// First try the country code
 		$country_from_code = $this->countryCode($request['country'], null);
 		if ( $country_from_code ) {
-			$class = 'SimpleLocator\Services\Helpers\States\\' . $country_from_code;
+			$class = 'SimpleLocator\Services\Helpers\States\\' . ucfirst($country_from_code);
 			if ( class_exists($class) ) return (new $class)->states();
 		}
 
 		// Then try the name
 		$country_from_name = $this->countryCode(null, $request['country']);
 		if ( $country_from_name ){
-			$class = 'SimpleLocator\Services\Helpers\States\\' . $country_from_name;
+			$class = 'SimpleLocator\Services\Helpers\States\\' . ucfirst($country_from_name);
 			if ( class_exists($class) ) return (new $class)->states();
 		}
 

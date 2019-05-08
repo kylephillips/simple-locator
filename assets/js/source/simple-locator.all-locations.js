@@ -139,7 +139,19 @@ SimpleLocator.AllLocations = function()
 				type: 'GET',
 				datatype: 'json',
 				data : self.formData,
+				beforeSend : function(i, v){
+					if ( wpsl_locator.jsdebug === '1' ){
+						console.log('All Locations Form Data');
+						console.log(self.formData);
+						console.log('URL');
+						console.log(v.url);
+					}
+				},
 				success: function(data){
+					if ( wpsl_locator.jsdebug === '1' ){
+						console.log('All Locations Response');
+						console.log(data);
+					}
 					if ( !data.results ) return self.noLocations();
 					SimpleLocator.formData[self.mapIndex] = data;
 					SimpleLocator.formData[self.mapIndex].allLocations = true;

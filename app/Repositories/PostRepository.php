@@ -54,6 +54,10 @@ class PostRepository
 		$args = [];
 		$args['post_type'] = $this->settings_repo->getLocationPostType();
 		if ( isset($request['limit']) ) $args['posts_per_page'] = $request['limit'];
+		if ( isset($request['orderby']) ) {
+			$args['orderby'] = sanitize_text_field($request['orderby']);
+			$args['order'] = ( isset($request['order']) && $request['order'] == 'asc' ) ? 'asc' : 'desc';
+		}
 		$args = $this->addTaxonomyArgs($request, $args);
 		$args = $this->addIdArgs($request, $args);
 

@@ -32,6 +32,8 @@ class AllLocationsShortcode
 			'noresultstext' => __('No locations found.', 'simple-locator'),
 			'includelist' => '', // Set to true to display the list beneath the map
 			'showall' => '', // Text to display in list header
+			'orderby' => '', // Defaults to default distance as set in plugin settings. Passed to wp_query as orderby parameter (ex: post_title)
+			'order' => 'asc', // If orderby set, may be 'asc' or 'desc'
 			'ids' => ''
 		], $options);
 		$this->setTaxonomyArgs($options);
@@ -78,6 +80,8 @@ class AllLocationsShortcode
 			}
 		}
 		
+		if ( $this->options['orderby'] !== '' ) $output .= ' data-orderby="' . $this->options['orderby'] . '"';
+		$output .= ( $this->options['order'] == 'asc' ) ? ' data-order="asc"' : ' data-order="desc"';
 		if ( $this->options['ids'] !== '' ) $output .= ' data-post-ids="' . $this->options['ids'] . '"';
 		if ( $this->options['mapheight'] !== '' ) $output .= ' style="height:' . intval($this->options['mapheight']) . 'px;"';
 		if ( $this->options['noresultstext'] !== '' ) $output .= ' data-no-results-text="' . $this->options['noresultstext'] . '"';

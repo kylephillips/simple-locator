@@ -93,6 +93,20 @@ SimpleLocator.AllLocations = function()
 	}
 
 	/**
+	* Set the order args, provided through data-post-ids attribute
+	*/
+	self.setOrderArgs = function()
+	{
+		self.formData.orderby = null;
+		self.formData.order = 'asc';
+		var orderby = $(self.activeMap).attr('data-orderby');
+		if ( typeof orderby === 'undefined' || orderby === '' ) return;
+		self.formData.orderby = orderby;
+		var order = $(self.activeMap).attr('data-order');
+		self.formData.order = ( typeof order !== 'undefined' && order === 'asc' ) ? 'asc' : 'desc';
+	}
+
+	/**
 	* Set location args (if default map is enabled, center there )
 	*/
 	self.setLocationArgs = function()
@@ -133,6 +147,7 @@ SimpleLocator.AllLocations = function()
 			self.setTaxonomyArgs();
 			self.setLimitArgs();
 			self.setIdArgs();
+			self.setOrderArgs();
 
 			$.ajax({
 				url : SimpleLocator.endpoints.search,

@@ -88,8 +88,8 @@ class LocationSearch
 	{
 		$this->request = ( $request ) ? $request : $_POST;
 		$this->setResultsFields();
-		$this->setAddress();
 		$this->setData();
+		$this->setAddress();
 		$this->setQueryData();
 		$this->setQuery();
 		$this->runQuery();
@@ -108,7 +108,7 @@ class LocationSearch
 	*/
 	private function setAddress()
 	{
-		$this->address = ( isset($this->request['latitude']) && $this->request['latitude'] != "") ? true : false;
+		$this->address = ( isset($this->request['latitude']) && $this->request['latitude'] != "" && !$this->data['orderby']) ? true : false;
 	}
 
 	/**
@@ -123,10 +123,15 @@ class LocationSearch
 			'distance' => ( isset($this->request['distance']) ) ? sanitize_text_field($this->request['distance']) : null,
 			'latitude' => ( isset($this->request['latitude']) ) ? sanitize_text_field($this->request['latitude']) : null,
 			'longitude' => ( isset($this->request['longitude']) ) ? sanitize_text_field($this->request['longitude']) : null,
+			'orderby' => null
 		];
 		if ( isset($this->request['page']) && $this->data['limit']){
 			$this->data['offset'] = (intval($this->request['page']) - 1) * $this->data['limit'];
 			if ( $this->data['offset'] < 0 ) $this->data['offset'] = 0;
+		}
+		if ( isset($this->request['orderby']) ){
+			$this->data['orderby'] = sanitize_text_field($this->request['orderby']);
+			$this->data['order'] = ( isset($this->request['order']) && $this->request['order'] == 'asc' ) ? 'asc' : 'desc';
 		}
 		if ( isset($this->request['taxfilter']) ) $this->setTaxonomies();
 	}
@@ -256,6 +261,19 @@ class LocationSearch
 	}
 
 	/**
+	* SQL Order Constraints
+	*/
+	private function sqlOrderby()
+	{
+		if ( !$this->data['orderby'] || $this->data['orderby'] == '' ) return;
+		$sql = "";
+		$orderby = 'p.' . $this->data['orderby'];
+		$order = strtoupper($this->data['order']);
+		$sql .= "\nORDER BY $orderby $order\n";
+		return apply_filters('simple_locator_sql_orderby', $sql, $this->request);
+	}
+
+	/**
 	* Set the Query
 	*/
 	private function setQuery($include_limit = true)
@@ -273,6 +291,7 @@ class LocationSearch
 			$sql .= $this->taxonomyJoins();
 			$sql .= $this->sqlWhere();
 			if ( $this->address ) $sql .= "\nHAVING distance < @distance\nORDER BY distance\n";
+			if ( !$this->address ) $sql .= $this->sqlOrderby();
 			$sql .= ($include_limit) ? $this->sqlLimit() . ";" : ';';
 		$this->sql = $sql;
 	}

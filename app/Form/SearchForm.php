@@ -17,7 +17,7 @@ class SearchForm
 		if ( $options['mapcontainer'] ) $out .= ' data-simple-locator-map-container="' . $options['mapcontainer'] . '"';
 		if ( $options['resultscontainer'] ) $out .= ' data-simple-locator-results-container="' . $options['resultscontainer'] . '"';
 		if ( $options['ajax'] ) $out .= ' data-simple-locator-ajax-form="true"';
-	 	$out .= 'data-simple-locator-map-control-position="' . $options['mapcontrolsposition'] . '"';
+	 	$out .= ' data-simple-locator-map-control-position="' . $options['mapcontrolsposition'] . '"';
 	 	if ( $options['allowemptyaddress'] ) $out .= ' class="allow-empty" data-simple-locator-form-allow-empty="true"';
 	 	$out .= '>';
 	 	echo $out;

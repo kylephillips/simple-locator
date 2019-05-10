@@ -56,7 +56,7 @@ class SearchForm
 				$out .= '<label ' . $this->attributeOutput($field->tax_label_attributes) . '>' . $field->label . '</label>';
 				$out .= '<ul ' . $this->attributeOutput($field->checkbox_wrapper_attributes) . '>';
 				foreach ( $field->options as $key => $option ) :
-					$out .= '<li class="simple-locator-checkbox"><label for="wpsl_taxonomy_' . $field->taxonomy . '_' . $key . '"><input type="checkbox" id="wpsl_taxonomy_' . $field->taxonomy . '" name="taxfilter[' . $field->taxonomy . '][]" value="' . $option['value'] . '" data-simple-locator-taxonomy-checkbox="' . $field->taxonomy . '"';
+					$out .= '<li class="simple-locator-checkbox"><label for="wpsl_taxonomy_' . $field->taxonomy . '_' . $key . '"><input type="checkbox" id="wpsl_taxonomy_' . $field->taxonomy . '_' . $key . '" name="taxfilter[' . $field->taxonomy . '][]" value="' . $option['value'] . '" data-simple-locator-taxonomy-checkbox="' . $field->taxonomy . '"';
 					if ( $option['selected'] ) $out .= ' checked';
 					$out .= ' />' .$option['label'] . '</label></li>';
 				endforeach;

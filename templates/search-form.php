@@ -37,7 +37,7 @@ if ( $widget ) :
 		?>
 		<button type="submit" data-simple-locator-submit class="wpslsubmit"><?php echo html_entity_decode($buttontext); ?></button>
 		<div class="geo_button_cont"></div>
-		<div class="wpsl-icon-spinner"><div class="wpsl-icon-spinner-image"><img src="<?php echo apply_filters('simple_locator_results_loading_spinner', \SimpleLocator\Helpers::plugin_url() . '/assets/images/loading-spinner.svg'); ?>" class="wpsl-spinner-image" /></div></div>
+		<div class="wpsl-icon-spinner"><div class="wpsl-icon-spinner-image"><img src="<?php echo apply_filters('simple_locator_results_loading_spinner', \SimpleLocator\Helpers::plugin_url() . '/assets/images/loading-spinner.svg'); ?>" class="wpsl-spinner-image" alt="<?php _e('Loading Indicator', 'simple-locator'); ?>" /></div></div>
 	</div>
 	</form>
 	<?php 

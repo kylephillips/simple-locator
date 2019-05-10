@@ -26,7 +26,7 @@ if ( $widget ) :
 	</div>
 	<div class="distance form-field">
 		<label for="wpsl_distance"><?php _e('Distance', 'simple-locator'); ?></label>
-		<select id="wpsl_distance" name="wpsl_distance" class="distanceselect" data-simple-locator-input-distance>
+		<select id="wpsl_distance"  name="wpsl_distance" class="distanceselect" data-simple-locator-input-distance>
 			<?php echo $distance_options; ?>
 		</select>
 	</div>
@@ -43,7 +43,7 @@ if ( $widget ) :
 	<?php 
 	if ( !$mapcontainer ) :
 		$out = '<div data-simple-locator-map class="wpsl-map"';
-		if ( isset($mapheight) && $mapheight !== "" ) $out .= 'style="height:' . $mapheight . 'px;"';
+		if ( isset($mapheight) && $mapheight !== "" ) $out .= ' style="height:' . $mapheight . 'px;"';
 		if ( $show_default_map ) $out .= ' data-simple-locator-default-enabled="true"';
 		if ( $perpage !== '' ) $out .= ' data-per-page="' . $perpage . '"';
 		if ( $showall ) $out .= ' data-simple-locator-all-locations-map="' . $showall . '" data-include-listing="true"';

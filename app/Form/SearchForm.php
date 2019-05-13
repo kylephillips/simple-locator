@@ -53,7 +53,7 @@ class SearchForm
 			if ( $field->type == 'checkbox' ) :
 
 				$out .= '<div' . $this->attributeOutput($field->wrapper_attributes) . '>';
-				$out .= '<label ' . $this->attributeOutput($field->tax_label_attributes) . '>' . $field->label . '</label>';
+				$out .= '<' . $field->dropdown_label_type . ' ' . $this->attributeOutput($field->tax_label_attributes) . '>' . $field->label . '</' . $field->dropdown_label_type . '>';
 				$out .= '<ul ' . $this->attributeOutput($field->checkbox_wrapper_attributes) . '>';
 				foreach ( $field->options as $key => $option ) :
 					$out .= '<li class="simple-locator-checkbox"><label for="wpsl_taxonomy_' . $field->taxonomy . '_' . $key . '"><input type="checkbox" id="wpsl_taxonomy_' . $field->taxonomy . '_' . $key . '" name="taxfilter[' . $field->taxonomy . '][]" value="' . $option['value'] . '" data-simple-locator-taxonomy-checkbox="' . $field->taxonomy . '"';
@@ -82,6 +82,7 @@ class SearchForm
 		$tax_field->taxonomy = $tax_name;
 		$tax_field->select_default = sprintf(esc_html__('--Select %s--', 'simple-locator'), $tax_obj->labels->singular_name);
 		$tax_field->type = ( $options['taxonomy_field_type'] == 'select' ) ? 'select' : 'checkbox';
+		$tax_field->dropdown_label_type = 'label';
 		$tax_field->wrapper_attributes = [
 			'class' => ['wpsl-taxonomy-filter', 'taxonomy-' . $tax_name]
 		];

@@ -269,7 +269,7 @@ SimpleLocator.Form = function()
 				}
 				if ( data.result_count === 0 ){
 					var message = wpsl_locator.nolocationserror + ' ' + data.formatted_address;
-					$(document).trigger('simple-locator-error', [self.activeForm, message]);
+					$(document).trigger('simple-locator-error', [self.activeForm, message, self.formData]);
 					wpsl_no_results(self.formData.formatted_address, self.activeForm); // Deprecated
 					self.toggleLoading(false, true);
 					return;

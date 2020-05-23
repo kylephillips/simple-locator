@@ -41,7 +41,7 @@ class UndoImport extends ImportListenerBase
 	*/
 	private function setIDs()
 	{
-		$this->import_id = ( isset($_POST['undo_import_id']) ) ? intval($_POST['undo_import_id']) : 0;
+		$this->import_id = ( isset($_POST['undo_import_id']) ) ? intval(sanitize_text_field($_POST['undo_import_id'])) : 0;
 		$this->post_ids = $this->import_repo->getImportedPostIDs($this->import_id);
 	}
 

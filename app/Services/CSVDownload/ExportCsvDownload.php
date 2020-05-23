@@ -67,8 +67,8 @@ class ExportCsvDownload
 	*/
 	private function buildCsvArray()
 	{
-		$standard_columns = ( isset($_POST['standard_columns']) ) ? $_POST['standard_columns'] : [];
-		$custom_columns = ( isset($_POST['custom_columns']) ) ? $_POST['custom_columns'] : [];
+		$standard_columns = ( isset($_POST['standard_columns']) ) ? sanitize_text_field($_POST['standard_columns']) : [];
+		$custom_columns = ( isset($_POST['custom_columns']) ) ? sanitize_text_field($_POST['custom_columns']) : [];
 		$taxonomies = ( isset($_POST['taxonomies']) ) ? $_POST['taxonomies'] : [];
 
 		$taxonomy_separator = ( isset($_POST['taxonomy_separator']) ) ? $_POST['taxonomy_separator'] : 'comma';
@@ -108,8 +108,8 @@ class ExportCsvDownload
 		// Header Row
 		$include_header = ( isset($_POST['include_header_row']) && $_POST['include_header_row'] == 'true' ) ? true : false;
 		if ( $include_header ) :
-			$standard_columns = ( isset($_POST['standard_columns']) ) ? $_POST['standard_columns'] : [];
-			$custom_columns = ( isset($_POST['custom_columns']) ) ? $_POST['custom_columns'] : [];
+			$standard_columns = ( isset($_POST['standard_columns']) ) ? sanitize_text_field($_POST['standard_columns']) : [];
+			$custom_columns = ( isset($_POST['custom_columns']) ) ? sanitize_text_field($_POST['custom_columns']) : [];
 			$taxonomies = ( isset($_POST['taxonomies']) ) ? $_POST['taxonomies'] : [];
 			$header = [];
 			foreach ( $standard_columns as $column ) :
@@ -132,7 +132,8 @@ class ExportCsvDownload
 
 		$csv->insertAll($this->formatted_posts);
 		$filename = __('location-export', 'simple-locator') . '.csv';
-		if ( isset($_POST['file_name']) && $_POST['file_name'] !== '' ) $filename = sanitize_text_field($_POST['file_name']) . '.csv';
+		if ( isset($_POST['file_name']) && $_POST['file_name'] !== '' ) 
+			$filename = sanitize_text_field($_POST['file_name']) . '.csv';
 		$csv->output($filename);
 	}
 

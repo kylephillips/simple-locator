@@ -26,7 +26,7 @@ class ImportTemplateRemove extends ImportListenerBase
 	*/
 	private function setID()
 	{
-		$this->template_id = ( isset($_POST['template_remove_id']) ) ? intval($_POST['template_remove_id']) : 0;
+		$this->template_id = ( isset($_POST['template_remove_id']) ) ? intval(sanitize_text_field($_POST['template_remove_id'])) : 0;
 	}
 
 	/**

@@ -38,7 +38,7 @@ class ImportTemplateSave extends ImportListenerBase
 			'post_type' => 'wpslimport',
 			'posts_per_page' => 1,
 			'fields' => 'ids',
-			'p' => intval($_POST['template_id'])
+			'p' => intval(sanitize_text_field($_POST['template_id']))
 		]);
 		if ( $q->have_posts() ) :
 			$post = $q->posts;

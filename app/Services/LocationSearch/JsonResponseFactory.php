@@ -28,8 +28,8 @@ class JsonResponseFactory
 		$formatted_address = ( isset($this->request['formatted_address']) ) ? sanitize_text_field($this->request['formatted_address']) : null;
 		$geolocation = ( isset($this->request['geolocation']) && $this->request['geolocation'] == 'true' ) ? true : false;
 		$allow_empty_address = ( isset($this->request['allow_empty_address']) && $this->request['allow_empty_address'] == 'true' ) ? true : false;
-		$page = ( isset($this->request['page']) ) ? intval($this->request['page']) : null;
-		$per_page = ( isset($this->request['per_page']) ) ? intval($this->request['per_page']) : -1;
+		$page = ( isset($this->request['page']) ) ? intval(sanitize_text_field($this->request['page'])) : null;
+		$per_page = ( isset($this->request['per_page']) ) ? intval(sanitize_text_field($this->request['per_page'])) : -1;
 
 		// Additional Pagination/etc…
 		$search_data = [];

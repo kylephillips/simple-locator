@@ -117,7 +117,7 @@ class LocationSearch
 	private function setData()
 	{
 		$this->data = [
-			'unit' => ( isset($this->request['unit']) ) ?  sanitize_text_field($this->request['unit']) : get_option('wpsl_measurement_unit'),
+			'unit' => ( isset($this->request['unit']) ) ? sanitize_text_field($this->request['unit']) : get_option('wpsl_measurement_unit'),
 			'offset' => null,
 			'limit' => ( isset($this->request['per_page']) ) ? sanitize_text_field(intval($this->request['per_page'])) : null,
 			'distance' => ( isset($this->request['distance']) ) ? sanitize_text_field($this->request['distance']) : null,

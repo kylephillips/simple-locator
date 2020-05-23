@@ -23,7 +23,7 @@ class GetCSVRow extends ImportAJAXListenerBase
 	*/
 	private function getRow()
 	{
-		$row = ( !isset($_POST['rowcount']) || !is_numeric($_POST['rowcount']) ) ? 0 : intval($_POST['rowcount']);
+		$row = ( !isset($_POST['rowcount']) || !is_numeric($_POST['rowcount']) ) ? 0 : intval(sanitize_text_field($_POST['rowcount']));
 		
 		try {
 			$columns = $this->row->getRow($row);

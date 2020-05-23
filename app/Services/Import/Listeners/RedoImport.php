@@ -35,7 +35,7 @@ class RedoImport extends ImportListenerBase
 	*/
 	private function setID()
 	{
-		$this->import_id = ( isset($_POST['redo_import_id']) ) ? intval($_POST['redo_import_id']) : 0;
+		$this->import_id = ( isset($_POST['redo_import_id']) ) ? intval(sanitize_text_field($_POST['redo_import_id'])) : 0;
 	}
 
 	/**

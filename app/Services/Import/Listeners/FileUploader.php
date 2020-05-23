@@ -74,7 +74,7 @@ class FileUploader extends ImportListenerBase
 			'import_type' => $_FILES['file']['type'],
 			'post_ids' => array(),
 			'complete' => false,
-			'using_template' => intval($_POST['import_template'])
+			'using_template' => intval(sanitize_text_field($_POST['import_template']))
 		];
 		if ( $template ) $transient = $this->saveTemplateData($transient);
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
@@ -131,7 +131,7 @@ class FileUploader extends ImportListenerBase
 	*/
 	private function getImportTemplate()
 	{
-		$this->template = $this->import_repo->getImportTemplates($_POST['import_template']);
+		$this->template = $this->import_repo->getImportTemplates(sanitize_text_field($_POST['import_template']));
 	}
 
 	/**

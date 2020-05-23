@@ -29,7 +29,7 @@ class ColumnMapper extends ImportListenerBase
 		$post_fields = ['title', 'content', 'excerpt', 'status', 'publish_date', 'publish_date_gmt', 'modified_date', 'modified_date_gmt', 'slug'];
 		foreach ( $fields as $key => $field ){
 			$this->fields[$key] = new \StdClass();
-			$this->fields[$key]->csv_column = intval($field['csv_column']);
+			$this->fields[$key]->csv_column = intval(sanitize_text_field($field['csv_column']));
 			$this->fields[$key]->field = sanitize_text_field($field['field']);
 			$this->fields[$key]->type = sanitize_text_field($field['type']);
 			$this->fields[$key]->unique = ( isset($field['unique']) && $field['unique'] == 1 ) ? true : false;

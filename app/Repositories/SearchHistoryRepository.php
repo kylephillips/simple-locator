@@ -26,22 +26,22 @@ class SearchHistoryRepository
 	{
 		$request = [];
 		$offset = null;
-		$per_page = ( isset($_GET['per_page']) ) ? intval($_GET['per_page']) : 20;
+		$per_page = ( isset($_GET['per_page']) ) ? intval(sanitize_text_field($_GET['per_page'])) : 20;
 
 		if ( isset($_GET['p']) && $paginated ){
-			$page = intval($_GET['p']);
+			$page = intval(sanitize_text_field($_GET['p']));
 			$offset = $per_page * ( $page - 1 );
 		}
 
 		if ( $request_type == 'GET' ){
-			if ( isset($_GET['q']) && $_GET['q'] !== '' ) $request['q'] = $_GET['q'];
-			if ( isset($_GET['date_start']) && $_GET['date_start'] !== '' ) $request['date_start'] = $_GET['date_start'];
-			if ( isset($_GET['date_end']) && $_GET['date_end'] !== '' ) $request['date_end'] = $_GET['date_end'];
+			if ( isset($_GET['q']) && $_GET['q'] !== '' ) $request['q'] = sanitize_text_field($_GET['q']);
+			if ( isset($_GET['date_start']) && $_GET['date_start'] !== '' ) $request['date_start'] = sanitize_text_field($_GET['date_start']);
+			if ( isset($_GET['date_end']) && $_GET['date_end'] !== '' ) $request['date_end'] = sanitize_text_field($_GET['date_end']);
 		}
 		if ( $request_type == 'POST' ){
-			if ( isset($_POST['q']) && $_POST['q'] !== '' ) $request['q'] = $_POST['q'];
-			if ( isset($_POST['date_start']) && $_POST['date_start'] !== '' ) $request['date_start'] = $_POST['date_start'];
-			if ( isset($_POST['date_end']) && $_POST['date_end'] !== '' ) $request['date_end'] = $_POST['date_end'];
+			if ( isset($_POST['q']) && $_POST['q'] !== '' ) $request['q'] = sanitize_text_field($_POST['q']);
+			if ( isset($_POST['date_start']) && $_POST['date_start'] !== '' ) $request['date_start'] = sanitize_text_field($_POST['date_start']);
+			if ( isset($_POST['date_end']) && $_POST['date_end'] !== '' ) $request['date_end'] = sanitize_text_field($_POST['date_end']);
 		}
 		
 
@@ -49,7 +49,7 @@ class SearchHistoryRepository
 		$query = "SELECT * FROM $table";
 		
 		if ( isset($request['q']) ) :
-			$q = sanitize_text_field($request['q']);
+			$q = $request['q'];
 			$query .= " WHERE (search_term LIKE '%$q%') OR (search_term_formatted LIKE '%$q%')";
 		endif;
 
@@ -123,7 +123,7 @@ class SearchHistoryRepository
 		$query = $_GET;
 		$first_page = true;
 
-		$current_page = ( isset($query['p']) && $query['p'] !== '' ) ? intval($query['p']) : 1;
+		$current_page = ( isset($query['p']) && $query['p'] !== '' ) ? intval(sanitize_text_field($query['p'])) : 1;
 		
 		if ( $current_page > 1 ){
 			$first_page = false;
@@ -134,7 +134,7 @@ class SearchHistoryRepository
 		$query['p'] = intval($current_page) + 1;
 		$next_page_query = http_build_query($query);
 
-		$per_page = ( isset($query['per_page']) && $query['per_page'] !== '' ) ? intval($query['per_page']) : 0;
+		$per_page = ( isset($query['per_page']) && $query['per_page'] !== '' ) ? intval(sanitize_text_field($query['per_page'])) : 0;
 		$total_results = $this->getTotalCount();
 		$out = '<ul class="pagination-list">';
 			if ( !$first_page ) $out .= '<li><a href="' . $_SERVER['PHP_SELF'] . '?' . $prev_page_query . '" class="' . $link_class . '">' . $prev . '</a></li>';

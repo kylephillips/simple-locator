@@ -26,7 +26,7 @@ class RemoveImport extends ImportListenerBase
 	*/
 	private function setID()
 	{
-		$this->import_id = ( isset($_POST['remove_import_id']) ) ? intval($_POST['remove_import_id']) : 0;
+		$this->import_id = ( isset($_POST['remove_import_id']) ) ? intval(sanitize_text_field($_POST['remove_import_id'])) : 0;
 	}
 
 	/**

@@ -11,7 +11,7 @@ Domain Path: /languages/
 License: GPLv2 or later.
 */
 
-/*  Copyright 2019 Kyle Phillips
+/*  Copyright 2020 Kyle Phillips
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License, version 2, as 
@@ -40,6 +40,8 @@ function wpsimplelocator_check_versions( $wp = '4.4', $php = '5.4.0' ) {
 }
 
 if ( !class_exists('Bootstrap') ) :
+	define('SIMPLELOCATOR_DIR', __DIR__);
+    define('SIMPLELOCATOR_URI', __FILE__);
 	wpsimplelocator_check_versions();
 	require('vendor/autoload.php');
 	require_once('app/SimpleLocator.php');

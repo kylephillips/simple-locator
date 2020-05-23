@@ -8,7 +8,7 @@ class Helpers
 	*/
 	public static function plugin_url()
 	{
-		return plugins_url() . '/simple-locator';
+		return plugins_url('/', SIMPLELOCATOR_URI);
 	}
 
 	/**

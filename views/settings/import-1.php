@@ -1,7 +1,7 @@
 <?php 
 // Form Notifications
-if ( isset($_GET['success']) ) echo '<div class="updated"><p>' . $_GET['success'] . '</p></div>';
-if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '</p></div>';
+if ( isset($_GET['success']) ) echo '<div class="updated"><p>' . sanitize_text_field($_GET['success']) . '</p></div>';
+if ( isset($_GET['error']) ) echo '<div class="error"><p>' . sanitize_text_field($_GET['error']) . '</p></div>';
 $all_templates = $this->import_repo->getImportTemplates();
 ?>
 

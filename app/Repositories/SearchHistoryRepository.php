@@ -105,7 +105,7 @@ class SearchHistoryRepository
 		$total_results = $this->getTotalCount();
 		
 		$query = $_GET;
-		$per_page = ( isset($query['per_page']) && $query['per_page'] !== '' ) ? intval($query['per_page']) : 20;
+		$per_page = ( isset($query['per_page']) && $query['per_page'] !== '' ) ? intval(sanitize_text_field($query['per_page'])) : 20;
 
 		$total_pages = ceil($total_results / $per_page);
 		return $total_pages;

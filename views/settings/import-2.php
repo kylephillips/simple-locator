@@ -9,7 +9,7 @@ if ( isset($transient['file']) && isset($transient['post_type']) ) :
 	<?php _e('Step 2: Map Columns', 'simple-locator'); ?> (<?php echo $transient['filename']; ?>)
 </h3>
 
-<?php if ( isset($_GET['error']) ) echo '<div class="error"><p>' . $_GET['error'] . '</p></div>'; ?>
+<?php if ( isset($_GET['error']) ) echo '<div class="error"><p>' . sanitize_text_field($_GET['error']) . '</p></div>'; ?>
 
 <div class="wpsl-loading-settings" data-simple-locator-import-loading>
 	<div class="wpsl-icon-spinner">

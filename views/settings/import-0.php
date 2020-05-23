@@ -10,7 +10,7 @@
 	else :
 		// Steps
 		if ( isset($_GET['step']) && in_array($_GET['step'], array('1', '2', '3')) ) {
-			include 'import-' . $_GET['step'] . '.php';
+			include 'import-' . sanitize_text_field($_GET['step']) . '.php';
 		} else {
 			include 'import-1.php';
 		}

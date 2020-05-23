@@ -8,12 +8,14 @@ $search_rows = $this->search_repo->getResults();
 $date_format = get_option('date_format');
 $is_search = ( isset($_GET['q']) ) ? true : false;
 
-if ( isset($_GET['date_start']) && $_GET['date_start'] !== '' ) $date_start = date('F j, Y', strtotime('@' . $_GET['date_start']));
-if ( isset($_GET['date_end']) && $_GET['date_end'] !== '' ) $date_end = date('F j, Y', strtotime('@' . $_GET['date_end']));
+if ( isset($_GET['date_start']) && $_GET['date_start'] !== '' ) 
+	$date_start = date('F j, Y', strtotime('@' . sanitize_text_field($_GET['date_start'])));
+if ( isset($_GET['date_end']) && $_GET['date_end'] !== '' ) 
+	$date_end = date('F j, Y', strtotime('@' . sanitize_text_field($_GET['date_end'])));
 if ( isset($_GET['q']) && $_GET['q'] !== '' ) $search_term = sanitize_text_field($_GET['q']);
 
-$per_page = ( isset($_GET['per_page']) && $_GET['per_page'] !== '' ) ? intval($_GET['per_page']) : 20;
-$current_page = ( isset($_GET['p']) && $_GET['p'] !== '' ) ? intval($_GET['p']) : 1;
+$per_page = ( isset($_GET['per_page']) && $_GET['per_page'] !== '' ) ? intval(sanitize_text_field($_GET['per_page'])) : 20;
+$current_page = ( isset($_GET['p']) && $_GET['p'] !== '' ) ? intval(sanitize_text_field($_GET['p'])) : 1;
 
 $page = admin_url('options-general.php?page=wp_simple_locator&tab=search-history');
 if ( $search_rows ) :
@@ -36,8 +38,8 @@ if ( $search_rows ) :
 			<input type="hidden" name="action" value="wpslhistorycsv">
 			<input type="hidden" name="page" value="<?php echo $page; ?>">
 			<input type="hidden" name="q" value="<?php if ( isset($search_term)  ) echo $search_term; ?>">
-			<input type="hidden" name="date_start" value="<?php if ( isset($date_start) ) echo $_GET['date_start']; ?>">
-			<input type="hidden" name="date_end" value="<?php if ( isset($date_end) ) echo $_GET['date_end']; ?>">
+			<input type="hidden" name="date_start" value="<?php if ( isset($date_start) ) echo sanitize_text_field($_GET['date_start']); ?>">
+			<input type="hidden" name="date_end" value="<?php if ( isset($date_end) ) echo sanitize_text_field($_GET['date_end']); ?>">
 			<button class="button button-primary"><?php _e('Download CSV', 'simple-locator'); ?></button>
 		</form>
 

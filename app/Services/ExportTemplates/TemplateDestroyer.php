@@ -11,7 +11,7 @@ class TemplateDestroyer
 
 	private function deleteTemplate()
 	{
-		$template_key = $_GET['templateKey'];
+		$template_key = sanitize_text_field($_GET['templateKey']);
 		$templates = get_option('wpsl_export_templates', []);
 		if ( !isset($templates[$template_key]) ) return;
 		unset($templates[$template_key]);

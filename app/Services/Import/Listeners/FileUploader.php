@@ -35,7 +35,7 @@ class FileUploader extends ImportListenerBase
 	private function copyFile()
 	{
 		if ( $_FILES['file']['name'] == "" ) return $this->error('Please include a file.');
-		if ( !$this->isCsv($_FILES['file']['type']) ) return $this->error('File must be CSV format. This file\'s format is ' . $_FILES['file']['type']);
+		if ( !$this->isCsv(sanitize_text_field($_FILES['file']['type'])) ) return $this->error('File must be CSV format. This file\'s format is ' . sanitize_text_field($_FILES['file']['type']));
 		$file = $_FILES['file'];
 		$upload_overrides = [ 'test_form' => false ];
 		$movefile = wp_handle_upload($file, $upload_overrides);
@@ -65,13 +65,13 @@ class FileUploader extends ImportListenerBase
 			'mac' => $mac, // is mac formatted?
 			'row_count' => $rowcount, // total rows in CSV file
 			'post_type' => $post_type, // post type to import to
-			'filename' => $_FILES['file']['name'], // filename for display purposes
+			'filename' => sanitize_text_field($_FILES['file']['name']), // filename for display purposes
 			'complete_rows' => '0',
 			'error_rows' => array(), // Rows with import or geocoding errors,
 			'last_imported' => 0,
 			'lat' => get_option('wpsl_lat_field'), // Field to save latitude to
 			'lng' => get_option('wpsl_lng_field'), // Field to save longitude to
-			'import_type' => $_FILES['file']['type'],
+			'import_type' => sanitize_text_field($_FILES['file']['type']),
 			'post_ids' => array(),
 			'complete' => false,
 			'using_template' => intval(sanitize_text_field($_POST['import_template']))

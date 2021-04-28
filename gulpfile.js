@@ -3,6 +3,7 @@ var sass = require('gulp-sass');
 var autoprefix = require('gulp-autoprefixer');
 var livereload = require('gulp-livereload');
 var notify = require('gulp-notify');
+var minifycss = require('gulp-minify-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var pump = require('pump');
@@ -50,44 +51,38 @@ var js_compiled = 'assets/js/';
 
 
 /**
-* Smush the admin Styles and output
+* Process the styles
 */
-gulp.task('scss', function(callback){
-	pump([
-		gulp.src(scss),
-		sass({ outputStyle: 'compressed' }),
-		autoprefix('last 15 version'),
-		gulp.dest(css),
-		livereload(),
-		notify('Simple Locator styles compiled & compressed.')
-	], callback);
-});
+var styles = function(){
+	return gulp.src(scss)
+	.pipe(sass({ outputStyle: 'compressed' }))
+	.pipe(autoprefix('last 15 version'))
+	.pipe(gulp.dest(css))
+	.pipe(livereload())
+	.pipe(notify('Simple Locator styles compiled & compressed.'))
+}
 
 /**
 * Admin JS
 */
-gulp.task('admin_scripts', function(callback){
-	pump([
-		gulp.src(js_admin_source),
-		concat('simple-locator-admin.min.js'),
-		gulp.dest(js_compiled),
-		uglify(),
-		gulp.dest(js_compiled)
-	], callback);
-});
+var admin_scripts = function(){
+	return gulp.src(js_admin_source)
+	.pipe(concat('simple-locator-admin.min.js'))
+	.pipe(gulp.dest(js_compiled))
+	.pipe(uglify())
+	.pipe(gulp.dest(js_compiled))
+}
 
 /**
 * Front end js
 */
-gulp.task('scripts', function(callback){
-	pump([
-		gulp.src(js_source),
-		concat('simple-locator.min.js'),
-		gulp.dest(js_compiled),
-		uglify(),
-		gulp.dest(js_compiled)
-	], callback);
-});
+var scripts = function(){
+	return gulp.src(js_source)
+	.pipe(concat('simple-locator.min.js'))
+	.pipe(gulp.dest(js_compiled))
+	.pipe(uglify())
+	.pipe(gulp.dest(js_compiled))
+}
 
 
 /**
@@ -95,18 +90,13 @@ gulp.task('scripts', function(callback){
 */
 gulp.task('watch', function(){
 	livereload.listen();
-	gulp.watch(scss, ['scss']);
-	gulp.watch(js_source, ['scripts']);
-	gulp.watch(js_admin_source, ['admin_scripts']);
+	gulp.watch(scss, gulp.series(styles));
+	gulp.watch(js_source, gulp.series(scripts));
+	gulp.watch(js_admin_source, gulp.series(admin_scripts));
 });
 
 
 /**
 * Default
 */
-gulp.task('default', [
-	'scss', 
-	'scripts', 
-	'admin_scripts', 
-	'watch'
-]);
+gulp.task('default', gulp.series(styles, scripts, admin_scripts, 'watch'));

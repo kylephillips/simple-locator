@@ -20,18 +20,22 @@ class RegisterApiEndpoints
 		register_rest_route( 'simplelocator/v2', '/search/', [
 			'methods'  => 'GET',
 			'callback' => [$this, 'searchLocations'],
+			'permission_callback' => '__return_true'
 		]);
 		register_rest_route( 'simplelocator/v2', '/locations/', [
 			'methods'  => 'GET',
 			'callback' => [$this, 'getLocations'],
+			'permission_callback' => '__return_true'
 		]);
 		register_rest_route( 'simplelocator/v2', '/states/', [
 			'methods'  => 'GET',
 			'callback' => [$this, 'getStates'],
+			'permission_callback' => '__return_true'
 		]);
 		register_rest_route( 'simplelocator/v2', '/export-templates/', [
 			'methods'  => 'GET',
 			'callback' => [$this, 'getExportTemplates'],
+			'permission_callback' => '__return_true'
 		]);
 	}
 

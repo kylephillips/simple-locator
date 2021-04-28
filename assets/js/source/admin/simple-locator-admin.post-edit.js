@@ -19,7 +19,8 @@ SimpleLocatorAdmin.PostEdit = function()
 		inputLatitude : '#wpsl_latitude',
 		inputLongitude : '#wpsl_longitude',
 		noAddressConfirm : 'data-simple-locator-confirm-no-address',
-		publishButton : '#publish'
+		publishButton : '#publish',
+		publishButtonGuttenberg : '.editor-post-publish-button'
 	}
 
 	self.bindEvents = function()
@@ -33,7 +34,7 @@ SimpleLocatorAdmin.PostEdit = function()
 		$(document).on('click', '.acf-tab-button', function(){
 			self.checkMapStatus();
 		});
-		$(document).on('click', self.selectors.publishButton, function(e){
+		$(document).on('click', self.selectors.publishButton + ',' + self.selectors.publishButtonGuttenberg, function(e){
 			if ( wpsl_locator.lat_field !== 'wpsl_latitude' && wpsl_locator.map_field !== "" ) return;
 			if ( !self.lookupaddress ) return;
 			if ( self.mappinrelocated ) return;

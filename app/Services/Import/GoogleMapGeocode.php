@@ -39,8 +39,6 @@ class GoogleMapGeocode
 		]);
 		$response_status = $response->getReasonPhrase();
 
-		//if ( $address == '5395 Sugarloaf Pkwy Lawrenceville GA 30043' ) $response_status = 'OVER_QUERY_LIMIT';
-
 		if ( $response_status == 'OVER_QUERY_LIMIT' ){
 			throw new GoogleQueryLimitException(__('Your API limit has been reached. Try again in 24 hours.', 'simple-locator'));
 		}

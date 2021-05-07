@@ -155,6 +155,7 @@ class PostImporter
 		}
 		$this->addMeta();
 		$this->addTerms();
+		do_action('simple_locator_post_imported', $this->post_id, $post);
 	}
 
 	/**

@@ -46,6 +46,11 @@ class PostImporter
 	private $post_id;
 
 	/**
+	* Newly Created Post Title
+	*/
+	private $post_title;
+
+	/**
 	* Post Repository
 	*/
 	private $post_repo;
@@ -67,6 +72,7 @@ class PostImporter
 		$this->setAddress();
 		$this->importPost();
 		$this->geocode();
+		do_action('simple_locator_post_imported', $this->post_id);
 		if ( $this->post_id ) return $this->post_id;
 		return false;
 	}
@@ -92,7 +98,10 @@ class PostImporter
 	*/
 	private function geocode()
 	{
-		if ( !$this->do_geocode || $this->transient['skip_geocode'] ) return;
+		if ( !$this->do_geocode || $this->transient['skip_geocode'] ) {
+			$this->updateLastRowImported();
+			return;
+		}
 		try {
 			$this->geocoder->geocode($this->address);
 			$coordinates = $this->geocoder->getCoordinates();
@@ -148,14 +157,22 @@ class PostImporter
 			$this->failedRow(__('Missing Title', 'simple-locator'));
 			return false;
 		}
+		
+		if ( $this->transient['auto_parent'] ) :
+			$this->transient = get_transient('wpsl_import_file'); // resetting transient passed into class to get the newest version
+			if ( sanitize_title($this->transient['last_unique_title']) == sanitize_title($post['post_title']) ) {
+				$post['post_parent'] = $this->transient['last_unique_title_id'];
+			}
+		endif;
+
 		$this->post_id = wp_insert_post($post);
 		if ( !$this->post_id ) {
 			$this->failedRow(__('WordPress Import Error', 'simple-locator'));
 			return false;
 		}
+		$this->post_title = $post['post_title'];
 		$this->addMeta();
 		$this->addTerms();
-		do_action('simple_locator_post_imported', $this->post_id);
 	}
 
 	/**
@@ -182,7 +199,6 @@ class PostImporter
 		if ( isset($meta['wpsl_state'][0]) ) $address .= $meta['wpsl_state'][0] . ' ';
 		if ( isset($meta['wpsl_zip'][0]) ) $address .= $meta['wpsl_zip'][0];
 		if ( $address == $this->address ) $this->do_geocode = false;
-
 	}
 
 	/**
@@ -249,7 +265,10 @@ class PostImporter
 		$transient = get_transient('wpsl_import_file'); // Calling manually for multiple errors
 		$transient['last_imported'] = $this->post_data['record_number'] - 1;
 		$transient['last_import_date'] = date_i18n( 'j F Y: H:i', time() );
+		if ( sanitize_title($this->post_title) !== sanitize_title($transient['last_unique_title']) ) {
+			$transient['last_unique_title'] = sanitize_title($this->post_title);
+			$transient['last_unique_title_id'] = intval($this->post_id);
+		}
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 	}
-
 }

@@ -54,6 +54,7 @@ class ColumnMapper extends ImportListenerBase
 			$transient['skip_first'] = true;
 			$transient['row_count'] = $transient['row_count'] - 1;
 		}
+		$transient['auto_parent'] = ( isset($_POST['wpsl_auto_parent']) && $_POST['wpsl_auto_parent'] == 1 ) ? true : false;
 		$transient['taxonomy_separator'] = sanitize_text_field($_POST['wpsl_import_taxonomy_separator']);
 		$transient['duplicate_handling'] = sanitize_text_field($_POST['wpsl_import_duplicate_handling']);
 		$transient['missing_handling'] = sanitize_text_field($_POST['wpsl_import_missing_handling']);

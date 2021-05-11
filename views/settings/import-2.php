@@ -1,6 +1,7 @@
 <?php 
 $transient = $this->import_repo->transient();
 $post_type = $transient['post_type'];
+$post_type_object = get_post_type_object($post_type);
 
 // Check that the columns have been mapped
 if ( isset($transient['file']) && isset($transient['post_type']) ) :
@@ -97,6 +98,18 @@ if ( isset($transient['file']) && isset($transient['post_type']) ) :
 				<label><input type="checkbox" name="wpsl_skip_geocoding" value="1" /><?php _e('Skip Geocoding', 'simple-locator'); ?></label>
 			</div>
 		</div>
+
+		<?php if ( $post_type_object->hierarchical ) : ?>
+		<div class="row">
+			<div class="label">
+				<h4><?php _e('Auto Parent Handling (Hierarchical post types only)', 'simple-locator'); ?></h4>
+				<p><?php _e('Automatically assign first post in a series with the same name as parent. (requires a specifically formatted CSV, where posts are grouped together with the same name, and the "headquarters" is first).', 'simple-locator'); ?></p>
+			</div>
+			<div class="field">
+				<label><input type="checkbox" name="wpsl_auto_parent" value="1" /><?php _e('Assign Auto-Parents', 'simple-locator'); ?></label>
+			</div>
+		</div>
+		<?php endif; ?>
 
 		<div class="row" data-import-post-status>
 			<div class="label">

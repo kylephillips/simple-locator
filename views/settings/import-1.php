@@ -3,6 +3,8 @@
 if ( isset($_GET['success']) ) echo '<div class="updated"><p>' . sanitize_text_field($_GET['success']) . '</p></div>';
 if ( isset($_GET['error']) ) echo '<div class="error"><p>' . sanitize_text_field($_GET['error']) . '</p></div>';
 $all_templates = $this->import_repo->getImportTemplates();
+$example_csv_link = \SimpleLocator\Helpers::plugin_url() . 'assets/csv_template.csv';
+$example_csv_link = apply_filters('simple_locator_example_csv', $example_csv_link);
 ?>
 
 <div class="wpsl-import-general-information">
@@ -88,7 +90,7 @@ $all_templates = $this->import_repo->getImportTemplates();
 		<div class="file">
 			<label><?php _e('Choose CSV File', 'simple-locator'); ?></label>
 			<input type="file" name="file">
-			<label class="inline"><input type="checkbox" name="mac_formatted" value="true"><?php _e('CSV file created on Mac', 'simple-locator'); ?>  <a href="<?php echo \SimpleLocator\Helpers::plugin_url(); ?>/assets/csv_template.csv"><?php _e('View an Example', 'simple-locator'); ?></a></label>
+			<label class="inline"><input type="checkbox" name="mac_formatted" value="true"><?php _e('CSV file created on Mac', 'simple-locator'); ?>  <a href="<?php echo $example_csv_link; ?>"><?php _e('View an Example', 'simple-locator'); ?></a></label>
 		</div>
 		<input type="submit" class="button" value="<?php _e('Start Import', 'simple-locator'); ?>">
 	</form>

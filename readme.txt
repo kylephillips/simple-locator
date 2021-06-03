@@ -139,7 +139,7 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 * Updates included Guzzle dependency to version 6 (resolves php 7.2 error).
 * Adds CSV export option to export locations to CSV files, with the ability to save and load export templates.
 * Adds location quick edit in admin post_row_actions, enabling quick location edit capabilities with geocoding. Displays if using the included Simple Locator address fields.
-* Adds ability to automatically assign location parent/children during CSV upload process through CSV row ordering.
+* Adds Google geocoding API test functionality to import to determine if there are errors with the API key provided.
 
 
 = 1.5.7 =

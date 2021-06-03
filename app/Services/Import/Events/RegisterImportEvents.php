@@ -4,6 +4,7 @@ namespace SimpleLocator\Services\Import\Events;
 use SimpleLocator\Services\Import\Listeners\FileUploader;
 use SimpleLocator\Services\Import\Listeners\GetCSVRow;
 use SimpleLocator\Services\Import\Listeners\ColumnMapper;
+use SimpleLocator\Services\Import\Listeners\ApiTest;
 use SimpleLocator\Services\Import\Listeners\Import;
 use SimpleLocator\Services\Import\Listeners\FinishImport;
 use SimpleLocator\Services\Import\Listeners\UndoImport;
@@ -23,6 +24,7 @@ class RegisterImportEvents
 		// Import Handlers
 		add_action( 'admin_post_wpslimportupload', [$this, 'FileWasUploaded']);
 		add_action( 'admin_post_wpslmapcolumns', [$this, 'ColumnMapWasSaved']);
+		add_action( 'wp_ajax_wpslimporttest', [$this, 'ImportTestPerformed']);
 		add_action( 'wp_ajax_wpsldoimport', [$this, 'ImportRequestMade']);
 
 		add_action( 'wp_ajax_wpslimportcolumns', [$this, 'CSVRowRequested']);
@@ -42,6 +44,14 @@ class RegisterImportEvents
 
 		// Remove a Template
 		add_action( 'admin_post_wpslremoveimporttemplate', [$this, 'importTemplateRemoved']);
+	}
+
+	/**
+	* An API test was run
+	*/
+	public function ImportTestPerformed()
+	{
+		new ApiTest;
 	}
 
 	/**

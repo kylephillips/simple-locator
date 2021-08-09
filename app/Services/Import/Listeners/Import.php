@@ -83,7 +83,8 @@ class Import extends ImportAJAXListenerBase
 			'status' => 'success', 
 			'failed_count' => $this->import_class->getFailedCount(), 
 			'import_count' => $this->import_class->getImportCount(),
-			'complete_rows' => $this->import_class->getCompleteCount()
+			'complete_rows' => $this->import_class->getCompleteCount(),
+			'total_rows' => $this->transient['row_count']
 		]);
 	}
 }

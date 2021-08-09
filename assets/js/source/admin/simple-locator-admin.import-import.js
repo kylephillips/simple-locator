@@ -71,6 +71,7 @@ SimpleLocatorAdmin.Import = function()
 				imports_per_request: self.imports_per_request
 			},
 			success: function(data){
+				console.log(data);
 				if ( data.status === 'testing' ){
 					console.log(data);
 					return;
@@ -85,6 +86,9 @@ SimpleLocatorAdmin.Import = function()
 					return;
 				}
 				self.updateProgress(data);
+			},
+			error: function(data){
+				console.log(data);
 			}
 		});
 	}
@@ -102,10 +106,8 @@ SimpleLocatorAdmin.Import = function()
 		$('[' + self.selectors.errorCount + ']').text(self.errorcount);
 		
 		// Progress Bar
-		var progress_total_width = $('[' + self.selectors.progressBarBackground + ']').width();
-		var progress_ratio = self.completecount / parseInt($('[' + self.selectors.progressBarBackground + ']').data('total'));
-		var progress_width = progress_total_width * progress_ratio;
-		$('[' + self.selectors.progressBar + ']').width(progress_width + 'px');
+		var progress_width = (data.complete_rows / data.total_rows) * 100;
+		$('[' + self.selectors.progressBar + ']').width(progress_width + '%');
 
 		self.doImport();
 	}

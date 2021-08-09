@@ -86,6 +86,9 @@ class CSVImport
 	private function setOffset($offset)
 	{
 		$this->offset = $offset;
+		if ( intval($this->offset) > intval($this->transient['row_count']) ) {
+			throw new \SimpleLocator\Services\Import\Exceptions\ImportCompleteException;	
+		}
 		if ( $this->transient['last_imported'] == 0 && $this->transient['skip_first'] ) $this->offset = 1;
 	}
 
@@ -98,7 +101,7 @@ class CSVImport
 		$csv = Reader::createFromPath($this->transient['file']);
 		$this->rows = $csv->setOffset($this->offset)->setLimit($this->request_number)->fetchAll();
 		
-		if ( !$this->rows ) {
+		if ( !$this->rows || count($this->rows) < 1 ) {
 			throw new \SimpleLocator\Services\Import\Exceptions\ImportCompleteException;
 		}
 

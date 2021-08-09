@@ -84,6 +84,7 @@ class PostImporter
 	{
 		$address = '';
 		foreach( $this->transient['columns'] as $field ){
+			if ( !isset($this->post_data[$field->csv_column]) ) return;
 			if ( $field->type == 'address' ) $address .= $this->post_data[$field->csv_column] . ' ';
 			if ( $field->type == 'city' ) $address .= $this->post_data[$field->csv_column] . ' ';
 			if ( $field->type == 'state' ) $address .= $this->post_data[$field->csv_column] . ' ';
@@ -161,7 +162,7 @@ class PostImporter
 		
 		if ( $this->transient['auto_parent'] ) :
 			$this->transient = get_transient('wpsl_import_file'); // resetting transient passed into class to get the newest version
-			if ( sanitize_title($this->transient['last_unique_title']) == sanitize_title($post['post_title']) ) {
+			if ( isset($this->transient['last_unique_title']) && sanitize_title($this->transient['last_unique_title']) == sanitize_title($post['post_title']) ) {
 				$post['post_parent'] = $this->transient['last_unique_title_id'];
 			}
 		endif;
@@ -266,9 +267,13 @@ class PostImporter
 		$transient = get_transient('wpsl_import_file'); // Calling manually for multiple errors
 		$transient['last_imported'] = $this->post_data['record_number'] - 1;
 		$transient['last_import_date'] = date_i18n( 'j F Y: H:i', time() );
-		if ( sanitize_title($this->post_title) !== sanitize_title($transient['last_unique_title']) ) {
+		if ( isset($this->transient['last_unique_title']) && sanitize_title($this->post_title) !== sanitize_title($transient['last_unique_title']) ) {
 			$transient['last_unique_title'] = sanitize_title($this->post_title);
 			$transient['last_unique_title_id'] = intval($this->post_id);
+		} 
+		if ( !isset($this->transient['last_unique_title']) ){
+			$transient['last_unique_title'] = sanitize_title($this->post_title);
+			$transient['last_unique_title_id'] = intval($this->post_id);	
 		}
 		set_transient('wpsl_import_file', $transient, 1 * YEAR_IN_SECONDS);
 	}

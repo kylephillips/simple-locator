@@ -1,5 +1,6 @@
 <?php
 $transient = $this->import_repo->transient();
+// echo '<pre>'; var_dump($transient); echo '</pre>';
 // echo '<pre>';
 // var_dump($transient);
 // echo '</pre>';
@@ -91,9 +92,10 @@ if ( !isset($transient['columns']) || $transient['complete'] ) : ?>
 <div class="wpsl-import-indicator" data-simple-locator-import-progress-message>
 	<div class="wpsl-alert"><?php _e('Import is in progress. Closing this page will stop the import.', 'simple-locator'); ?></div>
 
-	<div class="wpsl-import-progress" data-simple-locator-import-progress-bar>
-		<span class="progress-bar"></span>
-		<span class="progress-bar-bg" data-total="<?php echo $transient['row_count']; ?>" data-simple-locator-import-progress-bar-background></span>
+	<div class="wpsl-import-progress">
+		<span class="progress-bar-bg" data-total="<?php echo $transient['row_count']; ?>" data-simple-locator-import-progress-bar-background>
+			<span class="progress-bar" data-simple-locator-import-progress-bar></span>
+		</span>
 		<p><span class="progress-count" data-simple-locator-import-progress-count>0</span> <?php _e('of', 'simple-locator'); echo ' ' . $transient['row_count']; ?> <?php _e('Rows Imported', 'simple-locator'); ?> (<span class="error-count" data-simple-locator-import-error-count>0</span> <?php _e('Errors', 'simple-locator'); ?>)</p>
 		<p>
 			<button class="button wpsl-pause-import" data-simple-locator-import-pause><?php _e('Pause Import', 'simple-locator'); ?></button>

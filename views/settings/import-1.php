@@ -14,6 +14,10 @@ $example_csv_link = apply_filters('simple_locator_example_csv', $example_csv_lin
 			<p><?php _e('Effective June 11, 2018, Google charges for each geocoding request. Please review their pricing for Geocoding services ', 'simple-locator'); ?><a href="https://developers.google.com/maps/billing/understanding-cost-of-use?hl=en_US#geocoding" target="_blank"><?php _e('here', 'simple-locator'); ?></a>.</p>
 		</li>
 	</ul>
+	<div class="wpsl-import-test">
+		<div data-simple-locator-import-test-message></div>
+		<button data-simple-locator-import-test-button class="button"><?php _e('Test Google Geocoder', 'simple-locator'); ?></button>
+	</div>
 </div><!-- .wpsl-import-general-information -->
 
 <h2 class="wpsl-begin-import-header"><?php _e('Begin Import', 'simple-locator'); ?></h2>

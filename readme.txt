@@ -105,7 +105,7 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 
 == Changelog ==
 
-= 2.0.1 =
+= 2.0.2 =
 * Updates form to use API, with custom endpoints added for search and all locations queries.
 * Adds map pin filter, enabling customization of map pins for each location result.
 * Adds option to include the user’s search location as a pin, with option to customize separately from result pins.

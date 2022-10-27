@@ -2,9 +2,9 @@
 Contributors: kylephillips
 Donate link: http://locatewp.com/
 Tags: location, store locator, google maps, store map, locator, map
-Requires at least: 4.4
-Requires PHP: 5.4
-Tested up to: 5.0
+Requires at least: 5.0
+Requires PHP: 7.0
+Tested up to: 6.1
 Stable tag: 1.5.6
 
 License: GPLv2 or later

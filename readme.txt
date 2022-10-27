@@ -1,7 +1,7 @@
 === Simple Locator ===
 Contributors: kylephillips
 Donate link: http://locatewp.com/
-Tags: location, store locator, google maps, store map, locator, map
+Tags: location, store locator, google maps, store map, locator, map, locations
 Requires at least: 5.0
 Requires PHP: 7.0
 Tested up to: 6.1
@@ -324,24 +324,31 @@ Initial release
 == More Information ==
 
 = Shortcode Options =
-The shortcode to display the form and results is [wp_simple_locator]. There are several options available for customizing the form and results:
+The shortcode to display the form and results is [simple_locator]. There are several options available for customizing the form and results:
 
-* **distances** - A comma separated list of numbers used to ustomize the list of available distances to choose from in the form
-* **mapheight** - The height of the map in pixels
-* **mapcontainer** – The unique ID of a custom container in which to load the map.
-* **resultscontainer** - The unique ID of a custom container in which to load the search results.
-* **buttontext** - Text to display in submit button
+* **distances** - A comma separated list of numbers used to customize the list of available distances to choose from in the form. Defaults to 5,10,20,50,100
+* **mapheight** - The height of the map in pixels. Defaults to 250.
+* **mapcontainer** – The unique ID of a custom container in which to load the map (ID parameter of HTML element).
+* **resultscontainer** - The unique ID of a custom container in which to load the search results (ID parameter of HTML element).
+* **buttontext** - Text to display in submit button. Defaults to "Search".
 * **addresslabel** – Customize the address form label
 * **mapcontrols** – Hide or show the map controls
 * **mapcontrolsposition** – Google Maps formatted position for map controls (ex: TOP_LEFT)
-* **placeholder** - Customize the search input placeholder text (added in v1.3.0)
-* **noresultstext** - Customize the text displayed if no results are returned (added in v1.3.0)
+* **showgeobutton** - Whether to show or hide the "Use My Location" button. This button is hidden on sites that do not include an https connection. Defaults to false.
+* **geobuttontext** - Customize the text content of the geolocation button if shown. Defaults to "Use My Location".
+* **ajax** - Whether to submit the form with an ajax request. Defaults to true.
+* **formmethod** - The method of which the form submits. Default to "post". If using a GET method with a non-ajax request, a results page must be specified.
+* **placeholder** - Customize the search input placeholder text. Defaults to "Enter a Location"
+* **noresultstext** - Customize the text displayed if no results are returned. Defaults to "No results found".
 * **ajax** – To disable AJAX form submission, use ajax="false". NOTE: custom map/results containers are not available for non-AJAX forms (added in v1.3.0)
-* **perpage** - Used in conjunction with AJAX option. If a perpage option is included in a non-AJAX form, the results will be displayed with simple pagination, limited to the number per page specified. (Ex: ajax="false" perpage="15"). Pagination is not available with AJAX forms. (added in v1.3.0)
+* **perpage** - Used in conjunction with AJAX option. If a perpage option is included in a non-AJAX form, the results will be displayed with simple pagination, limited to the number per page specified. (Ex: ajax="false" perpage="15"). Pagination is not available with AJAX forms.
+* **resultspage** - If a non-ajax form is being submitted (see ajax option), a separate results page may be specified.
 * **taxonomies** - To include taxonomy filters in the search form, use a comma-separated list of taxonomy names/slugs. The form will include select menus for each of the taxonomies specified. (AJAX only)
+* **taxonomy_field_type** - If taxonomy fields are displayed, the field type may be either "select" or "checkbox". Defaults to "select".
 * **allowemptyaddress** - Set as "true" to allow empty address fields to be submitted (useful for returning all locations regardless of the user-specified location)
+* **showall** - Whether to show all locations on page load. Defaults to false.
 
-Visit [locate.wp](http://locatewp.com#documentation) for more detailed information.
+Visit [locate.wp](https://locatewp.com#documentation) for more detailed information.
 
 
 = Widget Use =
@@ -374,3 +381,9 @@ For a complete description of available filters and example usage, see the [plug
 * `simple_locator_sql_select($sql)` - Add additional fields to the SELECT sql query during search
 * `simple_locator_sql_join($sql)` - Join additional fields in the sql query during search
 * `simple_locator_sql_where($sql)` - Add additional WHERE parameters to the sql query during search
+* `simple_locator_form_in_results($display_form)` - Whether to show the form in results (bool)
+* `simple_locator_all_locations_text($text)` - Filter the text output of "All Locations"
+* `simple_locator_map_pin_single($html)` - Filter the single view map pin
+* `simple_locator_js_map_options($options)` - Filter the Javascript options passed to Google Maps for map display
+* `simple_locator_autocomplete_js_options($options)` - Filter the Javascript options passed to the Google Maps Autocomplete API
+* `simple_locator_form_taxonomies($taxonomies)` - Filter the taxonomies displayed in the search form

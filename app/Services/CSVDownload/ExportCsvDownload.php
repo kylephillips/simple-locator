@@ -67,8 +67,8 @@ class ExportCsvDownload
 	*/
 	private function buildCsvArray()
 	{
-		$standard_columns = ( isset($_POST['standard_columns']) ) ? sanitize_text_field($_POST['standard_columns']) : [];
-		$custom_columns = ( isset($_POST['custom_columns']) ) ? sanitize_text_field($_POST['custom_columns']) : [];
+		$standard_columns = ( isset($_POST['standard_columns']) ) ? $_POST['standard_columns'] : [];
+		$custom_columns = ( isset($_POST['custom_columns']) ) ? $_POST['custom_columns'] : [];
 		$taxonomies = ( isset($_POST['taxonomies']) ) ? $_POST['taxonomies'] : [];
 
 		$taxonomy_separator = ( isset($_POST['taxonomy_separator']) ) ? $_POST['taxonomy_separator'] : 'comma';
@@ -77,9 +77,11 @@ class ExportCsvDownload
 		foreach ( $this->posts as $k => $post ) :
 			$this->formatted_posts[$k] = [];
 			foreach ( $standard_columns as $column ) :
+				$column = sanitize_text_field($column);
 				$this->formatted_posts[$k][$column] = ( isset($post->$column) ) ? $post->$column : null;
 			endforeach;
 			foreach ( $custom_columns as $column ) :
+				$column = sanitize_text_field($column);
 				$this->formatted_posts[$k][$column] = ( isset($post->$column) ) ? $post->$column : null;
 			endforeach;
 			foreach ( $taxonomies as $tax ) :
@@ -108,16 +110,18 @@ class ExportCsvDownload
 		// Header Row
 		$include_header = ( isset($_POST['include_header_row']) && $_POST['include_header_row'] == 'true' ) ? true : false;
 		if ( $include_header ) :
-			$standard_columns = ( isset($_POST['standard_columns']) ) ? sanitize_text_field($_POST['standard_columns']) : [];
-			$custom_columns = ( isset($_POST['custom_columns']) ) ? sanitize_text_field($_POST['custom_columns']) : [];
+			$standard_columns = ( isset($_POST['standard_columns']) ) ? $_POST['standard_columns'] : [];
+			$custom_columns = ( isset($_POST['custom_columns']) ) ? $_POST['custom_columns'] : [];
 			$taxonomies = ( isset($_POST['taxonomies']) ) ? $_POST['taxonomies'] : [];
 			$header = [];
 			foreach ( $standard_columns as $column ) :
+				$column = sanitize_text_field($column);
 				$header[] = ( isset($_POST['column_name'][$column]) && $_POST['column_name'][$column] !== '' ) 
 					? sanitize_text_field($_POST['column_name'][$column])
 					: $column;
 			endforeach;
 			foreach ( $custom_columns as $column ) :
+				$column = sanitize_text_field($column);
 				$header[] = ( isset($_POST['column_name'][$column]) && $_POST['column_name'][$column] !== '' ) 
 					? sanitize_text_field($_POST['column_name'][$column])
 					: $column;

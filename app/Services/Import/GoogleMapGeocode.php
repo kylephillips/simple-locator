@@ -54,6 +54,10 @@ class GoogleMapGeocode
 
 		$results = $response->getBody()->getContents();
 		$results = json_decode($results, true);
+
+		if ( isset($results['error_message']) ){
+			throw new GoogleAPIException(sprintf(__('Google Maps Error: %s', 'simple-locator'), $results['error_message']));
+		}
 		
 		$this->coordinates = [
 			'lat' => $results['results'][0]['geometry']['location']['lat'],

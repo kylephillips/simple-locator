@@ -146,8 +146,20 @@ class LocationSearch
 		$this->request['formmethod'] = ( isset($temp_request['method']) && $temp_request['method'] == 'post' ) ? 'post' : 'get';
 		$this->request['mapheight'] = ( isset($temp_request['mapheight']) ) 
 			? intval(sanitize_text_field($temp_request['mapheight'])) : 250;
-		$this->request['taxfilter'] = ( isset($temp_request['taxfilter']) && is_array($temp_request['taxfilter']) ) 
-			? sanitize_text_field($temp_request['taxfilter']) : null;
+		$this->request['taxfilter'] = null;
+		if ( isset($temp_request['taxfilter']) && is_array($temp_request['taxfilter']) ){
+			$taxfilter = [];
+			foreach ( $temp_request['taxfilter'] as $taxonomy => $terms ){
+				if ( is_array($terms) ){
+					foreach ( $terms as $term ){
+						$taxfilter[sanitize_text_field($taxonomy)][] = sanitize_text_field($term);
+					}
+				} else {
+					$taxfilter[sanitize_text_field($taxonomy)] = sanitize_text_field($terms);
+				}
+			}
+			$this->request['taxfilter'] = $taxfilter;
+		}
 		$this->request['new_search'] = ( isset($temp_request['back']) || isset($temp_request['next']) ) ? false : true;
 		$this->formatTaxonomies();
 	}

@@ -105,6 +105,9 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 
 == Changelog ==
 
+= 2.0.3 =
+* Fixes bug that prevented taxonomy filters from applying in location searches
+
 = 2.0.2 =
 * Updates form to use API, with custom endpoints added for search and all locations queries.
 * Adds map pin filter, enabling customization of map pins for each location result.

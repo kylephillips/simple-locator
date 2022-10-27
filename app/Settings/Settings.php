@@ -6,6 +6,7 @@ use SimpleLocator\Repositories\SettingsRepository;
 use SimpleLocator\Repositories\ImportRepository;
 use SimpleLocator\Repositories\SearchHistoryRepository;
 use SimpleLocator\Services\Import\CSV\Row;
+use SimpleLocator\Services\Helpers\RemoteAddress;
 
 /**
 * Settings page
@@ -57,6 +58,11 @@ class Settings
 	* Search History Repository
 	*/
 	private $search_repo;
+
+	/**
+	* Remote Address Helper
+	*/
+	private $remote_address;
 	
 
 	public function __construct()
@@ -65,6 +71,7 @@ class Settings
 		$this->settings_repo = new SettingsRepository;
 		$this->import_repo = new ImportRepository;
 		$this->search_repo = new SearchHistoryRepository;
+		$this->remote_address = new RemoteAddress;
 		$this->row = new Row;
 		$this->setUnit();
 		$this->setFieldType();

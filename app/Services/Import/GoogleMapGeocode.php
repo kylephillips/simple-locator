@@ -29,7 +29,7 @@ class GoogleMapGeocode
 	*/
 	public function geocode($address)
 	{
-		$apikey = get_option('wpsl_google_api_key');
+		$apikey = get_option('wpsl_google_geocode_api_key');
 		$client = new Client();		
 		$response = $client->get('https://maps.googleapis.com/maps/api/geocode/json', [
 			'query' => [
@@ -56,7 +56,7 @@ class GoogleMapGeocode
 		$results = json_decode($results, true);
 
 		if ( isset($results['error_message']) ){
-			throw new GoogleAPIException(sprintf(__('Google Maps Error: %s', 'simple-locator'), $results['error_message']));
+			throw new GoogleAPIException(sprintf(__('%s', 'simple-locator'), $results['error_message']));
 		}
 		
 		$this->coordinates = [

@@ -15,7 +15,7 @@ class AdvancedCustomFields
 	{
 		if ( !function_exists('acf_field_type_exists') ) return;
 		$this->settings_repo = new SettingsRepository;
-		add_action( 'acf/save_post', [$this, 'saveMapFieldCoordinates'], 10 );
+		add_action( 'acf/save_post', [$this, 'saveMapFieldCoordinates'], 10);
 	}
 
 	/**
@@ -29,7 +29,7 @@ class AdvancedCustomFields
 		$option = get_option('wpsl_acf_map_field');
 		if ( !$option ) return;
 		if ( !isset($_POST['acf'][$option]) ) return;
-		$map_field = sanitize_text_field($_POST['acf'][$option]);
+		$map_field = get_field($option, $post_id);
 		if ( isset($map_field['lat']) && isset($map_field['lng']) ){
 			update_post_meta($post_id, $this->settings_repo->getGeoField('lat'), $map_field['lat']);
 			update_post_meta($post_id, $this->settings_repo->getGeoField('lng'), $map_field['lng']);

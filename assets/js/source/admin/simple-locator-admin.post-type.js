@@ -97,8 +97,10 @@ SimpleLocatorAdmin.PostType = function()
 	*/
 	self.selectLocationFields = function()
 	{
-		$('[' + self.selectors.useLocatorFieldsRadio + ']').attr('checked','checked');
-		$('[' + self.selectors.useCustomFieldsRadio + ']').removeAttr('checked');
+		if ( !$('[' + self.selectors.useCustomFieldsRadio + ']').is(':checked') ){
+			$('[' + self.selectors.useLocatorFieldsRadio + ']').attr('checked','checked');
+			$('[' + self.selectors.useCustomFieldsRadio + ']').removeAttr('checked');
+		}
 		$('[' + self.selectors.latitudeField + ']').val('wpsl_latitude');
 		$('[' + self.selectors.longitudeField + ']').val('wpsl_longitude');
 		$('[' + self.selectors.latitudeSelectField + ']').val('wpsl_latitude');

@@ -105,6 +105,9 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 
 == Changelog ==
 
+= 2.0.4 =
+* Fixes JS bugs when multiple maps Javascript options are specified
+
 = 2.0.3 =
 * Adds marker clustering option, with optional setting to pass in custom Google Maps Renderer object
 * Fixes bug that prevented taxonomy filters from applying in location searches

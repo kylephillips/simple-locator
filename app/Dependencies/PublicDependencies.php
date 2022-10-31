@@ -101,10 +101,10 @@ class PublicDependencies extends DependencyBase
 		if ( $this->settings_repo->customMapOptions() ) 
 			$localized_objects .= 'wpsl_locator.map_options = ' . apply_filters('simple_locator_js_map_options', $this->settings_repo->mapOptions()) . ';';
 		if ( $this->settings_repo->customAutocompleteOptions() ) 
-			$localized_objects .= 'wpsl_locator.autocomplete_options = ' . apply_filters('simple_locator_autocomplete_js_options', $this->settings_repo->autocompleteOptions());
+			$localized_objects .= "\n" . 'wpsl_locator.autocomplete_options = ' . apply_filters('simple_locator_autocomplete_js_options', $this->settings_repo->autocompleteOptions());
 		if ( $this->settings_repo->useClusterRenderer() ){
 			$cluster_renderer = $this->settings_repo->clusterRenderer();
-			if ( $cluster_renderer ) $localized_objects .= 'wpsl_locator.cluster_renderer = ' . apply_filters('simple_locator_cluster_renderer', $cluster_renderer);
+			if ( $cluster_renderer ) $localized_objects .= "\n" . 'wpsl_locator.cluster_renderer = ' . apply_filters('simple_locator_cluster_renderer', $cluster_renderer);
 		}
 		$localized_data['l10n_print_after'] = $localized_objects;
 

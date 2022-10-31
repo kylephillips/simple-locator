@@ -267,6 +267,33 @@ class SettingsRepository
 	}
 
 	/**
+	* Is marker clustering enabled?
+	*/
+	public function useMarkerClusters()
+	{
+		$option = get_option('wpsl_marker_clusters');
+		return ( !$option || $option !== 'true' ) ? false : true;
+	}
+
+	/**
+	* Is a custom cluster interface being used?
+	*/
+	public function useClusterRenderer()
+	{
+		$option = get_option('wpsl_marker_cluster_renderer_enabled');
+		return ( !$option || $option !== '1' ) ? false : true;
+	}
+
+	/**
+	* Custom Renderer interface for the MarkerClusterer
+	*/
+	public function clusterRenderer()
+	{
+		$option = get_option('wpsl_marker_cluster_renderer');
+		return ( $option && $option !== '' ) ? $option : false;
+	}
+
+	/**
 	* Get the Map Pin
 	*/
 	public function mapPin($style = 'standard')

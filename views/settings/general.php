@@ -131,6 +131,15 @@
 		</div><!-- .field -->
 	</div><!-- .row -->
 
+	<div class="row" data-simple-locator-cluster>
+		<div class="label"><h4><?php _e('Enable marker clusters', 'simple-locator'); ?></h4></div>
+		<div class="field">
+			<label>
+			<input type="checkbox" id="wpsl_marker_clusters" value="true" name="wpsl_marker_clusters" data-simple-locator-marker-cluster-input <?php if ($this->settings_repo->useMarkerClusters()) echo 'checked'; ?> />
+			<?php _e('Enable marker clustering', 'simple-locator'); ?></label>
+		</div>
+	</div>
+
 	<div class="row subhead"><h4><?php _e('Geolocation', 'simple-locator'); ?></h4></div>
 
 	<div class="row">

@@ -39,4 +39,19 @@ SimpleLocator.Utilities = function()
 		var latlng = [center.lat(), center.lng()];
 		return latlng;
 	}
+
+	/**
+	* Cluster markers if set to do so
+	*/
+	self.clusterMarkers = function(map, markers)
+	{
+		var options = {
+			map: map, 
+			markers: markers
+		}
+		if ( typeof wpsl_locator.cluster_renderer !== 'undefined' && wpsl_locator.cluster_renderer !== '' ) options.renderer = wpsl_locator.cluster_renderer;
+		if ( wpsl_locator.marker_clusters === '1' && typeof markerClusterer.MarkerClusterer !== 'undefined' ){
+			const markerCluster = new markerClusterer.MarkerClusterer(options);
+		}
+	}
 }

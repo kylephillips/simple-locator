@@ -1,4 +1,4 @@
-<?php settings_fields( 'wpsimplelocator-map' ); // wpsl_map_styles?>
+<?php settings_fields( 'wpsimplelocator-map' ); ?>
 <div class="wpsl-settings">
 	<div class="row subhead"><h4><?php _e('Map Styles', 'simple-locator'); ?></h4></div>
 
@@ -53,6 +53,21 @@
 		<div class="field align-top">
 			<label><input type="checkbox" name="wpsl_custom_autocomplete_options" value="1" data-simple-locator-custom-autocomplete-option <?php if ( $this->settings_repo->customAutocompleteOptions() ) echo 'checked'; ?> /><?php _e('Customize Google Maps Autocomplete Options', 'simple-locator'); ?> </label>
 			<textarea name="wpsl_autocomplete_options" data-simple-locator-custom-autocomplete style="width:100%;height:200px;margin-top:20px;<?php if ( !$this->settings_repo->customAutocompleteOptions() ) echo 'display:none;' ?>"><?php echo $this->settings_repo->autocompleteOptions(); ?></textarea>
+		</div>
+	</div>
+	<?php endif; ?>
+
+	<?php if ( $this->settings_repo->useMarkerClusters() ) : ?>
+	<div class="row">
+		<div class="label align-top">
+			<h4><?php _e('Customize Marker Clustering Options', 'simple-locator'); ?></h4>
+			<p><?php _e('Pass custom configuration options into the marker clustering class. This includes the algorithm, render options and more.', 'simple-locator'); ?> <a href="https://googlemaps.github.io/js-markerclusterer/" target="_blank"><?php _e('Documentation', 'simple-locator'); ?></a></p>
+		</div>
+		<div class="field align-top">
+			<label><input type="checkbox" name="wpsl_marker_cluster_renderer_enabled" value="1" data-simple-locator-custom-marker-clustering-option <?php if ( $this->settings_repo->useClusterRenderer() ) echo 'checked'; ?> /><?php _e('Customize Marker Cluster Renderer (<a href="https://googlemaps.github.io/js-markerclusterer/interfaces/Renderer.html" target="_blank">Renderer Object</a> passed into the MarkerClusterer).', 'simple-locator'); ?> </label>
+			<textarea name="wpsl_marker_cluster_renderer" data-simple-locator-clustering-renderer style="width:100%;height:200px;margin-top:20px;<?php if ( !$this->settings_repo->useClusterRenderer() ) echo ' display:none;' ?>"><?php echo $this->settings_repo->clusterRenderer(); ?></textarea>
+			<p><strong><?php _e('Example Renderer Object:', 'simple-locator'); ?>
+			<pre style="max-width: 100%; overflow: auto;white-space: pre-wrap; background-color:#f9f9f9;padding:10px;"><?php include( dirname(dirname(dirname(__FILE__))) . '/app/Migrations/map_options/cluster-renderer.php' ); ?></pre>
 		</div>
 	</div>
 	<?php endif; ?>

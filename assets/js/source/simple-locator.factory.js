@@ -60,6 +60,7 @@ SimpleLocator.markers = [];
 SimpleLocator.userPin = [];
 SimpleLocator.formData = [];
 SimpleLocator.infoWindow;
+SimpleLocator.utilities;
 
 SimpleLocator.mapservice = wpsl_locator.mapservice;
 
@@ -73,6 +74,7 @@ SimpleLocator.Factory = function()
 
 	self.init = function()
 	{
+		SimpleLocator.utilities = new SimpleLocator.Utilities;
 		new SimpleLocator.Geocoder;
 		new SimpleLocator.Geolocation;
 		new SimpleLocator.PlacesAutocomplete;

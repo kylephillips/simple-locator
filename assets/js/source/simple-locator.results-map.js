@@ -21,7 +21,6 @@ SimpleLocator.ResultsMap = function()
 			self.activeForm = $(form);
 			self.activeFormContainer = $(form).parents('[' + SimpleLocator.selectors.formContainer + ']');
 			self.data = data;
-			console.log(self.data);
 			self.setMapContainer();
 			self.setMapIndex();
 			self.loadMap();
@@ -141,6 +140,8 @@ SimpleLocator.ResultsMap = function()
 			google.maps.event.removeListener(listener); 
 		});
 		self.toggleLoading(false);
+		
+		SimpleLocator.utilities.clusterMarkers(SimpleLocator.maps[self.mapIndex], SimpleLocator.markers[self.mapIndex]);
 		$(document).trigger('simple-locator-map-rendered', [self.mapIndex, self.activeForm]);
 	}
 

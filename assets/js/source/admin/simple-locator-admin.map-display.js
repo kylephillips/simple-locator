@@ -17,7 +17,9 @@ SimpleLocatorAdmin.MapDisplay = function()
 		customOptionsCheckbox : 'data-simple-locator-custom-map-options-checkbox',
 		customOptions : 'data-simple-locator-custom-map-options',
 		customAutocompleteCheckbox : 'data-simple-locator-custom-autocomplete-option',
-		customAutocomplete : 'data-simple-locator-custom-autocomplete'
+		customAutocomplete : 'data-simple-locator-custom-autocomplete',
+		clusterRendererCheckbox : 'data-simple-locator-custom-marker-clustering-option',
+		clusterRenderer : 'data-simple-locator-clustering-renderer'
 	}
 
 	self.bindEvents = function()
@@ -44,6 +46,9 @@ SimpleLocatorAdmin.MapDisplay = function()
 		});
 		$(document).on('change', '[' + self.selectors.customAutocompleteCheckbox + ']', function(){
 			self.toggleAutocompleteOptions();
+		});
+		$(document).on('change', '[' + self.selectors.clusterRendererCheckbox + ']', function(){
+			self.toggleClusterRenderer();
 		});
 	}
 
@@ -125,6 +130,18 @@ SimpleLocatorAdmin.MapDisplay = function()
 			return;
 		}
 		$('[' + self.selectors.customAutocomplete + ']').hide();
+	}
+
+	/**
+	* Toggle Clustering Renderer Field
+	*/
+	self.toggleClusterRenderer = function()
+	{
+		if ( $('[' + self.selectors.clusterRendererCheckbox + ']').is(':checked') ){
+			$('[' + self.selectors.clusterRenderer + ']').show();
+			return;
+		}
+		$('[' + self.selectors.clusterRenderer + ']').hide();
 	}
 
 	return self.bindEvents();

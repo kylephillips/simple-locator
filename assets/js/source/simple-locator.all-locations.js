@@ -236,6 +236,7 @@ SimpleLocator.AllLocations = function()
 			});
 		}
 
+		SimpleLocator.utilities.clusterMarkers(map, SimpleLocator.markers[self.mapIndex]);
 		SimpleLocator.maps[self.mapIndex] = map;
 		self.loadList();
 

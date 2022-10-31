@@ -34,7 +34,18 @@ class PublicDependencies extends DependencyBase
 	{
 		$this->addGoogleMaps();
 		$dependencies = ['jquery'];
+		$marker_cluster = false;
 		if ( $this->settings_repo->mapService() == 'google' && $this->settings_repo->includeMapLibrary() ) $dependencies[] = 'google-maps';
+		if ( $this->settings_repo->useMarkerClusters() ) :
+			$marker_cluster = true;
+			wp_enqueue_script(
+				'marker-cluster',
+				$this->plugin_dir . '/assets/js/markerclusterer.min.js',
+				['google-maps'],
+				$this->version,
+				true
+			);
+		endif;
 		wp_register_script(
 			'simple-locator', 
 			$this->plugin_dir . '/assets/js/simple-locator.min.js', 
@@ -45,7 +56,7 @@ class PublicDependencies extends DependencyBase
 		wp_register_script(
 			'simple-locator-non-ajax-results', 
 			$this->plugin_dir . '/assets/js/simple-locator-non-ajax-results.js', 
-			array('jquery', 'simple-locator'), 
+			['jquery', 'simple-locator'], 
 			$this->version, 
 			true
 		);
@@ -80,7 +91,8 @@ class PublicDependencies extends DependencyBase
 			'custom_map_options'	=> $this->settings_repo->customMapOptions(),
 			'custom_autocomplete'	=> $this->settings_repo->customAutocompleteOptions(),
 			'postfields'			=> apply_filters('simple_locator_post_fields', false),
-			'jsdebug'				=> $this->settings_repo->jsDebug()
+			'jsdebug'				=> $this->settings_repo->jsDebug(),
+			'marker_clusters'		=> $marker_cluster
 		];
 		$localized_data['mapstyles'] = $this->styles_repo->getLocalizedStyles();
 		
@@ -90,6 +102,10 @@ class PublicDependencies extends DependencyBase
 			$localized_objects .= 'wpsl_locator.map_options = ' . apply_filters('simple_locator_js_map_options', $this->settings_repo->mapOptions()) . ';';
 		if ( $this->settings_repo->customAutocompleteOptions() ) 
 			$localized_objects .= 'wpsl_locator.autocomplete_options = ' . apply_filters('simple_locator_autocomplete_js_options', $this->settings_repo->autocompleteOptions());
+		if ( $this->settings_repo->useClusterRenderer() ){
+			$cluster_renderer = $this->settings_repo->clusterRenderer();
+			if ( $cluster_renderer ) $localized_objects .= 'wpsl_locator.cluster_renderer = ' . apply_filters('simple_locator_cluster_renderer', $cluster_renderer);
+		}
 		$localized_data['l10n_print_after'] = $localized_objects;
 
 		wp_localize_script( 

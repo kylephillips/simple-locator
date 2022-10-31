@@ -142,6 +142,7 @@ class Settings
 		register_setting( 'wpsimplelocator-general', 'wpsl_include_user_pin' );
 		register_setting( 'wpsimplelocator-general', 'wpsl_map_pin' );
 		register_setting( 'wpsimplelocator-general', 'wpsl_map_pin_user' );
+		register_setting( 'wpsimplelocator-general', 'wpsl_marker_clusters' );
 		register_setting( 'wpsimplelocator-general', 'wpsl_singular_data' );
 		register_setting( 'wpsimplelocator-general', 'wpsl_geo_button' );
 		register_setting( 'wpsimplelocator-general', 'wpsl_gmaps_api' );
@@ -168,6 +169,8 @@ class Settings
 		register_setting( 'wpsimplelocator-map', 'wpsl_map_options' );
 		register_setting( 'wpsimplelocator-map', 'wpsl_custom_autocomplete_options' );
 		register_setting( 'wpsimplelocator-map', 'wpsl_autocomplete_options' );
+		register_setting( 'wpsimplelocator-map', 'wpsl_marker_cluster_renderer_enabled');
+		register_setting( 'wpsimplelocator-map', 'wpsl_marker_cluster_renderer');
 		register_setting( 'wpsimplelocator-default', 'wpsl_default_map' );
 		register_setting( 'wpsimplelocator-results', 'wpsl_results_options' );
 		register_setting( 'wpsimplelocator-results', 'wpsl_results_fields_formatted' );

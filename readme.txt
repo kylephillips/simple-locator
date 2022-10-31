@@ -106,6 +106,7 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 == Changelog ==
 
 = 2.0.3 =
+* Adds marker clustering option, with optional setting to pass in custom Google Maps Renderer object
 * Fixes bug that prevented taxonomy filters from applying in location searches
 * Fixes bugs that were preventing ACF map field functionality from running correctly.
 * Fixes bugs that were not allowing the selection of custom lat/lng fields in the plugin settings.

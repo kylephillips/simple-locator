@@ -4,7 +4,7 @@ Donate link: http://locatewp.com/
 Tags: location, store locator, google maps, store map, locator, map, locations
 Requires at least: 5.0
 Requires PHP: 7.0
-Tested up to: 6.1
+Tested up to: 6.7
 Stable tag: 2.0.3
 
 License: GPLv2 or later
@@ -106,6 +106,7 @@ This plugin relies on the Google Maps Javascript API. Please refer to the API do
 == Changelog ==
 
 = 2.0.4 =
+* Security update addressing stored XSS. (Thanks to Yudha)
 * Fixes JS bugs when multiple maps Javascript options are specified
 
 = 2.0.3 =

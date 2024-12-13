@@ -41,7 +41,7 @@ class FormShortcode
 		$tax_array = explode(',', $this->options['taxonomies']);
 		$taxonomies = [];
 		foreach ( $tax_array as $key => $tax ){
-			$taxonomy = get_taxonomy($tax);
+			$taxonomy = get_taxonomy(esc_attr($tax));
 			if ( !$taxonomy ) continue;
 			$tax_label = $taxonomy->labels->name; // Get the label
 			$terms = get_terms($tax); // Get the terms

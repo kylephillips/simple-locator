@@ -80,11 +80,11 @@ class AllLocationsShortcode
 			}
 		}
 		
-		if ( $this->options['orderby'] !== '' ) $output .= ' data-orderby="' . $this->options['orderby'] . '"';
+		if ( $this->options['orderby'] !== '' ) $output .= ' data-orderby="' . esc_attr($this->options['orderby']) . '"';
 		$output .= ( $this->options['order'] == 'asc' ) ? ' data-order="asc"' : ' data-order="desc"';
-		if ( $this->options['ids'] !== '' ) $output .= ' data-post-ids="' . $this->options['ids'] . '"';
+		if ( $this->options['ids'] !== '' ) $output .= ' data-post-ids="' . esc_attr($this->options['ids']) . '"';
 		if ( $this->options['mapheight'] !== '' ) $output .= ' style="height:' . intval($this->options['mapheight']) . 'px;"';
-		if ( $this->options['noresultstext'] !== '' ) $output .= ' data-no-results-text="' . $this->options['noresultstext'] . '"';
+		if ( $this->options['noresultstext'] !== '' ) $output .= ' data-no-results-text="' . esc_attr($this->options['noresultstext']) . '"';
 		if ( $this->options['includelist'] == 'true' ) $output .= ' data-include-listing="true"';
 		if ( $this->options['perpage'] !== '' ) $output .= ' data-per-page="' . intval($this->options['perpage']) . '"';
 

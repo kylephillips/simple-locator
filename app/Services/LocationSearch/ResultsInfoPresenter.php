@@ -84,7 +84,7 @@ class ResultsInfoPresenter
 	public function currentResultCounts()
 	{
 		if ( !isset($this->request['per_page']) || $this->request['per_page'] == 0 || !$this->search_data['results'] ) return;
-		$current_start = ($this->request['page'] - 1) * $this->request['per_page'] + 1;
+		$current_start = (intval($this->request['page']) - 1) * intval($this->request['per_page']) + 1;
 		$current_end = $current_start + count($this->search_data['results']) - 1;
 		if ( $current_start != $current_end ) $current_start .= '&ndash;' . $current_end;
 		$output = '<p class="wpsl-results-current-count"><em>' . __('Showing', 'simple-locator') . ' ' . $current_start . ' ' . __('of', 'simple-locator') . ' ' . $this->search_data['total_results'] . '</em></p>';

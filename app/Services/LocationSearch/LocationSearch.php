@@ -112,36 +112,82 @@ class LocationSearch
 	}
 
 	/**
-	* Sanitize and set the user-submitted data
-	*/
+	 * Sanitize and validate user-submitted data
+	 * Ensures all input is safe and within expected ranges/types
+	 */
 	private function setData()
 	{
+		// Sanitize and validate unit
+		$unit = isset($this->request['unit']) ? sanitize_text_field($this->request['unit']) : get_option('wpsl_measurement_unit');
+		$unit = in_array($unit, ['miles', 'kilometers']) ? $unit : 'miles';
+
+		// Sanitize and validate pagination parameters
+		$per_page = isset($this->request['per_page']) ? absint($this->request['per_page']) : null;
+		$page = isset($this->request['page']) ? absint($this->request['page']) : 1;
+		$offset = ($page - 1) * $per_page;
+		if ($offset < 0) $offset = 0;
+
+		// Sanitize and validate distance
+		$distance = isset($this->request['distance']) ? absint($this->request['distance']) : null;
+		if ($distance !== null && $distance < 0) $distance = 0;
+
+		// Sanitize and validate coordinates
+		$latitude = isset($this->request['latitude']) ? floatval($this->request['latitude']) : null;
+		$longitude = isset($this->request['longitude']) ? floatval($this->request['longitude']) : null;
+
+		// Validate coordinate ranges
+		if ($latitude !== null && ($latitude < -90 || $latitude > 90)) {
+			$latitude = null;
+		}
+		if ($longitude !== null && ($longitude < -180 || $longitude > 180)) {
+			$longitude = null;
+		}
+
+		// Sanitize and validate order parameters
+		$orderby = isset($this->request['orderby']) ? sanitize_sql_orderby($this->request['orderby']) : null;
+		$order = isset($this->request['order']) ? sanitize_sql_orderby($this->request['order']) : 'DESC';
+		$order = in_array(strtoupper($order), ['ASC', 'DESC']) ? strtoupper($order) : 'DESC';
+
 		$this->data = [
-			'unit' => ( isset($this->request['unit']) ) ? sanitize_text_field($this->request['unit']) : get_option('wpsl_measurement_unit'),
-			'offset' => null,
-			'limit' => ( isset($this->request['per_page']) ) ? sanitize_text_field(intval($this->request['per_page'])) : null,
-			'distance' => ( isset($this->request['distance']) ) ? sanitize_text_field($this->request['distance']) : null,
-			'latitude' => ( isset($this->request['latitude']) ) ? sanitize_text_field($this->request['latitude']) : null,
-			'longitude' => ( isset($this->request['longitude']) ) ? sanitize_text_field($this->request['longitude']) : null,
-			'orderby' => null
+			'unit' => $unit,
+			'offset' => $offset,
+			'limit' => $per_page,
+			'distance' => $distance,
+			'latitude' => $latitude,
+			'longitude' => $longitude,
+			'orderby' => $orderby,
+			'order' => $order
 		];
-		if ( isset($this->request['page']) && $this->data['limit']){
-			$this->data['offset'] = (intval($this->request['page']) - 1) * $this->data['limit'];
-			if ( $this->data['offset'] < 0 ) $this->data['offset'] = 0;
+
+		// Set taxonomy filters if provided
+		if (isset($this->request['taxfilter'])) {
+			$this->setTaxonomies();
 		}
-		if ( isset($this->request['orderby']) ){
-			$this->data['orderby'] = sanitize_text_field($this->request['orderby']);
-			$this->data['order'] = ( isset($this->request['order']) && $this->request['order'] == 'asc' ) ? 'asc' : 'desc';
-		}
-		if ( isset($this->request['taxfilter']) ) $this->setTaxonomies();
 	}
 
 	/**
-	* Set Taxonomy Filters
-	*/
+	 * Sanitize and validate taxonomy filters
+	 * Ensures taxonomy names and term IDs are safe
+	 */
 	private function setTaxonomies()
 	{
-		$terms = $this->request['taxfilter'];
+		if (!isset($this->request['taxfilter']) || !is_array($this->request['taxfilter'])) {
+			return;
+		}
+
+		$terms = [];
+		foreach ($this->request['taxfilter'] as $taxonomy => $term_ids) {
+			// Sanitize taxonomy name
+			$taxonomy = sanitize_key($taxonomy);
+			// Ensure term IDs are integers
+			if (is_array($term_ids)) {
+				$term_ids = array_map('absint', $term_ids);
+				$term_ids = array_filter($term_ids); // Remove empty values
+				if (!empty($term_ids)) {
+					$terms[$taxonomy] = $term_ids;
+				}
+			}
+		}
 		$this->data['taxonomies'] = $terms;
 	}
 
@@ -274,44 +320,59 @@ class LocationSearch
 	}
 
 	/**
-	* Set the Query
-	*/
+	 * Build the SQL query using prepared statements and safe values
+	 * Prevents SQL injection and ensures only safe data is used
+	 */
 	private function setQuery($include_limit = true)
 	{
-		$sql = "
+		global $wpdb;
+		// Prepare the base query with placeholders for meta fields
+		$query = "
 			SELECT DISTINCT p.post_title AS title, p.ID AS id" .
 			$this->sqlFieldVars() . 
 			$this->distanceVars() . "
-			FROM " . $this->query_data['post_table'] . " AS p 
-			LEFT JOIN " . $this->query_data['meta_table'] . " AS lat
-				ON p.ID = lat.post_id AND lat.meta_key = '" . $this->query_data['lat_field'] . "'
-			LEFT JOIN " . $this->query_data['meta_table'] . " AS lng
-				ON p.ID = lng.post_id AND lng.meta_key = '" . $this->query_data['lng_field'] . "'";
-			$sql .= $this->sqlFieldJoins();
-			$sql .= $this->taxonomyJoins();
-			$sql .= $this->sqlWhere();
-			if ( $this->address ) $sql .= "\nHAVING distance < @distance\nORDER BY distance\n";
-			if ( !$this->address ) $sql .= $this->sqlOrderby();
-			$sql .= ($include_limit) ? $this->sqlLimit() . ";" : ';';
-		$this->sql = $sql;
+			FROM " . $wpdb->posts . " AS p 
+			LEFT JOIN " . $wpdb->postmeta . " AS lat
+				ON p.ID = lat.post_id AND lat.meta_key = %s
+			LEFT JOIN " . $wpdb->postmeta . " AS lng
+				ON p.ID = lng.post_id AND lng.meta_key = %s";
+		$query .= $this->sqlFieldJoins();
+		$query .= $this->taxonomyJoins();
+		$query .= $this->sqlWhere();
+		// Prepare the query parameters
+		$params = [
+			$this->query_data['lat_field'],
+			$this->query_data['lng_field']
+		];
+		if ($this->address) {
+			$query .= "\nHAVING distance < %d\nORDER BY distance\n";
+			$params[] = $this->query_data['distance'];
+		} else {
+			$query .= $this->sqlOrderby();
+		}
+		if ($include_limit) {
+			$query .= $this->sqlLimit();
+		}
+		$query .= ";";
+		// Use $wpdb->prepare to safely inject parameters
+		$this->sql = $wpdb->prepare($query, $params);
 	}
 
 	/**
-	* Lookup location data
-	*/
+	 * Run the SQL query and set results
+	 * Uses safe SQL variables and prepared statements
+	 */
 	private function runQuery()
 	{
 		global $wpdb;
-
-		// Set the SQL Vars
-		if ( $this->address ){
+		// Set the SQL Vars for distance calculation if needed
+		if ($this->address) {
 			$wpdb->query("SET SQL_BIG_SELECTS=1");
-			$wpdb->query("SET @origlat = " . $this->query_data['userlat'] . ";");
-			$wpdb->query("SET @origlng = " . $this->query_data['userlong'] . ";");
-			$wpdb->query("SET @distance = " . $this->query_data['distance'] . ";");
-			$wpdb->query("SET @dist_unit = " . $this->query_data['distance_unit'] . ";");
+			$wpdb->query($wpdb->prepare("SET @origlat = %f;", $this->query_data['userlat']));
+			$wpdb->query($wpdb->prepare("SET @origlng = %f;", $this->query_data['userlong']));
+			$wpdb->query($wpdb->prepare("SET @distance = %d;", $this->query_data['distance']));
+			$wpdb->query($wpdb->prepare("SET @dist_unit = %f;", $this->query_data['distance_unit']));
 		}
-		
 		// Run the Query
 		$results = $wpdb->get_results($this->sql);
 		$this->result_count = count($results);

@@ -22,5 +22,10 @@
 		"psr-4" : {
 			"SimpleLocator\\" : "app"
 		}
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true
+		}
 	}
 }

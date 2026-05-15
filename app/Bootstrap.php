@@ -37,6 +37,7 @@ class Bootstrap
 		new \SimpleLocator\Integrations\IntegrationFactory;
 		new \SimpleLocator\Post\AdminMap;
 		new \SimpleLocator\Post\QuickEditLink;
+		new \SimpleLocator\Dependencies\Dev;
 		add_action( 'widgets_init', [$this, 'formWidget']);
 	}
 

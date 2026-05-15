@@ -10,6 +10,7 @@ SimpleLocatorAdmin.ImportColumnMap = function()
 
 	self.totalrows = 0;
 	self.rowcount = 0; // for selecting a specific row from csv
+	self.columnsInitialized = false;
 
 	self.selectors = {
 		loadingIndicator : 'data-simple-locator-import-loading',
@@ -92,7 +93,10 @@ SimpleLocatorAdmin.ImportColumnMap = function()
 			success: function(data){
 				self.totalrows = data.row_count;
 				self.updateCurrentRowText();
-				self.addColumnRows(data)
+				if ( !self.columnsInitialized ) {
+					self.addColumnRows(data);
+					self.columnsInitialized = true;
+				}
 				self.populateColumnSelects(data);
 				self.selectColumns();
 			}

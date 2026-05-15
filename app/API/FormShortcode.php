@@ -19,6 +19,12 @@ class FormShortcode
 	public $options;
 
 	/**
+	* Styles Repository
+	*/
+	private $styles_repo;
+
+
+	/**
 	* Settings Repository
 	*/
 	private $settings_repo;

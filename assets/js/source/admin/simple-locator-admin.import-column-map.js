@@ -287,6 +287,7 @@ SimpleLocatorAdmin.ImportColumnMap = function()
 			var type = $(this).find('[' + self.selectors.selectType + ']');
 			if ( $(type).val() === "address" || $(type).val() === "full_address" ) added_address = true;
 			if ( $(field).val() === "title" ) added_title = true;
+			added_address = true;
 		});
 
 		// A title & address are required

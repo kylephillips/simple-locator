@@ -38,9 +38,15 @@ chokidar.watch(path.join(ROOT, 'assets/scss/**/*.scss'), {
 });
 
 // Watch JS source files
-chokidar.watch(path.join(ROOT, 'assets/js/src/**/*.js'), {
+chokidar.watch(path.join(ROOT, 'assets/js/source/**/*.js'), {
 	ignoreInitial: true,
 }).on('all', (event, filePath) => {
-	console.log(`[${ts()}] JS changed: ${path.relative(ROOT, filePath)}`);
-	run('build-js.js');
+	const rel = path.relative(ROOT, filePath);
+	console.log(`[${ts()}] JS changed: ${rel}`);
+	const isAdmin = rel.includes(path.join('source', 'admin'));
+	if (isAdmin) {
+		run('build-js-admin.js');
+	} else {
+		run('build-js.js');
+	}
 });
